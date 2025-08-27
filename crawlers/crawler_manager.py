@@ -18,6 +18,15 @@ from .tiktok_crawler import TikTokCrawler
 from .instagram_crawler import InstagramCrawler
 from .twitter_crawler import TwitterCrawler
 from .generic_web_crawler import GenericWebCrawler
+# Music Platform Crawlers
+from .spotify_crawler import SpotifyCrawler
+from .apple_music_crawler import AppleMusicCrawler
+from .soundcloud_crawler import SoundCloudCrawler
+# Emerging Platform Crawlers
+from .bereal_crawler import BeRealCrawler
+from .twitch_crawler import TwitchCrawler
+# Monetization Platform Crawlers
+from .patreon_crawler import PatreonCrawler
 
 logger = logging.getLogger(__name__)
 
@@ -91,6 +100,27 @@ class CrawlerManager:
                 
             # Initialize generic crawler
             self.crawlers["generic"] = GenericWebCrawler()
+            
+            # Initialize Music Platform Crawlers
+            if config.get("spotify", {}).get("enabled", False):
+                self.crawlers["spotify"] = SpotifyCrawler()
+                
+            if config.get("apple_music", {}).get("enabled", False):
+                self.crawlers["apple_music"] = AppleMusicCrawler()
+                
+            if config.get("soundcloud", {}).get("enabled", False):
+                self.crawlers["soundcloud"] = SoundCloudCrawler()
+            
+            # Initialize Emerging Platform Crawlers
+            if config.get("bereal", {}).get("enabled", False):
+                self.crawlers["bereal"] = BeRealCrawler()
+                
+            if config.get("twitch", {}).get("enabled", False):
+                self.crawlers["twitch"] = TwitchCrawler()
+            
+            # Initialize Monetization Platform Crawlers
+            if config.get("patreon", {}).get("enabled", False):
+                self.crawlers["patreon"] = PatreonCrawler()
             
             logger.info(f"Initialized {len(self.crawlers)} crawlers")
             
