@@ -1,0 +1,167 @@
+"""
+Docker Configuration for Ainflue Platform Services
+Docker Compose configuration for running the complete platform.
+
+Author: Fahed Mlaiel (mlaiel@live.de)
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+version: '3.8'
+
+services:
+  # Main Ainflue Application
+  ainflue-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
+      - MONGODB_HOST=mongodb
+    depends_on:
+      - postgres
+      - redis
+      - mongodb
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    networks:
+      - ainflue-network
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ainflue_platform
+      POSTGRES_USER: ainflue
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - ainflue-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ainflue-network
+
+  # MongoDB for Documents
+  mongodb:
+    image: mongo:6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ainflue
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+      MONGO_INITDB_DATABASE: ainflue_documents
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - ainflue-network
+
+  # Crawler Service
+  crawler-service:
+    build:
+      context: .
+      dockerfile: docker/crawler.dockerfile
+    environment:
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
+      - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
+      - INSTAGRAM_ACCESS_TOKEN=${INSTAGRAM_ACCESS_TOKEN}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./storage/crawled_data:/app/crawled_data
+    networks:
+      - ainflue-network
+
+  # Monetization Service
+  monetization-service:
+    build:
+      context: .
+      dockerfile: docker/monetization.dockerfile
+    environment:
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}
+      - PAYPAL_CLIENT_SECRET=${PAYPAL_CLIENT_SECRET}
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - ainflue-network
+
+  # Analytics Service
+  analytics-service:
+    build:
+      context: .
+      dockerfile: docker/analytics.dockerfile
+    environment:
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - ainflue-network
+
+  # AI Processing Service
+  ai-service:
+    build:
+      context: .
+      dockerfile: docker/ai.dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - redis
+    volumes:
+      - ./storage/ai_models:/app/models
+      - ./storage/processed_content:/app/processed
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - ainflue-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - ainflue-app
+    networks:
+      - ainflue-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  mongodb_data:
+
+networks:
+  ainflue-network:
+    driver: bridge
