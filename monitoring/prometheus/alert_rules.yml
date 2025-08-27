@@ -1,0 +1,405 @@
+# Prometheus Alert Rules for Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Version: 1.0.0
+
+groups:
+  # =================================================================
+  # APPLICATION HEALTH ALERTS
+  # =================================================================
+  - name: ainflue.application.health
+    rules:
+      # API Service Down
+      - alert: AinfluApiServiceDown
+        expr: up{job="ainflue-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: api
+          team: platform
+        annotations:
+          summary: "Ainflue API service is down"
+          description: "API service {{ $labels.instance }} has been down for more than 1 minute."
+          runbook_url: "https://docs.ainflue.com/runbooks/api-service-down"
+
+      # High Error Rate
+      - alert: AinfluHighErrorRate
+        expr: rate(http_requests_total{job="ainflue-api",status=~"5.."}[5m]) / rate(http_requests_total{job="ainflue-api"}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          service: api
+          team: platform
+        annotations:
+          summary: "High error rate detected in Ainflue API"
+          description: "Error rate is {{ $value | humanizePercentage }} for {{ $labels.instance }}"
+
+      # High Response Time
+      - alert: AinfluHighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+          service: api
+          team: platform
+        annotations:
+          summary: "High response time in Ainflue API"
+          description: "95th percentile response time is {{ $value }}s for {{ $labels.instance }}"
+
+      # No Requests (Traffic Drop)
+      - alert: AinfluNoTraffic
+        expr: rate(http_requests_total{job="ainflue-api"}[5m]) < 0.1
+        for: 10m
+        labels:
+          severity: warning
+          service: api
+          team: platform
+        annotations:
+          summary: "Very low traffic to Ainflue API"
+          description: "Request rate is {{ $value }} requests/second for {{ $labels.instance }}"
+
+  # =================================================================
+  # BUSINESS METRICS ALERTS
+  # =================================================================
+  - name: ainflue.business.metrics
+    rules:
+      # Revenue Processing Failures
+      - alert: AinfluRevenueProcessingFailures
+        expr: increase(revenue_processing_failures_total[1h]) > 10
+        for: 5m
+        labels:
+          severity: critical
+          service: monetization
+          team: business
+        annotations:
+          summary: "High revenue processing failure rate"
+          description: "{{ $value }} revenue processing failures in the last hour"
+
+      # Payment Processing Failures
+      - alert: AinfluPaymentFailures
+        expr: increase(payment_processing_failures_total[1h]) > 5
+        for: 5m
+        labels:
+          severity: critical
+          service: payments
+          team: business
+        annotations:
+          summary: "Payment processing failures detected"
+          description: "{{ $value }} payment failures in the last hour"
+
+      # Content Violation Detection Issues
+      - alert: AinfluViolationDetectionDown
+        expr: up{job="ainflue-crawler"} == 0
+        for: 5m
+        labels:
+          severity: warning
+          service: crawler
+          team: protection
+        annotations:
+          summary: "Content violation detection service is down"
+          description: "Crawler service {{ $labels.instance }} is down"
+
+      # High Content Violation Rate
+      - alert: AinfluHighViolationRate
+        expr: rate(content_violations_detected_total[1h]) > 100
+        for: 10m
+        labels:
+          severity: warning
+          service: protection
+          team: protection
+        annotations:
+          summary: "Unusually high content violation detection rate"
+          description: "{{ $value }} violations detected per hour"
+
+  # =================================================================
+  # INFRASTRUCTURE ALERTS
+  # =================================================================
+  - name: ainflue.infrastructure
+    rules:
+      # High CPU Usage
+      - alert: AinfluHighCpuUsage
+        expr: rate(container_cpu_usage_seconds_total{namespace="ainflue"}[5m]) * 100 > 80
+        for: 10m
+        labels:
+          severity: warning
+          service: infrastructure
+          team: platform
+        annotations:
+          summary: "High CPU usage in Ainflue namespace"
+          description: "CPU usage is {{ $value }}% for {{ $labels.pod }}"
+
+      # High Memory Usage
+      - alert: AinfluHighMemoryUsage
+        expr: container_memory_usage_bytes{namespace="ainflue"} / container_spec_memory_limit_bytes > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          service: infrastructure
+          team: platform
+        annotations:
+          summary: "High memory usage in Ainflue pod"
+          description: "Memory usage is {{ $value | humanizePercentage }} for {{ $labels.pod }}"
+
+      # Pod Restart Loops
+      - alert: AinfluPodRestartLoop
+        expr: increase(kube_pod_container_status_restarts_total{namespace="ainflue"}[1h]) > 3
+        for: 5m
+        labels:
+          severity: critical
+          service: infrastructure
+          team: platform
+        annotations:
+          summary: "Pod restart loop detected"
+          description: "Pod {{ $labels.pod }} has restarted {{ $value }} times in the last hour"
+
+      # Disk Space Low
+      - alert: AinfluDiskSpaceLow
+        expr: (node_filesystem_avail_bytes{mountpoint="/data"} / node_filesystem_size_bytes{mountpoint="/data"}) * 100 < 10
+        for: 5m
+        labels:
+          severity: critical
+          service: infrastructure
+          team: platform
+        annotations:
+          summary: "Low disk space on Ainflue node"
+          description: "Disk space is {{ $value }}% available on {{ $labels.instance }}"
+
+  # =================================================================
+  # DATABASE ALERTS
+  # =================================================================
+  - name: ainflue.database
+    rules:
+      # PostgreSQL Down
+      - alert: AinfluPostgreSQLDown
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: database
+          team: platform
+        annotations:
+          summary: "PostgreSQL database is down"
+          description: "PostgreSQL instance {{ $labels.instance }} is down"
+
+      # High Database Connections
+      - alert: AinfluHighDBConnections
+        expr: pg_stat_database_numbackends / pg_settings_max_connections > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          service: database
+          team: platform
+        annotations:
+          summary: "High PostgreSQL connection usage"
+          description: "{{ $value | humanizePercentage }} of max connections used"
+
+      # Slow Queries
+      - alert: AinfluSlowQueries
+        expr: pg_stat_activity_max_tx_duration > 300
+        for: 5m
+        labels:
+          severity: warning
+          service: database
+          team: platform
+        annotations:
+          summary: "Slow PostgreSQL queries detected"
+          description: "Query running for {{ $value }}s on {{ $labels.instance }}"
+
+      # Redis Down
+      - alert: AinfluRedisDown
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: cache
+          team: platform
+        annotations:
+          summary: "Redis cache is down"
+          description: "Redis instance {{ $labels.instance }} is down"
+
+      # High Redis Memory Usage
+      - alert: AinfluRedisHighMemory
+        expr: redis_memory_used_bytes / redis_memory_max_bytes > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          service: cache
+          team: platform
+        annotations:
+          summary: "High Redis memory usage"
+          description: "Redis memory usage is {{ $value | humanizePercentage }}"
+
+      # MongoDB Down
+      - alert: AinfluMongoDBDown
+        expr: mongodb_up == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: database
+          team: platform
+        annotations:
+          summary: "MongoDB is down"
+          description: "MongoDB instance {{ $labels.instance }} is down"
+
+  # =================================================================
+  # SECURITY ALERTS
+  # =================================================================
+  - name: ainflue.security
+    rules:
+      # Suspicious Request Pattern
+      - alert: AinfluSuspiciousRequestPattern
+        expr: rate(http_requests_total{status="401"}[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+          service: security
+          team: security
+        annotations:
+          summary: "High rate of unauthorized requests"
+          description: "{{ $value }} unauthorized requests per second from {{ $labels.instance }}"
+
+      # Rate Limit Violations
+      - alert: AinfluRateLimitViolations
+        expr: rate(rate_limit_violations_total[5m]) > 5
+        for: 2m
+        labels:
+          severity: warning
+          service: security
+          team: security
+        annotations:
+          summary: "High rate of rate limit violations"
+          description: "{{ $value }} rate limit violations per second"
+
+      # Failed Logins
+      - alert: AinfluFailedLogins
+        expr: increase(failed_login_attempts_total[5m]) > 50
+        for: 2m
+        labels:
+          severity: warning
+          service: security
+          team: security
+        annotations:
+          summary: "High number of failed login attempts"
+          description: "{{ $value }} failed login attempts in 5 minutes"
+
+  # =================================================================
+  # EXTERNAL DEPENDENCIES ALERTS
+  # =================================================================
+  - name: ainflue.external.dependencies
+    rules:
+      # Payment Provider Down
+      - alert: AinfluPaymentProviderDown
+        expr: payment_provider_health{provider="stripe"} == 0
+        for: 5m
+        labels:
+          severity: critical
+          service: payments
+          team: business
+        annotations:
+          summary: "Payment provider is down"
+          description: "{{ $labels.provider }} payment provider is not responding"
+
+      # Platform API Failures
+      - alert: AinfluPlatformAPIFailures
+        expr: rate(platform_api_failures_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: integrations
+          team: platform
+        annotations:
+          summary: "High platform API failure rate"
+          description: "{{ $value }} API failures per second for {{ $labels.platform }}"
+
+      # AI Service Unavailable
+      - alert: AinfluAIServiceDown
+        expr: ai_service_health == 0
+        for: 5m
+        labels:
+          severity: warning
+          service: ai
+          team: ai
+        annotations:
+          summary: "AI service is down"
+          description: "AI service {{ $labels.service }} is not responding"
+
+  # =================================================================
+  # KUBERNETES CLUSTER ALERTS
+  # =================================================================
+  - name: ainflue.kubernetes
+    rules:
+      # Node Not Ready
+      - alert: AinfluNodeNotReady
+        expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+        for: 5m
+        labels:
+          severity: critical
+          service: infrastructure
+          team: platform
+        annotations:
+          summary: "Kubernetes node is not ready"
+          description: "Node {{ $labels.node }} is not ready"
+
+      # Pod Crash Looping
+      - alert: AinfluPodCrashLooping
+        expr: rate(kube_pod_container_status_restarts_total{namespace="ainflue"}[15m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: infrastructure
+          team: platform
+        annotations:
+          summary: "Pod is crash looping"
+          description: "Pod {{ $labels.pod }} is crash looping"
+
+      # Persistent Volume Full
+      - alert: AinfluPVFull
+        expr: kubelet_volume_stats_available_bytes / kubelet_volume_stats_capacity_bytes < 0.1
+        for: 5m
+        labels:
+          severity: critical
+          service: storage
+          team: platform
+        annotations:
+          summary: "Persistent Volume is almost full"
+          description: "PV {{ $labels.persistentvolumeclaim }} is {{ $value | humanizePercentage }} full"
+
+  # =================================================================
+  # CUSTOM BUSINESS LOGIC ALERTS
+  # =================================================================
+  - name: ainflue.business.logic
+    rules:
+      # Revenue Below Threshold
+      - alert: AinfluRevenueBelowThreshold
+        expr: revenue_per_hour < 100
+        for: 1h
+        labels:
+          severity: warning
+          service: business
+          team: business
+        annotations:
+          summary: "Hourly revenue below threshold"
+          description: "Revenue is only {{ $value }} EUR in the last hour"
+
+      # Content Processing Backlog
+      - alert: AinfluContentProcessingBacklog
+        expr: content_processing_queue_size > 1000
+        for: 10m
+        labels:
+          severity: warning
+          service: processing
+          team: platform
+        annotations:
+          summary: "Large content processing backlog"
+          description: "{{ $value }} items in processing queue"
+
+      # Collaboration Matching Failures
+      - alert: AinfluCollaborationMatchingFailures
+        expr: collaboration_matching_failures_rate > 0.2
+        for: 10m
+        labels:
+          severity: warning
+          service: collaboration
+          team: business
+        annotations:
+          summary: "High collaboration matching failure rate"
+          description: "{{ $value | humanizePercentage }} of collaboration matching attempts failed"
