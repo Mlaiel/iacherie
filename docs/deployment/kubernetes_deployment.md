@@ -1,49 +1,74 @@
-# Kubernetes Deployment Guide for Ainflue Platform
+# Kubernetes Deployment Guide
+
+**Ainflue Platform - Complete Kubernetes Deployment**  
+**Author**: Fahed Mlaiel (mlaiel@live.de)  
+**Version**: 1.0  
+**Date**: January 2025
 
 ## Overview
-This guide covers the complete Kubernetes deployment of the Ainflue AI-powered content protection and monetization platform.
 
-**Author:** Fahed Mlaiel (mlaiel@live.de)  
-**Platform Version:** 1.0.0  
-**Kubernetes Version:** 1.28+  
+This guide provides comprehensive instructions for deploying the Ainflue platform on Kubernetes, including all microservices, databases, monitoring, and security configurations.
 
 ## Prerequisites
 
-### Required Tools
-- Kubernetes cluster (1.28+)
-- kubectl CLI configured
-- Helm 3.x
-- Docker registry access
-- SSL certificates
-
-### Cluster Requirements
-- **Minimum Nodes:** 3 (for high availability)
-- **CPU:** 8 cores per node
-- **Memory:** 16GB per node
-- **Storage:** 500GB per node (SSD recommended)
-- **Network:** Load balancer support
+- Kubernetes cluster 1.24+ (EKS, GKE, AKS, or on-premises)
+- kubectl configured and connected to cluster
+- Helm 3.x installed
+- Docker registry access (Docker Hub, ECR, GCR, etc.)
+- LoadBalancer/Ingress controller support
+- Persistent storage provisioner
 
 ## Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Ainflue Platform                     │
-├─────────────────────────────────────────────────────────┤
-│  Ingress Controller (nginx)                             │
-├─────────────────────────────────────────────────────────┤
-│  API Gateway Service                                    │
-├─────────────────┬─────────────────┬─────────────────────┤
-│  Monetization   │   Analytics     │    AI Engine       │
-│  Service        │   Service       │    Service          │
-├─────────────────┼─────────────────┼─────────────────────┤
-│  Crawler        │   Protection    │    Collaboration    │
-│  Service        │   Service       │    Service          │
-├─────────────────┴─────────────────┴─────────────────────┤
-│  Data Layer                                             │
-│  ┌─────────────┬─────────────┬─────────────────────────┐│
-│  │ PostgreSQL  │  MongoDB    │  Redis Cluster          ││
-│  └─────────────┴─────────────┴─────────────────────────┘│
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph "Kubernetes Cluster"
+        subgraph "Ingress Layer"
+            NGINX[NGINX Ingress Controller]
+            LB[Load Balancer]
+        end
+        
+        subgraph "Application Layer"
+            API[Ainflue API Gateway]
+            AI[AI Engine Service]
+            PROT[Protection Service]
+            MON[Monetization Service]
+            ANAL[Analytics Service]
+            CRAWL[Crawler Service]
+        end
+        
+        subgraph "Data Layer"
+            PG[PostgreSQL Cluster]
+            REDIS[Redis Cluster]
+            MONGO[MongoDB]
+            ES[Elasticsearch]
+        end
+        
+        subgraph "Monitoring Layer"
+            PROM[Prometheus]
+            GRAF[Grafana]
+            ALERT[AlertManager]
+        end
+    end
+    
+    LB --> NGINX
+    NGINX --> API
+    API --> AI
+    API --> PROT
+    API --> MON
+    API --> ANAL
+    API --> CRAWL
+    
+    AI --> PG
+    PROT --> REDIS
+    MON --> PG
+    ANAL --> ES
+    CRAWL --> MONGO
+    
+    PROM --> API
+    PROM --> AI
+    GRAF --> PROM
+    ALERT --> PROM
 ```
 
 ## Namespace Setup

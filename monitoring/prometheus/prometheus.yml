@@ -1,33 +1,31 @@
 # Prometheus Configuration for Ainflue Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
-# Version: 1.0.0
+# Production-ready Prometheus setup with service discovery
 
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
   external_labels:
     cluster: 'ainflue-production'
-    environment: 'production'
+    replica: 'prometheus-01'
 
-# Rule files for alerting
 rule_files:
   - "alert_rules.yml"
   - "recording_rules.yml"
 
-# Alertmanager configuration
 alerting:
   alertmanagers:
     - static_configs:
         - targets:
-          - alertmanager:9093
+          - alertmanager.ainflue-monitoring.svc.cluster.local:9093
 
-# Scrape configuration
 scrape_configs:
-  # Prometheus itself
+  # Prometheus self-monitoring
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
     scrape_interval: 30s
+    metrics_path: /metrics
     metrics_path: /metrics
 
   # Ainflue API Service

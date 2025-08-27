@@ -1,12 +1,12 @@
 # Prometheus Alert Rules for Ainflue Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
-# Version: 1.0.0
+# Production-ready alert rules with comprehensive coverage
 
 groups:
   # =================================================================
-  # APPLICATION HEALTH ALERTS
+  # CRITICAL SYSTEM ALERTS
   # =================================================================
-  - name: ainflue.application.health
+  - name: ainflue.critical.system
     rules:
       # API Service Down
       - alert: AinfluApiServiceDown
@@ -16,18 +16,414 @@ groups:
           severity: critical
           service: api
           team: platform
+          priority: P1
         annotations:
-          summary: "Ainflue API service is down"
-          description: "API service {{ $labels.instance }} has been down for more than 1 minute."
+          summary: "🚨 CRITICAL: Ainflue API service is down"
+          description: "API service {{ $labels.instance }} has been down for more than 1 minute. This affects all platform functionality."
           runbook_url: "https://docs.ainflue.com/runbooks/api-service-down"
+          action: "Immediate escalation to on-call engineer"
 
-      # High Error Rate
-      - alert: AinfluHighErrorRate
-        expr: rate(http_requests_total{job="ainflue-api",status=~"5.."}[5m]) / rate(http_requests_total{job="ainflue-api"}[5m]) > 0.05
+      # AI Engine Down
+      - alert: AinfluAiEngineDown
+        expr: up{job="ai-engine"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: ai-engine
+          team: ai
+          priority: P1
+        annotations:
+          summary: "🚨 CRITICAL: AI Engine service is down"
+          description: "AI Engine service {{ $labels.instance }} has been down for more than 2 minutes. Content protection and fingerprinting are offline."
+          runbook_url: "https://docs.ainflue.com/runbooks/ai-engine-down"
+          action: "Immediate restart and investigation required"
+
+      # Database Down
+      - alert: AinfluDatabaseDown
+        expr: up{job="postgresql"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          service: database
+          team: platform
+          priority: P1
+        annotations:
+          summary: "🚨 CRITICAL: PostgreSQL database is down"
+          description: "PostgreSQL database {{ $labels.instance }} is unreachable. All data operations are failing."
+          runbook_url: "https://docs.ainflue.com/runbooks/database-down"
+          action: "Immediate database recovery procedures"
+
+      # Redis Cache Down
+      - alert: AinfluRedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: cache
+          team: platform
+          priority: P1
+        annotations:
+          summary: "🚨 CRITICAL: Redis cache is down"
+          description: "Redis cache {{ $labels.instance }} is down. Performance will be severely degraded."
+          runbook_url: "https://docs.ainflue.com/runbooks/redis-down"
+          action: "Restart Redis and check for data corruption"
+
+  # =================================================================
+  # BUSINESS CRITICAL ALERTS
+  # =================================================================
+  - name: ainflue.business.critical
+    rules:
+      # Revenue Loss Alert
+      - alert: AinfluRevenueLoss
+        expr: ainflue:revenue_per_hour:sum < (ainflue:revenue_per_hour:sum offset 1h) * 0.5
+        for: 15m
+        labels:
+          severity: critical
+          service: monetization
+          team: business
+          priority: P1
+        annotations:
+          summary: "💰 CRITICAL: Revenue dropped by 50%+ in the last hour"
+          description: "Current hourly revenue: ${{ $value | humanize }}. This is less than 50% of the previous hour."
+          runbook_url: "https://docs.ainflue.com/runbooks/revenue-loss"
+          action: "Immediate investigation of monetization systems"
+
+      # Content Protection Failure
+      - alert: AinfluContentProtectionFailure
+        expr: rate(content_violations_detected_total[1h]) > rate(content_violations_detected_total[1h] offset 1h) * 5
+        for: 10m
+        labels:
+          severity: critical
+          service: protection
+          team: ai
+          priority: P1
+        annotations:
+          summary: "🛡️ CRITICAL: Content violations increased 5x"
+          description: "Content violations per hour: {{ $value | humanize }}. Protection systems may be compromised."
+          runbook_url: "https://docs.ainflue.com/runbooks/protection-failure"
+          action: "Check AI models and fingerprinting accuracy"
+
+      # Platform Integration Failure
+      - alert: AinfluPlatformIntegrationDown
+        expr: ainflue:platform_api_success_rate:5m < 0.8
+        for: 5m
+        labels:
+          severity: critical
+          service: integration
+          team: platform
+          priority: P1
+        annotations:
+          summary: "🔌 CRITICAL: Platform {{ $labels.platform }} integration failing"
+          description: "Success rate for {{ $labels.platform }}: {{ $value | humanizePercentage }}. Below 80% threshold."
+          runbook_url: "https://docs.ainflue.com/runbooks/platform-integration-failure"
+          action: "Check API credentials and rate limits"
+
+  # =================================================================
+  # PERFORMANCE ALERTS
+  # =================================================================
+  - name: ainflue.performance
+    rules:
+      # High API Response Time
+      - alert: AinfluHighApiResponseTime
+        expr: ainflue:api_response_time:p95_5m > 2
         for: 5m
         labels:
           severity: warning
           service: api
+          team: platform
+          priority: P2
+        annotations:
+          summary: "⚠️ API response time is high"
+          description: "95th percentile response time: {{ $value }}s for {{ $labels.endpoint }}. Target: <2s"
+          runbook_url: "https://docs.ainflue.com/runbooks/high-response-time"
+          action: "Check database performance and scaling"
+
+      # High Error Rate
+      - alert: AinfluHighErrorRate
+        expr: ainflue:api_error_rate:5m > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          service: api
+          team: platform
+          priority: P2
+        annotations:
+          summary: "⚠️ High API error rate detected"
+          description: "Error rate: {{ $value | humanizePercentage }} for {{ $labels.endpoint }}. Target: <5%"
+          runbook_url: "https://docs.ainflue.com/runbooks/high-error-rate"
+          action: "Check logs for error patterns"
+
+      # AI Processing Queue Backup
+      - alert: AinfluAiQueueBackup
+        expr: ainflue:ai_queue_depth:current > 1000
+        for: 10m
+        labels:
+          severity: warning
+          service: ai-engine
+          team: ai
+          priority: P2
+        annotations:
+          summary: "⚠️ AI processing queue is backing up"
+          description: "Queue depth: {{ $value }} items. Processing may be slower than incoming requests."
+          runbook_url: "https://docs.ainflue.com/runbooks/ai-queue-backup"
+          action: "Scale AI workers or check for processing issues"
+
+  # =================================================================
+  # INFRASTRUCTURE ALERTS
+  # =================================================================
+  - name: ainflue.infrastructure
+    rules:
+      # High CPU Usage
+      - alert: AinfluHighCpuUsage
+        expr: ainflue:instance_cpu_usage:rate5m > 80
+        for: 10m
+        labels:
+          severity: warning
+          service: infrastructure
+          team: devops
+          priority: P2
+        annotations:
+          summary: "⚠️ High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage: {{ $value }}% on instance {{ $labels.instance }}"
+          runbook_url: "https://docs.ainflue.com/runbooks/high-cpu"
+          action: "Check for resource-intensive processes"
+
+      # High Memory Usage
+      - alert: AinfluHighMemoryUsage
+        expr: ainflue:instance_memory_usage:percentage > 85
+        for: 10m
+        labels:
+          severity: warning
+          service: infrastructure
+          team: devops
+          priority: P2
+        annotations:
+          summary: "⚠️ High memory usage on {{ $labels.instance }}"
+          description: "Memory usage: {{ $value }}% on instance {{ $labels.instance }}"
+          runbook_url: "https://docs.ainflue.com/runbooks/high-memory"
+          action: "Check for memory leaks or scale vertically"
+
+      # Disk Space Low
+      - alert: AinfluLowDiskSpace
+        expr: ainflue:instance_disk_usage:percentage > 85
+        for: 5m
+        labels:
+          severity: critical
+          service: infrastructure
+          team: devops
+          priority: P1
+        annotations:
+          summary: "🚨 Low disk space on {{ $labels.instance }}"
+          description: "Disk usage: {{ $value }}% on instance {{ $labels.instance }}"
+          runbook_url: "https://docs.ainflue.com/runbooks/low-disk-space"
+          action: "Clean up logs or expand storage immediately"
+
+  # =================================================================
+  # DATABASE ALERTS
+  # =================================================================
+  - name: ainflue.database
+    rules:
+      # High Database Connections
+      - alert: AinfluHighDatabaseConnections
+        expr: ainflue:postgres_connections:utilization > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: database
+          team: platform
+          priority: P2
+        annotations:
+          summary: "⚠️ High database connection utilization"
+          description: "Connection pool usage: {{ $value }}%. Risk of connection exhaustion."
+          runbook_url: "https://docs.ainflue.com/runbooks/high-db-connections"
+          action: "Check for connection leaks or scale connection pool"
+
+      # Slow Database Queries
+      - alert: AinfluSlowDatabaseQueries
+        expr: ainflue:postgres_query_time:p95_5m > 5
+        for: 10m
+        labels:
+          severity: warning
+          service: database
+          team: platform
+          priority: P2
+        annotations:
+          summary: "⚠️ Slow database queries detected"
+          description: "95th percentile query time: {{ $value }}s. Performance degraded."
+          runbook_url: "https://docs.ainflue.com/runbooks/slow-queries"
+          action: "Analyze slow query log and optimize"
+
+      # Redis Memory High
+      - alert: AinfluRedisMemoryHigh
+        expr: ainflue:redis_memory:utilization > 90
+        for: 5m
+        labels:
+          severity: warning
+          service: cache
+          team: platform
+          priority: P2
+        annotations:
+          summary: "⚠️ Redis memory usage is high"
+          description: "Redis memory usage: {{ $value }}%. Risk of eviction."
+          runbook_url: "https://docs.ainflue.com/runbooks/redis-memory-high"
+          action: "Scale Redis or optimize cache usage"
+
+  # =================================================================
+  # SECURITY ALERTS
+  # =================================================================
+  - name: ainflue.security
+    rules:
+      # High Authentication Failures
+      - alert: AinfluHighAuthFailures
+        expr: ainflue:auth_failure_rate:5m > 0.1
+        for: 2m
+        labels:
+          severity: warning
+          service: security
+          team: security
+          priority: P2
+        annotations:
+          summary: "🔒 High authentication failure rate"
+          description: "Auth failure rate: {{ $value | humanizePercentage }}. Possible brute force attack."
+          runbook_url: "https://docs.ainflue.com/runbooks/high-auth-failures"
+          action: "Check for suspicious IP addresses and implement rate limiting"
+
+      # Suspicious Activity Detected
+      - alert: AinfluSuspiciousActivity
+        expr: ainflue:suspicious_activity:5m > 10
+        for: 1m
+        labels:
+          severity: critical
+          service: security
+          team: security
+          priority: P1
+        annotations:
+          summary: "🚨 SECURITY: Suspicious activity detected"
+          description: "{{ $value }} suspicious activities detected in the last 5 minutes."
+          runbook_url: "https://docs.ainflue.com/runbooks/suspicious-activity"
+          action: "Immediate security investigation required"
+
+      # Rate Limiting Triggered
+      - alert: AinfluRateLimitingTriggered
+        expr: ainflue:rate_limit_triggered:5m > 100
+        for: 5m
+        labels:
+          severity: warning
+          service: security
+          team: platform
+          priority: P2
+        annotations:
+          summary: "⚠️ High rate limiting activity"
+          description: "Rate limiting triggered {{ $value }} times in 5 minutes for {{ $labels.endpoint }}"
+          runbook_url: "https://docs.ainflue.com/runbooks/rate-limiting"
+          action: "Analyze traffic patterns and adjust limits if needed"
+
+  # =================================================================
+  # BUSINESS MONITORING ALERTS
+  # =================================================================
+  - name: ainflue.business.monitoring
+    rules:
+      # Low User Activity
+      - alert: AinfluLowUserActivity
+        expr: ainflue:active_users:hourly < 100
+        for: 30m
+        labels:
+          severity: warning
+          service: business
+          team: product
+          priority: P3
+        annotations:
+          summary: "📊 Low user activity detected"
+          description: "Only {{ $value }} active users in the last hour. Below normal levels."
+          runbook_url: "https://docs.ainflue.com/runbooks/low-user-activity"
+          action: "Check for platform issues or external factors"
+
+      # Content Processing Lag
+      - alert: AinfluContentProcessingLag
+        expr: ainflue:content_protected:rate_5m < 10
+        for: 15m
+        labels:
+          severity: warning
+          service: protection
+          team: ai
+          priority: P2
+        annotations:
+          summary: "⚠️ Content processing is lagging"
+          description: "Only {{ $value }} content items processed per 5 minutes. Below normal rate."
+          runbook_url: "https://docs.ainflue.com/runbooks/content-processing-lag"
+          action: "Check AI engine performance and queue status"
+
+  # =================================================================
+  # SLA VIOLATION ALERTS
+  # =================================================================
+  - name: ainflue.sla.violations
+    rules:
+      # API Availability SLA Violation
+      - alert: AinfluApiAvailabilitySlaViolation
+        expr: ainflue:api_availability:5m < 0.999
+        for: 1m
+        labels:
+          severity: critical
+          service: api
+          team: platform
+          priority: P1
+          sla: "availability"
+        annotations:
+          summary: "🚨 SLA VIOLATION: API availability below 99.9%"
+          description: "Current availability: {{ $value | humanizePercentage }}. SLA target: 99.9%"
+          runbook_url: "https://docs.ainflue.com/runbooks/sla-availability"
+          action: "Immediate investigation and remediation required"
+
+      # Response Time SLA Violation
+      - alert: AinfluResponseTimeSlaViolation
+        expr: ainflue:api_response_time_sla:5m == 0
+        for: 5m
+        labels:
+          severity: warning
+          service: api
+          team: platform
+          priority: P2
+          sla: "response_time"
+        annotations:
+          summary: "⚠️ SLA VIOLATION: API response time above 2s"
+          description: "95th percentile response time exceeds 2 seconds SLA target"
+          runbook_url: "https://docs.ainflue.com/runbooks/sla-response-time"
+          action: "Performance optimization required"
+
+  # =================================================================
+  # COST OPTIMIZATION ALERTS
+  # =================================================================
+  - name: ainflue.cost.optimization
+    rules:
+      # High Infrastructure Costs
+      - alert: AinfluHighInfrastructureCosts
+        expr: ainflue:infrastructure_cost:hourly > 500
+        for: 1h
+        labels:
+          severity: warning
+          service: infrastructure
+          team: devops
+          priority: P3
+        annotations:
+          summary: "💰 High infrastructure costs detected"
+          description: "Hourly infrastructure cost: ${{ $value }}. Above normal levels."
+          runbook_url: "https://docs.ainflue.com/runbooks/high-costs"
+          action: "Review resource usage and optimization opportunities"
+
+      # Low ROI
+      - alert: AinfluLowRoi
+        expr: ainflue:roi:hourly < 2
+        for: 2h
+        labels:
+          severity: warning
+          service: business
+          team: finance
+          priority: P3
+        annotations:
+          summary: "📊 Low ROI detected"
+          description: "Current ROI: {{ $value }}x. Target: >2x"
+          runbook_url: "https://docs.ainflue.com/runbooks/low-roi"
+          action: "Review costs and revenue optimization"
           team: platform
         annotations:
           summary: "High error rate detected in Ainflue API"
