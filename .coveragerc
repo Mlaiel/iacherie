@@ -1,0 +1,102 @@
+[run]
+# Coverage configuration for Ainflue platform
+source = .
+omit = 
+    # Test files
+    tests/*
+    test_*.py
+    *_test.py
+    conftest.py
+    
+    # Virtual environments
+    venv/*
+    env/*
+    .venv/*
+    .env/*
+    
+    # Build and cache directories
+    build/*
+    dist/*
+    __pycache__/*
+    .pytest_cache/*
+    htmlcov/*
+    .coverage*
+    
+    # Development tools
+    setup.py
+    manage.py
+    
+    # External libraries
+    site-packages/*
+    
+    # Configuration files
+    *.ini
+    *.cfg
+    *.yaml
+    *.yml
+    *.json
+    *.toml
+    
+    # Static files
+    static/*
+    media/*
+    assets/*
+    
+    # Documentation
+    docs/*
+    *.md
+    *.rst
+    
+    # Docker files
+    Dockerfile*
+    docker-compose*
+
+[report]
+# Reporting configuration
+exclude_lines =
+    # Standard exclusions
+    pragma: no cover
+    
+    # Debug code
+    def __repr__
+    if self\.debug:
+    if settings\.DEBUG
+    
+    # Testing code
+    raise AssertionError
+    raise NotImplementedError
+    
+    # Platform-specific code
+    if __name__ == .__main__.:
+    
+    # Type checking
+    if TYPE_CHECKING:
+    
+    # Abstract methods
+    @abstractmethod
+    
+    # Exception handling that shouldn't be tested
+    except ImportError:
+    except ModuleNotFoundError:
+    
+    # Defensive code
+    assert False
+    raise AssertionError
+
+precision = 2
+show_missing = True
+skip_covered = False
+sort = Cover
+
+[html]
+# HTML report configuration
+directory = htmlcov
+title = Ainflue Platform Coverage Report
+
+[xml]
+# XML report for CI/CD
+output = coverage.xml
+
+[json]
+# JSON report for integrations
+output = coverage.json
