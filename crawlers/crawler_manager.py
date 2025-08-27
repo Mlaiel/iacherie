@@ -22,11 +22,19 @@ from .generic_web_crawler import GenericWebCrawler
 from .spotify_crawler import SpotifyCrawler
 from .apple_music_crawler import AppleMusicCrawler
 from .soundcloud_crawler import SoundCloudCrawler
+from .deezer_crawler import DeezerCrawler
+from .youtube_music_crawler import YouTubeMusicCrawler
 # Emerging Platform Crawlers
 from .bereal_crawler import BeRealCrawler
 from .twitch_crawler import TwitchCrawler
+from .threads_crawler import ThreadsCrawler
+# Social Platform Crawlers
+from .reddit_crawler import RedditCrawler
+from .discord_crawler import DiscordCrawler
+from .facebook_crawler import FacebookCrawler
 # Monetization Platform Crawlers
 from .patreon_crawler import PatreonCrawler
+from .substack_crawler import SubstackCrawler
 
 logger = logging.getLogger(__name__)
 
@@ -110,6 +118,12 @@ class CrawlerManager:
                 
             if config.get("soundcloud", {}).get("enabled", False):
                 self.crawlers["soundcloud"] = SoundCloudCrawler()
+                
+            if config.get("deezer", {}).get("enabled", False):
+                self.crawlers["deezer"] = DeezerCrawler()
+                
+            if config.get("youtube_music", {}).get("enabled", False):
+                self.crawlers["youtube_music"] = YouTubeMusicCrawler()
             
             # Initialize Emerging Platform Crawlers
             if config.get("bereal", {}).get("enabled", False):
@@ -117,10 +131,26 @@ class CrawlerManager:
                 
             if config.get("twitch", {}).get("enabled", False):
                 self.crawlers["twitch"] = TwitchCrawler()
+                
+            if config.get("threads", {}).get("enabled", False):
+                self.crawlers["threads"] = ThreadsCrawler()
+            
+            # Initialize Social Platform Crawlers
+            if config.get("reddit", {}).get("enabled", False):
+                self.crawlers["reddit"] = RedditCrawler()
+                
+            if config.get("discord", {}).get("enabled", False):
+                self.crawlers["discord"] = DiscordCrawler()
+                
+            if config.get("facebook", {}).get("enabled", False):
+                self.crawlers["facebook"] = FacebookCrawler()
             
             # Initialize Monetization Platform Crawlers
             if config.get("patreon", {}).get("enabled", False):
                 self.crawlers["patreon"] = PatreonCrawler()
+                
+            if config.get("substack", {}).get("enabled", False):
+                self.crawlers["substack"] = SubstackCrawler()
             
             logger.info(f"Initialized {len(self.crawlers)} crawlers")
             

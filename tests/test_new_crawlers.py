@@ -11,8 +11,10 @@ import asyncio
 from datetime import datetime
 
 from crawlers import (
-    SpotifyCrawler, AppleMusicCrawler, SoundCloudCrawler,
-    BeRealCrawler, TwitchCrawler, PatreonCrawler
+    SpotifyCrawler, AppleMusicCrawler, SoundCloudCrawler, DeezerCrawler, YouTubeMusicCrawler,
+    BeRealCrawler, TwitchCrawler, ThreadsCrawler,
+    RedditCrawler, DiscordCrawler, FacebookCrawler,
+    PatreonCrawler, SubstackCrawler
 )
 
 
@@ -106,9 +108,9 @@ class TestNewCrawlers:
                 assert hasattr(stream, 'title')
 
     @pytest.mark.asyncio
-    async def test_patreon_crawler(self):
-        """Test Patreon crawler basic functionality"""
-        async with PatreonCrawler() as crawler:
+    async def test_reddit_crawler(self):
+        """Test Reddit crawler basic functionality"""
+        async with RedditCrawler() as crawler:
             results = await crawler.search_content(
                 content_id="test_content",
                 fingerprint="test_fingerprint",
@@ -120,7 +122,24 @@ class TestNewCrawlers:
                 post = results[0]
                 assert hasattr(post, 'post_id')
                 assert hasattr(post, 'title')
-                assert hasattr(post, 'creator_name')
+                assert hasattr(post, 'subreddit')
+
+    @pytest.mark.asyncio
+    async def test_facebook_crawler(self):
+        """Test Facebook crawler basic functionality"""
+        async with FacebookCrawler() as crawler:
+            results = await crawler.search_content(
+                content_id="test_content",
+                fingerprint="test_fingerprint",
+                similarity_threshold=0.8
+            )
+            
+            assert isinstance(results, list)
+            if results:
+                post = results[0]
+                assert hasattr(post, 'post_id')
+                assert hasattr(post, 'message')
+                assert hasattr(post, 'author_name')
 
 
 if __name__ == "__main__":
@@ -141,10 +160,20 @@ if __name__ == "__main__":
             results = await crawler.search_streams("test", "test", 0.8)
             print(f"Twitch streams: Found {len(results)} results")
         
-        # Test Patreon
-        async with PatreonCrawler() as crawler:
+        # Test Reddit
+        async with RedditCrawler() as crawler:
             results = await crawler.search_content("test", "test", 0.8)
-            print(f"Patreon: Found {len(results)} results")
+            print(f"Reddit: Found {len(results)} results")
+        
+        # Test Facebook  
+        async with FacebookCrawler() as crawler:
+            results = await crawler.search_content("test", "test", 0.8)
+            print(f"Facebook: Found {len(results)} results")
+        
+        # Test Substack
+        async with SubstackCrawler() as crawler:
+            results = await crawler.search_content("test", "test", 0.8)
+            print(f"Substack: Found {len(results)} results")
         
         print("All basic tests passed!")
     
