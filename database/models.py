@@ -100,3 +100,105 @@ class ProtectionViolation(Base):
     # Relationships
     user = relationship("User", back_populates="violations")
     content = relationship("Content", back_populates="violations")
+
+
+class RevenueTracking(Base):
+    """Revenue tracking model"""
+    __tablename__ = "revenue_tracking"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String(32), ForeignKey("users.id"), nullable=False)
+    content_id = Column(String(36), ForeignKey("content.id"), nullable=False)
+    platform = Column(String(50), nullable=False)
+    revenue_amount = Column(Float, nullable=False)
+    currency = Column(String(3), default="EUR")
+    revenue_type = Column(String(30), nullable=False)  # views, streams, licensing, etc.
+    period_start = Column(DateTime, nullable=False)
+    period_end = Column(DateTime, nullable=False)
+    platform_transaction_id = Column(String(100))
+    metadata = Column(JSON)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class PlatformConnections(Base):
+    """Platform connections model"""
+    __tablename__ = "platform_connections"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String(32), ForeignKey("users.id"), nullable=False)
+    platform = Column(String(50), nullable=False)
+    platform_user_id = Column(String(100))
+    platform_username = Column(String(100))
+    access_token = Column(Text)
+    refresh_token = Column(Text)
+    token_expires_at = Column(DateTime)
+    scopes = Column(JSON)  # Array of scopes
+    is_active = Column(Boolean, default=True)
+    connected_at = Column(DateTime, default=datetime.utcnow)
+    last_sync = Column(DateTime)
+
+
+class LicensingAgreements(Base):
+    """Licensing agreements model"""
+    __tablename__ = "licensing_agreements"
+    
+    id = Column(String(36), primary_key=True)
+    content_id = Column(String(36), ForeignKey("content.id"), nullable=False)
+    licensee_id = Column(String(32))
+    license_type = Column(String(50), nullable=False)
+    usage_rights = Column(JSON)  # Array of usage rights
+    price = Column(Float)
+    currency = Column(String(3))
+    territory = Column(String(100))
+    duration_months = Column(Integer)
+    status = Column(String(20), default="pending")
+    created_at = Column(DateTime, default=datetime.utcnow)
+    expires_at = Column(DateTime)
+
+
+class PaymentTransactions(Base):
+    """Payment transactions model"""
+    __tablename__ = "payment_transactions"
+    
+    id = Column(String(36), primary_key=True)
+    user_id = Column(String(32), ForeignKey("users.id"), nullable=False)
+    transaction_type = Column(String(30), nullable=False)
+    amount = Column(Float, nullable=False)
+    currency = Column(String(3), nullable=False)
+    payment_provider = Column(String(20), nullable=False)
+    provider_transaction_id = Column(String(100))
+    status = Column(String(20), default="pending")
+    metadata = Column(JSON)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    processed_at = Column(DateTime)
+
+
+class CollaborationProjects(Base):
+    """Collaboration projects model"""
+    __tablename__ = "collaboration_projects"
+    
+    id = Column(String(36), primary_key=True)
+    creator_id = Column(String(32), ForeignKey("users.id"), nullable=False)
+    collaborator_id = Column(String(32), ForeignKey("users.id"), nullable=False)
+    project_name = Column(String(255), nullable=False)
+    project_type = Column(String(50), nullable=False)
+    revenue_split = Column(JSON, nullable=False)
+    status = Column(String(20), default="proposed")
+    created_at = Column(DateTime, default=datetime.utcnow)
+    completed_at = Column(DateTime)
+
+
+class ContentPerformance(Base):
+    """Content performance model"""
+    __tablename__ = "content_performance"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    content_id = Column(String(36), ForeignKey("content.id"), nullable=False)
+    platform = Column(String(50), nullable=False)
+    views = Column(BigInteger, default=0)
+    likes = Column(BigInteger, default=0)
+    shares = Column(BigInteger, default=0)
+    comments = Column(BigInteger, default=0)
+    revenue_generated = Column(Float, default=0.0)
+    engagement_rate = Column(Float)
+    recorded_at = Column(DateTime, default=datetime.utcnow)
