@@ -1,0 +1,765 @@
+# Storage Configuration for IA Influencer Agent Platform
+# Persistent volumes and storage classes for data persistence
+#
+# Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
+# IA Influencer Agent + Content Protection Platform
+# All rights reserved.
+
+# Storage Class for High Performance SSD
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ia-fast-ssd
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: storage
+    environment: production
+  annotations:
+    description: "High-performance SSD storage for databases and cache"
+    storageclass.kubernetes.io/is-default-class: "false"
+provisioner: kubernetes.io/aws-ebs  # Change based on cloud provider
+parameters:
+  type: gp3
+  iops: "3000"
+  throughput: "125"
+  encrypted: "true"
+  fsType: ext4
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Retain
+---
+# Storage Class for Standard Storage
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ia-standard
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: storage
+    environment: production
+  annotations:
+    description: "Standard storage for application data and logs"
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: kubernetes.io/aws-ebs  # Change based on cloud provider
+parameters:
+  type: gp2
+  encrypted: "true"
+  fsType: ext4
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Retain
+---
+# Storage Class for Backup and Archive
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ia-archive
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: storage
+    environment: production
+  annotations:
+    description: "Archive storage for backups and long-term data"
+provisioner: kubernetes.io/aws-ebs  # Change based on cloud provider
+parameters:
+  type: sc1
+  encrypted: "true"
+  fsType: ext4
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Retain
+---
+# Persistent Volume for PostgreSQL Data
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ia-postgres-pv-0
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/component: database
+    environment: production
+  annotations:
+    description: "PostgreSQL primary data volume"
+spec:
+  capacity:
+    storage: 100Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ia-fast-ssd
+  hostPath:  # Replace with actual storage backend
+    path: /data/postgres-0
+    type: DirectoryOrCreate
+---
+# Persistent Volume for PostgreSQL Backup
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ia-postgres-backup-pv
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/component: backup
+    environment: production
+  annotations:
+    description: "PostgreSQL backup storage"
+spec:
+  capacity:
+    storage: 500Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ia-archive
+  hostPath:  # Replace with actual storage backend
+    path: /backup/postgres
+    type: DirectoryOrCreate
+---
+# Persistent Volume for Redis Data
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ia-redis-pv-0
+  labels:
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/component: cache
+    environment: production
+  annotations:
+    description: "Redis data and persistence"
+spec:
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ia-fast-ssd
+  hostPath:  # Replace with actual storage backend
+    path: /data/redis-0
+    type: DirectoryOrCreate
+---
+# Persistent Volume for MongoDB Data
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ia-mongodb-pv-0
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: analytics
+    environment: production
+  annotations:
+    description: "MongoDB analytics data"
+spec:
+  capacity:
+    storage: 200Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ia-fast-ssd
+  hostPath:  # Replace with actual storage backend
+    path: /data/mongodb-0
+    type: DirectoryOrCreate
+---
+# Persistent Volume for Application Uploads
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ia-uploads-pv
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: uploads
+    environment: production
+  annotations:
+    description: "User uploads and media files"
+spec:
+  capacity:
+    storage: 1Ti
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ia-standard
+  hostPath:  # Replace with actual storage backend
+    path: /data/uploads
+    type: DirectoryOrCreate
+---
+# Persistent Volume for ML Models
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ia-models-pv
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: machine-learning
+    environment: production
+  annotations:
+    description: "Machine learning models and weights"
+spec:
+  capacity:
+    storage: 100Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ia-standard
+  hostPath:  # Replace with actual storage backend
+    path: /data/models
+    type: DirectoryOrCreate
+---
+# Persistent Volume for Logs
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ia-logs-pv
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: logging
+    environment: production
+  annotations:
+    description: "Application logs and audit trails"
+spec:
+  capacity:
+    storage: 200Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ia-standard
+  hostPath:  # Replace with actual storage backend
+    path: /data/logs
+    type: DirectoryOrCreate
+---
+# Persistent Volume for FAISS Vector Database
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ia-faiss-pv
+  labels:
+    app.kubernetes.io/name: faiss
+    app.kubernetes.io/component: vector-database
+    environment: production
+  annotations:
+    description: "FAISS vector database for similarity search"
+spec:
+  capacity:
+    storage: 500Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ia-fast-ssd
+  hostPath:  # Replace with actual storage backend
+    path: /data/faiss
+    type: DirectoryOrCreate
+---
+# Persistent Volume for Elasticsearch
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ia-elasticsearch-pv-0
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/component: search
+    environment: production
+  annotations:
+    description: "Elasticsearch data for search and logging"
+spec:
+  capacity:
+    storage: 300Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ia-fast-ssd
+  hostPath:  # Replace with actual storage backend
+    path: /data/elasticsearch-0
+    type: DirectoryOrCreate
+---
+# Persistent Volume Claim for PostgreSQL
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-postgres-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/component: database
+    environment: production
+  annotations:
+    description: "PostgreSQL data storage claim"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ia-fast-ssd
+  resources:
+    requests:
+      storage: 100Gi
+  volumeName: ia-postgres-pv-0
+---
+# Persistent Volume Claim for Redis
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-redis-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/component: cache
+    environment: production
+  annotations:
+    description: "Redis data storage claim"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ia-fast-ssd
+  resources:
+    requests:
+      storage: 50Gi
+  volumeName: ia-redis-pv-0
+---
+# Persistent Volume Claim for MongoDB
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-mongodb-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: analytics
+    environment: production
+  annotations:
+    description: "MongoDB analytics storage claim"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ia-fast-ssd
+  resources:
+    requests:
+      storage: 200Gi
+  volumeName: ia-mongodb-pv-0
+---
+# Persistent Volume Claim for Application Uploads
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-uploads-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: uploads
+    environment: production
+  annotations:
+    description: "User uploads storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 1Ti
+  volumeName: ia-uploads-pv
+---
+# Persistent Volume Claim for ML Models
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-models-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: machine-learning
+    environment: production
+  annotations:
+    description: "ML models storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 100Gi
+  volumeName: ia-models-pv
+---
+# Persistent Volume Claim for Logs
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-logs-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: logging
+    environment: production
+  annotations:
+    description: "Application logs storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 200Gi
+  volumeName: ia-logs-pv
+---
+# Persistent Volume Claim for FAISS
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-faiss-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: faiss
+    app.kubernetes.io/component: vector-database
+    environment: production
+  annotations:
+    description: "FAISS vector database storage claim"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ia-fast-ssd
+  resources:
+    requests:
+      storage: 500Gi
+  volumeName: ia-faiss-pv
+---
+# Persistent Volume Claim for Elasticsearch
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-elasticsearch-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/component: search
+    environment: production
+  annotations:
+    description: "Elasticsearch storage claim"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ia-fast-ssd
+  resources:
+    requests:
+      storage: 300Gi
+  volumeName: ia-elasticsearch-pv-0
+---
+# Persistent Volume Claim for Audio Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-audio-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: audio-processor
+    environment: production
+  annotations:
+    description: "Audio files and processing storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 2Ti
+---
+# Persistent Volume Claim for Fingerprinting Models
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-fingerprinting-models-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: fingerprinting-engine
+    environment: production
+  annotations:
+    description: "Fingerprinting models and algorithms storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 200Gi
+---
+# Persistent Volume Claim for Crawl Data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-crawl-data-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: web-crawlers
+    environment: production
+  annotations:
+    description: "Web crawl data and content storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 5Ti
+---
+# Persistent Volume Claim for Screenshots
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-screenshots-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: web-crawlers
+    environment: production
+  annotations:
+    description: "Screenshots and evidence storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 1Ti
+---
+# Persistent Volume Claim for Revenue Data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-revenue-data-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: monetization-engine
+    environment: production
+  annotations:
+    description: "Revenue tracking and financial data storage claim"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ia-fast-ssd
+  resources:
+    requests:
+      storage: 100Gi
+---
+# Persistent Volume Claim for Licensing Data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-licensing-data-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: licensing-service
+    environment: production
+  annotations:
+    description: "Licensing agreements and contracts storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 50Gi
+---
+# Persistent Volume Claim for Collaboration Data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-collaboration-data-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: collaboration-engine
+    environment: production
+  annotations:
+    description: "Artist collaboration data storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 200Gi
+---
+# Persistent Volume Claim for Distribution Queue
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-distribution-queue-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: distribution-engine
+    environment: production
+  annotations:
+    description: "Content distribution queue storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 1Ti
+---
+# Persistent Volume Claim for Notification Queue
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-notification-queue-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: notification-service
+    environment: production
+  annotations:
+    description: "Notification queue and templates storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 10Gi
+---
+# Persistent Volume Claim for Video Processing
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-video-processing-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: video-processor
+    environment: production
+  annotations:
+    description: "Video processing and transcoding storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 3Ti
+---
+# Persistent Volume Claim for Image Processing
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-image-processing-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: image-processor
+    environment: production
+  annotations:
+    description: "Image processing and analysis storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 1Ti
+---
+# Persistent Volume Claim for Blockchain Data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-blockchain-data-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: blockchain-service
+    environment: production
+  annotations:
+    description: "Blockchain and smart contracts data storage claim"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ia-fast-ssd
+  resources:
+    requests:
+      storage: 100Gi
+---
+# Persistent Volume Claim for Copyright Registry
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-copyright-registry-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: copyright-registry
+    environment: production
+  annotations:
+    description: "Digital copyright registry storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 500Gi
+---
+# Persistent Volume Claim for Content Archive
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-content-archive-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: archive
+    environment: production
+  annotations:
+    description: "Long-term content archive storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-archive
+  resources:
+    requests:
+      storage: 10Ti
+---
+# Persistent Volume Claim for Analytics Cache
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-analytics-cache-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: analytics
+    environment: production
+  annotations:
+    description: "Analytics processing cache storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-fast-ssd
+  resources:
+    requests:
+      storage: 200Gi
+---
+# Persistent Volume Claim for ML Training Data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ia-ml-training-pvc
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: machine-learning
+    environment: production
+  annotations:
+    description: "ML training datasets storage claim"
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ia-standard
+  resources:
+    requests:
+      storage: 2Ti

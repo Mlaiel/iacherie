@@ -1,0 +1,1572 @@
+# Deployments for IA Influencer Agent Platform
+# Application deployments with high availability and auto-scaling
+#
+# Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
+# IA Influencer Agent + Content Protection Platform
+# All rights reserved.
+
+# API Gateway Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-api-gateway
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: api-gateway
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Main API Gateway deployment"
+    deployment.kubernetes.io/revision: "1"
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: api-gateway
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: api-gateway
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: api-gateway
+        image: ia-influencer-agent:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8000
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "api-gateway"
+        - name: DATABASE_URL
+          value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgresql-service:5432/$(POSTGRES_DB)"
+        - name: REDIS_URL
+          value: "redis://:$(REDIS_PASSWORD)@redis-service:6379/0"
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: ia-db-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ia-db-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: ia-db-secrets
+              key: postgres-db
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ia-db-secrets
+              key: redis-password
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ia-app-secrets
+              key: jwt-secret-key
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ia-app-secrets
+              key: api-key
+        envFrom:
+        - configMapRef:
+            name: ia-app-config
+        - configMapRef:
+            name: ia-database-config
+        volumeMounts:
+        - name: app-logs
+          mountPath: /app/logs
+        - name: app-config
+          mountPath: /app/config
+        - name: upload-storage
+          mountPath: /app/uploads
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /startup
+            port: 8000
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+      volumes:
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: app-config
+        configMap:
+          name: ia-app-config
+      - name: upload-storage
+        persistentVolumeClaim:
+          claimName: ia-uploads-pvc
+      terminationGracePeriodSeconds: 30
+---
+# ML Engine Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-ml-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: ml-engine
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Machine Learning engine deployment"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: ml-engine
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: ml-engine
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8001"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: ml-engine
+        image: ia-influencer-ml:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8001
+          protocol: TCP
+        - name: grpc
+          containerPort: 8002
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "ml-engine"
+        - name: GPU_ENABLED
+          value: "true"
+        - name: CUDA_VISIBLE_DEVICES
+          value: "0,1"
+        envFrom:
+        - configMapRef:
+            name: ia-ml-config
+        volumeMounts:
+        - name: ml-models
+          mountPath: /app/models
+        - name: app-logs
+          mountPath: /app/logs
+        - name: tmp-processing
+          mountPath: /tmp/processing
+        resources:
+          requests:
+            memory: "8Gi"
+            cpu: "4000m"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "16Gi"
+            cpu: "8000m"
+            nvidia.com/gpu: 2
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: ml-models
+        persistentVolumeClaim:
+          claimName: ia-models-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: tmp-processing
+        emptyDir:
+          sizeLimit: 50Gi
+      terminationGracePeriodSeconds: 60
+---
+# Content Protection Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-protection-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: content-protection
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Content protection and fingerprinting deployment"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: content-protection
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: content-protection
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8003"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: protection-service
+        image: ia-influencer-protection:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8003
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "content-protection"
+        - name: FAISS_SERVICE_URL
+          value: "http://faiss-service:8080"
+        - name: ELASTICSEARCH_URL
+          value: "http://elasticsearch-service:9200"
+        envFrom:
+        - configMapRef:
+            name: ia-protection-config
+        - secretRef:
+            name: ia-api-keys
+        volumeMounts:
+        - name: fingerprint-data
+          mountPath: /app/fingerprints
+        - name: app-logs
+          mountPath: /app/logs
+        - name: crawl-cache
+          mountPath: /app/cache
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2000m"
+          limits:
+            memory: "8Gi"
+            cpu: "4000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8003
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8003
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: fingerprint-data
+        persistentVolumeClaim:
+          claimName: ia-faiss-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: crawl-cache
+        emptyDir:
+          sizeLimit: 10Gi
+      terminationGracePeriodSeconds: 45
+---
+# Analytics Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-analytics-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: analytics
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Analytics and reporting service deployment"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: analytics
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: analytics
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8004"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: analytics-service
+        image: ia-influencer-analytics:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8004
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "analytics"
+        - name: MONGODB_URL
+          value: "mongodb://$(MONGODB_USER):$(MONGODB_PASSWORD)@mongodb-service:27017/$(MONGODB_DB)"
+        - name: MONGODB_USER
+          valueFrom:
+            secretKeyRef:
+              name: ia-db-secrets
+              key: mongodb-user
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ia-db-secrets
+              key: mongodb-password
+        - name: MONGODB_DB
+          valueFrom:
+            secretKeyRef:
+              name: ia-db-secrets
+              key: mongodb-db
+        volumeMounts:
+        - name: app-logs
+          mountPath: /app/logs
+        - name: analytics-cache
+          mountPath: /app/cache
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8004
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8004
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: analytics-cache
+        emptyDir:
+          sizeLimit: 5Gi
+      terminationGracePeriodSeconds: 30
+---
+# Celery Workers Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-celery-workers
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: workers
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Celery background workers deployment"
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: workers
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: workers
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "5555"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: celery-worker
+        image: ia-influencer-agent:latest
+        imagePullPolicy: Always
+        command: ["celery", "-A", "app.tasks.celery", "worker", "--loglevel=info", "--concurrency=4"]
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "worker"
+        - name: CELERY_BROKER_URL
+          value: "redis://:$(REDIS_PASSWORD)@redis-service:6379/1"
+        - name: CELERY_RESULT_BACKEND
+          value: "redis://:$(REDIS_PASSWORD)@redis-service:6379/2"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ia-db-secrets
+              key: redis-password
+        envFrom:
+        - configMapRef:
+            name: ia-app-config
+        - configMapRef:
+            name: ia-ml-config
+        - configMapRef:
+            name: ia-protection-config
+        volumeMounts:
+        - name: app-logs
+          mountPath: /app/logs
+        - name: worker-tmp
+          mountPath: /tmp/worker
+        - name: upload-storage
+          mountPath: /app/uploads
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          exec:
+            command:
+            - celery
+            - -A
+            - app.tasks.celery
+            - inspect
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+      - name: flower
+        image: mher/flower:1.2.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: flower
+          containerPort: 5555
+          protocol: TCP
+        env:
+        - name: CELERY_BROKER_URL
+          value: "redis://:$(REDIS_PASSWORD)@redis-service:6379/1"
+        - name: FLOWER_PORT
+          value: "5555"
+        - name: FLOWER_BASIC_AUTH
+          value: "admin:flower123"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ia-db-secrets
+              key: redis-password
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+      volumes:
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: worker-tmp
+        emptyDir:
+          sizeLimit: 10Gi
+      - name: upload-storage
+        persistentVolumeClaim:
+          claimName: ia-uploads-pvc
+      terminationGracePeriodSeconds: 60
+---
+# Audio Processing Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-audio-processor
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: audio-processor
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Audio processing and analysis deployment"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: audio-processor
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: audio-processor
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8005"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: audio-processor
+        image: ia-influencer-audio:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8005
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "audio-processor"
+        - name: SPOTIFY_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: ia-api-keys
+              key: spotify-client-id
+        - name: SPOTIFY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ia-api-keys
+              key: spotify-client-secret
+        - name: FFMPEG_THREADS
+          value: "8"
+        - name: CHROMAPRINT_ENABLED
+          value: "true"
+        envFrom:
+        - configMapRef:
+            name: ia-audio-config
+        volumeMounts:
+        - name: audio-storage
+          mountPath: /app/audio
+        - name: app-logs
+          mountPath: /app/logs
+        - name: audio-tmp
+          mountPath: /tmp/audio
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2000m"
+          limits:
+            memory: "8Gi"
+            cpu: "4000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8005
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8005
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: audio-storage
+        persistentVolumeClaim:
+          claimName: ia-audio-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: audio-tmp
+        emptyDir:
+          sizeLimit: 20Gi
+      terminationGracePeriodSeconds: 45
+---
+# Fingerprinting Engine Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-fingerprinting-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: fingerprinting-engine
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Multi-content fingerprinting engine deployment"
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: fingerprinting-engine
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: fingerprinting-engine
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8006"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: fingerprinting-engine
+        image: ia-influencer-fingerprinting:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8006
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "fingerprinting-engine"
+        - name: OPENCV_ENABLED
+          value: "true"
+        - name: CLIP_MODEL_ENABLED
+          value: "true"
+        - name: BERT_MODEL_ENABLED
+          value: "true"
+        - name: FAISS_INDEX_PATH
+          value: "/app/faiss/indexes"
+        - name: GPU_ENABLED
+          value: "true"
+        envFrom:
+        - configMapRef:
+            name: ia-fingerprinting-config
+        volumeMounts:
+        - name: fingerprinting-models
+          mountPath: /app/models
+        - name: faiss-indexes
+          mountPath: /app/faiss
+        - name: app-logs
+          mountPath: /app/logs
+        - name: processing-tmp
+          mountPath: /tmp/processing
+        resources:
+          requests:
+            memory: "8Gi"
+            cpu: "4000m"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "16Gi"
+            cpu: "8000m"
+            nvidia.com/gpu: 2
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8006
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8006
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: fingerprinting-models
+        persistentVolumeClaim:
+          claimName: ia-fingerprinting-models-pvc
+      - name: faiss-indexes
+        persistentVolumeClaim:
+          claimName: ia-faiss-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: processing-tmp
+        emptyDir:
+          sizeLimit: 50Gi
+      terminationGracePeriodSeconds: 60
+---
+# Web Crawlers Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-web-crawlers
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: web-crawlers
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Web crawlers for content surveillance deployment"
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: web-crawlers
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: web-crawlers
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8007"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: web-crawlers
+        image: ia-influencer-crawlers:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8007
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "web-crawlers"
+        - name: YOUTUBE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ia-api-keys
+              key: youtube-api-key
+        - name: INSTAGRAM_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: ia-api-keys
+              key: instagram-access-token
+        - name: TWITTER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ia-api-keys
+              key: twitter-api-key
+        - name: TIKTOK_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: ia-api-keys
+              key: tiktok-access-token
+        - name: SELENIUM_HUB_URL
+          value: "http://selenium-hub-service:4444/wd/hub"
+        - name: CRAWL_RATE_LIMIT
+          value: "100"
+        envFrom:
+        - configMapRef:
+            name: ia-crawlers-config
+        volumeMounts:
+        - name: crawl-data
+          mountPath: /app/crawl_data
+        - name: app-logs
+          mountPath: /app/logs
+        - name: screenshots
+          mountPath: /app/screenshots
+        - name: crawl-cache
+          mountPath: /app/cache
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8007
+          initialDelaySeconds: 30
+          periodSeconds: 20
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8007
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: crawl-data
+        persistentVolumeClaim:
+          claimName: ia-crawl-data-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: screenshots
+        persistentVolumeClaim:
+          claimName: ia-screenshots-pvc
+      - name: crawl-cache
+        emptyDir:
+          sizeLimit: 10Gi
+      terminationGracePeriodSeconds: 45
+---
+# Monetization Engine Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-monetization-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: monetization-engine
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Revenue tracking and monetization engine deployment"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: monetization-engine
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: monetization-engine
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8008"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: monetization-engine
+        image: ia-influencer-monetization:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8008
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "monetization-engine"
+        - name: STRIPE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ia-payment-secrets
+              key: stripe-api-key
+        - name: STRIPE_WEBHOOK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ia-payment-secrets
+              key: stripe-webhook-secret
+        - name: PAYPAL_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: ia-payment-secrets
+              key: paypal-client-id
+        - name: PAYPAL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ia-payment-secrets
+              key: paypal-client-secret
+        - name: WISE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ia-payment-secrets
+              key: wise-api-key
+        - name: REVENUE_CALCULATION_ENABLED
+          value: "true"
+        - name: AUTO_PAYOUT_ENABLED
+          value: "true"
+        envFrom:
+        - configMapRef:
+            name: ia-monetization-config
+        volumeMounts:
+        - name: revenue-data
+          mountPath: /app/revenue_data
+        - name: app-logs
+          mountPath: /app/logs
+        - name: licensing-cache
+          mountPath: /app/cache
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8008
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8008
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: revenue-data
+        persistentVolumeClaim:
+          claimName: ia-revenue-data-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: licensing-cache
+        emptyDir:
+          sizeLimit: 5Gi
+      terminationGracePeriodSeconds: 30
+---
+# Licensing Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-licensing-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: licensing-service
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Automated licensing and rights management deployment"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: licensing-service
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: licensing-service
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8009"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: licensing-service
+        image: ia-influencer-licensing:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8009
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "licensing-service"
+        - name: DMCA_AGENT_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: ia-legal-secrets
+              key: dmca-agent-email
+        - name: COPYRIGHT_OFFICE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ia-legal-secrets
+              key: copyright-office-key
+        - name: BLOCKCHAIN_ENABLED
+          value: "true"
+        - name: SMART_CONTRACTS_ENABLED
+          value: "true"
+        envFrom:
+        - configMapRef:
+            name: ia-licensing-config
+        volumeMounts:
+        - name: licensing-data
+          mountPath: /app/licensing_data
+        - name: app-logs
+          mountPath: /app/logs
+        - name: contracts-cache
+          mountPath: /app/cache
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8009
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8009
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: licensing-data
+        persistentVolumeClaim:
+          claimName: ia-licensing-data-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: contracts-cache
+        emptyDir:
+          sizeLimit: 2Gi
+      terminationGracePeriodSeconds: 30
+---
+# Collaboration Engine Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-collaboration-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: collaboration-engine
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Artist collaboration and matching engine deployment"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: collaboration-engine
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: collaboration-engine
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8010"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: collaboration-engine
+        image: ia-influencer-collaboration:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8010
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "collaboration-engine"
+        - name: ML_MATCHING_ENABLED
+          value: "true"
+        - name: RECOMMENDATION_ENGINE_URL
+          value: "http://ia-ml-engine:8001"
+        - name: BLOCKCHAIN_CONTRACTS_ENABLED
+          value: "true"
+        envFrom:
+        - configMapRef:
+            name: ia-collaboration-config
+        volumeMounts:
+        - name: collaboration-data
+          mountPath: /app/collaboration_data
+        - name: app-logs
+          mountPath: /app/logs
+        - name: matching-cache
+          mountPath: /app/cache
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8010
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8010
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: collaboration-data
+        persistentVolumeClaim:
+          claimName: ia-collaboration-data-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: matching-cache
+        emptyDir:
+          sizeLimit: 5Gi
+      terminationGracePeriodSeconds: 30
+---
+# Distribution Engine Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-distribution-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: distribution-engine
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Multi-platform content distribution deployment"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: distribution-engine
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: distribution-engine
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8011"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: distribution-engine
+        image: ia-influencer-distribution:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8011
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "distribution-engine"
+        - name: SPOTIFY_DISTRIBUTION_ENABLED
+          value: "true"
+        - name: YOUTUBE_DISTRIBUTION_ENABLED
+          value: "true"
+        - name: INSTAGRAM_DISTRIBUTION_ENABLED
+          value: "true"
+        - name: TIKTOK_DISTRIBUTION_ENABLED
+          value: "true"
+        - name: CDN_ENABLED
+          value: "true"
+        envFrom:
+        - configMapRef:
+            name: ia-distribution-config
+        - secretRef:
+            name: ia-api-keys
+        volumeMounts:
+        - name: distribution-queue
+          mountPath: /app/distribution_queue
+        - name: app-logs
+          mountPath: /app/logs
+        - name: distribution-cache
+          mountPath: /app/cache
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8011
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8011
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: distribution-queue
+        persistentVolumeClaim:
+          claimName: ia-distribution-queue-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: distribution-cache
+        emptyDir:
+          sizeLimit: 10Gi
+      terminationGracePeriodSeconds: 30
+---
+# Notification Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ia-notification-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: notification-service
+    app.kubernetes.io/part-of: ia-influencer-platform
+    environment: production
+  annotations:
+    description: "Real-time notifications and alerts deployment"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+      app.kubernetes.io/component: notification-service
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ia-influencer-agent
+        app.kubernetes.io/component: notification-service
+        app.kubernetes.io/instance: production
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8012"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ia-influencer-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: notification-service
+        image: ia-influencer-notifications:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8012
+          protocol: TCP
+        - name: websocket
+          containerPort: 8013
+          protocol: TCP
+        env:
+        - name: APP_ENVIRONMENT
+          value: "production"
+        - name: APP_COMPONENT
+          value: "notification-service"
+        - name: EMAIL_ENABLED
+          value: "true"
+        - name: SMS_ENABLED
+          value: "true"
+        - name: PUSH_ENABLED
+          value: "true"
+        - name: WEBSOCKET_ENABLED
+          value: "true"
+        - name: SENDGRID_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ia-notification-secrets
+              key: sendgrid-api-key
+        - name: TWILIO_ACCOUNT_SID
+          valueFrom:
+            secretKeyRef:
+              name: ia-notification-secrets
+              key: twilio-account-sid
+        - name: TWILIO_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: ia-notification-secrets
+              key: twilio-auth-token
+        envFrom:
+        - configMapRef:
+            name: ia-notification-config
+        volumeMounts:
+        - name: notification-queue
+          mountPath: /app/notification_queue
+        - name: app-logs
+          mountPath: /app/logs
+        - name: templates-cache
+          mountPath: /app/cache
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8012
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8012
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: notification-queue
+        persistentVolumeClaim:
+          claimName: ia-notification-queue-pvc
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: ia-logs-pvc
+      - name: templates-cache
+        emptyDir:
+          sizeLimit: 1Gi
+      terminationGracePeriodSeconds: 30

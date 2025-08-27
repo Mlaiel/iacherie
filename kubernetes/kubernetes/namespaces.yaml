@@ -1,0 +1,196 @@
+# Namespaces for IA Influencer Agent Platform
+# Production-ready namespace configuration with resource quotas and network isolation
+#
+# Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
+# IA Influencer Agent + Content Protection Platform
+# All rights reserved.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/component: application
+    app.kubernetes.io/part-of: ia-influencer-platform
+    app.kubernetes.io/managed-by: kubectl
+    environment: production
+    team: ia-platform
+    tier: application
+  annotations:
+    description: "Production namespace for IA Influencer Agent platform"
+    contact: "mlaiel@live.de"
+    project: "ia-influencer-agent"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ia-influencer-staging
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: staging
+    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/component: application
+    app.kubernetes.io/part-of: ia-influencer-platform
+    app.kubernetes.io/managed-by: kubectl
+    environment: staging
+    team: ia-platform
+    tier: application
+  annotations:
+    description: "Staging namespace for IA Influencer Agent platform"
+    contact: "mlaiel@live.de"
+    project: "ia-influencer-agent"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ia-monitoring
+  labels:
+    app.kubernetes.io/name: monitoring
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/part-of: ia-influencer-platform
+    app.kubernetes.io/managed-by: kubectl
+    environment: production
+    team: platform
+    tier: monitoring
+  annotations:
+    description: "Monitoring namespace for IA Influencer Agent platform"
+    contact: "mlaiel@live.de"
+    project: "ia-influencer-monitoring"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ia-storage
+  labels:
+    app.kubernetes.io/name: storage
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "v1.0.0"
+    app.kubernetes.io/component: storage
+    app.kubernetes.io/part-of: ia-influencer-platform
+    app.kubernetes.io/managed-by: kubectl
+    environment: production
+    team: platform
+    tier: storage
+  annotations:
+    description: "Storage namespace for IA Influencer Agent platform"
+    contact: "mlaiel@live.de"
+    project: "ia-influencer-storage"
+---
+# Resource Quota for Production Namespace
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: ia-influencer-prod-quota
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: resource-quota
+    app.kubernetes.io/instance: production
+    environment: production
+spec:
+  hard:
+    requests.cpu: "50"
+    requests.memory: 100Gi
+    limits.cpu: "100"
+    limits.memory: 200Gi
+    persistentvolumeclaims: "50"
+    pods: "100"
+    replicationcontrollers: "20"
+    secrets: "50"
+    services: "20"
+    services.loadbalancers: "5"
+    services.nodeports: "10"
+---
+# Resource Quota for Staging Namespace
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: ia-influencer-staging-quota
+  namespace: ia-influencer-staging
+  labels:
+    app.kubernetes.io/name: resource-quota
+    app.kubernetes.io/instance: staging
+    environment: staging
+spec:
+  hard:
+    requests.cpu: "20"
+    requests.memory: 40Gi
+    limits.cpu: "40"
+    limits.memory: 80Gi
+    persistentvolumeclaims: "20"
+    pods: "50"
+    replicationcontrollers: "10"
+    secrets: "25"
+    services: "10"
+    services.loadbalancers: "2"
+    services.nodeports: "5"
+---
+# Limit Range for Production Namespace
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: ia-influencer-prod-limits
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: limit-range
+    app.kubernetes.io/instance: production
+    environment: production
+spec:
+  limits:
+  - default:
+      cpu: "2"
+      memory: "4Gi"
+    defaultRequest:
+      cpu: "500m"
+      memory: "1Gi"
+    max:
+      cpu: "8"
+      memory: "16Gi"
+    min:
+      cpu: "100m"
+      memory: "128Mi"
+    type: Container
+  - default:
+      storage: "10Gi"
+    max:
+      storage: "100Gi"
+    min:
+      storage: "1Gi"
+    type: PersistentVolumeClaim
+---
+# Limit Range for Staging Namespace
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: ia-influencer-staging-limits
+  namespace: ia-influencer-staging
+  labels:
+    app.kubernetes.io/name: limit-range
+    app.kubernetes.io/instance: staging
+    environment: staging
+spec:
+  limits:
+  - default:
+      cpu: "1"
+      memory: "2Gi"
+    defaultRequest:
+      cpu: "250m"
+      memory: "512Mi"
+    max:
+      cpu: "4"
+      memory: "8Gi"
+    min:
+      cpu: "100m"
+      memory: "128Mi"
+    type: Container
+  - default:
+      storage: "5Gi"
+    max:
+      storage: "50Gi"
+    min:
+      storage: "1Gi"
+    type: PersistentVolumeClaim

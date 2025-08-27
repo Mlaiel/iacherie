@@ -1,0 +1,49 @@
+# IA Influencer Agent - Fluentd Custom Image
+# Specialized Fluentd configuration for IA logging pipeline
+# Author: Fahed Mlaiel <mlaiel@live.de>
+
+FROM fluent/fluentd:v1.16-debian-1
+
+USER root
+
+# Install additional plugins for enhanced functionality
+RUN fluent-gem install \
+    fluent-plugin-elasticsearch \
+    fluent-plugin-s3 \
+    fluent-plugin-redis \
+    fluent-plugin-prometheus \
+    fluent-plugin-kubernetes_metadata_filter \
+    fluent-plugin-rewrite-tag-filter \
+    fluent-plugin-multi-format-parser \
+    fluent-plugin-grep \
+    fluent-plugin-concat \
+    fluent-plugin-geoip \
+    fluent-plugin-ua-parser \
+    fluent-plugin-slack \
+    fluent-plugin-webhook \
+    && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
+
+# Create necessary directories
+RUN mkdir -p /var/log/fluentd/buffers \
+    && mkdir -p /fluentd/plugins \
+    && chown -R fluent:fluent /var/log/fluentd
+
+# Copy custom configuration
+COPY fluentd/conf/fluent.conf /fluentd/etc/fluent.conf
+COPY fluentd/plugins/* /fluentd/plugins/
+
+# Set proper permissions
+RUN chown -R fluent:fluent /fluentd
+
+# Switch back to fluent user
+USER fluent
+
+# Expose ports
+EXPOSE 24224 24220 9880
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:24220/api/plugins || exit 1
+
+# Start Fluentd
+CMD ["fluentd", "-c", "/fluentd/etc/fluent.conf", "-p", "/fluentd/plugins"]

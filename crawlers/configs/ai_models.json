@@ -1,0 +1,34 @@
+{
+  "models": {
+    "content_fingerprint": {
+      "model_id": "content_fingerprint",
+      "model_type": "fingerprint_extractor",
+      "provider": "custom_model",
+      "version": "1.0.0",
+      "endpoint_url": null,
+      "max_tokens": 4096,
+      "temperature": 0.1,
+      "enabled": true
+    },
+    "audio_analyzer": {
+      "model_id": "audio_analyzer",
+      "model_type": "audio_analyzer",
+      "provider": "custom_model",
+      "version": "1.0.0",
+      "endpoint_url": null,
+      "max_tokens": 4096,
+      "temperature": 0.1,
+      "enabled": true
+    },
+    "violation_detector": {
+      "model_id": "violation_detector",
+      "model_type": "violation_detector",
+      "provider": "custom_model",
+      "version": "1.0.0",
+      "endpoint_url": null,
+      "max_tokens": 4096,
+      "temperature": 0.1,
+      "enabled": true
+    }
+  }
+}

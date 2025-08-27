@@ -1,0 +1,158 @@
+environment: development
+
+adapters:
+  # Social Media Adapters
+  youtube_adapter:
+    name: youtube_adapter
+    platform_type: social_media
+    enabled: true
+    priority: 1
+    api_key: "${YOUTUBE_API_KEY}"
+    max_posts_per_day: 10
+    auto_publish: false
+    rate_limit:
+      max_requests: 100
+      time_window: 60
+      burst_limit: 10
+    security:
+      use_ssl: true
+      verify_certificates: true
+      timeout: 30
+      max_retries: 3
+    health_check:
+      enabled: true
+      interval: 300
+      timeout: 10
+
+  instagram_adapter:
+    name: instagram_adapter
+    platform_type: social_media
+    enabled: true
+    priority: 1
+    api_key: "${INSTAGRAM_API_KEY}"
+    access_token: "${INSTAGRAM_ACCESS_TOKEN}"
+    max_posts_per_day: 5
+    auto_publish: false
+
+  tiktok_adapter:
+    name: tiktok_adapter
+    platform_type: social_media
+    enabled: false
+    priority: 2
+    api_key: "${TIKTOK_API_KEY}"
+    max_posts_per_day: 3
+
+  # AI Platform Adapters
+  openai_adapter:
+    name: openai_adapter
+    platform_type: ai_platform
+    enabled: true
+    priority: 1
+    api_key: "${OPENAI_API_KEY}"
+    model_name: gpt-3.5-turbo
+    max_tokens: 4000
+    temperature: 0.7
+    max_requests_per_minute: 60
+    enable_caching: true
+    rate_limit:
+      max_requests: 60
+      time_window: 60
+
+  anthropic_adapter:
+    name: anthropic_adapter
+    platform_type: ai_platform
+    enabled: true
+    priority: 2
+    api_key: "${ANTHROPIC_API_KEY}"
+    model_name: claude-3-sonnet-20240229
+    max_tokens: 4000
+    temperature: 0.7
+
+  huggingface_adapter:
+    name: huggingface_adapter
+    platform_type: ai_platform
+    enabled: false
+    priority: 3
+    api_key: "${HUGGINGFACE_API_KEY}"
+    api_endpoint: "https://api-inference.huggingface.co"
+
+  # Content Protection Adapters
+  youtube_content_id:
+    name: youtube_content_id
+    platform_type: content_protection
+    enabled: true
+    priority: 1
+    api_key: "${YOUTUBE_CONTENT_ID_API_KEY}"
+    content_id_system: youtube
+    auto_claim: false
+    auto_takedown: false
+    monitoring_interval: 3600
+    minimum_match_duration: 30
+
+  facebook_rights_manager:
+    name: facebook_rights_manager
+    platform_type: content_protection
+    enabled: true
+    priority: 1
+    api_key: "${FACEBOOK_RIGHTS_API_KEY}"
+    auto_claim: false
+    auto_takedown: false
+
+  # Email Marketing Adapters
+  mailchimp_adapter:
+    name: mailchimp_adapter
+    platform_type: email_marketing
+    enabled: true
+    priority: 1
+    api_key: "${MAILCHIMP_API_KEY}"
+    list_id: "${MAILCHIMP_LIST_ID}"
+    sender_email: "noreply@example.com"
+    sender_name: "IA Influencer Platform"
+    double_optin: true
+    track_opens: true
+    track_clicks: true
+
+  sendgrid_adapter:
+    name: sendgrid_adapter
+    platform_type: email_marketing
+    enabled: false
+    priority: 2
+    api_key: "${SENDGRID_API_KEY}"
+    sender_email: "noreply@example.com"
+    sender_name: "IA Influencer Platform"
+
+  # SEO Platform Adapters
+  google_search_console:
+    name: google_search_console
+    platform_type: seo_platform
+    enabled: true
+    priority: 1
+    api_key: "${GOOGLE_SEARCH_CONSOLE_API_KEY}"
+    site_url: "https://example.com"
+    country_code: "US"
+    language_code: "en"
+    update_frequency: "daily"
+    track_keywords:
+      - "content creation"
+      - "influencer marketing"
+      - "social media"
+
+  semrush_adapter:
+    name: semrush_adapter
+    platform_type: seo_platform
+    enabled: false
+    priority: 2
+    api_key: "${SEMRUSH_API_KEY}"
+    competitor_domains:
+      - "competitor1.com"
+      - "competitor2.com"
+
+# Global Settings
+global_settings:
+  log_level: DEBUG
+  enable_monitoring: true
+  health_check_interval: 300
+  rate_limit_redis_url: "redis://localhost:6379"
+  encryption_enabled: true
+  backup_configurations: true
+  configuration_version: "1.0.0"

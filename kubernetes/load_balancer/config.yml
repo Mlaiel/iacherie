@@ -1,0 +1,619 @@
+# IA Influencer Agent - Load Balancer Configuration
+# Configuration complète du système de load balancing avancé
+#
+# © 2025 Fahed Mlaiel. All Rights Reserved.
+# Email: mlaiel@live.de
+#
+# ⚠️ STRICT COPYRIGHT WARNING ⚠️
+# This configuration is proprietary intellectual property.
+# Unauthorized copying or use is strictly prohibited.
+
+# =============================================================================
+# LOAD BALANCER ORCHESTRATOR CONFIGURATION
+# =============================================================================
+
+orchestrator:
+  version: "2.0.0"
+  environment: "production"
+  log_level: "INFO"
+  startup_timeout: 300
+  shutdown_timeout: 120
+
+# =============================================================================
+# NGINX LOAD BALANCER CONFIGURATION
+# =============================================================================
+
+nginx:
+  enabled: true
+  config_path: "/etc/nginx/ia_influencer_agent"
+  
+  upstream_servers:
+    content_protection:
+      - { host: "content-protection-1.ia-platform.local", port: 8001, weight: 3, max_fails: 3, fail_timeout: "30s" }
+      - { host: "content-protection-2.ia-platform.local", port: 8001, weight: 2, max_fails: 3, fail_timeout: "30s" }
+      - { host: "content-protection-3.ia-platform.local", port: 8001, weight: 1, max_fails: 3, fail_timeout: "30s" }
+    
+    fingerprinting:
+      - { host: "fingerprinting-1.ia-platform.local", port: 8002, weight: 2, max_fails: 2, fail_timeout: "20s" }
+      - { host: "fingerprinting-2.ia-platform.local", port: 8002, weight: 2, max_fails: 2, fail_timeout: "20s" }
+    
+    monetization:
+      - { host: "monetization-1.ia-platform.local", port: 8003, weight: 3, max_fails: 3, fail_timeout: "30s" }
+      - { host: "monetization-2.ia-platform.local", port: 8003, weight: 2, max_fails: 3, fail_timeout: "30s" }
+    
+    ai_agents:
+      - { host: "ai-agents-1.ia-platform.local", port: 8004, weight: 4, max_fails: 2, fail_timeout: "15s" }
+      - { host: "ai-agents-2.ia-platform.local", port: 8004, weight: 3, max_fails: 2, fail_timeout: "15s" }
+      - { host: "ai-agents-3.ia-platform.local", port: 8004, weight: 2, max_fails: 2, fail_timeout: "15s" }
+    
+    crawlers:
+      - { host: "crawlers-1.ia-platform.local", port: 8005, weight: 1, max_fails: 5, fail_timeout: "60s" }
+      - { host: "crawlers-2.ia-platform.local", port: 8005, weight: 1, max_fails: 5, fail_timeout: "60s" }
+
+  global_settings:
+    worker_processes: "auto"
+    worker_connections: 4096
+    keepalive_timeout: 65
+    client_max_body_size: "100M"
+    gzip: true
+    gzip_vary: true
+    gzip_proxied: "any"
+    gzip_comp_level: 6
+
+# =============================================================================
+# HAPROXY LOAD BALANCER CONFIGURATION
+# =============================================================================
+
+haproxy:
+  enabled: true
+  config_file: "/etc/haproxy/ia_influencer_agent.cfg"
+  
+  global:
+    maxconn: 10000
+    log: "127.0.0.1:514 local0"
+    chroot: "/var/lib/haproxy"
+    stats_socket: "/run/haproxy/admin.sock mode 660 level admin"
+    stats_timeout: "30s"
+    user: "haproxy"
+    group: "haproxy"
+    daemon: true
+  
+  defaults:
+    mode: "http"
+    timeout_connect: "5000ms"
+    timeout_client: "50000ms"
+    timeout_server: "50000ms"
+    option_httplog: true
+    option_dontlognull: true
+    option_http_server_close: true
+    option_forwardfor: "except 127.0.0.0/8"
+    option_redispatch: true
+    retries: 3
+    maxconn: 3000
+  
+  balance_algorithm: "roundrobin"
+  health_check_interval: "2000ms"
+
+# =============================================================================
+# ENVOY PROXY CONFIGURATION (SERVICE MESH)
+# =============================================================================
+
+envoy:
+  enabled: true
+  config_path: "/etc/envoy/ia_influencer_agent"
+  
+  admin:
+    access_log_path: "/tmp/admin_access.log"
+    address:
+      socket_address:
+        protocol: "TCP"
+        address: "127.0.0.1"
+        port_value: 9901
+  
+  static_resources:
+    listeners:
+      - name: "listener_0"
+        address:
+          socket_address:
+            protocol: "TCP"
+            address: "0.0.0.0"
+            port_value: 10000
+    
+    clusters:
+      - name: "content_protection_service"
+        connect_timeout: "0.25s"
+        type: "LOGICAL_DNS"
+        dns_lookup_family: "V4_ONLY"
+        lb_policy: "ROUND_ROBIN"
+      
+      - name: "fingerprinting_service"
+        connect_timeout: "0.25s"
+        type: "LOGICAL_DNS"
+        dns_lookup_family: "V4_ONLY"
+        lb_policy: "LEAST_REQUEST"
+
+# =============================================================================
+# HEALTH MONITORING CONFIGURATION
+# =============================================================================
+
+health_check:
+  enabled: true
+  global_settings:
+    check_interval: 30
+    timeout: 10
+    retries: 3
+    consecutive_failures: 3
+    consecutive_successes: 2
+  
+  endpoints:
+    content_protection:
+      path: "/health"
+      method: "GET"
+      expected_status: [200, 204]
+      timeout: 5
+      interval: 15
+    
+    fingerprinting:
+      path: "/api/v1/health"
+      method: "GET"
+      expected_status: [200]
+      timeout: 10
+      interval: 20
+    
+    monetization:
+      path: "/health/ready"
+      method: "GET"
+      expected_status: [200]
+      timeout: 8
+      interval: 25
+    
+    ai_agents:
+      path: "/health/live"
+      method: "GET"
+      expected_status: [200]
+      timeout: 3
+      interval: 10
+    
+    crawlers:
+      path: "/status"
+      method: "GET"
+      expected_status: [200, 202]
+      timeout: 15
+      interval: 60
+
+# =============================================================================
+# METRICS AND MONITORING CONFIGURATION
+# =============================================================================
+
+metrics:
+  enabled: true
+  prometheus:
+    enabled: true
+    port: 9090
+    scrape_interval: "15s"
+    evaluation_interval: "15s"
+    
+  collection:
+    interval: 15
+    retention_days: 30
+    
+  dashboards:
+    grafana:
+      enabled: true
+      port: 3000
+      datasource: "prometheus"
+    
+  alerts:
+    enabled: true
+    webhook_url: "https://alerts.ia-platform.local/webhook"
+    notification_channels: ["email", "slack", "pagerduty"]
+
+# =============================================================================
+# CIRCUIT BREAKER CONFIGURATION
+# =============================================================================
+
+circuit_breaker:
+  enabled: true
+  global_settings:
+    failure_threshold: 5
+    timeout: 60
+    half_open_max_calls: 10
+    half_open_timeout: 30
+    reset_timeout: 120
+  
+  per_service:
+    content_protection:
+      failure_threshold: 3
+      timeout: 30
+    
+    fingerprinting:
+      failure_threshold: 5
+      timeout: 45
+    
+    monetization:
+      failure_threshold: 2
+      timeout: 20
+    
+    ai_agents:
+      failure_threshold: 3
+      timeout: 25
+    
+    crawlers:
+      failure_threshold: 10
+      timeout: 120
+
+# =============================================================================
+# RATE LIMITING CONFIGURATION
+# =============================================================================
+
+rate_limiting:
+  enabled: true
+  global_settings:
+    requests_per_minute: 10000
+    burst_size: 1000
+    sliding_window: true
+  
+  per_service:
+    content_protection:
+      requests_per_minute: 5000
+      burst_size: 500
+    
+    fingerprinting:
+      requests_per_minute: 3000
+      burst_size: 300
+    
+    monetization:
+      requests_per_minute: 2000
+      burst_size: 200
+    
+    ai_agents:
+      requests_per_minute: 8000
+      burst_size: 800
+    
+    crawlers:
+      requests_per_minute: 1000
+      burst_size: 100
+  
+  per_user_tier:
+    premium:
+      requests_per_minute: 1000
+      burst_size: 200
+    
+    standard:
+      requests_per_minute: 500
+      burst_size: 100
+    
+    basic:
+      requests_per_minute: 100
+      burst_size: 20
+
+# =============================================================================
+# SSL/TLS TERMINATION CONFIGURATION
+# =============================================================================
+
+ssl:
+  enabled: true
+  certificates:
+    path: "/etc/ssl/ia_influencer_agent"
+    auto_renewal: true
+    renewal_days_before_expiry: 30
+  
+  protocols:
+    - "TLSv1.2"
+    - "TLSv1.3"
+  
+  ciphers: "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
+  
+  hsts:
+    enabled: true
+    max_age: 31536000
+    include_subdomains: true
+    preload: true
+
+# =============================================================================
+# GEOGRAPHIC LOAD BALANCING CONFIGURATION
+# =============================================================================
+
+geographic:
+  enabled: true
+  enable_gdpr_zones: true
+  
+  compliance_zones:
+    eu:
+      strict_gdpr: true
+      data_locality: true
+      allowed_countries: ["DE", "FR", "IT", "ES", "NL", "BE", "AT", "SE", "DK", "FI", "NO"]
+      server_locations: ["eu-central-1", "eu-west-1", "eu-west-3"]
+    
+    us:
+      strict_gdpr: false
+      data_locality: false
+      allowed_countries: ["US", "CA"]
+      server_locations: ["us-east-1", "us-west-1", "us-west-2"]
+    
+    asia:
+      strict_gdpr: false
+      data_locality: true
+      allowed_countries: ["JP", "SG", "AU", "KR", "IN"]
+      server_locations: ["ap-northeast-1", "ap-southeast-1", "ap-southeast-2"]
+  
+  latency_thresholds:
+    excellent: 50
+    good: 100
+    acceptable: 200
+    poor: 500
+  
+  routing_strategy: "latency_weighted"
+
+# =============================================================================
+# TRAFFIC SHAPING CONFIGURATION
+# =============================================================================
+
+traffic_shaping:
+  enabled: true
+  enable_qos: true
+  
+  bandwidth_limits:
+    premium:
+      min: "50Mbps"
+      max: "1Gbps"
+      burst: "100Mbps"
+    
+    standard:
+      min: "20Mbps"
+      max: "500Mbps"
+      burst: "50Mbps"
+    
+    basic:
+      min: "5Mbps"
+      max: "100Mbps"
+      burst: "20Mbps"
+  
+  priority_queues:
+    high:
+      weight: 4
+      max_burst: "10MB"
+      services: ["ai_agents", "monetization"]
+    
+    medium:
+      weight: 2
+      max_burst: "5MB"
+      services: ["content_protection", "fingerprinting"]
+    
+    low:
+      weight: 1
+      max_burst: "2MB"
+      services: ["crawlers"]
+
+# =============================================================================
+# AI OPTIMIZER CONFIGURATION
+# =============================================================================
+
+ai_optimizer:
+  enabled: true
+  enable_ml_optimization: true
+  
+  models:
+    load_prediction:
+      algorithm: "random_forest"
+      training_interval: 3600  # 1 hour
+      features: ["time_of_day", "day_of_week", "historical_load", "user_count"]
+    
+    performance_optimization:
+      algorithm: "gradient_boosting"
+      training_interval: 1800  # 30 minutes
+      features: ["response_time", "cpu_usage", "memory_usage", "network_io"]
+    
+    anomaly_detection:
+      algorithm: "isolation_forest"
+      training_interval: 900  # 15 minutes
+      features: ["request_rate", "error_rate", "latency", "resource_usage"]
+  
+  optimization:
+    prediction_horizon: 300  # 5 minutes
+    adjustment_interval: 60  # 1 minute
+    confidence_threshold: 0.8
+    
+  auto_scaling:
+    enabled: true
+    min_instances: 2
+    max_instances: 20
+    scale_up_threshold: 0.8
+    scale_down_threshold: 0.3
+    cooldown_period: 300
+
+# =============================================================================
+# REAL-TIME MONITORING CONFIGURATION
+# =============================================================================
+
+realtime_monitor:
+  enabled: true
+  enable_websocket: true
+  websocket_port: 8080
+  
+  anomaly_detection:
+    enabled: true
+    algorithms: ["statistical", "ml_based", "threshold_based"]
+    sensitivity: "medium"
+    
+  alert_thresholds:
+    cpu_usage: 80
+    memory_usage: 85
+    disk_usage: 90
+    response_time: 1000  # milliseconds
+    error_rate: 5  # percentage
+    concurrent_connections: 5000
+  
+  dashboards:
+    enabled: true
+    auto_refresh: 5  # seconds
+    retention_period: 86400  # 24 hours
+    
+  notifications:
+    email:
+      enabled: true
+      smtp_server: "smtp.ia-platform.local"
+      from_address: "alerts@ia-platform.local"
+      to_addresses: ["admin@ia-platform.local", "mlaiel@live.de"]
+    
+    slack:
+      enabled: true
+      webhook_url: "https://hooks.slack.com/services/..."
+      channel: "#ia-platform-alerts"
+    
+    pagerduty:
+      enabled: true
+      service_key: "your_pagerduty_service_key"
+
+# =============================================================================
+# FAILOVER AND DISASTER RECOVERY CONFIGURATION
+# =============================================================================
+
+failover:
+  enabled: true
+  enable_auto_failover: true
+  
+  health_check_interval: 10
+  failure_threshold: 3
+  recovery_threshold: 2
+  
+  backup_strategies:
+    - "hot_standby"
+    - "cold_standby"
+    - "cross_region"
+  
+  disaster_recovery:
+    rpo: 60  # Recovery Point Objective in seconds
+    rto: 300  # Recovery Time Objective in seconds
+    
+  regions:
+    primary: "eu-central-1"
+    secondary: "eu-west-1"
+    tertiary: "us-east-1"
+  
+  data_replication:
+    enabled: true
+    method: "synchronous"
+    backup_frequency: 300  # 5 minutes
+
+# =============================================================================
+# REDIS CONFIGURATION
+# =============================================================================
+
+redis:
+  enabled: true
+  host: "redis.ia-platform.local"
+  port: 6379
+  password: "${REDIS_PASSWORD}"
+  database: 0
+  
+  connection_pool:
+    max_connections: 100
+    retry_on_timeout: true
+    
+  cluster:
+    enabled: true
+    nodes:
+      - "redis-1.ia-platform.local:6379"
+      - "redis-2.ia-platform.local:6379"
+      - "redis-3.ia-platform.local:6379"
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+
+security:
+  enabled: true
+  
+  waf:
+    enabled: true
+    rules: ["owasp_crs", "custom_rules"]
+    
+  ddos_protection:
+    enabled: true
+    threshold: 1000  # requests per second
+    ban_duration: 3600  # 1 hour
+    
+  ip_filtering:
+    enabled: true
+    whitelist: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+    blacklist: []
+    
+  cors:
+    enabled: true
+    allowed_origins: ["https://ia-platform.local", "https://app.ia-platform.local"]
+    allowed_methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    allowed_headers: ["Content-Type", "Authorization", "X-Requested-With"]
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+
+logging:
+  level: "INFO"
+  format: "json"
+  
+  access_logs:
+    enabled: true
+    path: "/var/log/ia_influencer_agent/access.log"
+    rotation: "daily"
+    retention_days: 30
+    
+  error_logs:
+    enabled: true
+    path: "/var/log/ia_influencer_agent/error.log"
+    rotation: "daily"
+    retention_days: 90
+    
+  audit_logs:
+    enabled: true
+    path: "/var/log/ia_influencer_agent/audit.log"
+    rotation: "daily"
+    retention_days: 365
+
+# =============================================================================
+# SERVICES CONFIGURATION
+# =============================================================================
+
+services:
+  content_protection:
+    hosts: 
+      - "content-protection-1.ia-platform.local:8001"
+      - "content-protection-2.ia-platform.local:8001"
+      - "content-protection-3.ia-platform.local:8001"
+    health_check_path: "/api/v1/health"
+    weight: 3
+    priority: "high"
+    
+  fingerprinting:
+    hosts:
+      - "fingerprinting-1.ia-platform.local:8002"
+      - "fingerprinting-2.ia-platform.local:8002"
+    health_check_path: "/api/v1/health"
+    weight: 2
+    priority: "high"
+    
+  monetization:
+    hosts:
+      - "monetization-1.ia-platform.local:8003"
+      - "monetization-2.ia-platform.local:8003"
+    health_check_path: "/api/v1/health"
+    weight: 2
+    priority: "medium"
+    
+  ai_agents:
+    hosts:
+      - "ai-agents-1.ia-platform.local:8004"
+      - "ai-agents-2.ia-platform.local:8004"
+      - "ai-agents-3.ia-platform.local:8004"
+    health_check_path: "/api/v1/health"
+    weight: 3
+    priority: "high"
+    
+  crawlers:
+    hosts:
+      - "crawlers-1.ia-platform.local:8005"
+      - "crawlers-2.ia-platform.local:8005"
+    health_check_path: "/api/v1/health"
+    weight: 1
+    priority: "low"

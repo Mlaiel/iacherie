@@ -1,0 +1,863 @@
+# Services for IA Influencer Agent Platform
+# Network services and load balancing configuration
+#
+# Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
+# IA Influencer Agent + Content Protection Platform
+# All rights reserved.
+
+# PostgreSQL Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: database
+    environment: production
+  annotations:
+    description: "PostgreSQL database service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: production
+---
+# PostgreSQL Headless Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql-headless
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: database
+    environment: production
+  annotations:
+    description: "PostgreSQL headless service for StatefulSet"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: production
+---
+# Redis Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: cache
+    environment: production
+  annotations:
+    description: "Redis cache service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: 6379
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/instance: production
+---
+# Redis Headless Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-headless
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: cache
+    environment: production
+  annotations:
+    description: "Redis headless service for StatefulSet"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: 6379
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/instance: production
+---
+# MongoDB Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: analytics
+    environment: production
+  annotations:
+    description: "MongoDB analytics service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: mongodb
+    port: 27017
+    targetPort: 27017
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/instance: production
+---
+# MongoDB Headless Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-headless
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: analytics
+    environment: production
+  annotations:
+    description: "MongoDB headless service for StatefulSet"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: mongodb
+    port: 27017
+    targetPort: 27017
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/instance: production
+---
+# Elasticsearch Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: search
+    environment: production
+  annotations:
+    description: "Elasticsearch search service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9200
+    targetPort: 9200
+    protocol: TCP
+  - name: transport
+    port: 9300
+    targetPort: 9300
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/instance: production
+---
+# Elasticsearch Headless Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-headless
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: search
+    environment: production
+  annotations:
+    description: "Elasticsearch headless service for StatefulSet"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: http
+    port: 9200
+    targetPort: 9200
+    protocol: TCP
+  - name: transport
+    port: 9300
+    targetPort: 9300
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/instance: production
+---
+# API Gateway Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-api-gateway
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: api-gateway
+    environment: production
+  annotations:
+    description: "Main API Gateway service"
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8000
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: api-gateway
+    app.kubernetes.io/instance: production
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+---
+# ML Engine Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-ml-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: ml-engine
+    environment: production
+  annotations:
+    description: "Machine Learning engine service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8001
+    targetPort: 8001
+    protocol: TCP
+  - name: grpc
+    port: 8002
+    targetPort: 8002
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: ml-engine
+    app.kubernetes.io/instance: production
+---
+# Content Protection Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-protection-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: content-protection
+    environment: production
+  annotations:
+    description: "Content protection and fingerprinting service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8003
+    targetPort: 8003
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: content-protection
+    app.kubernetes.io/instance: production
+---
+# Analytics Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-analytics-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: analytics
+    environment: production
+  annotations:
+    description: "Analytics and reporting service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8004
+    targetPort: 8004
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: analytics
+    app.kubernetes.io/instance: production
+---
+# Celery Workers Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-celery-workers
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: workers
+    environment: production
+  annotations:
+    description: "Celery background workers service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: flower
+    port: 5555
+    targetPort: 5555
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: workers
+    app.kubernetes.io/instance: production
+---
+# File Upload Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-upload-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: file-upload
+    environment: production
+  annotations:
+    description: "File upload and processing service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8005
+    targetPort: 8005
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: file-upload
+    app.kubernetes.io/instance: production
+---
+# Monitoring Service (Prometheus)
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+  namespace: ia-monitoring
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: monitoring
+    environment: production
+  annotations:
+    description: "Prometheus monitoring service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9090
+    targetPort: 9090
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: production
+---
+# Grafana Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+  namespace: ia-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: dashboard
+    environment: production
+  annotations:
+    description: "Grafana dashboard service"
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: production
+---
+# AlertManager Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: alertmanager-service
+  namespace: ia-monitoring
+  labels:
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: alerting
+    environment: production
+  annotations:
+    description: "AlertManager service for alerts"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9093
+    targetPort: 9093
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/instance: production
+---
+# FAISS Vector Database Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: faiss-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: faiss
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: vector-database
+    environment: production
+  annotations:
+    description: "FAISS vector database service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: faiss
+    app.kubernetes.io/instance: production
+---
+# MinIO Storage Service (S3 Compatible)
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service
+  namespace: ia-storage
+  labels:
+    app.kubernetes.io/name: minio
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: object-storage
+    environment: production
+  annotations:
+    description: "MinIO S3-compatible object storage"
+spec:
+  type: LoadBalancer
+  ports:
+  - name: api
+    port: 9000
+    targetPort: 9000
+    protocol: TCP
+  - name: console
+    port: 9001
+    targetPort: 9001
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: minio
+    app.kubernetes.io/instance: production
+---
+# Audio Processing Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-audio-processor
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: audio-processor
+    environment: production
+  annotations:
+    description: "Audio processing and analysis service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8005
+    targetPort: 8005
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: audio-processor
+    app.kubernetes.io/instance: production
+---
+# Fingerprinting Engine Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-fingerprinting-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: fingerprinting-engine
+    environment: production
+  annotations:
+    description: "Multi-content fingerprinting engine service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8006
+    targetPort: 8006
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: fingerprinting-engine
+    app.kubernetes.io/instance: production
+---
+# Web Crawlers Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-web-crawlers
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: web-crawlers
+    environment: production
+  annotations:
+    description: "Web crawlers for content surveillance service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8007
+    targetPort: 8007
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: web-crawlers
+    app.kubernetes.io/instance: production
+---
+# Monetization Engine Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-monetization-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: monetization-engine
+    environment: production
+  annotations:
+    description: "Revenue tracking and monetization engine service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8008
+    targetPort: 8008
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: monetization-engine
+    app.kubernetes.io/instance: production
+---
+# Licensing Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-licensing-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: licensing-service
+    environment: production
+  annotations:
+    description: "Automated licensing and rights management service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8009
+    targetPort: 8009
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: licensing-service
+    app.kubernetes.io/instance: production
+---
+# Collaboration Engine Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-collaboration-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: collaboration-engine
+    environment: production
+  annotations:
+    description: "Artist collaboration and matching engine service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8010
+    targetPort: 8010
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: collaboration-engine
+    app.kubernetes.io/instance: production
+---
+# Distribution Engine Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-distribution-engine
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: distribution-engine
+    environment: production
+  annotations:
+    description: "Multi-platform content distribution service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8011
+    targetPort: 8011
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: distribution-engine
+    app.kubernetes.io/instance: production
+---
+# Notification Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-notification-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: notification-service
+    environment: production
+  annotations:
+    description: "Real-time notifications and alerts service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8012
+    targetPort: 8012
+    protocol: TCP
+  - name: websocket
+    port: 8013
+    targetPort: 8013
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: notification-service
+    app.kubernetes.io/instance: production
+---
+# Selenium Hub Service (for web crawling)
+apiVersion: v1
+kind: Service
+metadata:
+  name: selenium-hub-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: selenium
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: hub
+    environment: production
+  annotations:
+    description: "Selenium Grid Hub for web crawling"
+spec:
+  type: ClusterIP
+  ports:
+  - name: hub
+    port: 4444
+    targetPort: 4444
+    protocol: TCP
+  - name: event-bus
+    port: 4442
+    targetPort: 4442
+    protocol: TCP
+  - name: session-map
+    port: 4443
+    targetPort: 4443
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: selenium
+    app.kubernetes.io/component: hub
+    app.kubernetes.io/instance: production
+---
+# Video Processing Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-video-processor
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: video-processor
+    environment: production
+  annotations:
+    description: "Video processing and analysis service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8014
+    targetPort: 8014
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: video-processor
+    app.kubernetes.io/instance: production
+---
+# Image Processing Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-image-processor
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: image-processor
+    environment: production
+  annotations:
+    description: "Image processing and analysis service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8015
+    targetPort: 8015
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: image-processor
+    app.kubernetes.io/instance: production
+---
+# Text Processing Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-text-processor
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: text-processor
+    environment: production
+  annotations:
+    description: "Text processing and NLP service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8016
+    targetPort: 8016
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: text-processor
+    app.kubernetes.io/instance: production
+---
+# Blockchain Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-blockchain-service
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: blockchain-service
+    environment: production
+  annotations:
+    description: "Blockchain and smart contracts service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8017
+    targetPort: 8017
+    protocol: TCP
+  - name: rpc
+    port: 8545
+    targetPort: 8545
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: blockchain-service
+    app.kubernetes.io/instance: production
+---
+# Copyright Registry Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ia-copyright-registry
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: copyright-registry
+    environment: production
+  annotations:
+    description: "Digital copyright registry and verification service"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8018
+    targetPort: 8018
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: copyright-registry
+    app.kubernetes.io/instance: production

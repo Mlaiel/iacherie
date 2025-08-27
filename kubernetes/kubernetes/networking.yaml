@@ -1,0 +1,488 @@
+# Network Policies for IA Influencer Agent Platform
+# Micro-segmentation and network security controls
+#
+# Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
+# IA Influencer Agent + Content Protection Platform
+# All rights reserved.
+
+# Default Deny All Policy for Production Namespace
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Default deny all traffic - explicit allow required"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+# Allow Ingress Controller Access to API Gateway
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-to-api-gateway
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Allow ingress controller to access API gateway"
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: api-gateway
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+    ports:
+    - protocol: TCP
+      port: 8000
+---
+# Allow API Gateway to Database Services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway-to-databases
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Allow API gateway to access database services"
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: postgresql
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: api-gateway
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: analytics
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: workers
+    ports:
+    - protocol: TCP
+      port: 5432
+---
+# Allow Redis Access from Application Components
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-redis-access
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Allow application components to access Redis"
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: api-gateway
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: ml-engine
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: content-protection
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: analytics
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: workers
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: file-upload
+    ports:
+    - protocol: TCP
+      port: 6379
+---
+# Allow MongoDB Access from Analytics
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-mongodb-access
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Allow analytics service to access MongoDB"
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: mongodb
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: analytics
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: workers
+    ports:
+    - protocol: TCP
+      port: 27017
+---
+# Allow Elasticsearch Access
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-elasticsearch-access
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Allow application components to access Elasticsearch"
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: elasticsearch
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: content-protection
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: analytics
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: workers
+    - namespaceSelector:
+        matchLabels:
+          name: ia-monitoring
+    ports:
+    - protocol: TCP
+      port: 9200
+    - protocol: TCP
+      port: 9300
+---
+# Allow Inter-Service Communication
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-inter-service-communication
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Allow communication between application services"
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: ia-influencer-agent
+    ports:
+    - protocol: TCP
+      port: 8000
+    - protocol: TCP
+      port: 8001
+    - protocol: TCP
+      port: 8002
+    - protocol: TCP
+      port: 8003
+    - protocol: TCP
+      port: 8004
+    - protocol: TCP
+      port: 8005
+    - protocol: TCP
+      port: 5555
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: ia-influencer-agent
+    ports:
+    - protocol: TCP
+      port: 8000
+    - protocol: TCP
+      port: 8001
+    - protocol: TCP
+      port: 8002
+    - protocol: TCP
+      port: 8003
+    - protocol: TCP
+      port: 8004
+    - protocol: TCP
+      port: 8005
+    - protocol: TCP
+      port: 5555
+---
+# Allow External API Access
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-external-api-access
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Allow services to access external APIs"
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ia-influencer-agent
+  policyTypes:
+  - Egress
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow HTTPS traffic to external APIs
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+  # Allow HTTP traffic (for APIs that don't support HTTPS)
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 80
+  # Allow SMTP for email notifications
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 587
+    - protocol: TCP
+      port: 465
+---
+# Allow Monitoring Access
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-monitoring-access
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Allow monitoring namespace to scrape metrics"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ia-monitoring
+    ports:
+    - protocol: TCP
+      port: 9090
+    - protocol: TCP
+      port: 9187
+    - protocol: TCP
+      port: 9121
+    - protocol: TCP
+      port: 9216
+    - protocol: TCP
+      port: 9114
+    - protocol: TCP
+      port: 8080
+---
+# Network Policy for Monitoring Namespace
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: monitoring-network-policy
+  namespace: ia-monitoring
+  labels:
+    app.kubernetes.io/name: monitoring
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Network policy for monitoring services"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow ingress from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+    ports:
+    - protocol: TCP
+      port: 3000
+    - protocol: TCP
+      port: 9090
+    - protocol: TCP
+      port: 9093
+  # Allow internal monitoring communication
+  - from:
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 3000
+    - protocol: TCP
+      port: 9090
+    - protocol: TCP
+      port: 9093
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow access to application namespace for metrics
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: ia-influencer-prod
+  # Allow HTTPS for external integrations (Slack, PagerDuty)
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+  # Allow SMTP for email alerts
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 587
+    - protocol: TCP
+      port: 465
+---
+# Network Policy for Storage Namespace
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: storage-network-policy
+  namespace: ia-storage
+  labels:
+    app.kubernetes.io/name: storage
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Network policy for storage services"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow ingress from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+    ports:
+    - protocol: TCP
+      port: 9000
+    - protocol: TCP
+      port: 9001
+  # Allow access from application namespace
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ia-influencer-prod
+    ports:
+    - protocol: TCP
+      port: 9000
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+# Deny Cross-Namespace Communication (except monitoring)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-cross-namespace
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: network-security
+    environment: production
+  annotations:
+    description: "Deny cross-namespace communication except monitoring"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  egress:
+  # Deny egress to other namespaces except monitoring and storage
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: ia-monitoring
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: ia-storage
+  # Allow same namespace communication
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: ia-influencer-prod
+  # Allow egress to external networks (internet)
+  - to: []

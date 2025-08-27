@@ -1,0 +1,297 @@
+# RBAC Configuration for IA Influencer Agent Platform
+# Role-Based Access Control with security best practices
+#
+# Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
+# IA Influencer Agent + Content Protection Platform
+# All rights reserved.
+
+# Service Account for Application
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ia-influencer-app
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: service-account
+    environment: production
+  annotations:
+    description: "Service account for IA Influencer Agent application"
+automountServiceAccountToken: true
+---
+# Service Account for Monitoring
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ia-monitoring-sa
+  namespace: ia-monitoring
+  labels:
+    app.kubernetes.io/name: monitoring
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: service-account
+    environment: production
+  annotations:
+    description: "Service account for monitoring services"
+automountServiceAccountToken: true
+---
+# Service Account for Storage Operations
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ia-storage-sa
+  namespace: ia-storage
+  labels:
+    app.kubernetes.io/name: storage
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/component: service-account
+    environment: production
+  annotations:
+    description: "Service account for storage operations"
+automountServiceAccountToken: true
+---
+# ClusterRole for Application
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ia-influencer-app-role
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: rbac
+rules:
+# Basic pod and service discovery
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+# ConfigMaps and Secrets (limited access)
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+  resourceNames: ["ia-app-secrets", "ia-db-secrets", "ia-api-keys"]
+# Events for logging
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+# Metrics access
+- apiGroups: ["metrics.k8s.io"]
+  resources: ["pods", "nodes"]
+  verbs: ["get", "list"]
+---
+# Role for Application Namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: ia-influencer-prod
+  name: ia-app-namespace-role
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: rbac
+rules:
+# Full access to own pods
+- apiGroups: [""]
+  resources: ["pods", "pods/log", "pods/status"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+# Service management
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+# ConfigMap management
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+# PVC management
+- apiGroups: [""]
+  resources: ["persistentvolumeclaims"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+# Deployment management
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+---
+# ClusterRole for Monitoring
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ia-monitoring-role
+  labels:
+    app.kubernetes.io/name: monitoring
+    app.kubernetes.io/component: rbac
+rules:
+# Metrics collection
+- apiGroups: [""]
+  resources: ["nodes", "nodes/metrics", "services", "endpoints", "pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "daemonsets", "replicasets", "statefulsets"]
+  verbs: ["get", "list", "watch"]
+# Metrics server access
+- apiGroups: ["metrics.k8s.io"]
+  resources: ["nodes", "pods"]
+  verbs: ["get", "list"]
+---
+# ClusterRole for Storage Operations
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ia-storage-role
+  labels:
+    app.kubernetes.io/name: storage
+    app.kubernetes.io/component: rbac
+rules:
+# Storage class and PV management
+- apiGroups: ["storage.k8s.io"]
+  resources: ["storageclasses"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["persistentvolumes", "persistentvolumeclaims"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+# Node access for storage provisioning
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list", "watch"]
+---
+# ClusterRoleBinding for Application
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ia-influencer-app-binding
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: rbac
+subjects:
+- kind: ServiceAccount
+  name: ia-influencer-app
+  namespace: ia-influencer-prod
+roleRef:
+  kind: ClusterRole
+  name: ia-influencer-app-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# RoleBinding for Application Namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ia-app-namespace-binding
+  namespace: ia-influencer-prod
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: rbac
+subjects:
+- kind: ServiceAccount
+  name: ia-influencer-app
+  namespace: ia-influencer-prod
+roleRef:
+  kind: Role
+  name: ia-app-namespace-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# ClusterRoleBinding for Monitoring
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ia-monitoring-binding
+  labels:
+    app.kubernetes.io/name: monitoring
+    app.kubernetes.io/component: rbac
+subjects:
+- kind: ServiceAccount
+  name: ia-monitoring-sa
+  namespace: ia-monitoring
+roleRef:
+  kind: ClusterRole
+  name: ia-monitoring-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# ClusterRoleBinding for Storage
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ia-storage-binding
+  labels:
+    app.kubernetes.io/name: storage
+    app.kubernetes.io/component: rbac
+subjects:
+- kind: ServiceAccount
+  name: ia-storage-sa
+  namespace: ia-storage
+roleRef:
+  kind: ClusterRole
+  name: ia-storage-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Pod Security Policy (if supported)
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: ia-influencer-psp
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: security
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  volumes:
+    - 'configMap'
+    - 'emptyDir'
+    - 'projected'
+    - 'secret'
+    - 'downwardAPI'
+    - 'persistentVolumeClaim'
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  seLinux:
+    rule: 'RunAsAny'
+  fsGroup:
+    rule: 'RunAsAny'
+  readOnlyRootFilesystem: false
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+---
+# ClusterRole for Pod Security Policy
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ia-psp-role
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: security
+rules:
+- apiGroups: ['policy']
+  resources: ['podsecuritypolicies']
+  verbs: ['use']
+  resourceNames: ['ia-influencer-psp']
+---
+# ClusterRoleBinding for Pod Security Policy
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ia-psp-binding
+  labels:
+    app.kubernetes.io/name: ia-influencer-agent
+    app.kubernetes.io/component: security
+roleRef:
+  kind: ClusterRole
+  name: ia-psp-role
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: ia-influencer-app
+  namespace: ia-influencer-prod
+- kind: ServiceAccount
+  name: ia-monitoring-sa
+  namespace: ia-monitoring
+- kind: ServiceAccount
+  name: ia-storage-sa
+  namespace: ia-storage

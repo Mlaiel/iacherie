@@ -1,0 +1,384 @@
+# IA Influencer Agent - Network Configuration Example
+# Enterprise network deployment configuration for content protection platform
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: All rights reserved - Unauthorized use prohibited
+
+# Network Orchestrator Configuration
+orchestrator:
+  name: "ia-influencer-network"
+  environment: "production"
+  region: "us-east-1"
+  
+  # Monitoring Settings
+  monitoring:
+    enabled: true
+    metrics_collection_interval: 60  # seconds
+    health_check_interval: 30       # seconds
+    alert_endpoints:
+      - "mlaiel@live.de"
+      - "webhook://monitoring.influencer-agent.com/alerts"
+  
+  # Security Settings
+  security:
+    level: "high"
+    threat_intelligence_feeds:
+      - "https://feeds.security.org/threats.json"
+      - "https://api.abuse.ch/v2/feeds/"
+    auto_block_threats: true
+    incident_response_enabled: true
+
+# VPC Configuration
+vpc:
+  name: "ia-platform-vpc"
+  cidr_block: "10.0.0.0/16"
+  region: "us-east-1"
+  cloud_provider: "aws"
+  enable_dns_hostnames: true
+  enable_dns_support: true
+  enable_flow_logs: true
+  network_tier: "premium"
+  
+  # Subnets for different workload types
+  subnets:
+    - name: "public-web-subnet"
+      cidr_block: "10.0.1.0/24"
+      subnet_type: "public"
+      availability_zone: "us-east-1a"
+      public_access: true
+      
+    - name: "private-api-subnet"
+      cidr_block: "10.0.2.0/24"
+      subnet_type: "private"
+      availability_zone: "us-east-1b"
+      public_access: false
+      
+    - name: "content-processing-subnet"
+      cidr_block: "10.0.3.0/24"
+      subnet_type: "content_processing"
+      availability_zone: "us-east-1a"
+      public_access: false
+      
+    - name: "ai-workloads-subnet"
+      cidr_block: "10.0.4.0/24"
+      subnet_type: "ai_workloads"
+      availability_zone: "us-east-1b"
+      public_access: false
+      
+    - name: "database-subnet"
+      cidr_block: "10.0.5.0/24"
+      subnet_type: "database"
+      availability_zone: "us-east-1c"
+      public_access: false
+  
+  # NAT Gateways for private subnet internet access
+  nat_gateways:
+    - name: "main-nat-gateway"
+      subnet_id: "public-web-subnet"
+      bandwidth: "5Gbps"
+      availability_zone: "us-east-1a"
+  
+  # VPC Endpoints for private AWS service access
+  vpc_endpoints:
+    - name: "s3-endpoint"
+      service_name: "com.amazonaws.us-east-1.s3"
+      endpoint_type: "Gateway"
+      
+    - name: "dynamodb-endpoint"
+      service_name: "com.amazonaws.us-east-1.dynamodb"
+      endpoint_type: "Gateway"
+
+# DNS Configuration
+dns:
+  zones:
+    - name: "platform-zone"
+      domain: "influencer-agent.com"
+      provider: "aws_route53"
+      private_zone: false
+      
+      # DNS Records
+      records:
+        - name: "api"
+          record_type: "A"
+          value: "1.2.3.4"
+          ttl: 300
+          
+        - name: "app"
+          record_type: "CNAME"
+          value: "app-lb.us-east-1.elb.amazonaws.com"
+          ttl: 300
+          
+        - name: "content"
+          record_type: "A"
+          value: "5.6.7.8"
+          ttl: 300
+          
+        - name: "@"
+          record_type: "MX"
+          value: "10 mail.influencer-agent.com"
+          ttl: 3600
+          priority: 10
+      
+      # Health Checks
+      health_checks:
+        - name: "api-health-check"
+          target: "api.influencer-agent.com"
+          check_type: "https"
+          resource_path: "/health"
+          request_interval: 30
+          failure_threshold: 3
+          
+        - name: "app-health-check"
+          target: "app.influencer-agent.com"
+          check_type: "https"
+          resource_path: "/ping"
+          request_interval: 30
+          failure_threshold: 3
+
+# Firewall Configuration
+firewall:
+  default_action: "deny"
+  log_level: "INFO"
+  intrusion_detection: true
+  ddos_protection: true
+  geo_blocking: true
+  bot_protection: true
+  
+  # Security Policies
+  policies:
+    - name: "platform-security-policy"
+      default_action: "deny"
+      
+      rules:
+        # Allow HTTPS traffic
+        - name: "allow-https"
+          priority: 100
+          action: "allow"
+          protocol: "https"
+          destination_ports: [443]
+          description: "Allow HTTPS traffic"
+          
+        # Allow HTTP with redirect to HTTPS
+        - name: "allow-http-redirect"
+          priority: 101
+          action: "allow"
+          protocol: "http"
+          destination_ports: [80]
+          description: "Allow HTTP for HTTPS redirect"
+          
+        # API rate limiting
+        - name: "api-rate-limit"
+          priority: 200
+          action: "rate_limit"
+          protocol: "https"
+          destination_ports: [443]
+          rate_limit: 1000  # requests per minute
+          description: "API rate limiting"
+          
+        # Block common attack ports
+        - name: "block-attack-ports"
+          priority: 900
+          action: "drop"
+          protocol: "tcp"
+          destination_ports: [23, 135, 139, 445, 1433, 3389]
+          description: "Block common attack ports"
+          
+        # Geographic blocking (example countries)
+        - name: "geo-block-high-risk"
+          priority: 800
+          action: "drop"
+          protocol: "all"
+          countries_blocked: ["CN", "RU", "KP"]
+          description: "Block high-risk countries"
+  
+  # DDoS Protection
+  ddos_protection:
+    threshold: 10000  # requests per minute
+    action: "rate_limit"
+    auto_mitigation: true
+    notification_enabled: true
+
+# Ingress Configuration
+ingress:
+  rules:
+    # Main API ingress
+    - host: "api.influencer-agent.com"
+      path: "/api/v1"
+      service_name: "ia-api-service"
+      port: 8000
+      protocol: "https"
+      ssl_enabled: true
+      rate_limit: 2000  # requests per minute
+      auth_required: true
+      tenant_isolation: true
+      
+    # Web application ingress
+    - host: "app.influencer-agent.com"
+      path: "/"
+      service_name: "ia-web-service"
+      port: 3000
+      protocol: "https"
+      ssl_enabled: true
+      rate_limit: 5000
+      auth_required: false
+      
+    # Content processing ingress
+    - host: "content.influencer-agent.com"
+      path: "/upload"
+      service_name: "content-processing-service"
+      port: 8080
+      protocol: "https"
+      ssl_enabled: true
+      rate_limit: 500  # Lower limit for heavy uploads
+      auth_required: true
+      
+    # AI processing ingress
+    - host: "ai.influencer-agent.com"
+      path: "/process"
+      service_name: "ai-processing-service"
+      port: 8090
+      protocol: "https"
+      ssl_enabled: true
+      rate_limit: 100  # Very limited for AI processing
+      auth_required: true
+  
+  # SSL Certificates
+  ssl_certificates:
+    - name: "main-cert"
+      domains:
+        - "influencer-agent.com"
+        - "*.influencer-agent.com"
+      provider: "letsencrypt"
+      auto_renew: true
+      
+    - name: "api-cert"
+      domains:
+        - "api.influencer-agent.com"
+      provider: "letsencrypt"
+      auto_renew: true
+  
+  # Load Balancing
+  load_balancing:
+    - service_name: "ia-api-service"
+      method: "weighted_round_robin"
+      backends:
+        - name: "api-backend-1"
+          host: "10.0.2.10"
+          port: 8000
+          weight: 100
+          max_connections: 1000
+          
+        - name: "api-backend-2"
+          host: "10.0.2.11"
+          port: 8000
+          weight: 100
+          max_connections: 1000
+    
+    - service_name: "content-processing-service"
+      method: "least_connections"
+      backends:
+        - name: "content-backend-1"
+          host: "10.0.3.10"
+          port: 8080
+          weight: 100
+          max_connections: 500
+          
+        - name: "content-backend-2"
+          host: "10.0.3.11"
+          port: 8080
+          weight: 100
+          max_connections: 500
+
+# Network Failover Configuration
+failover:
+  configurations:
+    - name: "api-failover"
+      primary_endpoint: "api-primary.influencer-agent.com"
+      secondary_endpoint: "api-secondary.influencer-agent.com"
+      health_check_interval: 30
+      failure_threshold: 3
+      recovery_threshold: 2
+      automatic_failback: true
+      
+    - name: "content-failover"
+      primary_endpoint: "content-primary.influencer-agent.com"
+      secondary_endpoint: "content-secondary.influencer-agent.com"
+      health_check_interval: 60
+      failure_threshold: 2
+      recovery_threshold: 1
+      automatic_failback: false
+
+# Geographic DNS Routing
+geo_dns:
+  configurations:
+    - name: "global-api-routing"
+      default_endpoint: "api.influencer-agent.com"
+      geo_routing_rules:
+        - identifier: "europe"
+          endpoint: "api-eu.influencer-agent.com"
+          geo_location:
+            continent_code: "EU"
+            
+        - identifier: "asia"
+          endpoint: "api-asia.influencer-agent.com"
+          geo_location:
+            continent_code: "AS"
+            
+        - identifier: "america"
+          endpoint: "api-us.influencer-agent.com"
+          geo_location:
+            continent_code: "NA"
+
+# Monitoring and Alerting
+monitoring:
+  prometheus:
+    enabled: true
+    port: 9090
+    scrape_interval: "15s"
+    
+  grafana:
+    enabled: true
+    port: 3001
+    dashboards:
+      - "network-overview"
+      - "security-events"
+      - "performance-metrics"
+  
+  alerting:
+    rules:
+      - name: "high-latency"
+        condition: "avg_response_time > 500ms"
+        duration: "5m"
+        severity: "warning"
+        
+      - name: "error-rate"
+        condition: "error_rate > 5%"
+        duration: "2m"
+        severity: "critical"
+        
+      - name: "ddos-attack"
+        condition: "requests_per_minute > 10000"
+        duration: "1m"
+        severity: "critical"
+        
+      - name: "certificate-expiry"
+        condition: "cert_expires_in < 30d"
+        duration: "1h"
+        severity: "warning"
+
+# Compliance and Audit
+compliance:
+  gdpr:
+    enabled: true
+    data_retention_days: 90
+    audit_logs: true
+    
+  soc2:
+    enabled: true
+    security_controls: true
+    audit_trail: true
+    
+  pci_dss:
+    enabled: false  # Enable if processing payments
+    network_segmentation: true
+    encryption_in_transit: true
