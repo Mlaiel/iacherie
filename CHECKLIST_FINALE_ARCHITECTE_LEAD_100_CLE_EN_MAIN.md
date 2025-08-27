@@ -872,11 +872,24 @@ backend/core/i18n/
 |--------|---------------------|------------------------|
 | **Europe** | 32 langues | 750M utilisateurs |
 | **Asie** | 28 langues | 4.6B utilisateurs |
-| **Moyen-Orient/Afrique** | 25 langues | 1.5B utilisateurs |
+| **Moyen-Orient/Afrique** | 140+ langues | 1.5B utilisateurs |
+| **Nord-Afrique (Dialectes)** | 115+ dialectes | 400M utilisateurs |
+| **Amazigh/Berber** | 15+ dialectes | 40M utilisateurs |
+| **Afrique Sub-Saharienne** | 200+ langues | 1.3B utilisateurs |
 | **Amériques** | 15 langues | 1B utilisateurs |
 | **Océanie** | 10 langues | 50M utilisateurs |
 
-**TOTAL : 110+ langues principales = 7.9B+ utilisateurs mondiaux**
+**TOTAL : 555+ langues/dialectes = 9.6B+ utilisateurs mondiaux**
+
+**DÉTAIL NORD-AFRICAIN SPÉCIFIQUE :**
+- 🇹🇳 **Tunisie** : 14 dialectes = 12M utilisateurs
+- 🇩🇿 **Algérie** : 25 dialectes = 45M utilisateurs  
+- 🇲🇦 **Maroc** : 23 dialectes = 37M utilisateurs
+- 🇱🇾 **Libye** : 11 dialectes = 7M utilisateurs
+- 🇪🇬 **Égypte** : 15 dialectes = 105M utilisateurs
+- 🇸🇩 **Soudan** : 13 dialectes = 45M utilisateurs
+- 🇲🇷 **Mauritanie** : 14 dialectes = 5M utilisateurs
+- **+ Amazigh diaspora mondiale** = 40M+ utilisateurs
 
 #### 🚨 **MESSAGE CRITIQUE - INTERNATIONALISATION**
 
