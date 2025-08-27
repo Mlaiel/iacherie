@@ -1,0 +1,200 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-ai-engine
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-ai-engine
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: ai-engine
+    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ainflue-ai-engine
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ainflue-ai-engine
+        app.kubernetes.io/instance: production
+        app.kubernetes.io/version: "1.0"
+        app.kubernetes.io/component: ai-engine
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-service-account
+      imagePullSecrets:
+        - name: docker-registry-secret
+      containers:
+      - name: ai-engine
+        image: ghcr.io/mlaiel/ainflue/ai-engine:1.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8003
+          protocol: TCP
+        - name: metrics
+          containerPort: 9090
+          protocol: TCP
+        env:
+        - name: SERVICE_NAME
+          value: "ai-engine"
+        - name: SERVICE_PORT
+          value: "8003"
+        - name: GPU_ENABLED
+          value: "false"
+        - name: MODEL_CACHE_SIZE
+          value: "2048"
+        - name: BATCH_PROCESSING_SIZE
+          value: "8"
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2Gi
+          limits:
+            cpu: 2000m
+            memory: 8Gi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 20
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        volumeMounts:
+        - name: ai-models
+          mountPath: /app/models
+        - name: ai-cache
+          mountPath: /app/cache
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: ai-models
+        persistentVolumeClaim:
+          claimName: ai-models-pvc
+      - name: ai-cache
+        emptyDir:
+          sizeLimit: 4Gi
+      - name: temp-storage
+        emptyDir:
+          sizeLimit: 2Gi
+      nodeSelector:
+        node-type: cpu-optimized
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - ainflue-ai-engine
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-ai-engine-service
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-ai-engine
+    app.kubernetes.io/component: ai-engine
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8003
+    targetPort: http
+    protocol: TCP
+  - name: metrics
+    port: 9090
+    targetPort: metrics
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ainflue-ai-engine
+    app.kubernetes.io/instance: production
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-models-pvc
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-ai-engine
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: gp2
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-ai-engine-hpa
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-ai-engine
+    app.kubernetes.io/component: autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-ai-engine
+  minReplicas: 1
+  maxReplicas: 6
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 85
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 180
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 600
+      policies:
+      - type: Percent
+        value: 25
+        periodSeconds: 120
