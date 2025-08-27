@@ -1,32 +1,54 @@
 #!/bin/bash
 
+# =================================================================
 # Ainflue Platform Deployment Script
-# Automated deployment for production, staging, and development environments
-# 
 # Author: Fahed Mlaiel (mlaiel@live.de)
-# Version: 1.0.0
+# Description: Complete automated deployment for Ainflue Platform
+# Usage: ./scripts/deploy.sh [environment] [options]
+# =================================================================
 
-set -e
+set -euo pipefail
 
-# Colors for output
+# Color codes for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# Default values
-ENVIRONMENT="production"
+# Configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+ENVIRONMENT="${1:-production}"
 NAMESPACE="ainflue"
-DOCKER_REGISTRY="registry.ainflue.com"
-IMAGE_TAG="latest"
-DRY_RUN=false
-SKIP_TESTS=false
-FORCE_DEPLOY=false
+MONITORING_NAMESPACE="ainflue-monitoring"
+DOCKER_REGISTRY="${DOCKER_REGISTRY:-docker.io/ainflue}"
+IMAGE_TAG="${IMAGE_TAG:-latest}"
+KUBECONFIG="${KUBECONFIG:-$HOME/.kube/config}"
 
-# Function to print colored output
-print_status() {
+# Function definitions
+log_info() {
     echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+log_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+log_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+log_header() {
+    echo -e "${PURPLE}========================================${NC}"
+    echo -e "${PURPLE}$1${NC}"
+    echo -e "${PURPLE}========================================${NC}"
 }
 
 print_success() {

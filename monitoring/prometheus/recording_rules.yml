@@ -1,0 +1,316 @@
+# Prometheus Recording Rules for Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Optimized recording rules for performance and business metrics
+
+groups:
+  # System Resource Aggregations
+  - name: system_resource_aggregations
+    interval: 30s
+    rules:
+      # CPU Usage aggregations
+      - record: ainflue:instance_cpu_usage:rate5m
+        expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+        labels:
+          service_type: "system"
+
+      - record: ainflue:namespace_cpu_usage:rate5m
+        expr: sum by (namespace) (rate(container_cpu_usage_seconds_total{namespace=~"ainflue.*"}[5m]))
+        labels:
+          service_type: "application"
+
+      # Memory Usage aggregations
+      - record: ainflue:instance_memory_usage:percentage
+        expr: 100 - ((node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100)
+        labels:
+          service_type: "system"
+
+      - record: ainflue:namespace_memory_usage:percentage
+        expr: sum by (namespace) (container_memory_working_set_bytes{namespace=~"ainflue.*"}) / sum by (namespace) (cluster:namespace_memory:sum) * 100
+        labels:
+          service_type: "application"
+
+      # Disk Usage aggregations
+      - record: ainflue:instance_disk_usage:percentage
+        expr: 100 - ((node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100)
+        labels:
+          service_type: "system"
+
+      # Network aggregations
+      - record: ainflue:instance_network_receive:rate5m
+        expr: rate(node_network_receive_bytes_total{device!="lo"}[5m])
+        labels:
+          service_type: "system"
+
+      - record: ainflue:instance_network_transmit:rate5m
+        expr: rate(node_network_transmit_bytes_total{device!="lo"}[5m])
+        labels:
+          service_type: "system"
+
+  # Application Performance Aggregations
+  - name: application_performance_aggregations
+    interval: 30s
+    rules:
+      # API Response times
+      - record: ainflue:api_response_time:p95_5m
+        expr: histogram_quantile(0.95, sum by (le, method, endpoint) (rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])))
+        labels:
+          service_type: "api"
+
+      - record: ainflue:api_response_time:p99_5m
+        expr: histogram_quantile(0.99, sum by (le, method, endpoint) (rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])))
+        labels:
+          service_type: "api"
+
+      # API Request rates
+      - record: ainflue:api_request_rate:5m
+        expr: sum by (method, endpoint, status_code) (rate(http_requests_total{job="ainflue-api"}[5m]))
+        labels:
+          service_type: "api"
+
+      # API Error rates
+      - record: ainflue:api_error_rate:5m
+        expr: sum by (method, endpoint) (rate(http_requests_total{job="ainflue-api",status_code=~"5.."}[5m])) / sum by (method, endpoint) (rate(http_requests_total{job="ainflue-api"}[5m]))
+        labels:
+          service_type: "api"
+
+      # AI Engine performance
+      - record: ainflue:ai_processing_time:p95_5m
+        expr: histogram_quantile(0.95, sum by (le, model_type) (rate(ai_processing_duration_seconds_bucket{job="ai-engine"}[5m])))
+        labels:
+          service_type: "ai"
+
+      - record: ainflue:ai_processing_rate:5m
+        expr: sum by (model_type, operation) (rate(ai_operations_total{job="ai-engine"}[5m]))
+        labels:
+          service_type: "ai"
+
+  # Business Metrics Aggregations
+  - name: business_metrics_aggregations
+    interval: 60s
+    rules:
+      # Revenue metrics
+      - record: ainflue:revenue_per_minute:sum
+        expr: sum(increase(revenue_total_cents[1m])) / 100
+        labels:
+          metric_type: "revenue"
+
+      - record: ainflue:revenue_per_hour:sum
+        expr: sum(increase(revenue_total_cents[1h])) / 100
+        labels:
+          metric_type: "revenue"
+
+      - record: ainflue:revenue_per_day:sum
+        expr: sum(increase(revenue_total_cents[1d])) / 100
+        labels:
+          metric_type: "revenue"
+
+      # Revenue by platform
+      - record: ainflue:revenue_by_platform:hourly
+        expr: sum by (platform) (increase(revenue_total_cents[1h])) / 100
+        labels:
+          metric_type: "revenue"
+          granularity: "hourly"
+
+      - record: ainflue:revenue_by_platform:daily
+        expr: sum by (platform) (increase(revenue_total_cents[1d])) / 100
+        labels:
+          metric_type: "revenue"
+          granularity: "daily"
+
+      # User engagement metrics
+      - record: ainflue:active_users:5m
+        expr: count by (user_type) (last_activity_timestamp > (time() - 300))
+        labels:
+          metric_type: "engagement"
+
+      - record: ainflue:active_users:hourly
+        expr: count by (user_type) (last_activity_timestamp > (time() - 3600))
+        labels:
+          metric_type: "engagement"
+
+      - record: ainflue:active_users:daily
+        expr: count by (user_type) (last_activity_timestamp > (time() - 86400))
+        labels:
+          metric_type: "engagement"
+
+      # Content protection metrics
+      - record: ainflue:content_violations:rate_5m
+        expr: sum by (platform, violation_type) (rate(content_violations_total[5m]))
+        labels:
+          metric_type: "protection"
+
+      - record: ainflue:content_protected:rate_5m
+        expr: sum by (content_type) (rate(content_fingerprints_created_total[5m]))
+        labels:
+          metric_type: "protection"
+
+      # Monetization metrics
+      - record: ainflue:monetization_events:rate_5m
+        expr: sum by (event_type, platform) (rate(monetization_events_total[5m]))
+        labels:
+          metric_type: "monetization"
+
+  # Database Performance Aggregations
+  - name: database_performance_aggregations
+    interval: 30s
+    rules:
+      # PostgreSQL metrics
+      - record: ainflue:postgres_connections:utilization
+        expr: sum(pg_stat_database_numbackends) / sum(pg_settings_max_connections) * 100
+        labels:
+          service_type: "database"
+          database_type: "postgresql"
+
+      - record: ainflue:postgres_query_time:p95_5m
+        expr: histogram_quantile(0.95, sum by (le) (rate(pg_stat_statements_mean_time_bucket[5m])))
+        labels:
+          service_type: "database"
+          database_type: "postgresql"
+
+      - record: ainflue:postgres_locks:count
+        expr: sum by (mode) (pg_locks_count)
+        labels:
+          service_type: "database"
+          database_type: "postgresql"
+
+      # Redis metrics
+      - record: ainflue:redis_memory:utilization
+        expr: redis_memory_used_bytes / redis_memory_max_bytes * 100
+        labels:
+          service_type: "cache"
+          cache_type: "redis"
+
+      - record: ainflue:redis_commands:rate_5m
+        expr: rate(redis_commands_processed_total[5m])
+        labels:
+          service_type: "cache"
+          cache_type: "redis"
+
+      - record: ainflue:redis_hit_ratio:5m
+        expr: rate(redis_keyspace_hits_total[5m]) / (rate(redis_keyspace_hits_total[5m]) + rate(redis_keyspace_misses_total[5m]))
+        labels:
+          service_type: "cache"
+          cache_type: "redis"
+
+  # Platform Integration Metrics
+  - name: platform_integration_aggregations
+    interval: 60s
+    rules:
+      # Platform API success rates
+      - record: ainflue:platform_api_success_rate:5m
+        expr: sum by (platform) (rate(platform_api_requests_total{status="success"}[5m])) / sum by (platform) (rate(platform_api_requests_total[5m]))
+        labels:
+          metric_type: "integration"
+
+      # Platform API response times
+      - record: ainflue:platform_api_response_time:p95_5m
+        expr: histogram_quantile(0.95, sum by (le, platform) (rate(platform_api_duration_seconds_bucket[5m])))
+        labels:
+          metric_type: "integration"
+
+      # Platform API rate limit usage
+      - record: ainflue:platform_api_rate_limit:utilization
+        expr: platform_api_requests_used / platform_api_requests_limit * 100
+        labels:
+          metric_type: "integration"
+
+      # Crawler performance
+      - record: ainflue:crawler_success_rate:5m
+        expr: sum by (platform, crawler_type) (rate(crawler_operations_total{status="success"}[5m])) / sum by (platform, crawler_type) (rate(crawler_operations_total[5m]))
+        labels:
+          metric_type: "crawler"
+
+      - record: ainflue:crawler_content_found:rate_5m
+        expr: sum by (platform, content_type) (rate(crawler_content_found_total[5m]))
+        labels:
+          metric_type: "crawler"
+
+  # SLA and Performance Indicators
+  - name: sla_performance_indicators
+    interval: 300s  # 5 minutes
+    rules:
+      # API Availability (99.9% target)
+      - record: ainflue:api_availability:5m
+        expr: 1 - (sum(rate(http_requests_total{job="ainflue-api",status_code=~"5.."}[5m])) / sum(rate(http_requests_total{job="ainflue-api"}[5m])))
+        labels:
+          sla_type: "availability"
+          target: "99.9"
+
+      # Response Time SLA (< 2s for 95% of requests)
+      - record: ainflue:api_response_time_sla:5m
+        expr: histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m]))) < 2
+        labels:
+          sla_type: "response_time"
+          target: "2s_p95"
+
+      # Error Budget consumption
+      - record: ainflue:error_budget_consumption:hourly
+        expr: 1 - ainflue:api_availability:5m
+        labels:
+          sla_type: "error_budget"
+
+  # AI Model Performance
+  - name: ai_model_performance
+    interval: 60s
+    rules:
+      # Model accuracy metrics
+      - record: ainflue:ai_model_accuracy:5m
+        expr: sum by (model_name, model_version) (rate(ai_model_correct_predictions_total[5m])) / sum by (model_name, model_version) (rate(ai_model_predictions_total[5m]))
+        labels:
+          metric_type: "ai_performance"
+
+      # Content fingerprinting performance
+      - record: ainflue:fingerprinting_accuracy:5m
+        expr: sum by (content_type) (rate(fingerprint_matches_correct_total[5m])) / sum by (content_type) (rate(fingerprint_matches_total[5m]))
+        labels:
+          metric_type: "ai_performance"
+
+      # Processing queue depth
+      - record: ainflue:ai_queue_depth:current
+        expr: ai_processing_queue_size
+        labels:
+          metric_type: "ai_performance"
+
+  # Security Metrics
+  - name: security_metrics
+    interval: 60s
+    rules:
+      # Authentication failure rate
+      - record: ainflue:auth_failure_rate:5m
+        expr: sum(rate(auth_attempts_total{status="failed"}[5m])) / sum(rate(auth_attempts_total[5m]))
+        labels:
+          metric_type: "security"
+
+      # Rate limiting triggered
+      - record: ainflue:rate_limit_triggered:5m
+        expr: sum by (endpoint) (rate(rate_limit_triggered_total[5m]))
+        labels:
+          metric_type: "security"
+
+      # Suspicious activity detected
+      - record: ainflue:suspicious_activity:5m
+        expr: sum by (activity_type) (rate(suspicious_activity_total[5m]))
+        labels:
+          metric_type: "security"
+
+  # Cost Optimization Metrics
+  - name: cost_optimization_aggregations
+    interval: 300s
+    rules:
+      # Infrastructure costs per service
+      - record: ainflue:infrastructure_cost:hourly
+        expr: sum by (service, resource_type) (infrastructure_cost_per_hour)
+        labels:
+          metric_type: "cost"
+
+      # Cost per API request
+      - record: ainflue:cost_per_request:5m
+        expr: sum(infrastructure_cost_per_hour) / sum(rate(http_requests_total{job="ainflue-api"}[5m]) * 3600)
+        labels:
+          metric_type: "cost"
+
+      # ROI metrics
+      - record: ainflue:roi:hourly
+        expr: ainflue:revenue_per_hour:sum / sum(infrastructure_cost_per_hour)
+        labels:
+          metric_type: "business"
