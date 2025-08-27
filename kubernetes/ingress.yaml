@@ -1,0 +1,254 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ainflue-ingress
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue
+    app.kubernetes.io/component: ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://app.ainflue.com,https://ainflue.com"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    nginx.ingress.kubernetes.io/client-body-buffer-size: "100M"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100M"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: DENY";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-XSS-Protection: 1; mode=block";
+      more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains";
+      more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";
+      more_set_headers "Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'";
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - api.ainflue.com
+    - app.ainflue.com
+    - ainflue.com
+    secretName: ainflue-tls-secret
+  rules:
+  - host: api.ainflue.com
+    http:
+      paths:
+      - path: /v1/analytics
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-analytics-service
+            port:
+              number: 8002
+      - path: /v1/crawler
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-crawler-service
+            port:
+              number: 8001
+      - path: /v1/ai
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-ai-engine-service
+            port:
+              number: 8003
+      - path: /v1/collaboration
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-api-service
+            port:
+              number: 8000
+      - path: /v1/monetization
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-api-service
+            port:
+              number: 8000
+      - path: /v1/protection
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-api-service
+            port:
+              number: 8000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-api-service
+            port:
+              number: 8000
+  - host: app.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-frontend-service
+            port:
+              number: 3000
+  - host: ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-website-service
+            port:
+              number: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ainflue-monitoring-ingress
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue
+    app.kubernetes.io/component: monitoring-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+    nginx.ingress.kubernetes.io/auth-realm: "Ainflue Monitoring - Authentication Required"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - monitoring.ainflue.com
+    - grafana.ainflue.com
+    - prometheus.ainflue.com
+    secretName: monitoring-tls-secret
+  rules:
+  - host: monitoring.ainflue.com
+    http:
+      paths:
+      - path: /grafana
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana-service
+            port:
+              number: 3000
+      - path: /prometheus
+        pathType: Prefix
+        backend:
+          service:
+            name: prometheus-service
+            port:
+              number: 9090
+      - path: /alertmanager
+        pathType: Prefix
+        backend:
+          service:
+            name: alertmanager-service
+            port:
+              number: 9093
+  - host: grafana.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana-service
+            port:
+              number: 3000
+  - host: prometheus.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: prometheus-service
+            port:
+              number: 9090
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: monitoring-basic-auth
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue
+    app.kubernetes.io/component: monitoring-auth
+type: Opaque
+stringData:
+  auth: |
+    admin:$2y$10$CHANGE_THIS_BCRYPT_HASH_FOR_MONITORING_ACCESS
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-network-policy
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue
+    app.kubernetes.io/component: security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/part-of: ainflue-platform
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: ainflue-platform
+    ports:
+    - protocol: TCP
+      port: 8000
+    - protocol: TCP
+      port: 8001
+    - protocol: TCP
+      port: 8002
+    - protocol: TCP
+      port: 8003
+    - protocol: TCP
+      port: 9090
+  egress:
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 5432
+    - protocol: TCP
+      port: 6379
+    - protocol: TCP
+      port: 27017
+    - protocol: TCP
+      port: 9200

@@ -1,0 +1,196 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-crawler
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-crawler
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: crawler
+    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ainflue-crawler
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ainflue-crawler
+        app.kubernetes.io/instance: production
+        app.kubernetes.io/version: "1.0"
+        app.kubernetes.io/component: crawler
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-service-account
+      imagePullSecrets:
+        - name: docker-registry-secret
+      containers:
+      - name: crawler
+        image: ghcr.io/mlaiel/ainflue/crawler:1.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8001
+          protocol: TCP
+        - name: metrics
+          containerPort: 9090
+          protocol: TCP
+        env:
+        - name: SERVICE_NAME
+          value: "crawler"
+        - name: SERVICE_PORT
+          value: "8001"
+        - name: CRAWLER_CONCURRENT_JOBS
+          value: "5"
+        - name: SELENIUM_GRID_URL
+          value: "http://selenium-hub:4444/wd/hub"
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            cpu: 300m
+            memory: 1Gi
+          limits:
+            cpu: 1500m
+            memory: 4Gi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 45
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
+        volumeMounts:
+        - name: crawler-storage
+          mountPath: /app/downloads
+        - name: cache-storage
+          mountPath: /app/cache
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: crawler-storage
+        persistentVolumeClaim:
+          claimName: crawler-pvc
+      - name: cache-storage
+        emptyDir:
+          sizeLimit: 2Gi
+      - name: temp-storage
+        emptyDir:
+          sizeLimit: 1Gi
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - ainflue-crawler
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-crawler-service
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-crawler
+    app.kubernetes.io/component: crawler
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8001
+    targetPort: http
+    protocol: TCP
+  - name: metrics
+    port: 9090
+    targetPort: metrics
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ainflue-crawler
+    app.kubernetes.io/instance: production
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: crawler-pvc
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-crawler
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: gp2
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-crawler-hpa
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-crawler
+    app.kubernetes.io/component: autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-crawler
+  minReplicas: 1
+  maxReplicas: 8
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 85
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 120
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 30
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 20
+        periodSeconds: 60

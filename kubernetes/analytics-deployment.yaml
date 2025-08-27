@@ -1,0 +1,187 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-analytics
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-analytics
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: analytics
+    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ainflue-analytics
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ainflue-analytics
+        app.kubernetes.io/instance: production
+        app.kubernetes.io/version: "1.0"
+        app.kubernetes.io/component: analytics
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-service-account
+      imagePullSecrets:
+        - name: docker-registry-secret
+      containers:
+      - name: analytics
+        image: ghcr.io/mlaiel/ainflue/analytics:1.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8002
+          protocol: TCP
+        - name: metrics
+          containerPort: 9090
+          protocol: TCP
+        env:
+        - name: SERVICE_NAME
+          value: "analytics"
+        - name: SERVICE_PORT
+          value: "8002"
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: analytics-storage
+          mountPath: /app/data
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: analytics-storage
+        persistentVolumeClaim:
+          claimName: analytics-pvc
+      - name: temp-storage
+        emptyDir:
+          sizeLimit: 1Gi
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - ainflue-analytics
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-analytics-service
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-analytics
+    app.kubernetes.io/component: analytics
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8002
+    targetPort: http
+    protocol: TCP
+  - name: metrics
+    port: 9090
+    targetPort: metrics
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: ainflue-analytics
+    app.kubernetes.io/instance: production
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: analytics-pvc
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-analytics
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: gp2
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-analytics-hpa
+  namespace: ainflue
+  labels:
+    app.kubernetes.io/name: ainflue-analytics
+    app.kubernetes.io/component: autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-analytics
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 60
