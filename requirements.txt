@@ -42,7 +42,7 @@ librosa==0.10.1
 soundfile==0.12.1
 pydub==0.25.1
 pyacoustid==1.2.2
-chromaprint==1.5.1
+chromaprint==0.5
 
 # Video Processing
 opencv-python==4.8.1.78
