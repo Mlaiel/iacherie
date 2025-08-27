@@ -40,6 +40,7 @@ class LanguageScript(Enum):
     DEVANAGARI = "devanagari"
     THAI = "thai"
     HEBREW = "hebrew"
+    TIFINAGH = "tifinagh"  # Amazigh/Berber script
 
 
 @dataclass
@@ -263,8 +264,171 @@ class InternationalizationManager:
             ("tkl", "Tokelauan", "Gagana Tokelau"),
         ]
         
+        # CRITICAL: Add Amazigh/Berber languages (missing from original)
+        amazigh_berber_languages = [
+            # Primary Amazigh/Berber Languages
+            ("tzm", "Central Atlas Tamazight", "ⵜⴰⵎⴰⵣⵉⵖⵜ"),
+            ("rif", "Tarifit (Rif Berber)", "ⵜⴰⵔⵉⴼⵉⵜ"),
+            ("shi", "Tashelhit (Souss Berber)", "ⵜⴰⵛⵍⵃⵉⵜ"),
+            ("kab", "Kabyle", "ⵜⴰⵇⴱⴰⵢⵍⵉⵜ"),
+            ("shy", "Chaouia (Shawiya)", "ⵜⴰⵛⴰⵡⵉⵜ"),
+            ("mzb", "Tumzabt (Mozabite)", "ⵜⵓⵎⵣⴰⴱⵜ"),
+            ("thv", "Tahaggart Tamahaq", "ⵜⴰⵀⴰⴳⴳⴰⵔⵜ"),
+            ("ttq", "Tawallammat Tamajaq", "ⵜⴰⵡⴰⵍⵍⴰⵎⵎⴰⵜ"),
+            ("taq", "Tamasheq", "ⵜⴰⵎⴰⵛⴻⵖ"),
+            ("zen", "Zenaga", "ⵜⵓⵣⵏⴰⴳⴰ"),
+            
+            # Regional Amazigh Dialects - Morocco
+            ("tzm-MA-cent", "Central Morocco Tamazight", "ⵜⴰⵎⴰⵣⵉⵖⵜ ⵏ ⵡⴰⵟⵍⴰⵙ"),
+            ("rif-MA-north", "Northern Morocco Tarifit", "ⵜⴰⵔⵉⴼⵉⵜ ⵏ ⵓⴳⴰⴼⴰⵢ"),
+            ("shi-MA-south", "Southern Morocco Tashelhit", "ⵜⴰⵛⵍⵃⵉⵜ ⵏ ⵓⵏⵣⵓⵍ"),
+            
+            # Regional Amazigh Dialects - Algeria  
+            ("kab-DZ-tizi", "Tizi Ouzou Kabyle", "ⵜⴰⵇⴱⴰⵢⵍⵉⵜ ⵏ ⵜⵉⵣⵉ ⵡⴻⵣⵣⵓ"),
+            ("shy-DZ-aures", "Aurès Chaouia", "ⵜⴰⵛⴰⵡⵉⵜ ⵏ ⵡⴰⵡⵔⴰⵙ"),
+            ("mzb-DZ-ghardaia", "Ghardaïa Mozabite", "ⵜⵓⵎⵣⴰⴱⵜ ⵏ ⵖⴰⵔⴷⴰⵢⴰ"),
+            
+            # Regional Amazigh Dialects - Tuareg (Multi-country)
+            ("thv-DZ-hoggar", "Hoggar Tuareg (Algeria)", "ⵜⴰⵀⴰⴳⴳⴰⵔⵜ ⵏ ⵍⵣⴰⵢⴻⵔ"),
+            ("ttq-NE-niger", "Niger Tuareg", "ⵜⴰⵎⴰⵊⴰⵖ ⵏ ⵏⵉⵊⴻⵔ"),
+            ("taq-ML-mali", "Mali Tuareg", "ⵜⴰⵎⴰⵛⴻⵖ ⵏ ⵎⴰⵍⵉ"),
+            ("thv-LY-fezzan", "Fezzan Tuareg (Libya)", "ⵜⴰⵀⴰⴳⴳⴰⵔⵜ ⵏ ⴼⴻⵣⵣⴰⵏ"),
+            
+            # Additional Berber Languages
+            ("siz", "Siwi (Siwa Oasis)", "ⵙⵉⵡⵉ"),
+            ("jbn", "Nafusi (Jebel Nafusa)", "ⵏⴰⴼⵓⵙⵉ"),
+            ("gha", "Ghadamès Berber", "ⵖⴰⴷⴰⵎⴻⵙ"),
+            ("auj", "Awjila Berber", "ⴰⵡⵊⵉⵍⴰ"),
+            ("soc", "Sokna Berber", "ⵙⵓⴽⵏⴰ"),
+            
+            # Canary Islands (Historical)
+            ("guanche", "Guanche (Canary Islands)", "Guanche"),
+        ]
+        
+        # North African Arabic Dialects (Critical for completeness)
+        north_african_dialects = [
+            # Tunisian Regional Dialects
+            ("ar-TN-tunis", "Tunisian Arabic (Tunis)", "تونسي (تونس)"),
+            ("ar-TN-sfax", "Tunisian Arabic (Sfax)", "تونسي (صفاقس)"),
+            ("ar-TN-sousse", "Tunisian Arabic (Sousse)", "تونسي (سوسة)"),
+            ("ar-TN-gafsa", "Tunisian Arabic (Gafsa)", "تونسي (قفصة)"),
+            ("ar-TN-kairouan", "Tunisian Arabic (Kairouan)", "تونسي (القيروان)"),
+            ("ar-TN-bizerte", "Tunisian Arabic (Bizerte)", "تونسي (بنزرت)"),
+            ("ar-TN-gabes", "Tunisian Arabic (Gabès)", "تونسي (قابس)"),
+            ("ar-TN-tozeur", "Tunisian Arabic (Tozeur)", "تونسي (توزر)"),
+            ("ar-TN-mahdia", "Tunisian Arabic (Mahdia)", "تونسي (المهدية)"),
+            ("ar-TN-monastir", "Tunisian Arabic (Monastir)", "تونسي (المنستير)"),
+            ("ar-TN-nabeul", "Tunisian Arabic (Nabeul)", "تونسي (نابل)"),
+            ("ar-TN-kef", "Tunisian Arabic (Le Kef)", "تونسي (الكاف)"),
+            ("ar-TN-kasserine", "Tunisian Arabic (Kasserine)", "تونسي (القصرين)"),
+            ("ar-TN-medenine", "Tunisian Arabic (Médenine)", "تونسي (مدنين)"),
+            
+            # Algerian Regional Dialects
+            ("ar-DZ-algiers", "Algerian Arabic (Algiers)", "دزيري (الجزائر)"),
+            ("ar-DZ-oran", "Algerian Arabic (Oran)", "دزيري (وهران)"),
+            ("ar-DZ-constantine", "Algerian Arabic (Constantine)", "دزيري (قسنطينة)"),
+            ("ar-DZ-annaba", "Algerian Arabic (Annaba)", "دزيري (عنابة)"),
+            ("ar-DZ-setif", "Algerian Arabic (Sétif)", "دزيري (سطيف)"),
+            ("ar-DZ-tlemcen", "Algerian Arabic (Tlemcen)", "دزيري (تلمسان)"),
+            ("ar-DZ-batna", "Algerian Arabic (Batna)", "دزيري (باتنة)"),
+            ("ar-DZ-biskra", "Algerian Arabic (Biskra)", "دزيري (بسكرة)"),
+            ("ar-DZ-ouargla", "Algerian Arabic (Ouargla)", "دزيري (ورقلة)"),
+            ("ar-DZ-ghardaia", "Algerian Arabic (Ghardaïa)", "دزيري (غرداية)"),
+            ("ar-DZ-adrar", "Algerian Arabic (Adrar)", "دزيري (أدرار)"),
+            ("ar-DZ-tamanrasset", "Algerian Arabic (Tamanrasset)", "دزيري (تمنراست)"),
+            ("ar-DZ-bechar", "Algerian Arabic (Béchar)", "دزيري (بشار)"),
+            ("ar-DZ-tindouf", "Algerian Arabic (Tindouf)", "دزيري (تندوف)"),
+            ("ar-DZ-illizi", "Algerian Arabic (Illizi)", "دزيري (إليزي)"),
+            
+            # Moroccan Regional Dialects
+            ("ar-MA-casablanca", "Moroccan Arabic (Casablanca)", "دارجة (الدار البيضاء)"),
+            ("ar-MA-rabat", "Moroccan Arabic (Rabat)", "دارجة (الرباط)"),
+            ("ar-MA-fes", "Moroccan Arabic (Fès)", "دارجة (فاس)"),
+            ("ar-MA-marrakech", "Moroccan Arabic (Marrakech)", "دارجة (مراكش)"),
+            ("ar-MA-agadir", "Moroccan Arabic (Agadir)", "دارجة (أكادير)"),
+            ("ar-MA-tangier", "Moroccan Arabic (Tangier)", "دارجة (طنجة)"),
+            ("ar-MA-oujda", "Moroccan Arabic (Oujda)", "دارجة (وجدة)"),
+            ("ar-MA-tetouan", "Moroccan Arabic (Tétouan)", "دارجة (تطوان)"),
+            ("ar-MA-meknes", "Moroccan Arabic (Meknès)", "دارجة (مكناس)"),
+            ("ar-MA-kenitra", "Moroccan Arabic (Kénitra)", "دارجة (القنيطرة)"),
+            ("ar-MA-sale", "Moroccan Arabic (Salé)", "دارجة (سلا)"),
+            ("ar-MA-mohammedia", "Moroccan Arabic (Mohammedia)", "دارجة (المحمدية)"),
+            ("ar-MA-safi", "Moroccan Arabic (Safi)", "دارجة (آسفي)"),
+            ("ar-MA-essaouira", "Moroccan Arabic (Essaouira)", "دارجة (الصويرة)"),
+            ("ar-MA-ouarzazate", "Moroccan Arabic (Ouarzazate)", "دارجة (ورزازات)"),
+            ("ar-MA-errachidia", "Moroccan Arabic (Errachidia)", "دارجة (الراشيدية)"),
+            ("ar-MA-al-hoceima", "Moroccan Arabic (Al Hoceïma)", "دارجة (الحسيمة)"),
+            ("ar-MA-chefchaouen", "Moroccan Arabic (Chefchaouen)", "دارجة (شفشاون)"),
+            ("ar-MA-laayoune", "Moroccan Arabic (Laâyoune)", "دارجة (العيون)"),
+            ("ar-MA-dakhla", "Moroccan Arabic (Dakhla)", "دارجة (الداخلة)"),
+            
+            # Libyan Regional Dialects
+            ("ar-LY-tripoli", "Libyan Arabic (Tripoli)", "ليبي (طرابلس)"),
+            ("ar-LY-benghazi", "Libyan Arabic (Benghazi)", "ليبي (بنغازي)"),
+            ("ar-LY-misrata", "Libyan Arabic (Misrata)", "ليبي (مصراتة)"),
+            ("ar-LY-sirte", "Libyan Arabic (Sirte)", "ليبي (سرت)"),
+            ("ar-LY-sebha", "Libyan Arabic (Sebha)", "ليبي (سبها)"),
+            ("ar-LY-murzuq", "Libyan Arabic (Murzuq)", "ليبي (مرزق)"),
+            ("ar-LY-tobruk", "Libyan Arabic (Tobruk)", "ليبي (طبرق)"),
+            ("ar-LY-derna", "Libyan Arabic (Derna)", "ليبي (درنة)"),
+            ("ar-LY-bayda", "Libyan Arabic (Al Bayda)", "ليبي (البيضاء)"),
+            ("ar-LY-zawiya", "Libyan Arabic (Zawiya)", "ليبي (الزاوية)"),
+            ("ar-LY-nalut", "Libyan Arabic (Nalut)", "ليبي (نالوت)"),
+            
+            # Egyptian Regional Dialects
+            ("ar-EG-cairo", "Egyptian Arabic (Cairo)", "مصري (القاهرة)"),
+            ("ar-EG-alexandria", "Egyptian Arabic (Alexandria)", "مصري (الإسكندرية)"),
+            ("ar-EG-giza", "Egyptian Arabic (Giza)", "مصري (الجيزة)"),
+            ("ar-EG-luxor", "Egyptian Arabic (Luxor)", "مصري (الأقصر)"),
+            ("ar-EG-aswan", "Egyptian Arabic (Aswan)", "مصري (أسوان)"),
+            ("ar-EG-asyut", "Egyptian Arabic (Asyut)", "مصري (أسيوط)"),
+            ("ar-EG-minya", "Egyptian Arabic (Minya)", "مصري (المنيا)"),
+            ("ar-EG-fayoum", "Egyptian Arabic (Fayoum)", "مصري (الفيوم)"),
+            ("ar-EG-suez", "Egyptian Arabic (Suez)", "مصري (السويس)"),
+            ("ar-EG-ismailia", "Egyptian Arabic (Ismaïlia)", "مصري (الإسماعيلية)"),
+            ("ar-EG-port-said", "Egyptian Arabic (Port Said)", "مصري (بورسعيد)"),
+            ("ar-EG-damietta", "Egyptian Arabic (Damietta)", "مصري (دمياط)"),
+            ("ar-EG-mansoura", "Egyptian Arabic (Mansoura)", "مصري (المنصورة)"),
+            ("ar-EG-tanta", "Egyptian Arabic (Tanta)", "مصري (طنطا)"),
+            ("ar-EG-zagazig", "Egyptian Arabic (Zagazig)", "مصري (الزقازيق)"),
+            
+            # Sudanese Regional Dialects
+            ("ar-SD-khartoum", "Sudanese Arabic (Khartoum)", "سوداني (الخرطوم)"),
+            ("ar-SD-omdurman", "Sudanese Arabic (Omdurman)", "سوداني (أم درمان)"),
+            ("ar-SD-port-sudan", "Sudanese Arabic (Port Sudan)", "سوداني (بورتسودان)"),
+            ("ar-SD-kassala", "Sudanese Arabic (Kassala)", "سوداني (كسلا)"),
+            ("ar-SD-gedaref", "Sudanese Arabic (Gedaref)", "سوداني (القضارف)"),
+            ("ar-SD-nyala", "Sudanese Arabic (Nyala)", "سوداني (نيالا)"),
+            ("ar-SD-el-fasher", "Sudanese Arabic (El Fasher)", "سوداني (الفاشر)"),
+            ("ar-SD-el-obeid", "Sudanese Arabic (El Obeid)", "سوداني (الأبيض)"),
+            ("ar-SD-wad-madani", "Sudanese Arabic (Wad Madani)", "سوداني (ود مدني)"),
+            ("ar-SD-atbara", "Sudanese Arabic (Atbara)", "سوداني (عطبرة)"),
+            ("ar-SD-dongola", "Sudanese Arabic (Dongola)", "سوداني (دنقلا)"),
+            ("ar-SD-kosti", "Sudanese Arabic (Kosti)", "سوداني (كوستي)"),
+            ("ar-SD-sennar", "Sudanese Arabic (Sennar)", "سوداني (سنار)"),
+            
+            # Mauritanian Regional Dialects
+            ("ar-MR-nouakchott", "Mauritanian Arabic (Nouakchott)", "موريتاني (نواكشوط)"),
+            ("ar-MR-nouadhibou", "Mauritanian Arabic (Nouadhibou)", "موريتاني (نواذيبو)"),
+            ("ar-MR-atar", "Mauritanian Arabic (Atar)", "موريتاني (أطار)"),
+            ("ar-MR-rosso", "Mauritanian Arabic (Rosso)", "موريتاني (روصو)"),
+            ("ar-MR-kaedi", "Mauritanian Arabic (Kaédi)", "موريتاني (كيهيدي)"),
+            ("ar-MR-kiffa", "Mauritanian Arabic (Kiffa)", "موريتاني (كيفة)"),
+            ("ar-MR-aioun", "Mauritanian Arabic (Aïoun)", "موريتاني (عيون العتروس)"),
+            ("ar-MR-nema", "Mauritanian Arabic (Néma)", "موريتاني (النعمة)"),
+            ("ar-MR-tidjikja", "Mauritanian Arabic (Tidjikja)", "موريتاني (تيجيكجة)"),
+            ("ar-MR-boutilimit", "Mauritanian Arabic (Boutilimit)", "موريتاني (بوتلميت)"),
+            ("ar-MR-selibaby", "Mauritanian Arabic (Sélibaby)", "موريتاني (سيلبابي)"),
+            ("ar-MR-maghama", "Mauritanian Arabic (Maghama)", "موريتاني (مقامة)"),
+            
+            # Hassanya Arabic (Mauritanian Bedouin)
+            ("mey", "Hassaniyya Arabic", "حسانية"),
+        ]
+        
         # Add all extended languages with auto-translation enabled
-        all_extended = extended_european + extended_asian + extended_african + extended_american + pacific_languages
+        all_extended = (extended_european + extended_asian + extended_african + 
+                       extended_american + pacific_languages + amazigh_berber_languages + 
+                       north_african_dialects)
         
         for code, name, native_name in all_extended:
             # Determine region and script based on language
@@ -310,9 +474,14 @@ class InternationalizationManager:
     def _determine_script(self, code: str) -> LanguageScript:
         """Determine writing script based on language code"""
         cyrillic = ["mk", "sr", "kk", "ky", "tg", "mn"]
-        arabic = ["ar-MA", "ar-EG", "ar-SA", "ku", "ps", "sd", "dv"]
+        arabic = ["ar-MA", "ar-EG", "ar-SA", "ku", "ps", "sd", "dv"] + \
+                [f"ar-{country}-{city}" for country in ["TN", "DZ", "MA", "LY", "SD", "MR"] 
+                 for city in ["tunis", "sfax", "algiers", "oran", "casablanca", "fes", "tripoli", "benghazi", "khartoum", "nouakchott"]]
         devanagari = ["ne"]
         thai = ["km", "lo"]
+        tifinagh = ["tzm", "rif", "shi", "kab", "shy", "mzb", "thv", "ttq", "taq", "zen"] + \
+                  [f"{base}-{country}-{region}" for base in ["tzm", "rif", "shi", "kab", "shy", "mzb", "thv", "ttq", "taq"] 
+                   for country in ["MA", "DZ", "NE", "ML", "LY"] for region in ["cent", "north", "south", "tizi", "aures", "ghardaia", "hoggar", "niger", "mali", "fezzan"]]
         
         if code in cyrillic:
             return LanguageScript.CYRILLIC
@@ -322,6 +491,8 @@ class InternationalizationManager:
             return LanguageScript.DEVANAGARI
         elif code in thai:
             return LanguageScript.THAI
+        elif code in tifinagh:
+            return LanguageScript.TIFINAGH
         else:
             return LanguageScript.LATIN
     
@@ -494,6 +665,8 @@ class InternationalizationManager:
                 return 'ja'
             elif re.search(r'[가-힣]', text):
                 return 'ko'
+            elif re.search(r'[ⴰ-ⵯ]', text):  # Tifinagh script range
+                return 'tzm'  # Default to Central Atlas Tamazight
             else:
                 return 'en'  # Default to English
                 
@@ -585,7 +758,10 @@ class InternationalizationManager:
             "auto_translate_languages": auto_translate_languages,
             "languages_by_region": regions,
             "languages_by_script": scripts,
-            "coverage_percentage": (total_languages / 195) * 100  # Target 195+ languages
+            "coverage_percentage": (total_languages / 350) * 100,  # Updated target: 350+ languages including dialects
+            "amazigh_berber_languages": len([l for l in self.languages.values() if any(code in l.code for code in ['tzm', 'rif', 'shi', 'kab', 'shy', 'mzb', 'thv', 'ttq', 'taq', 'zen'])]),
+            "north_african_dialects": len([l for l in self.languages.values() if l.code.startswith(('ar-TN', 'ar-DZ', 'ar-MA', 'ar-LY', 'ar-EG', 'ar-SD', 'ar-MR')) or l.code == 'mey']),
+            "tifinagh_script_languages": len([l for l in self.languages.values() if l.script == LanguageScript.TIFINAGH])
         }
 
 
