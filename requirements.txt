@@ -1,0 +1,97 @@
+# Core Requirements for Ainflue Platform
+# Production-ready packages for AI-powered content protection
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Database
+asyncpg==0.29.0
+sqlalchemy[asyncio]==2.0.23
+alembic==1.12.1
+
+# Cache & Message Queue
+aioredis==2.0.1
+celery==5.3.4
+
+# MongoDB
+motor==3.3.2
+
+# Security & Authentication
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+cryptography==41.0.8
+python-multipart==0.0.6
+
+# Data Validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
+email-validator==2.1.0
+
+# AI & Machine Learning
+torch==2.1.0
+torchvision==0.16.0
+tensorflow==2.14.0
+transformers==4.36.0
+sentence-transformers==2.2.2
+clip-by-openai==1.0
+huggingface-hub==0.19.4
+
+# Audio Processing
+librosa==0.10.1
+soundfile==0.12.1
+pydub==0.25.1
+pyacoustid==1.2.2
+chromaprint==1.5.1
+
+# Video Processing
+opencv-python==4.8.1.78
+moviepy==1.0.3
+pillow==10.1.0
+pillow-heif==0.13.0
+
+# Image Processing
+imagehash==4.3.1
+
+# Text Processing
+textstat==0.7.3
+textblob==0.17.1
+yake==0.4.8
+pypdf2==3.0.1
+python-docx==1.1.0
+chardet==5.2.0
+
+# Vector Database
+faiss-cpu==1.7.4
+numpy==1.24.3
+
+# Web Scraping
+selenium==4.15.0
+beautifulsoup4==4.12.2
+scrapy==2.11.0
+aiohttp==3.9.1
+
+# Platform APIs
+google-api-python-client==2.108.0
+google-auth==2.23.4
+tweepy==4.14.0
+
+# Payment Processing
+stripe==7.8.0
+
+# Monitoring & Logging
+prometheus-client==0.19.0
+structlog==23.2.0
+
+# Development & Testing (optional)
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.0
+
+# Utilities
+python-dotenv==1.0.0
+click==8.1.7
+rich==13.7.0
+typer==0.9.0
