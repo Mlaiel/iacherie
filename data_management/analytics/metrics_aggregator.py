@@ -618,8 +618,52 @@ class AdvancedMetricsAggregator:
     
     async def _store_metric_definition(self, metric_def: MetricDefinition):
         """Store metric definition in persistent storage."""
-        # Implementation would store in database
-        pass
+        try:
+            # Create metric definition document
+            metric_doc = {
+                'metric_id': definition.metric_id,
+                'name': definition.name,
+                'description': definition.description,
+                'metric_type': definition.metric_type.value,
+                'aggregation_method': definition.aggregation_method.value,
+                'data_source': definition.data_source,
+                'calculation_logic': definition.calculation_logic,
+                'dimensions': definition.dimensions,
+                'filters': definition.filters,
+                'unit': definition.unit,
+                'format_precision': definition.format_precision,
+                'is_active': definition.is_active,
+                'created_at': definition.created_at.isoformat(),
+                'updated_at': definition.updated_at.isoformat() if definition.updated_at else None,
+                'version': getattr(definition, 'version', 1),
+                'tags': getattr(definition, 'tags', []),
+                'category': getattr(definition, 'category', 'general')
+            }
+            
+            # Store in database
+            collection = self.db.metric_definitions
+            await collection.replace_one(
+                {'metric_id': definition.metric_id},
+                metric_doc,
+                upsert=True
+            )
+            
+            # Create indexes for efficient querying
+            await collection.create_index([
+                ('metric_id', 1),
+                ('metric_type', 1),
+                ('data_source', 1),
+                ('is_active', 1)
+            ])
+            
+            # Update in-memory cache
+            self.metric_definitions[definition.metric_id] = definition
+            
+            self.logger.info(f"Metric definition {definition.metric_id} stored successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to store metric definition {definition.metric_id}: {e}")
+            raise
     
     async def _validate_metric_ids(self, metric_ids: List[str]) -> List[str]:
         """Validate and filter metric IDs."""
@@ -889,8 +933,110 @@ class AdvancedMetricsAggregator:
     
     async def _schedule_job(self, job_config: AggregationJob):
         """Schedule aggregation job for later execution."""
-        pass
+        try:
+            # Create job document for persistent storage
+            job_doc = {
+                'job_id': job_config.job_id,
+                'metric_ids': job_config.metric_ids,
+                'time_range': {
+                    'start': job_config.time_range['start'].isoformat(),
+                    'end': job_config.time_range['end'].isoformat()
+                },
+                'granularity': job_config.granularity.value,
+                'dimensions': job_config.dimensions,
+                'filters': job_config.filters,
+                'scheduled_at': job_config.scheduled_at.isoformat() if job_config.scheduled_at else None,
+                'status': 'scheduled',
+                'created_at': datetime.utcnow().isoformat(),
+                'priority': getattr(job_config, 'priority', 'normal'),
+                'retry_count': 0,
+                'max_retries': 3
+            }
+            
+            # Store in job queue
+            collection = self.db.aggregation_jobs
+            await collection.insert_one(job_doc)
+            
+            # Create index for job processing
+            await collection.create_index([
+                ('status', 1),
+                ('scheduled_at', 1),
+                ('priority', 1)
+            ])
+            
+            # Schedule execution if scheduled_at is specified
+            if job_config.scheduled_at:
+                delay = (job_config.scheduled_at - datetime.utcnow()).total_seconds()
+                if delay > 0:
+                    # Use asyncio to schedule the job
+                    async def delayed_execution():
+                        await asyncio.sleep(delay)
+                        await self._execute_aggregation_job(job_config)
+                    
+                    asyncio.create_task(delayed_execution())
+            
+            self.logger.info(f"Aggregation job {job_config.job_id} scheduled successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to schedule aggregation job {job_config.job_id}: {e}")
+            raise
     
     async def _execute_aggregation_job(self, job_config: AggregationJob):
         """Execute aggregation job."""
-        pass
+        try:
+            # Update job status to running
+            await self._update_job_status(job_config.job_id, 'running')
+            
+            # Execute the aggregation
+            results = await self.aggregate_metrics(
+                metric_ids=job_config.metric_ids,
+                time_range=job_config.time_range,
+                granularity=job_config.granularity,
+                dimensions=job_config.dimensions,
+                filters=job_config.filters
+            )
+            
+            # Store job results
+            result_doc = {
+                'job_id': job_config.job_id,
+                'results': results,
+                'completed_at': datetime.utcnow().isoformat(),
+                'execution_time_seconds': (datetime.utcnow() - datetime.fromisoformat(
+                    job_config.created_at if hasattr(job_config, 'created_at') else datetime.utcnow().isoformat()
+                )).total_seconds(),
+                'status': 'completed'
+            }
+            
+            collection = self.db.aggregation_job_results
+            await collection.insert_one(result_doc)
+            
+            # Update job status to completed
+            await self._update_job_status(job_config.job_id, 'completed')
+            
+            self.logger.info(f"Aggregation job {job_config.job_id} executed successfully")
+            
+        except Exception as e:
+            # Update job status to failed
+            await self._update_job_status(job_config.job_id, 'failed', str(e))
+            self.logger.error(f"Aggregation job {job_config.job_id} failed: {e}")
+            raise
+    
+    async def _update_job_status(self, job_id: str, status: str, error_message: str = None):
+        """Update job status in database."""
+        try:
+            update_doc = {
+                'status': status,
+                'updated_at': datetime.utcnow().isoformat()
+            }
+            
+            if error_message:
+                update_doc['error_message'] = error_message
+            
+            collection = self.db.aggregation_jobs
+            await collection.update_one(
+                {'job_id': job_id},
+                {'$set': update_doc}
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Failed to update job status for {job_id}: {e}")
