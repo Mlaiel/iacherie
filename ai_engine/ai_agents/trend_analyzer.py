@@ -26,14 +26,34 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 
 # Mock engines for testing - would be replaced with actual implementations
 class TrendPredictionEngine:
-    async def initialize(self): pass
+    async def initialize(self):
+        """Initialize trend prediction models and algorithms"""
+        self.models = {}
+        self.algorithms = ['temporal_analysis', 'pattern_matching', 'velocity_tracking']
+        self.initialized = True
+        logger.info("TrendPredictionEngine initialized with prediction algorithms")
+        
     async def predict_trends(self, historical_data, signals, horizon): return []
 
 class SocialListeningEngine:
-    async def initialize(self): pass
+    async def initialize(self):
+        """Initialize social listening capabilities"""
+        self.platforms = ['twitter', 'instagram', 'tiktok', 'youtube', 'facebook']
+        self.sentiment_analyzer = {}
+        self.keyword_tracker = {}
+        self.initialized = True
+        logger.info("SocialListeningEngine initialized for multi-platform monitoring")
 
 class PlatformDataCollector:
-    async def initialize(self, platforms): pass
+    async def initialize(self, platforms):
+        """Initialize data collection for specified platforms"""
+        self.platforms = platforms or ['all']
+        self.collectors = {}
+        self.api_connections = {}
+        self.rate_limiters = {}
+        self.initialized = True
+        logger.info(f"PlatformDataCollector initialized for platforms: {self.platforms}")
+        
     async def collect_trending_data(self, platform): return {'items': []}
 
 logger = logging.getLogger(__name__)

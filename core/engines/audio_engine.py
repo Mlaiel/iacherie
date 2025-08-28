@@ -37533,9 +37533,17 @@ except ImportError:
     PYAUDIO_AVAILABLE = False
     # Mock PyAudio
     class PyAudio:
-        def __init__(self): pass
+        def __init__(self):
+            """Initialize mock PyAudio for testing"""
+            self.is_initialized = True
+            logger.debug("Mock PyAudio initialized")
+        
         def open(self, *args, **kwargs): return None
-        def terminate(self): pass
+        
+        def terminate(self):
+            """Terminate mock PyAudio"""
+            self.is_initialized = False
+            logger.debug("Mock PyAudio terminated")
     pyaudio = type('MockModule', (), {'PyAudio': PyAudio, 'paInt16': 8, 'paContinue': 0})()
 
 try:
