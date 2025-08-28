@@ -809,6 +809,26 @@ transformers_manager = TransformersManager()
 
 
 class TransformationManager:
+    """Manager for coordinating data transformations"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.transformers = {}
+    
+    async def transform_data(self, data: Any, transformation_type: str) -> Any:
+        """Transform data using specified transformation type"""
+        try:
+            if transformation_type not in self.transformers:
+                raise TransformationError(f"Unknown transformation type: {transformation_type}")
+            
+            transformer = self.transformers[transformation_type]
+            return await transformer.transform(data)
+            
+        except Exception as e:
+            self.logger.error(f"Transformation failed: {e}")
+            raise TransformationError(f"Transformation failed: {e}")
+
+
 # Export des classes et instances principales
 __all__ = [
     # Classes principales

@@ -1,21 +1,24 @@
 """
-🔒 Security Test Automation - IA Influencer Agent Platform Enterprise
-=====================================================================
+🔒 Enhanced Security Test Automation - IA Influencer Agent Platform Enterprise
+==============================================================================
 Module: tests/security/automated_security_tests.py
 Author: Fahed Mlaiel (mlaiel@live.de)
-=====================================================================
+==============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE TESTS DE SÉCURITÉ AUTOMATISÉS
-Tests de sécurité complets pour toutes les couches de l'application
-- Tests d'intrusion automatisés  
-- Validation de vulnérabilités OWASP
+🎯 SYSTÈME DE TESTS DE SÉCURITÉ AUTOMATISÉS COMPLET
+Tests de sécurité enterprise-grade pour toutes les couches:
+- Tests d'intrusion automatisés OWASP Top 10
+- Validation de vulnérabilités avec scoring CVSS
 - Tests de charge et résistance DDoS
-- Validation de conformité réglementaire
-- Tests d'authentification et autorisation
+- Validation de conformité réglementaire (GDPR, SOX, HIPAA)
+- Tests d'authentification et autorisation JWT/OAuth2
+- Tests de chiffrement et cryptographie
+- Tests de sécurité API et microservices
+- Tests de sécurité infrastructure et conteneurs
 """
 
 import asyncio
