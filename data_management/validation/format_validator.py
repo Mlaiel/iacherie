@@ -344,8 +344,65 @@ class AudioFormatValidator:
         # Validation basée sur les informations Mutagen
         if 'mutagen' in metadata:
             mutagen_info = metadata['mutagen']
-            # Logic spécifique selon les informations disponibles
-            # TODO: Implémenter détection plus précise
+            
+            # Implement more precise detection based on mutagen metadata
+            try:
+                # Check for specific audio format indicators
+                if 'mime' in mutagen_info:
+                    mime_type = mutagen_info['mime']
+                    mime_to_format = {
+                        'audio/mpeg': 'mp3',
+                        'audio/mp4': 'm4a',
+                        'audio/flac': 'flac',
+                        'audio/ogg': 'ogg',
+                        'audio/wav': 'wav',
+                        'audio/x-wav': 'wav',
+                        'audio/aiff': 'aiff',
+                        'audio/x-aiff': 'aiff'
+                    }
+                    if mime_type in mime_to_format:
+                        detected_format = mime_to_format[mime_type]
+                        if detected_format in self.supported_formats:
+                            return detected_format
+                
+                # Check for codec information
+                if 'codec' in mutagen_info:
+                    codec = mutagen_info['codec'].lower()
+                    if 'mp3' in codec or 'mpeg' in codec:
+                        return 'mp3'
+                    elif 'flac' in codec:
+                        return 'flac'
+                    elif 'aac' in codec:
+                        return 'm4a'
+                    elif 'vorbis' in codec:
+                        return 'ogg'
+                
+                # Check for bitrate and other quality indicators
+                if 'bitrate' in mutagen_info:
+                    bitrate = mutagen_info['bitrate']
+                    # High bitrate often indicates lossless formats
+                    if bitrate > 1000000 and extension in ['flac', 'wav', 'aiff']:
+                        return extension
+                
+                # Check for file format specific fields
+                if 'length' in mutagen_info and 'filesize' in mutagen_info:
+                    # Calculate approximate bitrate to help identify format
+                    length = mutagen_info['length']
+                    filesize = mutagen_info['filesize']
+                    if length > 0:
+                        calculated_bitrate = (filesize * 8) / length
+                        
+                        # Typical bitrates for different formats
+                        if calculated_bitrate > 1000000:  # > 1 Mbps, likely lossless
+                            if extension in ['flac', 'wav', 'aiff']:
+                                return extension
+                        elif calculated_bitrate > 200000:  # > 200 kbps, likely high quality compressed
+                            if extension in ['mp3', 'm4a', 'ogg']:
+                                return extension
+                
+            except Exception as e:
+                self.logger.warning(f"Error in precise audio format detection: {e}")
+        
         
         return extension if extension in self.supported_formats else 'unknown'
 
@@ -517,7 +574,102 @@ class VideoFormatValidator:
         # Validation basée sur fourcc et autres métadonnées
         if 'fourcc' in metadata:
             fourcc = metadata['fourcc']
-            # TODO: Implémenter mapping fourcc vers format
+            
+            # Implement mapping fourcc to format
+            try:
+                # Convert fourcc code to string if it's an integer
+                if isinstance(fourcc, int):
+                    # Convert fourcc integer to 4-character string
+                    fourcc_str = ''.join([chr((fourcc >> 8*i) & 0xFF) for i in range(4)])
+                else:
+                    fourcc_str = str(fourcc)
+                
+                # FourCC to format mapping
+                fourcc_to_format = {
+                    # H.264 variants
+                    'avc1': 'mp4',  # H.264 in MP4
+                    'AVC1': 'mp4',
+                    'H264': 'mp4',
+                    'x264': 'mp4',
+                    
+                    # H.265/HEVC variants
+                    'hvc1': 'mp4',  # H.265 in MP4
+                    'hev1': 'mp4',
+                    'H265': 'mp4',
+                    'HEVC': 'mp4',
+                    
+                    # VP8/VP9 (WebM)
+                    'VP80': 'webm',
+                    'VP90': 'webm',
+                    'VP8 ': 'webm',
+                    'VP9 ': 'webm',
+                    
+                    # AV1
+                    'AV01': 'mp4',  # AV1 can be in MP4 or WebM
+                    'av01': 'mp4',
+                    
+                    # MPEG-4 variants
+                    'mp4v': 'mp4',
+                    'MP4V': 'mp4',
+                    'DIVX': 'avi',
+                    'DX50': 'avi',
+                    'XVID': 'avi',
+                    
+                    # Legacy codecs
+                    'MJPG': 'avi',  # Motion JPEG
+                    'mjpg': 'avi',
+                    'YUY2': 'avi',  # Raw YUV
+                    'UYVY': 'avi',
+                    
+                    # QuickTime
+                    'qt  ': 'mov',
+                    'QT  ': 'mov',
+                    
+                    # Flash Video
+                    'FLV1': 'flv',
+                    'flv1': 'flv',
+                    
+                    # ProRes (typically in MOV)
+                    'apch': 'mov',  # ProRes 422 HQ
+                    'apcn': 'mov',  # ProRes 422
+                    'apcs': 'mov',  # ProRes 422 LT
+                    'apco': 'mov',  # ProRes 422 Proxy
+                    'ap4h': 'mov',  # ProRes 4444
+                }
+                
+                # Try exact match first
+                if fourcc_str in fourcc_to_format:
+                    detected_format = fourcc_to_format[fourcc_str]
+                    if detected_format in self.supported_formats:
+                        self.logger.info(f"Detected format {detected_format} from fourcc {fourcc_str}")
+                        return detected_format
+                
+                # Try case-insensitive match
+                fourcc_lower = fourcc_str.lower()
+                for known_fourcc, format_name in fourcc_to_format.items():
+                    if known_fourcc.lower() == fourcc_lower:
+                        if format_name in self.supported_formats:
+                            self.logger.info(f"Detected format {format_name} from fourcc {fourcc_str} (case-insensitive)")
+                            return format_name
+                
+                # Log unknown fourcc for debugging
+                self.logger.debug(f"Unknown fourcc code: {fourcc_str} (0x{fourcc:08x} if int)")
+                
+            except Exception as e:
+                self.logger.warning(f"Error processing fourcc code: {e}")
+        
+        # Check other metadata for format hints
+        if 'codec_name' in metadata:
+            codec_name = metadata['codec_name'].lower()
+            if 'h264' in codec_name or 'avc' in codec_name:
+                return 'mp4'
+            elif 'h265' in codec_name or 'hevc' in codec_name:
+                return 'mp4'
+            elif 'vp8' in codec_name or 'vp9' in codec_name:
+                return 'webm'
+            elif 'av1' in codec_name:
+                return 'mp4'
+        
         
         return extension if extension in self.supported_formats else 'unknown'
 

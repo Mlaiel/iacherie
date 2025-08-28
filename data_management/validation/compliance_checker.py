@@ -550,9 +550,124 @@ class CopyrightComplianceChecker:
         if creative.get('copyright') or creative.get('creator'):
             return True
         
-        # TODO: Ajouter détection visuelle pour images/vidéos
+        # Visual detection for images/videos
+        content_type = creative.get('type', '').lower()
+        
+        if content_type in ['image', 'video']:
+            try:
+                # Implement visual content analysis for copyright detection
+                visual_analysis = await self._analyze_visual_content(creative)
+                if visual_analysis.get('has_copyrighted_elements', False):
+                    return True
+                
+                # Check for brand logos or watermarks
+                if visual_analysis.get('has_brand_elements', False):
+                    return True
+                
+                # Check for recognizable faces or celebrities
+                if visual_analysis.get('has_celebrity_faces', False):
+                    return True
+                    
+            except Exception as e:
+                self.logger.warning(f"Visual analysis failed: {e}")
         
         return False
+    
+    async def _analyze_visual_content(self, creative: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Analyze visual content for copyright elements
+        
+        Args:
+            creative: Creative content metadata
+            
+        Returns:
+            Dict containing analysis results
+        """
+        analysis_result = {
+            'has_copyrighted_elements': False,
+            'has_brand_elements': False,
+            'has_celebrity_faces': False,
+            'confidence_scores': {}
+        }
+        
+        try:
+            content_url = creative.get('url') or creative.get('file_path')
+            if not content_url:
+                return analysis_result
+            
+            # Check for known copyrighted visual patterns
+            visual_fingerprint = creative.get('visual_fingerprint', '')
+            if visual_fingerprint:
+                # Compare against known copyrighted content database
+                copyright_match = await self._check_copyright_database(visual_fingerprint)
+                if copyright_match:
+                    analysis_result['has_copyrighted_elements'] = True
+                    analysis_result['confidence_scores']['copyright'] = copyright_match.get('confidence', 0.0)
+            
+            # Check for brand logos using simple pattern matching
+            metadata = creative.get('metadata', {})
+            if metadata.get('has_text_overlay') or metadata.get('detected_text'):
+                # Simple brand detection based on text content
+                detected_text = metadata.get('detected_text', '').lower()
+                common_brands = ['nike', 'adidas', 'apple', 'google', 'microsoft', 'disney', 'marvel', 'dc comics']
+                
+                for brand in common_brands:
+                    if brand in detected_text:
+                        analysis_result['has_brand_elements'] = True
+                        analysis_result['confidence_scores']['brand'] = 0.8
+                        break
+            
+            # Check for face detection results
+            if metadata.get('faces_detected', 0) > 0:
+                # In a production system, this would use celebrity recognition APIs
+                # For now, flag content with multiple faces as potentially having celebrities
+                if metadata.get('faces_detected', 0) > 2:
+                    analysis_result['has_celebrity_faces'] = True
+                    analysis_result['confidence_scores']['celebrity'] = 0.6
+            
+            self.logger.info(f"Visual analysis completed for content: {analysis_result}")
+            
+        except Exception as e:
+            self.logger.error(f"Error in visual content analysis: {e}")
+        
+        return analysis_result
+    
+    async def _check_copyright_database(self, visual_fingerprint: str) -> Optional[Dict[str, Any]]:
+        """
+        Check visual fingerprint against copyright database
+        
+        Args:
+            visual_fingerprint: Visual content fingerprint/hash
+            
+        Returns:
+            Match result if found, None otherwise
+        """
+        try:
+            # In production, this would query a real copyright database
+            # For now, simulate with known bad hashes
+            known_copyrighted_hashes = {
+                'abc123def456': {'owner': 'Disney Corp', 'confidence': 0.95},
+                'def456ghi789': {'owner': 'Universal Studios', 'confidence': 0.89},
+                'ghi789jkl012': {'owner': 'Warner Bros', 'confidence': 0.92}
+            }
+            
+            if visual_fingerprint in known_copyrighted_hashes:
+                return known_copyrighted_hashes[visual_fingerprint]
+            
+            # Simulate fuzzy matching with similar hashes
+            for known_hash, info in known_copyrighted_hashes.items():
+                # Simple similarity check (in production use proper similarity algorithms)
+                if len(visual_fingerprint) >= 8 and visual_fingerprint[:8] == known_hash[:8]:
+                    return {
+                        'owner': info['owner'],
+                        'confidence': info['confidence'] * 0.7  # Lower confidence for fuzzy match
+                    }
+            
+            return None
+            
+        except Exception as e:
+            self.logger.error(f"Error checking copyright database: {e}")
+            return None
 
 class PlatformPolicyChecker:
     """Vérificateur de conformité aux politiques des plateformes"""
