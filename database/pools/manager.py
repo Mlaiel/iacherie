@@ -681,8 +681,29 @@ class DatabasePoolManager:
                 elif db_type == DatabaseType.REDIS:
                     pool = RedisConnectionPool(config, connection_info)
                     success = await pool.initialize()
+                elif db_type == DatabaseType.MONGODB:
+                    # Import MongoDB pool implementation
+                    from .mongodb_pool import MongoDBConnectionPool
+                    pool = MongoDBConnectionPool(config, connection_info)
+                    success = await pool.initialize()
+                elif db_type == DatabaseType.ELASTICSEARCH:
+                    # Import Elasticsearch pool implementation  
+                    from .elasticsearch_pool import ElasticsearchConnectionPool
+                    pool = ElasticsearchConnectionPool(config, connection_info)
+                    success = await pool.initialize()
+                elif db_type == DatabaseType.VECTOR_STORE:
+                    # Import Vector store pool implementation
+                    from .vector_store_pool import VectorStoreConnectionPool
+                    pool = VectorStoreConnectionPool(config, connection_info)
+                    success = await pool.initialize()
+                elif db_type == DatabaseType.OBJECT_STORAGE:
+                    # Import Object storage pool implementation
+                    from .object_storage_pool import ObjectStorageConnectionPool
+                    pool = ObjectStorageConnectionPool(config, connection_info)
+                    success = await pool.initialize()
                 else:
-                    raise NotImplementedError(f"Pool type {db_type} not implemented")
+                    logger.error(f"Unsupported database type: {db_type}")
+                    return False
                 
                 if success:
                     self.pools[pool_id] = pool
