@@ -222,21 +222,40 @@ class BaseAIAgent(ABC):
             self.status = AgentStatus.ERROR
             return False
     
-    @abstractmethod
     async def _custom_initialize(self) -> None:
-        """Custom initialization logic for specific agents"""
-        # Base implementation - can be overridden by subclasses
+        """
+        Custom initialization logic for specific agents
+        
+        Base implementation provides standard validation and setup.
+        Subclasses can override this method for specialized initialization.
+        """
         self.logger.debug(f"Base initialization for {self.agent_name}")
         
-        # Validate configuration
+        # Validate required configuration
         if not self.config.agent_id:
             raise ValueError("Agent ID is required")
         if not self.config.agent_name:
             raise ValueError("Agent name is required")
+        if not self.config.capabilities:
+            raise ValueError("At least one capability must be specified")
         
-        # Initialize any base resources
+        # Validate resource limits
+        if self.config.max_concurrent_tasks <= 0:
+            raise ValueError("max_concurrent_tasks must be positive")
+        if self.config.default_timeout <= 0:
+            raise ValueError("default_timeout must be positive")
+        
+        # Initialize base resources
         self._initialized_at = datetime.now(timezone.utc)
-        self.logger.debug(f"Agent {self.agent_name} base initialization complete")
+        
+        # Initialize task tracking
+        self._task_counter = 0
+        self._last_task_time = datetime.now(timezone.utc)
+        
+        # Initialize performance baseline
+        self.metrics.last_activity = datetime.now(timezone.utc)
+        
+        self.logger.debug(f"Agent {self.agent_name} base initialization complete with {len(self.capabilities)} capabilities")
     
     async def execute_task(self, task: AgentTask) -> Dict[str, Any]:
         """Execute a task with proper error handling and metrics"""
@@ -291,11 +310,24 @@ class BaseAIAgent(ABC):
     
     @abstractmethod
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """Implementation of task execution - must be overridden by subclasses"""
-        # Base implementation that should be overridden
+        """
+        Implementation of task execution - must be overridden by subclasses
+        
+        Args:
+            task: The task to execute with context and parameters
+            
+        Returns:
+            Dict[str, Any]: Task execution result
+            
+        Raises:
+            NotImplementedError: If not implemented by subclass
+        """
+        # This method MUST be implemented by subclasses
+        # Providing a helpful error message for development
         raise NotImplementedError(
             f"Task execution not implemented for {self.__class__.__name__}. "
-            f"Must override _execute_task_impl method."
+            f"Agent '{self.agent_name}' must override _execute_task_impl method to handle "
+            f"task type '{task.task_type}'. Available capabilities: {[cap.value for cap in self.capabilities]}"
         )
     
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
@@ -484,28 +516,45 @@ class AgentRegistry:
     def __init__(self):
         self.agents: Dict[str, BaseAIAgent] = {}
         self.capabilities_map: Dict[AgentCapability, List[str]] = {}
+        self._lock = asyncio.Lock()
+        self.logger = logging.getLogger(f"{__name__}.AgentRegistry")
     
-    def register_agent(self, agent: BaseAIAgent) -> None:
+    async def register_agent(self, agent: BaseAIAgent) -> None:
         """Register an agent in the registry"""
-        self.agents[agent.agent_id] = agent
-        
-        # Update capabilities map
-        for capability in agent.capabilities:
-            if capability not in self.capabilities_map:
-                self.capabilities_map[capability] = []
-            self.capabilities_map[capability].append(agent.agent_id)
+        async with self._lock:
+            if agent.agent_id in self.agents:
+                raise ValueError(f"Agent with ID {agent.agent_id} already registered")
+            
+            self.agents[agent.agent_id] = agent
+            
+            # Update capabilities map
+            for capability in agent.capabilities:
+                if capability not in self.capabilities_map:
+                    self.capabilities_map[capability] = []
+                self.capabilities_map[capability].append(agent.agent_id)
+            
+            self.logger.info(f"Registered agent {agent.agent_name} ({agent.agent_id}) with {len(agent.capabilities)} capabilities")
     
-    def unregister_agent(self, agent_id: str) -> None:
+    async def unregister_agent(self, agent_id: str) -> None:
         """Unregister an agent from the registry"""
-        if agent_id in self.agents:
+        async with self._lock:
+            if agent_id not in self.agents:
+                self.logger.warning(f"Agent {agent_id} not found in registry")
+                return
+            
             agent = self.agents.pop(agent_id)
             
             # Update capabilities map
             for capability in agent.capabilities:
                 if capability in self.capabilities_map:
-                    self.capabilities_map[capability].remove(agent_id)
-                    if not self.capabilities_map[capability]:
-                        del self.capabilities_map[capability]
+                    try:
+                        self.capabilities_map[capability].remove(agent_id)
+                        if not self.capabilities_map[capability]:
+                            del self.capabilities_map[capability]
+                    except ValueError:
+                        pass  # Agent ID not in list
+            
+            self.logger.info(f"Unregistered agent {agent.agent_name} ({agent_id})")
     
     def get_agents_by_capability(self, capability: AgentCapability) -> List[BaseAIAgent]:
         """Get all agents that have a specific capability"""
@@ -519,9 +568,215 @@ class AgentRegistry:
             if agent.status in [AgentStatus.READY, AgentStatus.BUSY]
         ]
     
+    def get_agent_by_id(self, agent_id: str) -> Optional[BaseAIAgent]:
+        """Get agent by ID"""
+        return self.agents.get(agent_id)
+    
+    def get_agent_by_name(self, agent_name: str) -> Optional[BaseAIAgent]:
+        """Get agent by name"""
+        for agent in self.agents.values():
+            if agent.agent_name == agent_name:
+                return agent
+        return None
+    
+    async def find_best_agent(self, 
+                             capability: AgentCapability, 
+                             task_context: Dict[str, Any] = None) -> Optional[BaseAIAgent]:
+        """Find the best agent for a specific capability and task"""
+        candidates = self.get_agents_by_capability(capability)
+        
+        if not candidates:
+            return None
+        
+        # Filter by availability
+        available_candidates = [
+            agent for agent in candidates 
+            if agent.status in [AgentStatus.READY, AgentStatus.BUSY] and 
+               len(agent.active_tasks) < agent.config.max_concurrent_tasks
+        ]
+        
+        if not available_candidates:
+            return None
+        
+        # Score agents based on performance and availability
+        best_agent = None
+        best_score = -1
+        
+        for agent in available_candidates:
+            # Check if agent can handle the specific task
+            if task_context:
+                can_handle = await agent.can_handle_task(
+                    task_context.get('task_type', ''), 
+                    task_context
+                )
+                if not can_handle:
+                    continue
+            
+            # Calculate score based on performance metrics
+            score = self._calculate_agent_score(agent)
+            
+            if score > best_score:
+                best_score = score
+                best_agent = agent
+        
+        return best_agent
+    
+    def _calculate_agent_score(self, agent: BaseAIAgent) -> float:
+        """Calculate agent performance score"""
+        # Factors: success rate, response time, current load
+        success_rate = agent.metrics.success_rate / 100.0  # 0-1
+        
+        # Inverse response time (faster is better)
+        response_factor = 1.0 / max(agent.metrics.average_response_time, 0.1)
+        
+        # Load factor (less loaded is better)
+        load_factor = 1.0 - (len(agent.active_tasks) / max(agent.config.max_concurrent_tasks, 1))
+        
+        # Weighted score
+        score = (success_rate * 0.5) + (response_factor * 0.3) + (load_factor * 0.2)
+        
+        return score
+    
+    async def get_registry_status(self) -> Dict[str, Any]:
+        """Get comprehensive registry status"""
+        total_agents = len(self.agents)
+        available_agents = len(self.get_available_agents())
+        
+        status_breakdown = {}
+        for status in AgentStatus:
+            status_breakdown[status.value] = len([
+                agent for agent in self.agents.values() 
+                if agent.status == status
+            ])
+        
+        capability_breakdown = {}
+        for capability, agent_ids in self.capabilities_map.items():
+            capability_breakdown[capability.value] = len(agent_ids)
+        
+        return {
+            "total_agents": total_agents,
+            "available_agents": available_agents,
+            "status_breakdown": status_breakdown,
+            "capability_breakdown": capability_breakdown,
+            "registered_agents": [
+                {
+                    "id": agent.agent_id,
+                    "name": agent.agent_name,
+                    "status": agent.status.value,
+                    "capabilities": [cap.value for cap in agent.capabilities],
+                    "active_tasks": len(agent.active_tasks),
+                    "success_rate": agent.metrics.success_rate
+                }
+                for agent in self.agents.values()
+            ]
+        }
+    
     async def shutdown_all(self) -> None:
         """Shutdown all registered agents"""
+        self.logger.info(f"Shutting down {len(self.agents)} agents")
+        
         shutdown_tasks = [agent.shutdown() for agent in self.agents.values()]
-        await asyncio.gather(*shutdown_tasks, return_exceptions=True)
+        results = await asyncio.gather(*shutdown_tasks, return_exceptions=True)
+        
+        # Log any shutdown errors
+        for i, result in enumerate(results):
+            if isinstance(result, Exception):
+                agent_id = list(self.agents.keys())[i]
+                self.logger.error(f"Error shutting down agent {agent_id}: {result}")
+        
         self.agents.clear()
         self.capabilities_map.clear()
+        self.logger.info("All agents shutdown complete")
+
+
+class AgentFactory:
+    """Factory for creating specialized agents"""
+    
+    _agent_classes: Dict[str, type] = {}
+    
+    @classmethod
+    def register_agent_class(cls, agent_type: str, agent_class: type) -> None:
+        """Register an agent class with the factory"""
+        if not issubclass(agent_class, BaseAIAgent):
+            raise ValueError(f"Agent class must inherit from BaseAIAgent")
+        
+        cls._agent_classes[agent_type] = agent_class
+    
+    @classmethod
+    def create_agent(cls, agent_type: str, config: AgentConfiguration) -> BaseAIAgent:
+        """Create an agent of the specified type"""
+        if agent_type not in cls._agent_classes:
+            raise ValueError(f"Unknown agent type: {agent_type}")
+        
+        agent_class = cls._agent_classes[agent_type]
+        return agent_class(config)
+    
+    @classmethod
+    def get_available_types(cls) -> List[str]:
+        """Get list of available agent types"""
+        return list(cls._agent_classes.keys())
+
+
+# Utility functions for agent management
+async def create_agent_config(
+    agent_id: str,
+    agent_name: str,
+    capabilities: List[AgentCapability],
+    **kwargs
+) -> AgentConfiguration:
+    """Create agent configuration with validation"""
+    if not agent_id or not agent_name:
+        raise ValueError("agent_id and agent_name are required")
+    
+    if not capabilities:
+        raise ValueError("At least one capability must be specified")
+    
+    return AgentConfiguration(
+        agent_id=agent_id,
+        agent_name=agent_name,
+        capabilities=set(capabilities),
+        **kwargs
+    )
+
+
+async def deploy_agent(agent: BaseAIAgent, registry: AgentRegistry) -> bool:
+    """Deploy an agent to the registry"""
+    try:
+        # Initialize the agent
+        success = await agent.initialize()
+        if not success:
+            return False
+        
+        # Register with the registry
+        await registry.register_agent(agent)
+        
+        logger.info(f"Successfully deployed agent {agent.agent_name}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Failed to deploy agent {agent.agent_name}: {e}")
+        return False
+
+
+# Export all public components
+__all__ = [
+    # Enums
+    'AgentCapability',
+    'AgentStatus', 
+    'AgentPriority',
+    
+    # Data classes
+    'AgentMetrics',
+    'AgentTask',
+    'AgentConfiguration',
+    
+    # Main classes
+    'BaseAIAgent',
+    'AgentRegistry',
+    'AgentFactory',
+    
+    # Utilities
+    'agent_lifecycle',
+    'create_agent_config',
+    'deploy_agent'
+]
