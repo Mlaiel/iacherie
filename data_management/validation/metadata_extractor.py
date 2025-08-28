@@ -668,9 +668,62 @@ class AudioMetadataExtractor:
         try:
             # Classification audio (nécessite conversion en format supporté)
             if self.audio_classifier:
-                # TODO: Implémenter la classification audio
-                # Nécessite de charger et préprocesser l'audio
-                pass
+                # Audio classification implementation using spectral features
+                try:
+                    import librosa
+                    import numpy as np
+                    
+                    # Load audio file (30 seconds sample for classification)
+                    y, sr = librosa.load(file_path, sr=22050, duration=30)
+                    
+                    # Extract MFCC features (Mel-frequency cepstral coefficients)
+                    mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+                    mfcc_mean = np.mean(mfccs, axis=1)
+                    
+                    # Extract spectral features
+                    spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)
+                    spectral_rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
+                    zero_crossings = librosa.feature.zero_crossing_rate(y)
+                    
+                    # Calculate tempo and rhythm features
+                    tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+                    
+                    # Simple rule-based classification based on audio characteristics
+                    genre_prediction = self._classify_audio_genre(
+                        mfcc_mean, 
+                        np.mean(spectral_centroids), 
+                        np.mean(spectral_rolloff),
+                        np.mean(zero_crossings),
+                        tempo
+                    )
+                    
+                    # Add classification results to AI analysis
+                    ai_analysis['genre_prediction'] = genre_prediction
+                    ai_analysis['tempo_bpm'] = float(tempo)
+                    ai_analysis['spectral_centroid'] = float(np.mean(spectral_centroids))
+                    ai_analysis['spectral_rolloff'] = float(np.mean(spectral_rolloff))
+                    ai_analysis['zero_crossing_rate'] = float(np.mean(zero_crossings))
+                    ai_analysis['mfcc_features'] = mfcc_mean.tolist()
+                    
+                except Exception as e:
+                    logger.warning(f"Audio classification failed: {e}")
+                    ai_analysis['classification_error'] = str(e)
+            else:
+                # Fallback: Basic audio analysis without classification
+                try:
+                    import librosa
+                    y, sr = librosa.load(file_path, sr=None, duration=10)  # Short sample
+                    
+                    # Basic tempo detection
+                    tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
+                    ai_analysis['tempo_bpm'] = float(tempo)
+                    
+                    # Energy analysis
+                    rms_energy = librosa.feature.rms(y=y)
+                    ai_analysis['energy_level'] = float(np.mean(rms_energy))
+                    
+                except Exception as e:
+                    logger.warning(f"Basic audio analysis failed: {e}")
             
             # Analyse basique du spectre
             import librosa
@@ -705,6 +758,48 @@ class AudioMetadataExtractor:
             self.logger.debug(f"Erreur analyse IA audio: {e}")
         
         return ai_analysis
+    
+    def _classify_audio_genre(self, mfcc_mean, spectral_centroid, spectral_rolloff, zero_crossing_rate, tempo):
+        """Simple rule-based audio genre classification"""
+        try:
+            # Genre classification based on audio features
+            # These are simplified rules - in production, you'd use a trained ML model
+            
+            # Electronic/Dance characteristics
+            if tempo > 120 and spectral_centroid > 2500 and zero_crossing_rate > 0.1:
+                return "electronic/dance"
+            
+            # Classical/Acoustic characteristics  
+            elif tempo < 100 and spectral_centroid < 2000 and zero_crossing_rate < 0.05:
+                return "classical/acoustic"
+            
+            # Rock/Metal characteristics
+            elif spectral_rolloff > 4000 and zero_crossing_rate > 0.08:
+                return "rock/metal"
+            
+            # Jazz characteristics
+            elif 80 < tempo < 140 and 1500 < spectral_centroid < 3000:
+                return "jazz/blues"
+            
+            # Pop characteristics
+            elif 100 < tempo < 130 and 2000 < spectral_centroid < 3500:
+                return "pop/mainstream"
+            
+            # Hip-hop/Rap characteristics
+            elif tempo > 80 and spectral_centroid < 2200 and zero_crossing_rate > 0.06:
+                return "hip-hop/rap"
+            
+            # Ambient/Chill characteristics
+            elif tempo < 90 and spectral_centroid > 1800 and zero_crossing_rate < 0.04:
+                return "ambient/chill"
+            
+            # Default fallback
+            else:
+                return "unknown/mixed"
+                
+        except Exception as e:
+            logger.warning(f"Genre classification error: {e}")
+            return "classification_failed"
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
         """Crée des métadonnées d'erreur"""

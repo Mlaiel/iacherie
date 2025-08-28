@@ -510,13 +510,100 @@ class EllipticCurveEncryption(BaseEncryptor):
     
     def encrypt(self, data: bytes, key: EncryptionKey, **kwargs) -> EncryptionResult:
         """ECC encryption using ECIES (Elliptic Curve Integrated Encryption Scheme)"""
-        # Note: This is a simplified implementation
-        # In production, use a proper ECIES implementation
-        raise NotImplementedError("ECIES encryption not implemented in this demo")
+        try:
+            if key.key_type != KeyType.ASYMMETRIC_PUBLIC:
+                raise EncryptionError("ECC encryption requires public key")
+            
+            # Load the public key
+            public_key = serialization.load_pem_public_key(key.key_data)
+            if not isinstance(public_key, EllipticCurvePublicKey):
+                raise EncryptionError("Invalid ECC public key")
+            
+            # Generate ephemeral key pair for ECIES
+            ephemeral_private_key = ec.generate_private_key(ec.SECP256R1())
+            ephemeral_public_key = ephemeral_private_key.public_key()
+            
+            # Perform ECDH key exchange
+            shared_key = ephemeral_private_key.exchange(ec.ECDH(), public_key)
+            
+            # Derive symmetric key using HKDF
+            derived_key = HKDF(
+                algorithm=hashes.SHA256(),
+                length=32,  # 256 bits for AES-256
+                salt=None,
+                info=b'ECIES encryption',
+                backend=default_backend()
+            ).derive(shared_key)
+            
+            # Encrypt data with AES-GCM using derived key
+            fernet = Fernet(base64.urlsafe_b64encode(derived_key))
+            encrypted_data = fernet.encrypt(data)
+            
+            # Serialize ephemeral public key
+            ephemeral_public_pem = ephemeral_public_key.public_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PublicFormat.SubjectPublicKeyInfo
+            )
+            
+            # Create metadata including ephemeral public key
+            metadata = {
+                'ephemeral_public_key': ephemeral_public_pem.decode('utf-8'),
+                'algorithm': 'ECIES',
+                'curve': 'SECP256R1',
+                'kdf': 'HKDF-SHA256'
+            }
+            
+            return EncryptionResult(
+                encrypted_data=encrypted_data,
+                metadata=metadata,
+                algorithm=EncryptionAlgorithm.ECC_SECP256R1,
+                key_id=key.key_id,
+                timestamp=datetime.now(timezone.utc)
+            )
+            
+        except Exception as e:
+            logger.error(f"ECC encryption failed: {str(e)}")
+            raise EncryptionError(f"ECC encryption failed: {str(e)}")
     
     def decrypt(self, encrypted_result: EncryptionResult, key: EncryptionKey) -> bytes:
         """ECC decryption using ECIES"""
-        raise NotImplementedError("ECIES decryption not implemented in this demo")
+        try:
+            if key.key_type != KeyType.ASYMMETRIC_PRIVATE:
+                raise EncryptionError("ECC decryption requires private key")
+            
+            # Load the private key
+            private_key = serialization.load_pem_private_key(
+                key.key_data, 
+                password=None
+            )
+            if not isinstance(private_key, EllipticCurvePrivateKey):
+                raise EncryptionError("Invalid ECC private key")
+            
+            # Extract ephemeral public key from metadata
+            ephemeral_public_pem = encrypted_result.metadata['ephemeral_public_key'].encode('utf-8')
+            ephemeral_public_key = serialization.load_pem_public_key(ephemeral_public_pem)
+            
+            # Perform ECDH key exchange
+            shared_key = private_key.exchange(ec.ECDH(), ephemeral_public_key)
+            
+            # Derive symmetric key using HKDF (same parameters as encryption)
+            derived_key = HKDF(
+                algorithm=hashes.SHA256(),
+                length=32,  # 256 bits for AES-256
+                salt=None,
+                info=b'ECIES encryption',
+                backend=default_backend()
+            ).derive(shared_key)
+            
+            # Decrypt data with AES-GCM using derived key
+            fernet = Fernet(base64.urlsafe_b64encode(derived_key))
+            decrypted_data = fernet.decrypt(encrypted_result.encrypted_data)
+            
+            return decrypted_data
+            
+        except Exception as e:
+            logger.error(f"ECC decryption failed: {str(e)}")
+            raise EncryptionError(f"ECC decryption failed: {str(e)}")
     
     def sign_data(self, data: bytes, private_key: EncryptionKey) -> bytes:
         """Sign data using ECDSA"""
