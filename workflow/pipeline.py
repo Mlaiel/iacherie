@@ -627,8 +627,10 @@ class IntelligentContentPipeline:
     def get_execution_graph(self) -> Dict[str, List[str]]:
         """Get the execution dependency graph."""
         return dict(self.execution_graph)
-            self.end_time = datetime.utcnow()
-        
+    
+    async def finalize_execution(self) -> Dict[str, Any]:
+        """Finalize pipeline execution."""
+        self.end_time = datetime.utcnow()
         return self.get_execution_summary()
 
     async def _execute_step(self, step: PipelineStep) -> bool:

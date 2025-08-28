@@ -487,7 +487,7 @@ class CreatorMatcher:
                 # Filter by collaboration type if specified
                 if collaboration_type:
                     query = query.where(
-                        "preferred_collaboration_types" like f"%{collaboration_type.value}%"
+                        "preferred_collaboration_types.like(f'%{collaboration_type.value}%')"
                     )
                 
                 # Filter by location if specified

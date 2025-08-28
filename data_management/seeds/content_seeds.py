@@ -244,10 +244,12 @@ class ContentSeedsManager:
             # Content workflow configurations
             workflow_result = await self._initialize_content_workflows()
             results['content_workflows'] = workflow_result
-        logger.info("Initializing content seeds data...")
-        start_time = datetime.now(timezone.utc)
+            
+        except Exception as e:
+            logger.error(f"Content seeds initialization failed: {e}")
+            raise ContentSeedError(f"Failed to initialize content seeds: {e}")
         
-        results = {}
+        return results
         
         try:
             # Initialize content type templates
