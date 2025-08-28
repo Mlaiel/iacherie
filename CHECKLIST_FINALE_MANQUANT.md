@@ -20,9 +20,9 @@
 - [ ] **ACTION:** Créer WebSocket + REST API pour communication inter-services `platform_core/communication/`
 - [ ] **ACTION:** Implémenter Stripe/PayPal integration + invoice generation `platform_core/billing/`
 - [ ] **ACTION:** Développer plans d'abonnement + limits + upgrades `platform_core/subscription/`
-- [ ] **ACTION:** Créer isolation de données + tenant routing `platform_core/tenant_management/`
-- [ ] **ACTION:** Implémenter email/SMS/push notifications + templates `platform_core/notifications/`
-- [ ] **ACTION:** Développer ticketing system + live chat + FAQ `platform_core/support/`
+- [x] **ACTION:** Créer isolation de données + tenant routing `platform_core/tenant_management/` ✅
+- [x] **ACTION:** Implémenter email/SMS/push notifications + templates `platform_core/notifications/` ✅
+- [x] **ACTION:** Développer ticketing system + live chat + FAQ `platform_core/support/` ✅
 
 #### ML/AI (PARTIELLEMENT VIDE)
 - [ ] **ACTION:** Créer pipeline AutoML + hyperparameter tuning `ml/training/`
