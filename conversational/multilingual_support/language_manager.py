@@ -659,6 +659,91 @@ class SupportedLanguage(Enum):
     KENZI = "xnz"                     # Kenzi Nubian (Egypt, Sudan)
     FADICCA = "fdi"                   # Fadicca Nubian (Sudan)
     NOBIIN = "fia"                    # Nobiin Nubian (Egypt, Sudan)
+    
+    # Additional Critical Languages for Worldwide Coverage
+    
+    # Sign Languages (Critical for accessibility)
+    AMERICAN_SIGN_LANGUAGE = "ase"    # American Sign Language (USA, Canada)
+    BRITISH_SIGN_LANGUAGE = "bfi"     # British Sign Language (UK)
+    FRENCH_SIGN_LANGUAGE = "fsl"      # French Sign Language (France)
+    GERMAN_SIGN_LANGUAGE = "gsg"      # German Sign Language (Germany)
+    JAPANESE_SIGN_LANGUAGE = "jsl"    # Japanese Sign Language (Japan)
+    CHINESE_SIGN_LANGUAGE = "csl"     # Chinese Sign Language (China)
+    INTERNATIONAL_SIGN = "ils"        # International Sign
+    
+    # Central Asian Languages (Major Gap)
+    KAZAKH = "kk"                     # Kazakh (Kazakhstan, China)
+    KYRGYZ = "ky"                     # Kyrgyz (Kyrgyzstan)
+    UZBEK = "uz"                      # Uzbek (Uzbekistan)
+    UZBEK_LATIN = "uz_Latn"          # Uzbek Latin script
+    UZBEK_CYRILLIC = "uz_Cyrl"       # Uzbek Cyrillic script
+    TURKMEN = "tk"                    # Turkmen (Turkmenistan)
+    TAJIK = "tg"                      # Tajik (Tajikistan)
+    TAJIK_CYRILLIC = "tg_Cyrl"       # Tajik Cyrillic script
+    TAJIK_PERSIAN = "tg_Arab"         # Tajik Persian script
+    
+    # Additional African Languages (Major Coverage Gap)
+    AMHARIC_ET = "am_ET"              # Amharic (Ethiopia)
+    OROMO = "om"                      # Oromo (Ethiopia)
+    TIGRINYA = "ti"                   # Tigrinya (Ethiopia, Eritrea)
+    SIDAMO = "sid"                    # Sidamo (Ethiopia)
+    WOLAYTA = "wal"                   # Wolayta (Ethiopia)
+    KAMBA = "kam"                     # Kamba (Kenya)
+    LUO_KE = "luo"                    # Luo (Kenya)
+    KALENJIN = "kln"                  # Kalenjin (Kenya)
+    MERU = "mer"                      # Meru (Kenya)
+    EMBU = "ebu"                      # Embu (Kenya)
+    GUSII = "guz"                     # Gusii (Kenya)
+    TESO = "teo"                      # Teso (Uganda, Kenya)
+    LUGANDA = "lg"                    # Luganda (Uganda)
+    RUNYANKORE = "nyn"                # Runyankore (Uganda)
+    KINYARWANDA = "rw"                # Kinyarwanda (Rwanda)
+    KIRUNDI = "rn"                    # Kirundi (Burundi)
+    TONGA_ZM = "to_ZM"                # Tonga (Zambia)
+    NYANJA = "ny"                     # Nyanja/Chichewa (Malawi)
+    YAO_MW = "yao"                    # Yao (Malawi)
+    MALAGASY = "mg"                   # Malagasy (Madagascar)
+    
+    # Additional Pacific Languages
+    PAPUA_NEW_GUINEA_PIDGIN = "tpi"   # Tok Pisin (Papua New Guinea)
+    HIRI_MOTU = "ho"                  # Hiri Motu (Papua New Guinea)
+    SOLOMON_ISLANDS_PIDGIN = "pis"    # Solomon Islands Pidgin
+    BISLAMA = "bi"                    # Bislama (Vanuatu)
+    COOK_ISLANDS_MAORI = "rar"        # Cook Islands Maori
+    NIUEAN = "niu"                    # Niuean (Niue)
+    TOKELAUAN = "tkl"                 # Tokelauan (Tokelau)
+    
+    # Additional European Regional Languages
+    ROMANSH = "rm"                    # Romansh (Switzerland)
+    LADIN = "lld"                     # Ladin (Italy)
+    FRIULIAN = "fur"                  # Friulian (Italy)
+    SARDINIAN = "sc"                  # Sardinian (Italy)
+    CORSICAN = "co"                   # Corsican (France)
+    OCCITAN = "oc"                    # Occitan (France)
+    FRANCO_PROVENCAL = "frp"          # Franco-Provençal (France, Switzerland)
+    WALLOON = "wa"                    # Walloon (Belgium)
+    LOWER_SORBIAN = "dsb"             # Lower Sorbian (Germany)
+    UPPER_SORBIAN = "hsb"             # Upper Sorbian (Germany)
+    
+    # Additional Middle Eastern Languages
+    SORANI_KURDISH = "ckb"            # Sorani Kurdish (Iraq, Iran)
+    KURMANJI_KURDISH = "ku"           # Kurmanji Kurdish (Turkey, Syria)
+    ZAZAKI = "zza"                    # Zazaki (Turkey)
+    LUR = "lrc"                       # Lur (Iran)
+    GILAKI = "glk"                    # Gilaki (Iran)
+    MAZANDARANI = "mzn"               # Mazandarani (Iran)
+    BALOCHI = "bal"                   # Balochi (Pakistan, Iran, Afghanistan)
+    BRAHUI = "brh"                    # Brahui (Pakistan)
+    
+    # Additional South American Indigenous Languages
+    AYMARA = "ay"                     # Aymara (Bolivia, Peru)
+    TZELTAL = "tzh"                   # Tzeltal (Mexico)
+    TZOTZIL = "tzo"                   # Tzotzil (Mexico)
+    CHOL = "ctu"                      # Ch'ol (Mexico)
+    MIXTEC = "mix"                    # Mixtec (Mexico)
+    ZAPOTEC = "zap"                   # Zapotec (Mexico)
+    OTOMI = "oto"                     # Otomi (Mexico)
+    HUICHOL = "hch"                   # Huichol (Mexico)
 
     @staticmethod
     def get_language_family(language: 'SupportedLanguage') -> str:

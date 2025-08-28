@@ -589,6 +589,164 @@ DIALECT_LOCALIZATIONS: Dict[str, DialectLocalization] = {
         country_code="221",
         greeting_style="respectful",
         politeness_level="high"
+    ),
+    
+    # Additional Critical Language Localizations
+    "kk": DialectLocalization(
+        dialect_code="kk",
+        region="Kazakhstan",
+        currency_symbol="₸",
+        currency_position="after",
+        date_format="%d.%m.%Y",
+        phone_format="+7 {area_code} {number}",
+        country_code="7",
+        greeting_style="formal",
+        politeness_level="high"
+    ),
+    
+    "ky": DialectLocalization(
+        dialect_code="ky",
+        region="Kyrgyzstan",
+        currency_symbol="с",
+        currency_position="after",
+        date_format="%d.%m.%Y",
+        phone_format="+996 {area_code} {number}",
+        country_code="996",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "uz": DialectLocalization(
+        dialect_code="uz",
+        region="Uzbekistan",
+        currency_symbol="so'm",
+        currency_position="after",
+        date_format="%d.%m.%Y",
+        phone_format="+998 {area_code} {number}",
+        country_code="998",
+        greeting_style="formal",
+        politeness_level="high"
+    ),
+    
+    "tk": DialectLocalization(
+        dialect_code="tk",
+        region="Turkmenistan",
+        currency_symbol="m",
+        currency_position="after",
+        date_format="%d.%m.%Y",
+        phone_format="+993 {area_code} {number}",
+        country_code="993",
+        greeting_style="formal",
+        politeness_level="high"
+    ),
+    
+    "tg": DialectLocalization(
+        dialect_code="tg",
+        region="Tajikistan",
+        currency_symbol="смн",
+        currency_position="after",
+        date_format="%d.%m.%Y",
+        phone_format="+992 {area_code} {number}",
+        country_code="992",
+        greeting_style="formal",
+        politeness_level="high"
+    ),
+    
+    "am_ET": DialectLocalization(
+        dialect_code="am_ET",
+        region="Ethiopia (Amharic)",
+        currency_symbol="ብር",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+251 {area_code} {number}",
+        country_code="251",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "om": DialectLocalization(
+        dialect_code="om",
+        region="Ethiopia (Oromo)",
+        currency_symbol="ብር",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+251 {area_code} {number}",
+        country_code="251",
+        greeting_style="traditional",
+        politeness_level="high"
+    ),
+    
+    "rw": DialectLocalization(
+        dialect_code="rw",
+        region="Rwanda",
+        currency_symbol="RF",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+250 {number}",
+        country_code="250",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "rn": DialectLocalization(
+        dialect_code="rn",
+        region="Burundi",
+        currency_symbol="FBu",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+257 {number}",
+        country_code="257",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "mg": DialectLocalization(
+        dialect_code="mg",
+        region="Madagascar",
+        currency_symbol="Ar",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+261 {area_code} {number}",
+        country_code="261",
+        greeting_style="traditional",
+        politeness_level="medium"
+    ),
+    
+    "ay": DialectLocalization(
+        dialect_code="ay",
+        region="Bolivia/Peru (Aymara)",
+        currency_symbol="Bs",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+591 {area_code} {number}",
+        country_code="591",
+        greeting_style="traditional",
+        politeness_level="high"
+    ),
+    
+    # Sign Language Localizations (accessibility focused)
+    "ase": DialectLocalization(
+        dialect_code="ase",
+        region="USA/Canada (ASL)",
+        currency_symbol="$",
+        currency_position="before",
+        date_format="%m/%d/%Y",
+        phone_format="+1 {area_code} {number}",
+        country_code="1",
+        greeting_style="visual",
+        politeness_level="medium"
+    ),
+    
+    "bfi": DialectLocalization(
+        dialect_code="bfi",
+        region="UK (BSL)",
+        currency_symbol="£",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+44 {area_code} {number}",
+        country_code="44",
+        greeting_style="visual",
+        politeness_level="medium"
     )
 }
 
