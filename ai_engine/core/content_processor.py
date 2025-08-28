@@ -202,8 +202,48 @@ class BaseProcessor:
         context: ProcessingContext, 
         state: PipelineState
     ) -> ProcessingResult:
-        """Process content and return result"""
-        raise NotImplementedError("Subclasses must implement process method")
+        """Process content and return result - base implementation"""
+        try:
+            # Basic processing that validates input and returns content unchanged
+            if not self.validate_input(content, context):
+                return ProcessingResult(
+                    success=False,
+                    data=None,
+                    error="Input validation failed",
+                    metadata={
+                        "processor": self.name,
+                        "stage": "validation"
+                    }
+                )
+            
+            # Basic passthrough processing
+            processed_data = content
+            
+            # Update processing state
+            state.add_step(f"{self.name}_processed")
+            
+            return ProcessingResult(
+                success=True,
+                data=processed_data,
+                metadata={
+                    "processor": self.name,
+                    "stage": "processed",
+                    "timestamp": datetime.utcnow().isoformat(),
+                    "content_type": type(content).__name__
+                }
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Processing failed in {self.name}: {str(e)}")
+            return ProcessingResult(
+                success=False,
+                data=None,
+                error=str(e),
+                metadata={
+                    "processor": self.name,
+                    "stage": "error"
+                }
+            )
         
     def validate_input(self, content: Any, context: ProcessingContext) -> bool:
         """Validate processor input"""
