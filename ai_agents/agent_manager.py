@@ -23,10 +23,36 @@ import json
 import uuid
 
 from .base import BaseAgent, AgentRequest, AgentResponse, AgentStatus, AgentPriority
-from ..core.config import settings
-from ..core.exceptions import AgentError, ResourceLimitError
-from ..utils.load_balancer import LoadBalancer
-from ..utils.health_checker import HealthChecker
+try:
+    from ..core.config import settings
+except ImportError:
+    try:
+        from core.config import settings
+    except ImportError:
+        # Fallback settings object
+        settings = type('Settings', (), {
+            'redis_url': 'redis://localhost:6379',
+            'max_agents_per_type': 10,
+            'agent_timeout': 300
+        })()
+try:
+    from ..core.exceptions import AgentError, ResourceLimitError
+except ImportError:
+    try:
+        from core.exceptions import AgentError, ResourceLimitError
+    except ImportError:
+        class AgentError(Exception): pass
+        class ResourceLimitError(Exception): pass
+
+try:
+    from ..utils.load_balancer import LoadBalancer
+except ImportError:
+    LoadBalancer = None
+
+try:
+    from ..utils.health_checker import HealthChecker
+except ImportError:
+    HealthChecker = None
 
 logger = logging.getLogger(__name__)
 
@@ -74,8 +100,17 @@ class AgentManager:
     def __init__(self):
         self.pools: Dict[str, AgentPool] = {}
         self.routing_rules: List[RoutingRule] = []
-        self.load_balancer = LoadBalancer()
-        self.health_checker = HealthChecker()
+        
+        # Initialize utilities (with fallbacks)
+        if LoadBalancer is not None:
+            self.load_balancer = LoadBalancer()
+        else:
+            self.load_balancer = None
+            
+        if HealthChecker is not None:
+            self.health_checker = HealthChecker()
+        else:
+            self.health_checker = None
         
         # Manager state
         self.is_running = False
