@@ -126,10 +126,19 @@ dmypy.json
 ehthumbs.db
 Thumbs.db
 
+# Node.js / Frontend
+node_modules/
+.next/
+.nuxt/
+dist/
+out/
+*.tsbuildinfo
+next-env.d.ts
+package-lock.json
+
 # Project specific
 *.log
 .env*
 !.env.example
-node_modules/
 temp/
 tmp/
