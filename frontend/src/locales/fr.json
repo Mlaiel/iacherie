@@ -102,5 +102,19 @@
   "currency_localization": "Localisation monétaire",
   "date_preferences": "Préférences de format de date",
   "number_formatting": "Formatage des nombres",
-  "phone_standards": "Standards de numéros de téléphone"
+  "phone_standards": "Standards de numéros de téléphone",
+  "local_dialects": "Dialectes locaux",
+  "indigenous_languages": "Langues indigènes",
+  "regional_customization": "Personnalisation régionale",
+  "cultural_nuances": "Nuances culturelles",
+  "local_expressions": "Expressions locales",
+  "dialect_variants": "Variantes dialectales",
+  "community_language": "Langue communautaire",
+  "traditional_speech": "Parole traditionnelle",
+  "colloquial_terms": "Termes familiers",
+  "vernacular_support": "Support vernaculaire",
+  "heritage_languages": "Langues patrimoniales",
+  "minority_languages": "Langues minoritaires",
+  "tribal_languages": "Langues tribales",
+  "ancestral_tongues": "Langues ancestrales"
 }

@@ -102,5 +102,19 @@
   "currency_localization": "توطين العملة",
   "date_preferences": "تفضيلات تنسيق التاريخ",
   "number_formatting": "تنسيق الأرقام",
-  "phone_standards": "معايير أرقام الهاتف"
+  "phone_standards": "معايير أرقام الهاتف",
+  "local_dialects": "اللهجات المحلية",
+  "indigenous_languages": "اللغات الأصلية",
+  "regional_customization": "التخصيص الإقليمي",
+  "cultural_nuances": "الفروق الثقافية",
+  "local_expressions": "التعابير المحلية",
+  "dialect_variants": "متغيرات اللهجة",
+  "community_language": "لغة المجتمع",
+  "traditional_speech": "الخطاب التقليدي",
+  "colloquial_terms": "المصطلحات العامية",
+  "vernacular_support": "دعم اللغة المحلية",
+  "heritage_languages": "لغات التراث",
+  "minority_languages": "لغات الأقليات",
+  "tribal_languages": "لغات القبائل",
+  "ancestral_tongues": "ألسنة الأجداد"
 }

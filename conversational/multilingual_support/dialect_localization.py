@@ -516,6 +516,79 @@ DIALECT_LOCALIZATIONS: Dict[str, DialectLocalization] = {
         country_code="52",
         greeting_style="traditional",
         politeness_level="high"
+    ),
+    
+    # Enhanced indigenous and local dialect support
+    "qu_PE": DialectLocalization(
+        dialect_code="qu_PE",
+        region="Peru (Quechua)",
+        currency_symbol="S/",
+        currency_position="before", 
+        date_format="%d/%m/%Y",
+        phone_format="+51 {area_code} {number}",
+        country_code="51",
+        greeting_style="traditional",
+        politeness_level="high"
+    ),
+    
+    "en_SG": DialectLocalization(
+        dialect_code="en_SG",
+        region="Singapore (Singlish)",
+        currency_symbol="S$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+65 {number}",
+        country_code="65",
+        greeting_style="casual",
+        politeness_level="medium"
+    ),
+    
+    "en_MY": DialectLocalization(
+        dialect_code="en_MY", 
+        region="Malaysia (Malaysian English)",
+        currency_symbol="RM",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+60 {area_code} {number}",
+        country_code="60",
+        greeting_style="casual",
+        politeness_level="medium"
+    ),
+    
+    "zh_HK_cant": DialectLocalization(
+        dialect_code="zh_HK_cant",
+        region="Hong Kong (Cantonese Traditional)",
+        currency_symbol="HK$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+852 {number}",
+        country_code="852",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "ar_EG_local": DialectLocalization(
+        dialect_code="ar_EG_local",
+        region="Egypt (Egyptian Arabic)",
+        currency_symbol="ج.م",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+20 {area_code} {number}",
+        country_code="20",
+        greeting_style="warm",
+        politeness_level="medium"
+    ),
+    
+    "fr_SN": DialectLocalization(
+        dialect_code="fr_SN",
+        region="Senegal (Wolof-French)",
+        currency_symbol="CFA",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+221 {number}",
+        country_code="221",
+        greeting_style="respectful",
+        politeness_level="high"
     )
 }
 

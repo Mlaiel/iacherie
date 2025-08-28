@@ -102,5 +102,19 @@
   "currency_localization": "Asideg n tdrimt",
   "date_preferences": "Ismenyafen n usmel n wazmez",
   "number_formatting": "Asmel n yiḍerrayen",
-  "phone_standards": "Lugan n yimiḍanen n tiliɣri"
+  "phone_standards": "Ilugan n wuṭṭun",
+  "local_dialects": "Tutlayin tididrin",
+  "indigenous_languages": "Tutlayin timezwura",
+  "regional_customization": "Asegzi n tmnaḍin",
+  "cultural_nuances": "Inuɣen idelsanen",
+  "local_expressions": "Awalen ididren",
+  "dialect_variants": "Inuɣen n tutlayt",
+  "community_language": "Tutlayt n umetti",
+  "traditional_speech": "Awal azayku",
+  "colloquial_terms": "Awalen igejdanen",
+  "vernacular_support": "Tallalt n tutlayt taɣerfant",
+  "heritage_languages": "Tutlayin n uṛaz",
+  "minority_languages": "Tutlayin timecṭuḥin",
+  "tribal_languages": "Tutlayin n tqebilin",
+  "ancestral_tongues": "Ilsawen n imezwura"
 }
