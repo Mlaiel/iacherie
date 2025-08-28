@@ -479,6 +479,43 @@ class EnterpriseAIProtectionEngine:
             
         except Exception as e:
             logger.error(f"Error during engine shutdown: {str(e)}")
+    
+    async def continuous_learning(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Continuous learning from protection outcomes
+        """
+        try:
+            learning_results = {}
+            
+            # Update content classifier
+            classifier_update = await self.content_classifier.update_model(feedback_data)
+            learning_results['classifier'] = classifier_update
+            
+            # Update threat detector
+            threat_update = await self.threat_detector.update_model(feedback_data)
+            learning_results['threat_detector'] = threat_update
+            
+            # Update pattern analyzer
+            pattern_update = await self.pattern_analyzer.update_model(feedback_data)
+            learning_results['pattern_analyzer'] = pattern_update
+            
+            # Update prediction engine
+            prediction_update = await self.prediction_engine.update_model(feedback_data)
+            learning_results['prediction_engine'] = prediction_update
+            
+            logger.info(f"Continuous learning completed: {len(feedback_data)} samples processed")
+            
+            return {
+                'learning_id': str(uuid.uuid4()),
+                'timestamp': datetime.utcnow().isoformat(),
+                'samples_processed': len(feedback_data),
+                'results': learning_results,
+                'status': 'completed'
+            }
+            
+        except Exception as e:
+            logger.error(f"Continuous learning failed: {str(e)}")
+            raise
 
 # Factory function for creating engine instances
 def create_ai_engine(config_dict: Dict[str, Any] = None) -> EnterpriseAIProtectionEngine:
@@ -535,76 +572,4 @@ __all__ = [
     'MarketIntelligenceEngine', 
     'AnalyticsDashboardEngine'
 ]
-                'analysis_id': str(uuid.uuid4()),
-                'timestamp': datetime.utcnow().isoformat(),
-                'classification': classification,
-                'threats': threats,
-                'patterns': patterns,
-                'risk_assessment': risk_assessment,
-                'optimizations': optimizations,
-                'decision': decision,
-                'confidence_score': decision.get('confidence', 0.0)
-            }
-            
-        except Exception as e:
-            logger.error(f"AI analysis failed: {str(e)}")
-            raise
-    
-    async def continuous_learning(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """
-        Continuous learning from protection outcomes
-        """
-        try:
-            learning_results = {}
-            
-            # Update content classifier
-            classifier_update = await self.content_classifier.update_model(feedback_data)
-            learning_results['classifier'] = classifier_update
-            
-            # Update threat detector
-            threat_update = await self.threat_detector.update_model(feedback_data)
-            learning_results['threat_detector'] = threat_update
-            
-            # Update pattern analyzer
-            pattern_update = await self.pattern_analyzer.update_model(feedback_data)
-            learning_results['pattern_analyzer'] = pattern_update
-            
-            # Update prediction engine
-            prediction_update = await self.prediction_engine.update_model(feedback_data)
-            learning_results['prediction_engine'] = prediction_update
-            
-            logger.info(f"Continuous learning completed: {len(feedback_data)} samples processed")
-            
-            return {
-                'learning_id': str(uuid.uuid4()),
-                'timestamp': datetime.utcnow().isoformat(),
-                'samples_processed': len(feedback_data),
-                'results': learning_results,
-                'status': 'completed'
-            }
-            
-        except Exception as e:
-            logger.error(f"Continuous learning failed: {str(e)}")
-            raise
 
-__all__ = [
-    # Master AI Engine
-    'AIProtectionEngine',
-    
-    # Core AI Components
-    'ContentClassifierEngine',
-    'ThreatDetectionEngine', 
-    'PatternAnalysisEngine',
-    'PredictionEngine',
-    'OptimizationEngine',
-    'DecisionEngine',
-    
-    # Advanced Processing Components
-    'MultiModalContentProcessor',
-    'ContentFingerprintEngine',
-    'CollaborativeIntelligenceEngine',
-    
-    # Business Intelligence Components
-    'RevenueIntelligenceEngine',
-    'MarketIntelligenceEngine'
-]
