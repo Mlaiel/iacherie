@@ -744,7 +744,10 @@ class VideoDetectionEngine:
                                 confidence_level=confidence,
                                 time_segments=time_segments,
                                 visual_similarity=detailed_similarity,
-                                audio_similarity=None,  # TODO: Implement audio comparison
+                                audio_similarity=self._calculate_audio_similarity(
+                                    detection_video_features, 
+                                    stored_fingerprint.features
+                                ),  # Audio comparison implementation
                                 platform=detection_metadata.get("platform", ""),
                                 detected_at=datetime.utcnow(),
                                 match_details=feature_similarities
@@ -817,6 +820,51 @@ class VideoDetectionEngine:
             },
             "last_updated": datetime.utcnow().isoformat()
         }
+    
+    def _calculate_audio_similarity(self, detected_features: Dict[str, np.ndarray], 
+                                   reference_features: Dict[str, np.ndarray]) -> float:
+        """Calculate audio similarity score between detected and reference video."""
+        try:
+            # Extract audio features if available
+            detected_audio = detected_features.get('audio_features')
+            reference_audio = reference_features.get('audio_features')
+            
+            if detected_audio is None or reference_audio is None:
+                # Try alternative audio feature keys
+                detected_audio = detected_features.get('mfcc')
+                reference_audio = reference_features.get('mfcc')
+            
+            if detected_audio is None or reference_audio is None:
+                return 0.0
+            
+            # Ensure arrays are the same shape for comparison
+            min_length = min(len(detected_audio), len(reference_audio))
+            if min_length == 0:
+                return 0.0
+            
+            detected_audio = detected_audio[:min_length]
+            reference_audio = reference_audio[:min_length]
+            
+            # Calculate cosine similarity
+            detected_flat = detected_audio.flatten()
+            reference_flat = reference_audio.flatten()
+            
+            # Handle edge case where one or both vectors have zero norm
+            detected_norm = np.linalg.norm(detected_flat)
+            reference_norm = np.linalg.norm(reference_flat)
+            
+            if detected_norm == 0 or reference_norm == 0:
+                return 0.0
+            
+            # Cosine similarity
+            similarity = np.dot(detected_flat, reference_flat) / (detected_norm * reference_norm)
+            
+            # Ensure similarity is in [0, 1] range
+            return max(0.0, min(1.0, float(similarity)))
+            
+        except Exception as e:
+            logger.warning(f"Audio similarity calculation failed: {e}")
+            return 0.0
     
     async def cleanup(self) -> None:
         """Cleanup resources."""

@@ -127,7 +127,7 @@ class TextFeatureExtractor:
             features = {
                 "original_length": len(text),
                 "cleaned_length": len(cleaned_text),
-                "language": "en"  # TODO: Add language detection
+                "language": self._detect_language(cleaned_text)  # Language detection implementation
             }
             
             # Basic text statistics
@@ -926,6 +926,52 @@ class TextDetectionEngine:
             },
             "last_updated": datetime.utcnow().isoformat()
         }
+    
+    def _detect_language(self, text: str) -> str:
+        """Detect the language of the input text."""
+        try:
+            # Simple heuristic-based language detection
+            text_lower = text.lower()
+            
+            # Common words in different languages
+            language_patterns = {
+                'en': ['the', 'and', 'is', 'in', 'to', 'of', 'a', 'that', 'it', 'with'],
+                'fr': ['le', 'de', 'et', 'à', 'un', 'il', 'être', 'et', 'en', 'avoir'],
+                'es': ['el', 'de', 'que', 'y', 'a', 'en', 'un', 'es', 'se', 'no'],
+                'de': ['der', 'die', 'und', 'in', 'den', 'von', 'zu', 'das', 'mit', 'sich'],
+                'it': ['il', 'di', 'che', 'e', 'la', 'per', 'una', 'in', 'con', 'da'],
+                'ar': ['في', 'من', 'إلى', 'على', 'هذا', 'أن', 'كان', 'قد', 'لا', 'ما']
+            }
+            
+            # Count matches for each language
+            language_scores = {}
+            words = text_lower.split()
+            
+            for lang, common_words in language_patterns.items():
+                score = sum(1 for word in words if word in common_words)
+                if len(words) > 0:
+                    language_scores[lang] = score / len(words)
+                else:
+                    language_scores[lang] = 0.0
+            
+            # Return language with highest score, default to English
+            if language_scores:
+                detected_lang = max(language_scores, key=language_scores.get)
+                # Only return if confidence is reasonable
+                if language_scores[detected_lang] > 0.05:  # At least 5% match
+                    return detected_lang
+            
+            # Check for Arabic script
+            arabic_chars = sum(1 for char in text if '\u0600' <= char <= '\u06FF')
+            if arabic_chars > len(text) * 0.3:  # More than 30% Arabic characters
+                return 'ar'
+            
+            # Default to English
+            return 'en'
+            
+        except Exception as e:
+            logger.warning(f"Language detection failed: {e}")
+            return 'en'
     
     async def cleanup(self) -> None:
         """Cleanup resources."""
