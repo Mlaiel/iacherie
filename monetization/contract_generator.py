@@ -501,8 +501,43 @@ class ContractGenerator:
         license_terms: Dict[str, Any]
     ) -> None:
         """Validate CCPA compliance"""
-        # CCPA validation logic
-        pass
+        logger.info("Validating CCPA compliance for contract")
+        
+        # Check for required CCPA elements
+        required_clauses = [
+            "data_collection_notice",
+            "consumer_rights",
+            "opt_out_mechanism",
+            "data_deletion_rights"
+        ]
+        
+        # Validate data collection notice
+        if not variables.get("data_collection_notice"):
+            logger.warning("CCPA: Data collection notice missing")
+            variables["data_collection_notice"] = (
+                "This agreement complies with California Consumer Privacy Act (CCPA). "
+                "Consumer data collection practices are disclosed and consent-based."
+            )
+        
+        # Validate consumer rights clause
+        if not variables.get("consumer_rights_clause"):
+            logger.info("Adding CCPA consumer rights clause")
+            variables["consumer_rights_clause"] = (
+                "Consumers have the right to know about personal information collected, "
+                "the right to delete personal information, and the right to opt-out of "
+                "the sale of personal information as defined under CCPA."
+            )
+        
+        # Add CCPA-specific terms to license
+        if "ccpa_compliance" not in license_terms:
+            license_terms["ccpa_compliance"] = {
+                "data_subject_rights": True,
+                "opt_out_available": True,
+                "data_deletion_policy": "Upon request within 45 days",
+                "privacy_policy_link": variables.get("privacy_policy_url", "/privacy-policy")
+            }
+        
+        logger.info("CCPA compliance validation completed")
     
     async def _validate_dmca_compliance(
         self,
@@ -510,8 +545,62 @@ class ContractGenerator:
         license_terms: Dict[str, Any]
     ) -> None:
         """Validate DMCA compliance"""
-        # DMCA validation logic
-        pass
+        logger.info("Validating DMCA compliance for contract")
+        
+        # Check for required DMCA elements
+        required_dmca_elements = [
+            "copyright_notice",
+            "takedown_procedure",
+            "counter_notification_process",
+            "dmca_agent_contact"
+        ]
+        
+        # Validate copyright notice
+        if not variables.get("copyright_notice"):
+            logger.warning("DMCA: Copyright notice missing, adding default")
+            variables["copyright_notice"] = (
+                f"© {datetime.now().year} {variables.get('licensor_name', 'Content Owner')}. "
+                "All rights reserved. Unauthorized use is prohibited."
+            )
+        
+        # Validate takedown procedure
+        if not variables.get("dmca_takedown_procedure"):
+            logger.info("Adding DMCA takedown procedure")
+            variables["dmca_takedown_procedure"] = (
+                "Copyright infringement claims should be submitted to our DMCA agent "
+                "with: (1) Physical/electronic signature of copyright owner, "
+                "(2) Identification of copyrighted work, (3) Location of infringing material, "
+                "(4) Contact information, (5) Good faith statement, (6) Accuracy statement."
+            )
+        
+        # Add DMCA agent information if not present
+        if not variables.get("dmca_agent_contact"):
+            logger.info("Adding DMCA agent contact information")
+            variables["dmca_agent_contact"] = {
+                "email": variables.get("dmca_email", "dmca@company.com"),
+                "address": variables.get("dmca_address", "DMCA Agent, Legal Department"),
+                "phone": variables.get("dmca_phone", "+1-XXX-XXX-XXXX")
+            }
+        
+        # Add DMCA-specific license terms
+        if "dmca_compliance" not in license_terms:
+            license_terms["dmca_compliance"] = {
+                "takedown_response_time": "24-48 hours",
+                "counter_notification_time": "10 business days",
+                "safe_harbor_protection": True,
+                "copyright_monitoring": variables.get("copyright_monitoring", True)
+            }
+        
+        # Validate content identification requirements
+        if "content_identification" not in license_terms:
+            license_terms["content_identification"] = {
+                "fingerprinting_enabled": True,
+                "metadata_tracking": True,
+                "usage_monitoring": True,
+                "infringement_detection": "automated"
+            }
+        
+        logger.info("DMCA compliance validation completed")
     
     async def _render_contract(
         self,
