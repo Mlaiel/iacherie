@@ -744,6 +744,90 @@ class SupportedLanguage(Enum):
     ZAPOTEC = "zap"                   # Zapotec (Mexico)
     OTOMI = "oto"                     # Otomi (Mexico)
     HUICHOL = "hch"                   # Huichol (Mexico)
+    
+    # Additional Critical Missing Languages for Complete Worldwide Coverage
+    FARSI = "fa"                      # Persian/Farsi (Iran, Afghanistan, Tajikistan)
+    FARSI_IR = "fa_IR"                # Persian (Iran)
+    FARSI_AF = "fa_AF"                # Dari Persian (Afghanistan)
+    FARSI_TJ = "fa_TJ"                # Tajik Persian (Tajikistan)
+    MAPUCHE = "arn"                   # Mapuche (Chile, Argentina)
+    
+    # Additional Regional Dialects and Indigenous Languages
+    QUECHUA_BOLIVIA = "qu_BO"         # Quechua (Bolivia)
+    QUECHUA_ECUADOR = "qu_EC"         # Quechua (Ecuador)
+    QUECHUA_PERU = "qu_PE"            # Quechua (Peru)
+    GUARANI_PY = "gn_PY"              # Guarani (Paraguay)
+    GUARANI_BO = "gn_BO"              # Guarani (Bolivia)
+    NAVAJO = "nv"                     # Navajo/Diné (USA)
+    CHEROKEE = "chr"                  # Cherokee (USA)
+    CREE = "cr"                       # Cree (Canada)
+    INUKTITUT = "iu"                  # Inuktitut (Canada)
+    OJIBWE = "oj"                     # Ojibwe (USA, Canada)
+    
+    # Additional African Languages for Comprehensive Coverage
+    FULANI = "ff"                     # Fulani/Fula (West Africa)
+    FULANI_SN = "ff_SN"               # Fulani (Senegal)
+    FULANI_GN = "ff_GN"               # Fulani (Guinea)
+    FULANI_ML = "ff_ML"               # Fulani (Mali)
+    FULANI_BF = "ff_BF"               # Fulani (Burkina Faso)
+    BAMBARA = "bm"                    # Bambara (Mali)
+    SANGO = "sg"                      # Sango (Central African Republic)
+    LINGALA = "ln"                    # Lingala (DRC, Congo)
+    KIKONGO = "kg"                    # Kikongo (DRC, Congo, Angola)
+    SHONA = "sn"                      # Shona (Zimbabwe)
+    NDEBELE = "nd"                    # Ndebele (Zimbabwe, South Africa)
+    TSWANA = "tn"                     # Tswana (Botswana, South Africa)
+    SEPEDI = "nso"                    # Sepedi/Northern Sotho (South Africa)
+    VENDA = "ve"                      # Venda (South Africa)
+    TSONGA = "ts"                     # Tsonga (South Africa, Mozambique)
+    
+    # Additional Asian Languages and Dialects
+    SINDHI = "sd"                     # Sindhi (Pakistan, India)
+    NEPALI = "ne"                     # Nepali (Nepal)
+    SINHALA = "si"                    # Sinhala (Sri Lanka)
+    DZONGKHA = "dz"                   # Dzongkha (Bhutan)
+    BURMESE = "my"                    # Burmese (Myanmar)
+    KHMER = "km"                      # Khmer (Cambodia)
+    LAO = "lo"                        # Lao (Laos)
+    MONGOLIAN_MN = "mn_MN"            # Mongolian (Mongolia)
+    MONGOLIAN_CN = "mn_CN"            # Mongolian (China/Inner Mongolia)
+    
+    # Additional Pacific Island Languages
+    FIJIAN = "fj"                     # Fijian (Fiji)
+    MARSHALLESE = "mh"                # Marshallese (Marshall Islands)
+    PALAUAN = "pau"                   # Palauan (Palau)
+    CHUUKESE = "chk"                  # Chuukese (Micronesia)
+    YAPESE = "yap"                    # Yapese (Micronesia)
+    KOSRAEAN = "kos"                  # Kosraean (Micronesia)
+    POHNPEIAN = "pon"                 # Pohnpeian (Micronesia)
+    
+    # Additional European Regional Languages and Dialects
+    BASQUE = "eu"                     # Basque (Spain, France)
+    WELSH = "cy"                      # Welsh (Wales)
+    IRISH = "ga"                      # Irish Gaelic (Ireland)
+    SCOTTISH_GAELIC = "gd"            # Scottish Gaelic (Scotland)
+    MANX = "gv"                       # Manx (Isle of Man)
+    CORNISH = "kw"                    # Cornish (Cornwall)
+    BRETON = "br"                     # Breton (Brittany, France)
+    ALSATIAN = "gsw"                  # Alsatian (France)
+    LUXEMBOURGISH = "lb"              # Luxembourgish (Luxembourg)
+    RUSYN = "rue"                     # Rusyn (Ukraine, Slovakia, Poland)
+    KASHUBIAN = "csb"                 # Kashubian (Poland)
+    
+    # Additional Middle Eastern Languages
+    ARAMAIC = "arc"                   # Aramaic (Syria, Iraq)
+    ASSYRIAN = "aii"                  # Assyrian Neo-Aramaic (Iraq, Syria)
+    SYRIAC = "syc"                    # Syriac (Syria, Iraq)
+    COPTIC = "cop"                    # Coptic (Egypt)
+    
+    # Additional Sign Languages for Complete Accessibility
+    SPANISH_SIGN_LANGUAGE = "ssp"     # Spanish Sign Language
+    ITALIAN_SIGN_LANGUAGE = "ise"     # Italian Sign Language
+    RUSSIAN_SIGN_LANGUAGE = "rsl"     # Russian Sign Language
+    INDIAN_SIGN_LANGUAGE = "ins"      # Indian Sign Language
+    BRAZILIAN_SIGN_LANGUAGE = "bzs"   # Brazilian Sign Language (Libras)
+    MEXICAN_SIGN_LANGUAGE = "mfs"     # Mexican Sign Language
+    ARGENTINE_SIGN_LANGUAGE = "aed"   # Argentine Sign Language
 
     @staticmethod
     def get_language_family(language: 'SupportedLanguage') -> str:
