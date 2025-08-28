@@ -406,6 +406,353 @@ class CDNStorageManager:
             logger.error(f"Failed to list CDN content: {str(e)}")
             return []
     
+    async def optimize_static_content(
+        self,
+        content_type: str,
+        content_data: bytes,
+        optimization_level: str = 'medium'
+    ) -> Dict[str, Any]:
+        """
+        Advanced static content optimization for CDN delivery
+        
+        Features:
+        - CSS/JS minification
+        - Image optimization and format conversion
+        - Content compression
+        - Cache-optimized headers
+        - Performance analytics
+        """
+        try:
+            optimization_result = {
+                'original_size': len(content_data),
+                'optimized_variants': {},
+                'recommended_headers': {},
+                'performance_metrics': {}
+            }
+            
+            # Determine optimization strategy based on content type
+            if content_type.startswith('text/css'):
+                optimization_result = await self._optimize_css_content(content_data, optimization_level)
+            elif content_type.startswith('application/javascript') or content_type.startswith('text/javascript'):
+                optimization_result = await self._optimize_js_content(content_data, optimization_level)
+            elif content_type.startswith('image/'):
+                optimization_result = await self._optimize_image_content_cdn(content_data, optimization_level)
+            elif content_type.startswith('text/html'):
+                optimization_result = await self._optimize_html_content(content_data, optimization_level)
+            else:
+                # Generic optimization
+                optimization_result = await self._optimize_generic_content_enhanced(content_data, optimization_level)
+            
+            # Add common CDN headers
+            optimization_result['recommended_headers'].update({
+                'Cache-Control': self._get_cache_control_header(content_type),
+                'Content-Encoding': 'gzip',
+                'Vary': 'Accept-Encoding',
+                'X-Content-Type-Options': 'nosniff',
+                'X-Frame-Options': 'DENY',
+                'X-XSS-Protection': '1; mode=block'
+            })
+            
+            return optimization_result
+            
+        except Exception as e:
+            logger.error(f"Static content optimization failed: {e}")
+            return {
+                'success': False,
+                'error': str(e),
+                'original_size': len(content_data)
+            }
+    
+    async def _optimize_css_content(self, css_data: bytes, optimization_level: str) -> Dict[str, Any]:
+        """Optimize CSS content"""
+        try:
+            css_text = css_data.decode('utf-8')
+            
+            # Basic CSS minification
+            import re
+            
+            # Remove comments
+            minified = re.sub(r'/\*.*?\*/', '', css_text, flags=re.DOTALL)
+            
+            # Remove extra whitespace
+            minified = re.sub(r'\s+', ' ', minified)
+            minified = re.sub(r';\s*}', '}', minified)
+            minified = re.sub(r':\s+', ':', minified)
+            minified = re.sub(r';\s+', ';', minified)
+            minified = minified.strip()
+            
+            # Advanced optimizations for high level
+            if optimization_level == 'high':
+                # Remove unnecessary semicolons
+                minified = re.sub(r';}', '}', minified)
+                # Compress colors
+                minified = re.sub(r'#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3', r'#\1\2\3', minified)
+            
+            optimized_data = minified.encode('utf-8')
+            
+            # Create compressed version
+            import gzip
+            compressed_data = gzip.compress(optimized_data)
+            
+            return {
+                'original_size': len(css_data),
+                'optimized_variants': {
+                    'minified': {
+                        'size': len(optimized_data),
+                        'data': optimized_data,
+                        'compression_ratio': len(optimized_data) / len(css_data)
+                    },
+                    'compressed': {
+                        'size': len(compressed_data),
+                        'data': compressed_data,
+                        'compression_ratio': len(compressed_data) / len(css_data)
+                    }
+                },
+                'recommended_headers': {
+                    'Content-Type': 'text/css; charset=utf-8'
+                },
+                'performance_metrics': {
+                    'size_reduction': len(css_data) - len(optimized_data),
+                    'compression_ratio': len(optimized_data) / len(css_data)
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"CSS optimization failed: {e}")
+            return {'success': False, 'error': str(e)}
+    
+    async def _optimize_js_content(self, js_data: bytes, optimization_level: str) -> Dict[str, Any]:
+        """Optimize JavaScript content"""
+        try:
+            js_text = js_data.decode('utf-8')
+            
+            # Basic JS minification
+            import re
+            
+            # Remove single-line comments (but preserve URLs)
+            minified = re.sub(r'(?<!:)//.*?$', '', js_text, flags=re.MULTILINE)
+            
+            # Remove multi-line comments
+            minified = re.sub(r'/\*.*?\*/', '', minified, flags=re.DOTALL)
+            
+            # Remove extra whitespace
+            minified = re.sub(r'\s+', ' ', minified)
+            minified = minified.strip()
+            
+            # Advanced optimizations for high level
+            if optimization_level == 'high':
+                # Remove unnecessary semicolons before }
+                minified = re.sub(r';\s*}', '}', minified)
+                # Compress common patterns
+                minified = re.sub(r'\s*([{}();,:])\s*', r'\1', minified)
+            
+            optimized_data = minified.encode('utf-8')
+            
+            # Create compressed version
+            import gzip
+            compressed_data = gzip.compress(optimized_data)
+            
+            return {
+                'original_size': len(js_data),
+                'optimized_variants': {
+                    'minified': {
+                        'size': len(optimized_data),
+                        'data': optimized_data,
+                        'compression_ratio': len(optimized_data) / len(js_data)
+                    },
+                    'compressed': {
+                        'size': len(compressed_data),
+                        'data': compressed_data,
+                        'compression_ratio': len(compressed_data) / len(js_data)
+                    }
+                },
+                'recommended_headers': {
+                    'Content-Type': 'application/javascript; charset=utf-8'
+                },
+                'performance_metrics': {
+                    'size_reduction': len(js_data) - len(optimized_data),
+                    'compression_ratio': len(optimized_data) / len(js_data)
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"JavaScript optimization failed: {e}")
+            return {'success': False, 'error': str(e)}
+    
+    async def _optimize_image_content_cdn(self, image_data: bytes, optimization_level: str) -> Dict[str, Any]:
+        """Optimize image content for CDN delivery"""
+        try:
+            # Use the image optimizer if available
+            try:
+                from ...optimization.image_optimizer import ImageOptimizer
+                optimizer = ImageOptimizer()
+                
+                options = {
+                    'quality': optimization_level,
+                    'generate_webp': True,
+                    'generate_responsive': True,
+                    'strip_metadata': True,
+                    'progressive': True,
+                    'optimize': True
+                }
+                
+                result = optimizer.optimize_image(image_data, options)
+                
+                if result['success']:
+                    return {
+                        'original_size': len(image_data),
+                        'optimized_variants': result['variants'],
+                        'recommended_headers': {
+                            'Content-Type': 'image/jpeg',  # Default, should be determined by actual format
+                            'Vary': 'Accept'
+                        },
+                        'performance_metrics': result['optimization_stats']
+                    }
+                
+            except ImportError:
+                logger.warning("Image optimizer not available, using basic optimization")
+            
+            # Fallback basic optimization
+            import gzip
+            compressed_data = gzip.compress(image_data)
+            
+            return {
+                'original_size': len(image_data),
+                'optimized_variants': {
+                    'compressed': {
+                        'size': len(compressed_data),
+                        'data': compressed_data,
+                        'compression_ratio': len(compressed_data) / len(image_data)
+                    }
+                },
+                'recommended_headers': {
+                    'Content-Type': 'image/jpeg'
+                },
+                'performance_metrics': {
+                    'compression_ratio': len(compressed_data) / len(image_data)
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"Image optimization failed: {e}")
+            return {'success': False, 'error': str(e)}
+    
+    async def _optimize_html_content(self, html_data: bytes, optimization_level: str) -> Dict[str, Any]:
+        """Optimize HTML content"""
+        try:
+            html_text = html_data.decode('utf-8')
+            
+            # Basic HTML minification
+            import re
+            
+            # Remove HTML comments (but preserve conditional comments)
+            minified = re.sub(r'<!--(?!\[if\s).*?-->', '', html_text, flags=re.DOTALL)
+            
+            # Remove extra whitespace between tags
+            minified = re.sub(r'>\s+<', '><', minified)
+            
+            # Remove leading/trailing whitespace on lines
+            minified = '\n'.join(line.strip() for line in minified.split('\n'))
+            
+            # Remove empty lines
+            minified = re.sub(r'\n\s*\n', '\n', minified)
+            
+            optimized_data = minified.encode('utf-8')
+            
+            # Create compressed version
+            import gzip
+            compressed_data = gzip.compress(optimized_data)
+            
+            return {
+                'original_size': len(html_data),
+                'optimized_variants': {
+                    'minified': {
+                        'size': len(optimized_data),
+                        'data': optimized_data,
+                        'compression_ratio': len(optimized_data) / len(html_data)
+                    },
+                    'compressed': {
+                        'size': len(compressed_data),
+                        'data': compressed_data,
+                        'compression_ratio': len(compressed_data) / len(html_data)
+                    }
+                },
+                'recommended_headers': {
+                    'Content-Type': 'text/html; charset=utf-8'
+                },
+                'performance_metrics': {
+                    'size_reduction': len(html_data) - len(optimized_data),
+                    'compression_ratio': len(optimized_data) / len(html_data)
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"HTML optimization failed: {e}")
+            return {'success': False, 'error': str(e)}
+    
+    async def _optimize_generic_content_enhanced(self, content_data: bytes, optimization_level: str) -> Dict[str, Any]:
+        """Enhanced generic content optimization"""
+        try:
+            # Apply compression
+            import gzip
+            import brotli
+            
+            # Gzip compression
+            gzip_data = gzip.compress(content_data, compresslevel=9 if optimization_level == 'high' else 6)
+            
+            # Brotli compression (if available)
+            brotli_data = None
+            try:
+                brotli_data = brotli.compress(content_data, quality=11 if optimization_level == 'high' else 6)
+            except:
+                pass
+            
+            variants = {
+                'gzip': {
+                    'size': len(gzip_data),
+                    'data': gzip_data,
+                    'compression_ratio': len(gzip_data) / len(content_data)
+                }
+            }
+            
+            if brotli_data:
+                variants['brotli'] = {
+                    'size': len(brotli_data),
+                    'data': brotli_data,
+                    'compression_ratio': len(brotli_data) / len(content_data)
+                }
+            
+            return {
+                'original_size': len(content_data),
+                'optimized_variants': variants,
+                'recommended_headers': {
+                    'Content-Encoding': 'gzip' if not brotli_data else 'br, gzip'
+                },
+                'performance_metrics': {
+                    'best_compression_ratio': min(v['compression_ratio'] for v in variants.values())
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"Generic content optimization failed: {e}")
+            return {'success': False, 'error': str(e)}
+    
+    def _get_cache_control_header(self, content_type: str) -> str:
+        """Get appropriate Cache-Control header for content type"""
+        
+        if content_type.startswith('text/css') or content_type.startswith('application/javascript'):
+            # CSS and JS can be cached for longer
+            return 'public, max-age=31536000, immutable'  # 1 year
+        elif content_type.startswith('image/'):
+            # Images can be cached for a long time
+            return 'public, max-age=2592000'  # 30 days
+        elif content_type.startswith('text/html'):
+            # HTML should be revalidated more frequently
+            return 'public, max-age=3600, must-revalidate'  # 1 hour
+        else:
+            # Default caching
+            return 'public, max-age=86400'  # 1 day
+
     async def optimize_content(
         self,
         content_hash: str,
