@@ -1,0 +1,89 @@
+{
+  "common": {
+    "welcome": "Habari",
+    "dashboard": "Dashibodi",
+    "upload": "Pakia",
+    "content": "Maudhui",
+    "protection": "Ulinzi",
+    "monitoring": "Ufuatiliaji",
+    "analytics": "Uchanganuzi",
+    "settings": "Mipangilio",
+    "profile": "Wasifu",
+    "logout": "Toka",
+    "save": "Hifadhi",
+    "cancel": "Ghairi",
+    "delete": "Futa",
+    "edit": "Hariri",
+    "view": "Ona",
+    "loading": "Inapakia...",
+    "error": "Kosa",
+    "success": "Mafanikio",
+    "warning": "Onyo",
+    "info": "Habari"
+  },
+  "dashboard": {
+    "title": "Dashibodi ya Muumba",
+    "totalRevenue": "Mapato Yote",
+    "contentProtected": "Maudhui Yaliyolindwa",
+    "violationsDetected": "Ukiukaji Uliogundulika",
+    "platformsConnected": "Majukwaa Yaliyounganishwa",
+    "recentActivity": "Shughuli za Hivi Karibuni",
+    "monthlyGrowth": "Ukuaji wa Kila Mwezi",
+    "protectionStatus": "Hali ya Ulinzi"
+  },
+  "upload": {
+    "title": "Pakia Maudhui",
+    "dragAndDrop": "Buruta na udondoshe faili hapa",
+    "selectFiles": "Chagua Faili",
+    "supportedFormats": "Miundo Inayotumika",
+    "maxFileSize": "Ukubwa Mkuu wa Faili",
+    "processing": "Inachakata...",
+    "fingerprintGenerated": "Alama ya Kidole Imetengenezwa",
+    "uploadComplete": "Upakiaji Umekamilika"
+  },
+  "protection": {
+    "title": "Ulinzi wa Maudhui",
+    "fingerprintMatch": "Kulingana kwa Alama ya Kidole",
+    "confidence": "Uhakika",
+    "platform": "Jukwaa",
+    "detectionTime": "Muda wa Ugundulizi",
+    "actionTaken": "Hatua Iliyochukuliwa",
+    "dmcaNotice": "Notisi ya DMCA",
+    "takedownRequest": "Ombi la Kuondoa"
+  },
+  "monetization": {
+    "title": "Upatikanaji wa Pesa",
+    "revenue": "Mapato",
+    "royalties": "Malipo ya Uongozi",
+    "partnerships": "Ushirikiano",
+    "paymentMethod": "Njia ya Malipo",
+    "withdrawalHistory": "Historia ya Kutoa",
+    "pendingPayments": "Malipo Yanayosubiri"
+  },
+  "collaboration": {
+    "title": "Ushirikiano",
+    "findPartners": "Tafuta Washirika",
+    "activeCollaborations": "Ushirikiano Unaofanya Kazi",
+    "proposalsSent": "Mapendekezo Yaliyotumwa",
+    "proposalsReceived": "Mapendekezo Yaliyopokelewa",
+    "matchingScore": "Alama ya Kulingana"
+  },
+  "settings": {
+    "title": "Mipangilio",
+    "account": "Akaunti",
+    "security": "Usalama",
+    "notifications": "Arifa",
+    "privacy": "Faragha",
+    "language": "Lugha",
+    "timezone": "Eneo la Saa",
+    "currency": "Sarafu"
+  },
+  "ai_agent": {
+    "title": "Wakala wa AI wa Muziki",
+    "recommendations": "Mapendekezo",
+    "trendAnalysis": "Uchanganuzi wa Mitindo",
+    "genrePrediction": "Utabiri wa Aina",
+    "collaborationSuggestions": "Mapendekezo ya Ushirikiano",
+    "optimizationTips": "Vidokezo vya Kuboresha"
+  }
+}

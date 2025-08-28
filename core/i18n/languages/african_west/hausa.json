@@ -1,0 +1,89 @@
+{
+  "common": {
+    "welcome": "Bawo",
+    "dashboard": "Tebur",
+    "upload": "Jiyya",
+    "content": "Abun ciki",
+    "protection": "Kariya",
+    "monitoring": "Sa ido",
+    "analytics": "Bincike",
+    "settings": "Saiti",
+    "profile": "Bayani",
+    "logout": "Fita",
+    "save": "Ajiye",
+    "cancel": "Soke",
+    "delete": "Share",
+    "edit": "Gyara",
+    "view": "Duba",
+    "loading": "Ana loading...",
+    "error": "Kuskure",
+    "success": "Nasara",
+    "warning": "Gargadi",
+    "info": "Labari"
+  },
+  "dashboard": {
+    "title": "Dashboard na Mawallafi",
+    "totalRevenue": "Dukiyar Gaba daya",
+    "contentProtected": "Abubuwan da ake kiyayewa",
+    "violationsDetected": "Cin zarafi da aka gano",
+    "platformsConnected": "Dandamali da aka haɗa",
+    "recentActivity": "Ayyukan kwanan nan",
+    "monthlyGrowth": "Girma na wata-wata",
+    "protectionStatus": "Matsayin kariya"
+  },
+  "upload": {
+    "title": "Jiyya Abun ciki",
+    "dragAndDrop": "Ja ka sauke fayiloli a nan",
+    "selectFiles": "Zaɓi Fayiloli",
+    "supportedFormats": "Nau'o'in da ake goyan baya",
+    "maxFileSize": "Mafi girman Fayil",
+    "processing": "Ana sarrafa...",
+    "fingerprintGenerated": "An samar da alamar yatsa",
+    "uploadComplete": "Upload ya kammala"
+  },
+  "protection": {
+    "title": "Kare Abun ciki",
+    "fingerprintMatch": "Alamar yatsa ta dace",
+    "confidence": "Aminci",
+    "platform": "Dandamali",
+    "detectionTime": "Lokacin gano",
+    "actionTaken": "Matakin da aka ɗauka",
+    "dmcaNotice": "Sanarwar DMCA",
+    "takedownRequest": "Bukatar cirewa"
+  },
+  "monetization": {
+    "title": "Samun kudi",
+    "revenue": "Kudaden shiga",
+    "royalties": "Kudin fama",
+    "partnerships": "Haɗin gwiwa",
+    "paymentMethod": "Hanyar biyan kuɗi",
+    "withdrawalHistory": "Tarihin cirewa",
+    "pendingPayments": "Biyan kuɗi masu jiran aiki"
+  },
+  "collaboration": {
+    "title": "Haɗin gwiwa",
+    "findPartners": "Nemo abokan tarayya",
+    "activeCollaborations": "Haɗin gwiwan da ke aiki",
+    "proposalsSent": "Shawarwarin da aka aika",
+    "proposalsReceived": "Shawarwarin da aka karba",
+    "matchingScore": "Maki na dacewa"
+  },
+  "settings": {
+    "title": "Saiti",
+    "account": "Asusu",
+    "security": "Tsaro",
+    "notifications": "Sanarwa",
+    "privacy": "Sirri",
+    "language": "Harshe",
+    "timezone": "Lokacin yanki",
+    "currency": "Kudin kasa"
+  },
+  "ai_agent": {
+    "title": "Wakili na AI na Kiɗa",
+    "recommendations": "Shawarwari",
+    "trendAnalysis": "Nazarin yanayi",
+    "genrePrediction": "Tsinkayar nau'i",
+    "collaborationSuggestions": "Shawarwarin haɗin gwiwa",
+    "optimizationTips": "Shawarwarin ingantawa"
+  }
+}

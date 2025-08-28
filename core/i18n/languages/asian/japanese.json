@@ -1,0 +1,89 @@
+{
+  "common": {
+    "welcome": "いらっしゃいませ",
+    "dashboard": "ダッシュボード",
+    "upload": "アップロード",
+    "content": "コンテンツ",
+    "protection": "保護",
+    "monitoring": "監視",
+    "analytics": "分析",
+    "settings": "設定",
+    "profile": "プロフィール",
+    "logout": "ログアウト",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "view": "表示",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "warning": "警告",
+    "info": "情報"
+  },
+  "dashboard": {
+    "title": "クリエイターダッシュボード",
+    "totalRevenue": "総収益",
+    "contentProtected": "保護されたコンテンツ",
+    "violationsDetected": "検出された違反",
+    "platformsConnected": "接続されたプラットフォーム",
+    "recentActivity": "最近の活動",
+    "monthlyGrowth": "月間成長率",
+    "protectionStatus": "保護ステータス"
+  },
+  "upload": {
+    "title": "コンテンツアップロード",
+    "dragAndDrop": "ファイルをここにドラッグ＆ドロップ",
+    "selectFiles": "ファイルを選択",
+    "supportedFormats": "サポートされている形式",
+    "maxFileSize": "最大ファイルサイズ",
+    "processing": "処理中...",
+    "fingerprintGenerated": "フィンガープリント生成",
+    "uploadComplete": "アップロード完了"
+  },
+  "protection": {
+    "title": "コンテンツ保護",
+    "fingerprintMatch": "フィンガープリント一致",
+    "confidence": "信頼度",
+    "platform": "プラットフォーム",
+    "detectionTime": "検出時間",
+    "actionTaken": "実行されたアクション",
+    "dmcaNotice": "DMCA通知",
+    "takedownRequest": "削除要求"
+  },
+  "monetization": {
+    "title": "収益化",
+    "revenue": "収益",
+    "royalties": "ロイヤリティ",
+    "partnerships": "パートナーシップ",
+    "paymentMethod": "支払い方法",
+    "withdrawalHistory": "出金履歴",
+    "pendingPayments": "保留中の支払い"
+  },
+  "collaboration": {
+    "title": "コラボレーション",
+    "findPartners": "パートナーを見つける",
+    "activeCollaborations": "アクティブなコラボレーション",
+    "proposalsSent": "送信された提案",
+    "proposalsReceived": "受信された提案",
+    "matchingScore": "マッチングスコア"
+  },
+  "settings": {
+    "title": "設定",
+    "account": "アカウント",
+    "security": "セキュリティ",
+    "notifications": "通知",
+    "privacy": "プライバシー",
+    "language": "言語",
+    "timezone": "タイムゾーン",
+    "currency": "通貨"
+  },
+  "ai_agent": {
+    "title": "音楽AIエージェント",
+    "recommendations": "推奨事項",
+    "trendAnalysis": "トレンド分析",
+    "genrePrediction": "ジャンル予測",
+    "collaborationSuggestions": "コラボレーション提案",
+    "optimizationTips": "最適化のヒント"
+  }
+}
