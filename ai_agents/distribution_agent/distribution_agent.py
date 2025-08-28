@@ -103,7 +103,7 @@ class DistributionAgent(BaseAgent):
     """
     
     def __init__(self, agent_id: str = "distribution_agent", config: Dict[str, Any] = None):
-        super().__init__(agent_id, config)
+        super().__init__(agent_id, config or {})
         
         # Core components
         self.content_scheduler = ContentScheduler()
