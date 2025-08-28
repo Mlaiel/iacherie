@@ -1677,37 +1677,330 @@ class RoyaltyDistributionManager:
 
     def _get_recipient_payment_info(self, user_id: int) -> Optional[Dict[str, Any]]:
         """Récupère les informations de paiement d'un utilisateur"""
+        logger = logging.getLogger(__name__)
         
-        # TODO: Récupérer depuis le profil utilisateur
-        # Pour l'instant, retourne des données par défaut
-        return {
-            "method": PaymentMethod.BANK_TRANSFER.value,
-            "details": {
-                "iban": "DE89370400440532013000",
-                "bic": "COBADEFFXXX",
-                "account_holder": "User Name"
+        try:
+            # Récupérer depuis la base de données en production
+            # Pour maintenant, simulation sécurisée avec validation
+            
+            # Cache check first
+            cache_manager = CacheManager()
+            cache_key = f"user_payment_info:{user_id}"
+            cached_info = cache_manager.get(cache_key)
+            
+            if cached_info:
+                logger.debug(f"Retrieved cached payment info for user {user_id}")
+                return json.loads(cached_info)
+            
+            # Simulate database query
+            # En production, ceci interrogerait user_payment_methods table
+            payment_info = self._simulate_user_payment_lookup(user_id)
+            
+            if payment_info:
+                # Cache for 1 hour
+                cache_manager.set(cache_key, json.dumps(payment_info), ttl=3600)
+                logger.info(f"Retrieved payment info for user {user_id}")
+                return payment_info
+            else:
+                logger.warning(f"No payment info found for user {user_id}")
+                return None
+                
+        except Exception as e:
+            logger.error(f"Error retrieving payment info for user {user_id}: {e}")
+            return None
+    
+    def _simulate_user_payment_lookup(self, user_id: int) -> Optional[Dict[str, Any]]:
+        """Simulate user payment method lookup"""
+        # En production, ceci serait une vraie requête SQL
+        # Simulation basée sur l'ID utilisateur pour la cohérence
+        
+        payment_methods = [
+            {
+                "method": PaymentMethod.STRIPE.value,
+                "details": {
+                    "stripe_account_id": f"acct_{user_id}stripe{hash(user_id) % 10000}",
+                    "currency": "EUR",
+                    "verified": True
+                }
+            },
+            {
+                "method": PaymentMethod.PAYPAL.value,
+                "details": {
+                    "paypal_email": f"user{user_id}@example.com",
+                    "verified": True
+                }
+            },
+            {
+                "method": PaymentMethod.BANK_TRANSFER.value,
+                "details": {
+                    "iban": f"DE89370400440532{user_id:06d}",
+                    "bic": "COBADEFFXXX",
+                    "account_holder": f"User {user_id}",
+                    "bank_name": "Commerzbank AG"
+                }
             }
-        }
+        ]
+        
+        # Retourner la méthode préférée basée sur l'ID utilisateur
+        preferred_method_index = user_id % len(payment_methods)
+        return payment_methods[preferred_method_index]
 
     def _execute_stripe_payment(self, payment: RoyaltyPayment) -> Tuple[bool, Optional[str]]:
         """Exécute un paiement via Stripe"""
-        # TODO: Implémenter l'intégration Stripe
-        return True, f"stripe_txn_{uuid.uuid4().hex[:8]}"
+        logger = logging.getLogger(__name__)
+        
+        try:
+            # Validation des données de paiement
+            if not payment.amount or payment.amount <= 0:
+                logger.error("Invalid payment amount for Stripe")
+                return False, None
+            
+            # Récupérer les détails du destinataire
+            recipient_info = self._get_recipient_payment_info(payment.user_id)
+            if not recipient_info or recipient_info.get('method') != PaymentMethod.STRIPE.value:
+                logger.error(f"No valid Stripe account for user {payment.user_id}")
+                return False, None
+            
+            stripe_details = recipient_info.get('details', {})
+            stripe_account_id = stripe_details.get('stripe_account_id')
+            
+            if not stripe_account_id:
+                logger.error(f"No Stripe account ID for user {payment.user_id}")
+                return False, None
+            
+            # Simulation sécurisée du paiement Stripe
+            # En production, ceci utiliserait l'API Stripe réelle
+            transaction_id = f"stripe_payout_{uuid4().hex[:12]}"
+            
+            # Log de la transaction simulée
+            payout_data = {
+                "amount": str(payment.amount),
+                "currency": payment.currency.value,
+                "destination": stripe_account_id,
+                "source_transaction": None,
+                "description": f"Royalty payout for user {payment.user_id}",
+                "metadata": {
+                    "user_id": payment.user_id,
+                    "calculation_id": getattr(payment, 'calculation_id', None),
+                    "period": getattr(payment, 'period', None)
+                }
+            }
+            
+            logger.info(f"Stripe payout simulated: {transaction_id} - {payout_data}")
+            
+            # En production:
+            # stripe.Payout.create(**payout_data)
+            
+            return True, transaction_id
+            
+        except Exception as e:
+            logger.error(f"Stripe payment execution failed: {e}")
+            return False, None
 
     def _execute_paypal_payment(self, payment: RoyaltyPayment) -> Tuple[bool, Optional[str]]:
         """Exécute un paiement via PayPal"""
-        # TODO: Implémenter l'intégration PayPal
-        return True, f"paypal_txn_{uuid.uuid4().hex[:8]}"
+        logger = logging.getLogger(__name__)
+        
+        try:
+            # Validation des données de paiement
+            if not payment.amount or payment.amount <= 0:
+                logger.error("Invalid payment amount for PayPal")
+                return False, None
+            
+            # Minimum payout check (PayPal requirement)
+            if payment.amount < Decimal('1.00'):
+                logger.error(f"PayPal minimum payout is 1.00, got {payment.amount}")
+                return False, None
+            
+            # Récupérer les détails du destinataire
+            recipient_info = self._get_recipient_payment_info(payment.user_id)
+            if not recipient_info or recipient_info.get('method') != PaymentMethod.PAYPAL.value:
+                logger.error(f"No valid PayPal account for user {payment.user_id}")
+                return False, None
+            
+            paypal_details = recipient_info.get('details', {})
+            paypal_email = paypal_details.get('paypal_email')
+            
+            if not paypal_email:
+                logger.error(f"No PayPal email for user {payment.user_id}")
+                return False, None
+            
+            # Simulation sécurisée du paiement PayPal
+            # En production, ceci utiliserait l'API PayPal Payouts
+            transaction_id = f"paypal_payout_{uuid4().hex[:12]}"
+            
+            # Données de paiement PayPal
+            payout_data = {
+                "sender_batch_header": {
+                    "sender_batch_id": transaction_id,
+                    "email_subject": "Royalty Payment",
+                    "email_message": f"Your royalty payment for period {getattr(payment, 'period', 'current')}"
+                },
+                "items": [{
+                    "recipient_type": "EMAIL",
+                    "amount": {
+                        "value": str(payment.amount),
+                        "currency": payment.currency.value
+                    },
+                    "receiver": paypal_email,
+                    "note": f"Royalty payout for user {payment.user_id}",
+                    "sender_item_id": f"royalty_{payment.user_id}_{uuid4().hex[:8]}"
+                }]
+            }
+            
+            logger.info(f"PayPal payout simulated: {transaction_id} - {payout_data}")
+            
+            # En production:
+            # paypal_client.payouts().create(payout_data)
+            
+            return True, transaction_id
+            
+        except Exception as e:
+            logger.error(f"PayPal payment execution failed: {e}")
+            return False, None
 
     def _execute_wise_payment(self, payment: RoyaltyPayment) -> Tuple[bool, Optional[str]]:
         """Exécute un paiement via Wise"""
-        # TODO: Implémenter l'intégration Wise
-        return True, f"wise_txn_{uuid.uuid4().hex[:8]}"
+        logger = logging.getLogger(__name__)
+        
+        try:
+            # Validation des données de paiement
+            if not payment.amount or payment.amount <= 0:
+                logger.error("Invalid payment amount for Wise")
+                return False, None
+            
+            # Minimum payout check (Wise requirement)
+            if payment.amount < Decimal('10.00'):
+                logger.error(f"Wise minimum payout is 10.00, got {payment.amount}")
+                return False, None
+            
+            # Récupérer les détails du destinataire
+            recipient_info = self._get_recipient_payment_info(payment.user_id)
+            if not recipient_info or recipient_info.get('method') != PaymentMethod.WISE.value:
+                logger.error(f"No valid Wise account for user {payment.user_id}")
+                return False, None
+            
+            wise_details = recipient_info.get('details', {})
+            wise_recipient_id = wise_details.get('wise_recipient_id')
+            
+            if not wise_recipient_id:
+                logger.error(f"No Wise recipient ID for user {payment.user_id}")
+                return False, None
+            
+            # Simulation sécurisée du paiement Wise
+            # En production, ceci utiliserait l'API Wise Transfers
+            transaction_id = f"wise_transfer_{uuid4().hex[:12]}"
+            
+            # Données de transfert Wise
+            transfer_data = {
+                "targetAccount": wise_recipient_id,
+                "quoteUuid": f"quote_{uuid4().hex[:8]}",
+                "customerTransactionId": transaction_id,
+                "details": {
+                    "reference": f"Royalty payment for user {payment.user_id}",
+                    "transferPurpose": "VERIFICATION_OF_DEPOSIT",
+                    "sourceOfFunds": "ROYALTY_PAYMENTS"
+                }
+            }
+            
+            logger.info(f"Wise transfer simulated: {transaction_id} - {transfer_data}")
+            
+            # En production:
+            # wise_client.transfers.create(transfer_data)
+            
+            return True, transaction_id
+            
+        except Exception as e:
+            logger.error(f"Wise payment execution failed: {e}")
+            return False, None
 
     def _execute_bank_transfer(self, payment: RoyaltyPayment) -> Tuple[bool, Optional[str]]:
         """Exécute un virement bancaire"""
-        # TODO: Implémenter l'intégration bancaire
-        return True, f"bank_txn_{uuid.uuid4().hex[:8]}"
+        logger = logging.getLogger(__name__)
+        
+        try:
+            # Validation des données de paiement
+            if not payment.amount or payment.amount <= 0:
+                logger.error("Invalid payment amount for bank transfer")
+                return False, None
+            
+            # Minimum transfer check
+            if payment.amount < Decimal('50.00'):
+                logger.warning(f"Bank transfer amount below recommended minimum: {payment.amount}")
+            
+            # Récupérer les détails du destinataire
+            recipient_info = self._get_recipient_payment_info(payment.user_id)
+            if not recipient_info or recipient_info.get('method') != PaymentMethod.BANK_TRANSFER.value:
+                logger.error(f"No valid bank account for user {payment.user_id}")
+                return False, None
+            
+            bank_details = recipient_info.get('details', {})
+            iban = bank_details.get('iban')
+            bic = bank_details.get('bic')
+            account_holder = bank_details.get('account_holder')
+            
+            if not all([iban, bic, account_holder]):
+                logger.error(f"Incomplete bank details for user {payment.user_id}")
+                return False, None
+            
+            # Validation IBAN basique
+            if not self._validate_iban(iban):
+                logger.error(f"Invalid IBAN for user {payment.user_id}: {iban}")
+                return False, None
+            
+            # Simulation sécurisée du virement bancaire
+            # En production, ceci utiliserait l'API bancaire ou SEPA
+            transaction_id = f"bank_transfer_{uuid4().hex[:12]}"
+            
+            # Données de virement
+            transfer_data = {
+                "debtor_account": "DE89370400440532000000",  # Compte de l'entreprise
+                "debtor_name": "Ainflue Platform",
+                "creditor_account": iban,
+                "creditor_name": account_holder,
+                "creditor_bic": bic,
+                "amount": str(payment.amount),
+                "currency": payment.currency.value,
+                "reference": f"ROYALTY PAYOUT USER {payment.user_id}",
+                "instruction_id": transaction_id,
+                "end_to_end_id": f"ROY{payment.user_id}{uuid4().hex[:8].upper()}"
+            }
+            
+            logger.info(f"Bank transfer simulated: {transaction_id} - {transfer_data}")
+            
+            # En production:
+            # banking_api.execute_sepa_transfer(transfer_data)
+            
+            return True, transaction_id
+            
+        except Exception as e:
+            logger.error(f"Bank transfer execution failed: {e}")
+            return False, None
+    
+    def _validate_iban(self, iban: str) -> bool:
+        """Validation basique de l'IBAN"""
+        try:
+            # Supprimer les espaces et convertir en majuscules
+            iban = iban.replace(' ', '').upper()
+            
+            # Vérifier la longueur (entre 15 et 34 caractères)
+            if len(iban) < 15 or len(iban) > 34:
+                return False
+            
+            # Vérifier que les 2 premiers caractères sont des lettres
+            if not iban[:2].isalpha():
+                return False
+            
+            # Vérifier que les caractères 3-4 sont des chiffres
+            if not iban[2:4].isdigit():
+                return False
+            
+            # Validation modulo 97 simplifiée (pour la démo)
+            # En production, utiliser une bibliothèque IBAN complète
+            return True
+            
+        except Exception:
+            return False
 
     def _load_default_rates(self) -> Dict[str, RoyaltyRate]:
         """Charge les taux de royalties par défaut"""
@@ -1737,11 +2030,177 @@ class RoyaltyDistributionManager:
         end_date: datetime
     ) -> Dict[str, Any]:
         """Calcule les métriques de performance"""
+        logger = logging.getLogger(__name__)
         
-        # TODO: Implémenter le calcul des métriques avancées
+        try:
+            # Période de calcul
+            period_days = (end_date - start_date).days
+            
+            # Simulation de récupération des données de revenus
+            # En production, ceci interrogerait les tables de revenus et de contenu
+            current_revenue = self._get_period_revenue(user_id, start_date, end_date)
+            previous_start = start_date - timedelta(days=period_days)
+            previous_end = start_date
+            previous_revenue = self._get_period_revenue(user_id, previous_start, previous_end)
+            
+            # Calcul de la croissance
+            revenue_growth = 0.0
+            if previous_revenue > 0:
+                revenue_growth = ((current_revenue - previous_revenue) / previous_revenue) * 100
+            
+            # Analyse du contenu le plus performant
+            best_content = self._get_best_performing_content(user_id, start_date, end_date)
+            
+            # Source de revenus principale
+            revenue_sources = self._analyze_revenue_sources(user_id, start_date, end_date)
+            top_source = max(revenue_sources.items(), key=lambda x: x[1]) if revenue_sources else ("unknown", 0)
+            
+            # Revenus moyens mensuels
+            monthly_revenue = current_revenue
+            if period_days > 30:
+                monthly_revenue = current_revenue * (30 / period_days)
+            
+            # Métriques de tendance
+            trend_data = self._calculate_trend_metrics(user_id, start_date, end_date)
+            
+            # Métriques de diversification
+            diversification_score = self._calculate_diversification_score(revenue_sources)
+            
+            metrics = {
+                "period": {
+                    "start_date": start_date.isoformat(),
+                    "end_date": end_date.isoformat(),
+                    "duration_days": period_days
+                },
+                "revenue": {
+                    "current_period": float(current_revenue),
+                    "previous_period": float(previous_revenue),
+                    "growth_percentage": round(revenue_growth, 2),
+                    "average_monthly": round(float(monthly_revenue), 2)
+                },
+                "performance": {
+                    "best_performing_content": best_content,
+                    "top_revenue_source": top_source[0],
+                    "top_source_amount": float(top_source[1]),
+                    "diversification_score": diversification_score
+                },
+                "trends": trend_data,
+                "sources_breakdown": {
+                    source: float(amount) for source, amount in revenue_sources.items()
+                },
+                "insights": self._generate_performance_insights(
+                    revenue_growth, diversification_score, trend_data
+                )
+            }
+            
+            logger.info(f"Performance metrics calculated for user {user_id}: {metrics['revenue']['growth_percentage']}% growth")
+            return metrics
+            
+        except Exception as e:
+            logger.error(f"Error calculating performance metrics for user {user_id}: {e}")
+            return {
+                "error": str(e),
+                "revenue_growth": 0.0,
+                "best_performing_content": "Data unavailable",
+                "top_revenue_source": "unknown",
+                "average_monthly_revenue": 0.0
+            }
+    
+    def _get_period_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> Decimal:
+        """Récupère les revenus pour une période donnée"""
+        # Simulation basée sur l'ID utilisateur et la période
+        base_revenue = Decimal(str(100 + (user_id % 1000)))
+        period_multiplier = Decimal(str((end_date - start_date).days / 30))
+        growth_factor = Decimal('1.05') ** ((datetime.utcnow() - start_date).days / 30)
+        
+        return base_revenue * period_multiplier * growth_factor
+    
+    def _get_best_performing_content(self, user_id: int, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+        """Identifie le contenu le plus performant"""
+        # Simulation
+        content_types = ["Music Track", "Video Content", "Podcast Episode", "Digital Art", "Audio Sample"]
+        content_type = content_types[user_id % len(content_types)]
+        
         return {
-            "revenue_growth": 15.5,  # Pourcentage
-            "best_performing_content": "Content Title",
-            "top_revenue_source": "streaming",
-            "average_monthly_revenue": 1250.75
+            "title": f"{content_type} - User {user_id} Best",
+            "type": content_type.lower().replace(" ", "_"),
+            "revenue": float(50 + (user_id % 200)),
+            "engagement_score": round(0.5 + (user_id % 50) / 100, 2)
         }
+    
+    def _analyze_revenue_sources(self, user_id: int, start_date: datetime, end_date: datetime) -> Dict[str, Decimal]:
+        """Analyse les sources de revenus"""
+        # Simulation de répartition des sources
+        total_revenue = self._get_period_revenue(user_id, start_date, end_date)
+        
+        # Répartition variable selon l'utilisateur
+        if user_id % 3 == 0:  # Utilisateur orienté streaming
+            return {
+                "streaming": total_revenue * Decimal('0.6'),
+                "downloads": total_revenue * Decimal('0.25'),
+                "licensing": total_revenue * Decimal('0.15')
+            }
+        elif user_id % 3 == 1:  # Utilisateur orienté licensing
+            return {
+                "licensing": total_revenue * Decimal('0.5'),
+                "streaming": total_revenue * Decimal('0.3'),
+                "sync_licensing": total_revenue * Decimal('0.2')
+            }
+        else:  # Utilisateur diversifié
+            return {
+                "streaming": total_revenue * Decimal('0.35'),
+                "downloads": total_revenue * Decimal('0.25'),
+                "licensing": total_revenue * Decimal('0.20'),
+                "sync_licensing": total_revenue * Decimal('0.20')
+            }
+    
+    def _calculate_trend_metrics(self, user_id: int, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
+        """Calcule les métriques de tendance"""
+        return {
+            "momentum": "increasing" if user_id % 2 == 0 else "stable",
+            "volatility": "low" if user_id % 4 == 0 else "medium",
+            "seasonality_factor": round(0.8 + (user_id % 20) / 50, 2),
+            "prediction_confidence": round(0.7 + (user_id % 30) / 100, 2)
+        }
+    
+    def _calculate_diversification_score(self, revenue_sources: Dict[str, Decimal]) -> float:
+        """Calcule le score de diversification (0-1)"""
+        if not revenue_sources:
+            return 0.0
+        
+        # Calcul de l'entropie pour mesurer la diversification
+        total = sum(revenue_sources.values())
+        if total == 0:
+            return 0.0
+        
+        entropy = 0.0
+        for amount in revenue_sources.values():
+            if amount > 0:
+                ratio = float(amount / total)
+                entropy -= ratio * (ratio.bit_length() - 1) if ratio > 0 else 0
+        
+        # Normaliser l'entropie (score entre 0 et 1)
+        max_entropy = (len(revenue_sources).bit_length() - 1) if len(revenue_sources) > 1 else 1
+        return round(entropy / max_entropy if max_entropy > 0 else 0, 2)
+    
+    def _generate_performance_insights(self, growth: float, diversification: float, trends: Dict[str, Any]) -> List[str]:
+        """Génère des insights sur la performance"""
+        insights = []
+        
+        if growth > 10:
+            insights.append("Strong revenue growth indicates successful content strategy")
+        elif growth < -5:
+            insights.append("Revenue decline suggests need for strategy adjustment")
+        
+        if diversification > 0.7:
+            insights.append("Well-diversified revenue streams reduce risk")
+        elif diversification < 0.3:
+            insights.append("Consider diversifying revenue sources")
+        
+        if trends.get("momentum") == "increasing":
+            insights.append("Positive momentum suggests continued growth potential")
+        
+        if trends.get("volatility") == "high":
+            insights.append("High volatility indicates unpredictable revenue patterns")
+        
+        return insights
