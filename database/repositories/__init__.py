@@ -57,6 +57,10 @@ from .cross_platform_monitoring_repository import CrossPlatformMonitoringReposit
 from .ai_revenue_analytics_repository import AIRevenueAnalyticsRepository
 from .advanced_team_collaboration_repository import AdvancedTeamCollaborationRepository
 
+# Import new licensing repositories
+from .license_repository import LicenseRepository
+from .content_repository import ContentRepository
+
 # Repository registry for dynamic access and dependency injection
 REPOSITORY_REGISTRY: Dict[str, Type[BaseRepository]] = {
     'content_fingerprint': ContentFingerprintRepository,
@@ -81,7 +85,11 @@ REPOSITORY_REGISTRY: Dict[str, Type[BaseRepository]] = {
     'blockchain_rights': BlockchainRightsRepository,
     'cross_platform_monitoring': CrossPlatformMonitoringRepository,
     'ai_revenue_analytics': AIRevenueAnalyticsRepository,
-    'advanced_team_collaboration': AdvancedTeamCollaborationRepository
+    'advanced_team_collaboration': AdvancedTeamCollaborationRepository,
+    
+    # Licensing repositories
+    'license': LicenseRepository,
+    'content': ContentRepository
 }
 
 class RepositoryFactory:
@@ -268,6 +276,10 @@ __all__ = [
     'CrossPlatformMonitoringRepository',
     'AIRevenueAnalyticsRepository',
     'AdvancedTeamCollaborationRepository',
+    
+    # Licensing repositories
+    'LicenseRepository',
+    'ContentRepository',
     
     # Utility functions
     'create_repository_factory',

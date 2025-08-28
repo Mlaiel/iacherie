@@ -13,9 +13,9 @@ from .licensing_manager import LicensingManager
 from .royalty_engine import RoyaltyEngine
 from .usage_tracker import UsageTracker
 from .contract_generator import ContractGenerator
-from .compliance_monitor import ComplianceMonitor
-from .licensing_analytics import LicensingAnalytics
 from .rights_validator import RightsValidator
+
+# Only import modules that exist
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
@@ -26,8 +26,6 @@ __all__ = [
     "RoyaltyEngine",
     "UsageTracker",
     "ContractGenerator",
-    "ComplianceMonitor", 
-    "LicensingAnalytics",
     "RightsValidator",
 ]
 
