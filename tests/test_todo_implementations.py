@@ -170,11 +170,26 @@ def test_implementation_completeness():
             # Check for empty method definitions (def.*:$\n\s*pass$)
             empty_methods = re.findall(r'def [^:]+:\s*\n\s*pass\s*$', content, re.MULTILINE)
             
-            # Filter out legitimate pass statements (like in exception handlers)
+            # Filter out legitimate pass statements (like in exception handlers and abstract methods)
             critical_empty_methods = []
+            lines = content.split('\n')
             for method in empty_methods:
+                method_lines = method.strip().split('\n')
+                method_signature = method_lines[0].strip()
+                
+                # Find the method in the file to check if it's abstract
+                is_abstract = False
+                for i, line in enumerate(lines):
+                    if method_signature in line:
+                        # Check previous lines for @abstractmethod decorator
+                        for j in range(max(0, i-3), i):
+                            if '@abstractmethod' in lines[j]:
+                                is_abstract = True
+                                break
+                        break
+                
                 # Skip if it's in an exception handler or abstract method
-                if 'except' not in method and '@abstractmethod' not in method:
+                if 'except' not in method and not is_abstract:
                     critical_empty_methods.append(method)
             
             assert len(critical_empty_methods) == 0, f"Found empty methods in {file_path}: {critical_empty_methods}"
