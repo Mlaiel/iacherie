@@ -636,9 +636,38 @@ class ContentDatabaseManager:
             
             if cached_data:
                 record_dict = json.loads(cached_data)
-                # TODO: Convert back to ContentRecord object
-                # This would require proper deserialization logic
-                return None  # Placeholder
+                try:
+                    # Convert back to ContentRecord object
+                    record = ContentRecord(
+                        fingerprint_id=record_dict.get('fingerprint_id', ''),
+                        content_id=record_dict.get('content_id', ''),
+                        content_type=ContentType(record_dict.get('content_type', 'unknown')),
+                        owner_id=record_dict.get('owner_id', ''),
+                        audio_fingerprint=record_dict.get('audio_fingerprint'),
+                        video_fingerprint=record_dict.get('video_fingerprint'),
+                        image_fingerprint=record_dict.get('image_fingerprint'),
+                        text_fingerprint=record_dict.get('text_fingerprint'),
+                        metadata=self._dict_to_metadata(record_dict.get('metadata', {})),
+                        technical_metadata=record_dict.get('technical_metadata', {}),
+                        custom_metadata=record_dict.get('custom_metadata', {}),
+                        protection_enabled=record_dict.get('protection_enabled', True),
+                        monitoring_active=record_dict.get('monitoring_active', True),
+                        copyright_info=record_dict.get('copyright_info', {}),
+                        licensing_info=record_dict.get('licensing_info', {}),
+                        vector_embedding=record_dict.get('vector_embedding'),
+                        embedding_dimension=record_dict.get('embedding_dimension', 0),
+                        created_at=datetime.fromisoformat(record_dict['created_at']) if 'created_at' in record_dict else datetime.now(),
+                        updated_at=datetime.fromisoformat(record_dict['updated_at']) if 'updated_at' in record_dict else datetime.now(),
+                        last_accessed=datetime.fromisoformat(record_dict['last_accessed']) if record_dict.get('last_accessed') else None,
+                        expires_at=datetime.fromisoformat(record_dict['expires_at']) if record_dict.get('expires_at') else None,
+                        status=record_dict.get('status', 'active'),
+                        tags=record_dict.get('tags', []),
+                        flags=record_dict.get('flags', {})
+                    )
+                    return record
+                except Exception as e:
+                    logger.error(f"Failed to deserialize cached record: {str(e)}")
+                    return None
             
         except Exception as e:
             logger.warning(f"Cache retrieval failed: {str(e)}")
@@ -687,8 +716,12 @@ class ContentDatabaseManager:
                 # Parse metadata if exists
                 if row['metadata']:
                     metadata_dict = json.loads(row['metadata'])
-                    # TODO: Convert to ContentMetadata object
-                    # record.metadata = ContentMetadata.from_dict(metadata_dict)
+                    try:
+                        # Convert to ContentMetadata object
+                        record.metadata = self._dict_to_metadata(metadata_dict)
+                    except Exception as e:
+                        logger.warning(f"Failed to convert metadata: {str(e)}")
+                        record.metadata = None
                 
                 return record
         
@@ -1181,6 +1214,33 @@ class ContentDatabaseManager:
             
         except Exception as e:
             logger.error(f"Error closing database connections: {str(e)}")
+    
+    def _dict_to_metadata(self, metadata_dict: Dict[str, Any]) -> Optional[ContentMetadata]:
+        """Convert dictionary to ContentMetadata object"""
+        try:
+            # Create ContentMetadata from dictionary
+            metadata = ContentMetadata(
+                title=metadata_dict.get('title', ''),
+                description=metadata_dict.get('description', ''),
+                creator=metadata_dict.get('creator', ''),
+                creation_date=datetime.fromisoformat(metadata_dict['creation_date']) if metadata_dict.get('creation_date') else None,
+                keywords=metadata_dict.get('keywords', []),
+                category=metadata_dict.get('category', ''),
+                language=metadata_dict.get('language', ''),
+                duration=metadata_dict.get('duration'),
+                file_size=metadata_dict.get('file_size'),
+                format=metadata_dict.get('format', ''),
+                resolution=metadata_dict.get('resolution'),
+                bitrate=metadata_dict.get('bitrate'),
+                encoding=metadata_dict.get('encoding', ''),
+                source_url=metadata_dict.get('source_url', ''),
+                platform=metadata_dict.get('platform', ''),
+                custom_fields=metadata_dict.get('custom_fields', {})
+            )
+            return metadata
+        except Exception as e:
+            logger.error(f"Failed to convert dictionary to ContentMetadata: {str(e)}")
+            return None
 
 
 # Global content database manager instance
