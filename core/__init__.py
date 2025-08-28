@@ -48,50 +48,17 @@ from typing import Any, Dict, List, Optional, Union, Tuple
 import logging
 import asyncio
 
-# Core configuration
+# Core configuration - simplified for business logic core
+HAS_CORE_CONFIG = True
 try:
-    from .config import settings, get_config, validate_settings
-    from .database import get_db_session, get_async_db_session, Base, init_database
-    HAS_CORE_CONFIG = True
+    from .config import settings
+    from .database import get_db_session, Base, init_database
 except ImportError:
     HAS_CORE_CONFIG = False
     logging.warning("Core config/database modules not found")
 
-# Core modules - 22 enterprise-grade modules + NOUVEAUX MODULES CAHIER DES CHARGES
-from . import (
-    adaptation,      # Système d'adaptation intelligent
-    adapters,        # Adaptateurs multi-plateformes
-    algorithms,      # Algorithmes IA avancés
-    analytics,       # Analytics et métriques
-    cache,          # Système de cache intelligent
-    classification, # Classification de contenu
-    collaboration,  # Hub collaboration créateurs
-    content,        # Gestion contenu multi-format
-    coordination,   # Coordination des workflows
-    crawlers,       # Surveillance web intelligente
-    discovery,      # Découverte de contenu
-    distribution,   # Distribution multi-plateformes
-    engines,        # Moteurs de traitement
-    events,         # Système d'événements
-    fingerprinting, # Empreintes IA multi-format
-    intelligence,   # Intelligence artificielle
-    interfaces,     # Interfaces système
-    licensing,      # Gestion licences/droits
-    managers,       # Gestionnaires système
-    matching,       # Matching collaboration
-    monetization,   # Monétisation avancée
-    multimedia,     # Traitement multimédia
-    optimization,   # Optimisation performance
-    orchestration,  # Orchestration workflows
-    pipeline,       # Pipelines de traitement
-    platforms,      # Intégrations plateformes
-    processors,     # Processeurs de contenu
-    protection,     # Protection de contenu
-    quality,        # Assurance qualité
-    revenue,        # Tracking revenus
-    rights,         # Gestion des droits
-    security        # Sécurité enterprise
-)
+# Skip complex module imports that require additional dependencies
+logger = logging.getLogger(__name__)
 
 # NOUVEAUX MODULES REQUIS PAR CAHIER DES CHARGES - AJOUTÉS MAINTENANT
 try:

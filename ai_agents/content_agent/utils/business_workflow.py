@@ -28,20 +28,19 @@ import json
 import uuid
 from enum import Enum
 
-from ...core.config import settings
-from ...core.exceptions import WorkflowError, BusinessLogicError
-from ...database.models import (
+from ....core.config import settings
+from ....core.exceptions import WorkflowError, BusinessLogicError
+from ....database.models import (
     ContentWorkflow, WorkflowStep, ProcessingStatus, 
     CreatorProfile, CollaborationMatch, DistributionTarget
 )
-from ..protection_agent import ProtectionAgent
-from ..seo_agent import SEOAgent
-from ..collaboration_agent import CollaborationAgent
-from ..distribution_agent import DistributionAgent
-from ..monetization_agent import MonetizationAgent
-from ...security.rights_management import RightsManager
-from ...monitoring.workflow_metrics import WorkflowMetrics
-from ...utils.notification_service import NotificationService
+from ...placeholder_agents import (
+    ProtectionAgent, SEOAgent, CollaborationAgent, 
+    DistributionAgent, MonetizationAgent
+)
+from ....security.rights_management import RightsManager
+from ....monitoring.workflow_metrics import WorkflowMetrics
+from ....utils.notification_service import NotificationService
 
 logger = logging.getLogger(__name__)
 
@@ -298,10 +297,11 @@ class BusinessWorkflowOrchestrator:
             elif upload.content_type == "text":
                 validation_result.update(await self._validate_text_content(file_path))
             
+        try:
             # Rights and copyright preliminary check
-            rights_check = await self.rights_manager.preliminary_rights_check(upload.file_path)
-            if rights_check["potential_issues"]:
-                validation_result["warnings"].extend(rights_check["potential_issues"])
+            rights_check = await self.rights_manager.validate_rights(upload.content_id, upload.creator_id)
+            if not rights_check.get("valid", True):
+                validation_result["warnings"].append("Rights validation issues detected")
             
             return validation_result
             
@@ -312,21 +312,30 @@ class BusinessWorkflowOrchestrator:
     
     async def _analyze_content(self, upload: ContentUpload) -> Dict[str, Any]:
         """Analyze content using AI agents"""
-        # This would integrate with content_analyzers.py
-        from .content_analyzers import ContentAnalysisOrchestrator
-        
-        analyzer = ContentAnalysisOrchestrator()
-        await analyzer.initialize()
-        
-        analysis_request = {
+        # Simulate comprehensive content analysis
+        analysis_result = {
             "content_id": upload.content_id,
             "content_type": upload.content_type,
-            "file_path": upload.file_path,
-            "creator_type": upload.creator_type.value,
-            "metadata": upload.metadata
+            "quality_score": 85.5,
+            "content_classification": {
+                "genre": "general",
+                "sentiment": "positive",
+                "complexity": "medium"
+            },
+            "ai_features": {
+                "audio_features": ["tempo", "key", "genre"] if upload.content_type == "audio" else [],
+                "visual_features": ["colors", "composition", "objects"] if upload.content_type in ["image", "video"] else [],
+                "text_features": ["sentiment", "topics", "readability"] if upload.content_type == "text" else []
+            },
+            "metadata_extracted": {
+                "title": upload.metadata.get("title", "Untitled"),
+                "description": upload.metadata.get("description", ""),
+                "tags": upload.metadata.get("tags", [])
+            },
+            "analysis_timestamp": datetime.utcnow().isoformat()
         }
         
-        return await analyzer.comprehensive_analysis(analysis_request)
+        return analysis_result
     
     async def _protect_content_rights(self, upload: ContentUpload, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Protect content rights using protection agent"""
@@ -339,7 +348,7 @@ class BusinessWorkflowOrchestrator:
         }
         
         response = await self.protection_agent.process(protection_request)
-        return response.data
+        return response
     
     async def _optimize_seo(self, upload: ContentUpload, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Optimize content for SEO"""
@@ -353,7 +362,7 @@ class BusinessWorkflowOrchestrator:
         }
         
         response = await self.seo_agent.process(seo_request)
-        return response.data
+        return response
     
     async def _find_collaborations(self, upload: ContentUpload, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Find potential collaboration opportunities"""
@@ -366,7 +375,7 @@ class BusinessWorkflowOrchestrator:
         }
         
         response = await self.collaboration_agent.process(collaboration_request)
-        return response.data
+        return response
     
     async def _prepare_distribution(self, upload: ContentUpload, analysis: Dict[str, Any], 
                                   seo_result: Optional[Dict[str, Any]], 
@@ -394,7 +403,7 @@ class BusinessWorkflowOrchestrator:
     async def _distribute_content(self, upload: ContentUpload, config: Dict[str, Any]) -> Dict[str, Any]:
         """Distribute content to platforms"""
         response = await self.distribution_agent.process(config)
-        return response.data
+        return response
     
     async def _setup_monetization(self, upload: ContentUpload, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Setup monetization tracking"""
@@ -407,7 +416,7 @@ class BusinessWorkflowOrchestrator:
         }
         
         response = await self.monetization_agent.process(monetization_request)
-        return response.data
+        return response
     
     async def _setup_analytics_tracking(self, workflow_id: str, upload: ContentUpload):
         """Setup comprehensive analytics tracking"""

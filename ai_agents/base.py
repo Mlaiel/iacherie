@@ -30,19 +30,18 @@ import psycopg2
 from sqlalchemy.orm import Session
 from prometheus_client import Counter, Histogram, Gauge
 
-from ..core.config import settings
-from ..core.database import get_db_session
-from ..core.exceptions import (
+from core.config import settings
+from core.exceptions import (
     AgentError, 
     ValidationError, 
     ProcessingError,
     ResourceLimitError,
     SecurityError
 )
-from ..security.encryption import ContentEncryption
-from ..utils.performance_monitor import PerformanceMonitor
-from ..utils.rate_limiter import RateLimiter
-from ..utils.circuit_breaker import CircuitBreaker
+from security.encryption import ContentEncryption
+from utils.performance_monitor import PerformanceMonitor
+from utils.rate_limiter import RateLimiter
+from utils.circuit_breaker import CircuitBreaker
 
 logger = logging.getLogger(__name__)
 
