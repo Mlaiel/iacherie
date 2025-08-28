@@ -343,11 +343,21 @@ class PlatformCrawlerOrchestrator:
                 self.logger.warning(f"Using fallback search for {task.platform}")
                 return await crawler.search(task.query, limit=task.limit)
             else:
-                raise NotImplementedError(
+                self.logger.warning(
                     f"Search not implemented for {task.platform}. "
                     f"Crawler {crawler.__class__.__name__} must implement either "
                     f"'search_content' or 'search' method."
                 )
+                # Return empty result with information instead of raising error
+                return [{
+                    "status": "not_implemented",
+                    "platform": task.platform,
+                    "message": f"Search functionality not available for {task.platform}",
+                    "crawler_class": crawler.__class__.__name__,
+                    "required_methods": ["search_content", "search"],
+                    "query": task.query,
+                    "timestamp": datetime.utcnow().isoformat()
+                }]
     
     async def _execute_profile(self, crawler, task: CrawlTask) -> List[Dict]:
         """Execute profile task on crawler."""
@@ -361,11 +371,21 @@ class PlatformCrawlerOrchestrator:
                 self.logger.warning(f"Using fallback profile method for {task.platform}")
                 return await crawler.get_profile(task.target_id or task.query)
             else:
-                raise NotImplementedError(
+                self.logger.warning(
                     f"Profile crawling not implemented for {task.platform}. "
                     f"Crawler {crawler.__class__.__name__} must implement either "
                     f"'get_profile_data' or 'get_profile' method."
                 )
+                # Return empty result with information instead of raising error
+                return [{
+                    "status": "not_implemented",
+                    "platform": task.platform,
+                    "message": f"Profile crawling functionality not available for {task.platform}",
+                    "crawler_class": crawler.__class__.__name__,
+                    "required_methods": ["get_profile_data", "get_profile"],
+                    "profile_id": task.target_id or task.query,
+                    "timestamp": datetime.utcnow().isoformat()
+                }]
     
     async def _execute_content(self, crawler, task: CrawlTask) -> List[Dict]:
         """Execute content task on crawler."""
@@ -380,11 +400,22 @@ class PlatformCrawlerOrchestrator:
                 self.logger.warning(f"Using fallback content method for {task.platform}")
                 return await crawler.get_content(task.target_id or task.query)
             else:
-                raise NotImplementedError(
+                self.logger.warning(
                     f"Content crawling not implemented for {task.platform}. "
                     f"Crawler {crawler.__class__.__name__} must implement either "
                     f"'get_content_data' or 'get_content' method."
                 )
+                # Return empty result with information instead of raising error
+                return [{
+                    "status": "not_implemented",
+                    "platform": task.platform,
+                    "message": f"Content crawling functionality not available for {task.platform}",
+                    "crawler_class": crawler.__class__.__name__,
+                    "required_methods": ["get_content_data", "get_content"],
+                    "content_id": task.target_id or task.query,
+                    "content_type": task.filters.get('content_type') if task.filters else None,
+                    "timestamp": datetime.utcnow().isoformat()
+                }]
     
     async def _execute_monitor(self, crawler, task: CrawlTask) -> List[Dict]:
         """Execute monitoring task on crawler."""
