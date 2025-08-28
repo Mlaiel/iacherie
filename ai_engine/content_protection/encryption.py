@@ -3776,7 +3776,11 @@ class CryptoProvider:
     """Cryptographic provider for various crypto operations"""
     
     def __init__(self):
-        pass
+        """Initialize cryptographic provider with secure defaults"""
+        self.backend = default_backend()
+        self.secure_random = secrets.SystemRandom()
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        self.logger.info("CryptoProvider initialized with secure backend")
     
     async def generate_random_key(
         self,

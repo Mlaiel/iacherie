@@ -423,7 +423,10 @@ class PerceptualImageProcessor(ImageProcessor):
     """Processeur pour l'analyse perceptuelle avancée"""
     
     def __init__(self):
-        pass
+        """Initialise le processeur d'analyse perceptuelle"""
+        if not CV2_AVAILABLE:
+            raise ImportError("OpenCV library not available for perceptual image processing")
+        self.name = "perceptual_analysis"
     
     async def process(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
         """Analyse perceptuelle avancée de l'image"""
