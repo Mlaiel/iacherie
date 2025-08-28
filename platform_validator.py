@@ -221,11 +221,14 @@ class PlatformValidator:
                     analysis["has_implementations"] = True
             
             elif isinstance(node, ast.Raise):
-                # Check for NotImplementedError
+                # Check for NotImplementedError - but ignore in abstract methods
                 if isinstance(node.exc, ast.Call):
                     if isinstance(node.exc.func, ast.Name):
                         if node.exc.func.id == "NotImplementedError":
-                            analysis["is_complete"] = False
+                            # Check if this is in an abstract method
+                            parent_function = self._find_parent_function(node, tree)
+                            if parent_function and not self._is_abstract_method(parent_function):
+                                analysis["is_complete"] = False
         
         # Calculate complexity score
         analysis["complexity_score"] = self._calculate_complexity(tree)
@@ -234,6 +237,10 @@ class PlatformValidator:
     
     def _is_incomplete_function(self, node: ast.FunctionDef) -> bool:
         """Check if a function is incomplete"""
+        # Skip abstract methods
+        if self._is_abstract_method(node):
+            return False
+            
         if len(node.body) == 0:
             return True
         
@@ -246,7 +253,7 @@ class PlatformValidator:
                 # Just a docstring
                 return True
         
-        # Check for NotImplementedError
+        # Check for NotImplementedError (but not in abstract methods)
         for stmt in ast.walk(node):
             if isinstance(stmt, ast.Raise):
                 if isinstance(stmt.exc, ast.Call):
@@ -254,6 +261,25 @@ class PlatformValidator:
                         if stmt.exc.func.id == "NotImplementedError":
                             return True
         
+        return False
+    
+    def _find_parent_function(self, node: ast.AST, tree: ast.AST) -> Optional[ast.FunctionDef]:
+        """Find the parent function of a given node"""
+        for parent in ast.walk(tree):
+            if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                for child in ast.walk(parent):
+                    if child is node:
+                        return parent
+        return None
+    
+    def _is_abstract_method(self, func_node: ast.FunctionDef) -> bool:
+        """Check if a function is an abstract method"""
+        # Check for @abstractmethod decorator
+        for decorator in func_node.decorator_list:
+            if isinstance(decorator, ast.Name) and decorator.id == "abstractmethod":
+                return True
+            elif isinstance(decorator, ast.Attribute) and decorator.attr == "abstractmethod":
+                return True
         return False
     
     def _calculate_complexity(self, tree: ast.AST) -> float:
@@ -402,7 +428,7 @@ async def main():
     
     # Get the platform root directory
     current_dir = Path(__file__).parent
-    platform_root = current_dir.parent  # Go up one level to platform root
+    platform_root = current_dir  # Script is in the root directory
     
     # Create validator and run validation
     validator = PlatformValidator(str(platform_root))
