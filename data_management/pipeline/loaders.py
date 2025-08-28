@@ -605,8 +605,23 @@ class StorageLoader:
         
         # PostgreSQL connection pool
         if self.config.postgres_config:
-            # In production, use proper async connection pool
-            pass
+            # Initialize PostgreSQL async connection pool
+            try:
+                import asyncpg
+                self.postgres_pool = None  # Will be initialized in async context
+                self.postgres_config = {
+                    'host': self.config.postgres_config['host'],
+                    'port': self.config.postgres_config['port'],
+                    'database': self.config.postgres_config['database'],
+                    'user': self.config.postgres_config['user'],
+                    'password': self.config.postgres_config['password'],
+                    'min_size': self.config.postgres_config.get('min_pool_size', 5),
+                    'max_size': self.config.postgres_config.get('max_pool_size', 20)
+                }
+                self.logger.info("PostgreSQL connection config initialized")
+            except ImportError:
+                self.logger.warning("asyncpg not available, PostgreSQL loader disabled")
+                self.postgres_pool = None
         
         # Redis for caching
         if self.config.redis_config:
@@ -723,12 +738,38 @@ class AnalyticsLoader:
         # InfluxDB for time-series data
         if self.config.influxdb_config:
             # Initialize InfluxDB client
-            pass
+            try:
+                from influxdb_client import InfluxDBClient
+                self.influxdb_client = InfluxDBClient(
+                    url=self.config.influxdb_config['url'],
+                    token=self.config.influxdb_config['token'],
+                    org=self.config.influxdb_config['org']
+                )
+                self.influxdb_bucket = self.config.influxdb_config['bucket']
+                self.logger.info("InfluxDB client initialized")
+            except ImportError:
+                self.logger.warning("InfluxDB client not available, time-series storage disabled")
+                self.influxdb_client = None
         
         # Elasticsearch for full-text search and analytics
         if self.config.elasticsearch_config:
             # Initialize Elasticsearch client
-            pass
+            try:
+                from elasticsearch import AsyncElasticsearch
+                self.elasticsearch_client = AsyncElasticsearch(
+                    hosts=[self.config.elasticsearch_config['host']],
+                    http_auth=(
+                        self.config.elasticsearch_config.get('username'),
+                        self.config.elasticsearch_config.get('password')
+                    ),
+                    verify_certs=self.config.elasticsearch_config.get('verify_certs', True),
+                    ssl_context=self.config.elasticsearch_config.get('ssl_context')
+                )
+                self.elasticsearch_index = self.config.elasticsearch_config.get('index', 'analytics')
+                self.logger.info("Elasticsearch client initialized")
+            except ImportError:
+                self.logger.warning("Elasticsearch client not available, search analytics disabled")
+                self.elasticsearch_client = None
     
     @monitor_performance
     async def load_analytics_data(
@@ -778,3 +819,107 @@ class AnalyticsLoader:
         })
         
         return enriched
+    
+    async def _initialize_postgres_pool(self):
+        """Initialize PostgreSQL connection pool asynchronously"""
+        if self.postgres_config and not self.postgres_pool:
+            try:
+                import asyncpg
+                self.postgres_pool = await asyncpg.create_pool(**self.postgres_config)
+                self.logger.info("✅ PostgreSQL connection pool initialized")
+                return True
+            except Exception as e:
+                self.logger.error(f"Failed to initialize PostgreSQL pool: {e}")
+                return False
+        return True
+    
+    async def _load_to_postgres(self, data: Dict[str, Any], table: str) -> bool:
+        """Load data to PostgreSQL"""
+        try:
+            if not self.postgres_pool:
+                await self._initialize_postgres_pool()
+            
+            if self.postgres_pool:
+                async with self.postgres_pool.acquire() as conn:
+                    # Generate INSERT query dynamically
+                    columns = list(data.keys())
+                    values = list(data.values())
+                    placeholders = ', '.join([f'${i+1}' for i in range(len(values))])
+                    
+                    query = f"""
+                        INSERT INTO {table} ({', '.join(columns)}) 
+                        VALUES ({placeholders})
+                        ON CONFLICT DO NOTHING
+                    """
+                    
+                    await conn.execute(query, *values)
+                    self.logger.debug(f"📊 Data loaded to PostgreSQL table {table}")
+                    return True
+            return False
+        except Exception as e:
+            self.logger.error(f"PostgreSQL load error: {e}")
+            return False
+    
+    async def _load_to_influxdb(self, data: Dict[str, Any], measurement: str) -> bool:
+        """Load time-series data to InfluxDB"""
+        try:
+            if self.influxdb_client:
+                from influxdb_client.client.write_api import SYNCHRONOUS
+                write_api = self.influxdb_client.write_api(write_option=SYNCHRONOUS)
+                
+                # Prepare data point
+                point_data = {
+                    'measurement': measurement,
+                    'tags': data.get('tags', {}),
+                    'fields': data.get('fields', {}),
+                    'time': data.get('timestamp', datetime.utcnow())
+                }
+                
+                write_api.write(bucket=self.influxdb_bucket, record=point_data)
+                self.logger.debug(f"📈 Time-series data loaded to InfluxDB measurement {measurement}")
+                return True
+            return False
+        except Exception as e:
+            self.logger.error(f"InfluxDB load error: {e}")
+            return False
+    
+    async def _load_to_elasticsearch(self, data: Dict[str, Any], doc_type: str = '_doc') -> bool:
+        """Load document data to Elasticsearch"""
+        try:
+            if self.elasticsearch_client:
+                doc_id = data.get('id', str(uuid.uuid4()))
+                
+                await self.elasticsearch_client.index(
+                    index=self.elasticsearch_index,
+                    id=doc_id,
+                    body=data,
+                    doc_type=doc_type
+                )
+                
+                self.logger.debug(f"🔍 Document loaded to Elasticsearch index {self.elasticsearch_index}")
+                return True
+            return False
+        except Exception as e:
+            self.logger.error(f"Elasticsearch load error: {e}")
+            return False
+    
+    async def close_connections(self):
+        """Close all storage connections gracefully"""
+        try:
+            # Close PostgreSQL pool
+            if self.postgres_pool:
+                await self.postgres_pool.close()
+                self.logger.info("PostgreSQL pool closed")
+            
+            # Close InfluxDB client
+            if self.influxdb_client:
+                self.influxdb_client.close()
+                self.logger.info("InfluxDB client closed")
+            
+            # Close Elasticsearch client
+            if self.elasticsearch_client:
+                await self.elasticsearch_client.close()
+                self.logger.info("Elasticsearch client closed")
+                
+        except Exception as e:
+            self.logger.error(f"Error closing connections: {e}")
