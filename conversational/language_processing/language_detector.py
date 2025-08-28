@@ -57,31 +57,128 @@ DetectorFactory.seed = 0
 
 class SupportedLanguage(Enum):
     """Supported languages for content processing"""
+    # Major Global Languages (Tier 1)
     ENGLISH = "en"
-    GERMAN = "de"
-    FRENCH = "fr"
-    SPANISH = "es"
-    ITALIAN = "it"
-    PORTUGUESE = "pt"
-    DUTCH = "nl"
-    RUSSIAN = "ru"
-    CHINESE = "zh"
-    JAPANESE = "ja"
-    KOREAN = "ko"
-    ARABIC = "ar"
+    CHINESE_SIMPLIFIED = "zh"
+    CHINESE_TRADITIONAL = "zh_TW"
     HINDI = "hi"
-    TURKISH = "tr"
+    SPANISH = "es"
+    FRENCH = "fr"
+    ARABIC = "ar"
+    PORTUGUESE = "pt"
+    RUSSIAN = "ru"
+    JAPANESE = "ja"
+    GERMAN = "de"
+    KOREAN = "ko"
+    
+    # European Languages (Tier 2)
+    ITALIAN = "it"
+    DUTCH = "nl"
     POLISH = "pl"
     SWEDISH = "sv"
     NORWEGIAN = "no"
     DANISH = "da"
     FINNISH = "fi"
+    TURKISH = "tr"
     GREEK = "el"
     HEBREW = "he"
+    CZECH = "cs"
+    HUNGARIAN = "hu"
+    BULGARIAN = "bg"
+    ROMANIAN = "ro"
+    CROATIAN = "hr"
+    SERBIAN = "sr"
+    UKRAINIAN = "uk"
+    SLOVAK = "sk"
+    SLOVENIAN = "sl"
+    ESTONIAN = "et"
+    LATVIAN = "lv"
+    LITHUANIAN = "lt"
+    
+    # Asian Languages (Tier 3)
     THAI = "th"
     VIETNAMESE = "vi"
     INDONESIAN = "id"
     MALAY = "ms"
+    TAGALOG = "tl"
+    BENGALI = "bn"
+    PUNJABI = "pa"
+    MARATHI = "mr"
+    GUJARATI = "gu"
+    TAMIL = "ta"
+    TELUGU = "te"
+    KANNADA = "kn"
+    MALAYALAM = "ml"
+    URDU = "ur"
+    PERSIAN = "fa"
+    BURMESE = "my"
+    KHMER = "km"
+    LAO = "lo"
+    MONGOLIAN = "mn"
+    NEPALI = "ne"
+    SINHALESE = "si"
+    
+    # African Languages (Tier 4)
+    SWAHILI = "sw"
+    HAUSA = "ha"
+    YORUBA = "yo"
+    IGBO = "ig"
+    ZULU = "zu"
+    XHOSA = "xh"
+    AFRIKAANS = "af"
+    AMHARIC = "am"
+    OROMO = "om"
+    SOMALI = "so"
+    
+    # Amazigh/Berber Languages (Revolutionary Support)
+    TAMAZIGHT_CENTRAL = "tzm"        # Central Atlas Tamazight (Morocco)
+    TARIFIT = "rif"                  # Rif Berber (Morocco/Algeria)
+    TASHELHIT = "shi"                # Shilha (Morocco)
+    KABYLE = "kab"                   # Kabyle (Algeria)
+    SHAWIYA = "shy"                  # Shawiya/Chaouia (Algeria)
+    MZAB = "mzb"                     # Mozabite (Algeria)
+    TAHAGGART = "thv"                # Tahaggart Tamahaq (Algeria)
+    TUAREG = "ttq"                   # Tamasheq (Mali/Niger)
+    TAMASHEQ = "taq"                 # Air Tamajeq (Niger)
+    ZENAGA = "zen"                   # Zenaga (Mauritania)
+    
+    # Arabic Regional Variants
+    ARABIC_EGYPTIAN = "ar_EG"        # Egyptian Arabic
+    ARABIC_LEVANTINE = "ar_SY"       # Levantine Arabic
+    ARABIC_GULF = "ar_AE"            # Gulf Arabic
+    ARABIC_MAGHREB = "ar_MA"         # Maghrebi Arabic
+    ARABIC_IRAQI = "ar_IQ"           # Iraqi Arabic
+    ARABIC_SUDANESE = "ar_SD"        # Sudanese Arabic
+    
+    # American Indigenous Languages
+    QUECHUA = "qu"                   # Quechua (Peru/Bolivia)
+    GUARANI = "gn"                   # Guaraní (Paraguay)
+    NAVAJO = "nv"                    # Navajo (USA)
+    
+    # Pacific Languages
+    MAORI = "mi"                     # Māori (New Zealand)
+    HAWAIIAN = "haw"                 # Hawaiian (USA)
+    FIJIAN = "fj"                    # Fijian
+    
+    # Additional Regional Languages
+    WELSH = "cy"                     # Welsh
+    IRISH = "ga"                     # Irish Gaelic
+    SCOTS_GAELIC = "gd"              # Scottish Gaelic
+    BRETON = "br"                    # Breton
+    BASQUE = "eu"                    # Basque
+    CATALAN = "ca"                   # Catalan
+    GALICIAN = "gl"                  # Galician
+    CORSICAN = "co"                  # Corsican
+    SARDINIAN = "sc"                 # Sardinian
+    MALTESE = "mt"                   # Maltese
+    ICELANDIC = "is"                 # Icelandic
+    FAROESE = "fo"                   # Faroese
+    LUXEMBOURGISH = "lb"             # Luxembourgish
+    ROMANSH = "rm"                   # Romansh
+    
+    # Sign Languages
+    AMERICAN_SIGN_LANGUAGE = "ase"   # ASL
+    BRITISH_SIGN_LANGUAGE = "bfi"    # BSL
 
 
 class LanguageFamily(Enum):
@@ -440,24 +537,87 @@ class LanguageDetector:
             return False, {}
             
     async def _detect_dialect(self, text: str, language: str) -> Optional[str]:
-        """Detect dialect or regional variant"""
+        """Detect dialect or regional variant with comprehensive support"""
         try:
-            # Simple dialect detection based on specific words/patterns
+            # Comprehensive dialect detection patterns for global coverage
             dialect_patterns = {
                 'en': {
-                    'american': ['color', 'center', 'realize', 'aluminum', 'mom'],
-                    'british': ['colour', 'centre', 'realise', 'aluminium', 'mum'],
-                    'australian': ['mate', 'bloke', 'arvo', 'servo', 'brekkie']
+                    'american': ['color', 'center', 'realize', 'aluminum', 'mom', 'elevator', 'apartment', 'gas', 'truck', 'candy'],
+                    'british': ['colour', 'centre', 'realise', 'aluminium', 'mum', 'lift', 'flat', 'petrol', 'lorry', 'sweets'],
+                    'australian': ['mate', 'bloke', 'arvo', 'servo', 'brekkie', 'barbie', 'sunnies', 'thongs', 'ute', 'sheila'],
+                    'canadian': ['eh', 'toque', 'loonie', 'toonie', 'chesterfield', 'hydro', 'washroom', 'parkade'],
+                    'south_african': ['braai', 'bakkies', 'robots', 'now now', 'just now', 'sharp sharp', 'eish'],
+                    'irish': ['craic', 'bold', 'gaff', 'messages', 'press', 'delighted', 'grand', 'brilliant'],
+                    'scottish': ['ken', 'bairn', 'bonnie', 'dreich', 'nae', 'wee', 'kirk', 'loch'],
+                    'indian': ['prepone', 'out of station', 'good name', 'do the needful', 'revert back', 'timepass'],
+                    'nigerian': ['abeg', 'wahala', 'sha', 'abi', 'chop', 'gist', 'package', 'waka'],
+                    'jamaican': ['bredrin', 'yute', 'ting', 'nuh', 'mi deh', 'wha gwaan', 'big up', 'likkle']
                 },
                 'de': {
-                    'standard': ['sprechen', 'haben', 'machen'],
-                    'swiss': ['grüezi', 'merci', 'chuchichäschtli'],
-                    'austrian': ['servus', 'grüß gott', 'pfiat di']
+                    'standard': ['sprechen', 'haben', 'machen', 'schauen', 'gehen'],
+                    'swiss': ['grüezi', 'merci', 'chuchichäschtli', 'luege', 'gah', 'höre', 'säge', 'mache'],
+                    'austrian': ['servus', 'grüß gott', 'pfiat di', 'schauen', 'gehen', 'baba', 'leiwand'],
+                    'bavarian': ['servus', 'pfüat di', 'griaß di', 'moiz', 'schaug', 'geh'],
+                    'swabian': ['grüß gott', 'hosch', 'bischt', 'isch', 'net', 'nix'],
+                    'rheinisch': ['tach', 'wat', 'dat', 'hä', 'ne', 'jo']
                 },
                 'es': {
-                    'spain': ['vosotros', 'coches', 'ordenador'],
-                    'mexico': ['ustedes', 'carros', 'computadora'],
-                    'argentina': ['vos', 'auto', 'computadora']
+                    'spain': ['vosotros', 'coches', 'ordenador', 'zumo', 'patatas', 'móvil', 'conducir'],
+                    'mexico': ['ustedes', 'carros', 'computadora', 'jugo', 'papas', 'celular', 'manejar'],
+                    'argentina': ['vos', 'auto', 'computadora', 'jugo', 'papas', 'celular', 'manejar'],
+                    'colombia': ['parce', 'chimba', 'bacano', 'chévere', 'berraco', 'mamagallismo'],
+                    'peru': ['causa', 'pata', 'jato', 'chamba', 'chela', 'corazón'],
+                    'chile': ['weón', 'fome', 'bacán', 'pololo', 'carrete', 'cuico'],
+                    'venezuela': ['pana', 'chévere', 'arrecho', 'mamagevo', 'burda', 'ladilla'],
+                    'dominican': ['klk', 'tigueraje', 'jajajay', 'manigua', 'vacano']
+                },
+                'fr': {
+                    'france': ['chocolatine', 'pain au chocolat', 'weekend', 'shopping', 'mail'],
+                    'quebec': ['fin de semaine', 'magasinage', 'courriel', 'dépanneur', 'char'],
+                    'belgian': ['nonante', 'septante', 'wassingue', 'kot', 'drache'],
+                    'swiss': ['huitante', 'septante', 'linge', 'panosse', 'fœhn'],
+                    'african': ['taxi-brousse', 'maquis', 'daba', 'palabre', 'concession'],
+                    'maghreb': ['baraka', 'walou', 'bezef', 'khlass', 'benna']
+                },
+                'pt': {
+                    'brazilian': ['você', 'trem', 'garoto', 'geladeira', 'ônibus', 'celular'],
+                    'portugal': ['tu', 'comboio', 'miúdo', 'frigorífico', 'autocarro', 'telemóvel'],
+                    'angolan': ['bué', 'garina', 'bazar', 'fixe', 'catita'],
+                    'mozambican': ['xima', 'capulana', 'machamba', 'biscate']
+                },
+                'ar': {
+                    'egyptian': ['عايز', 'جامد', 'زي', 'خالاص', 'برضه', 'كده'],
+                    'levantine': ['شو', 'هيك', 'كتير', 'تمام', 'حلو', 'خلص'],
+                    'gulf': ['شلون', 'وايد', 'زين', 'يلا', 'خوش', 'عاد'],
+                    'maghreb': ['آش', 'بزاف', 'مليح', 'يلاه', 'واخا', 'بصح'],
+                    'iraqi': ['شلونك', 'آني', 'هم', 'ماكو', 'هوايه', 'زين'],
+                    'sudanese': ['كيفك', 'جداً', 'هسه', 'شديد', 'خلاص']
+                },
+                'it': {
+                    'northern': ['ghe', 'xe', 'ciao belo', 'va ben', 'massa'],
+                    'central': ['aò', 'magnà', 'morì', 'che dici', 'annamo'],
+                    'southern': ['guagliò', 'massì', 'assaje', 'ammuina', 'uagliò'],
+                    'sicilian': ['picciotto', 'arrusbigliato', 'travagghiare', 'sceccu'],
+                    'sardinian': ['deu', 'de', 'si', 'nde', 'chi']
+                },
+                'zh': {
+                    'mandarin': ['你好', '谢谢', '再见', '什么', '怎么'],
+                    'cantonese': ['你好', '多謝', '再見', '乜嘢', '點解'],
+                    'taiwanese': ['你好', '多謝', '掰掰', '啥物', '按怎'],
+                    'shanghainese': ['侬好', '谢谢侬', '再会', '啥个', '哪能']
+                },
+                'hi': {
+                    'standard': ['आप', 'है', 'में', 'और', 'का'],
+                    'punjabi': ['ਤੁਸੀਂ', 'ਹੈ', 'ਵਿਚ', 'ਅਤੇ', 'ਦਾ'],
+                    'gujarati': ['તમે', 'છે', 'માં', 'અને', 'ના'],
+                    'bengali': ['আপনি', 'আছে', 'মধ্যে', 'এবং', 'এর'],
+                    'marathi': ['तुम्ही', 'आहे', 'मध्ये', 'आणि', 'चा']
+                },
+                'ru': {
+                    'standard': ['привет', 'спасибо', 'пожалуйста', 'хорошо', 'плохо'],
+                    'ukrainian': ['привіт', 'дякую', 'будь ласка', 'добре', 'погано'],
+                    'belarusian': ['прывітанне', 'дзякуй', 'калі ласка', 'добра', 'дрэнна'],
+                    'siberian': ['здорово', 'давай', 'нормально', 'ништяк']
                 }
             }
             
