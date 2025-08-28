@@ -149,7 +149,9 @@ class MetricCollector(ABC):
         end_date: datetime
     ) -> List[MetricData]:
         """Collect metrics for specified period."""
-        pass
+        # Base implementation for metric collection
+        # This is abstract and should be implemented by subclasses
+        raise NotImplementedError("Subclasses must implement collect_metrics")
 
 
 class RevenueMetricCollector(MetricCollector):

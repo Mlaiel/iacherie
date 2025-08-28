@@ -592,23 +592,70 @@ class FeeCalculatorEngine:
     # Additional calculation methods
     async def _calculate_fixed_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate fixed fee"""
-        # Implementation for fixed fee calculation
-        pass
+        fixed_amount = Decimal("2.50")  # Standard fixed fee
+        return FeeCalculationResult(
+            request_id=request.request_id,
+            total_fee=fixed_amount,
+            fee_breakdown={"fixed_fee": fixed_amount},
+            calculation_method="fixed",
+            currency=request.currency
+        )
     
     async def _calculate_volume_based_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate volume-based fee"""
-        # Implementation for volume-based calculation
-        pass
+        base_rate = Decimal("0.025")  # 2.5% base rate
+        volume_multiplier = Decimal("1.0")
+        
+        # Adjust based on transaction volume
+        if request.amount > Decimal("1000"):
+            volume_multiplier = Decimal("0.8")  # 20% discount for high volume
+        elif request.amount > Decimal("500"):
+            volume_multiplier = Decimal("0.9")  # 10% discount for medium volume
+            
+        fee = request.amount * base_rate * volume_multiplier
+        return FeeCalculationResult(
+            request_id=request.request_id,
+            total_fee=fee,
+            fee_breakdown={"volume_based_fee": fee, "base_rate": base_rate, "multiplier": volume_multiplier},
+            calculation_method="volume_based",
+            currency=request.currency
+        )
     
     async def _calculate_hybrid_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate hybrid fee (combination of strategies)"""
-        # Implementation for hybrid calculation
-        pass
+        # Combine percentage and fixed fees
+        percentage_fee = request.amount * Decimal("0.029")  # 2.9%
+        fixed_fee = Decimal("0.30")
+        total_fee = percentage_fee + fixed_fee
+        
+        return FeeCalculationResult(
+            request_id=request.request_id,
+            total_fee=total_fee,
+            fee_breakdown={"percentage_fee": percentage_fee, "fixed_fee": fixed_fee},
+            calculation_method="hybrid",
+            currency=request.currency
+        )
     
     async def _calculate_dynamic_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate dynamic fee based on market conditions"""
-        # Implementation for dynamic calculation
-        pass
+        # Dynamic fee based on time and load
+        base_rate = Decimal("0.025")
+        current_hour = datetime.utcnow().hour
+        
+        # Peak hours (9-17) have higher fees
+        if 9 <= current_hour <= 17:
+            dynamic_multiplier = Decimal("1.2")
+        else:
+            dynamic_multiplier = Decimal("0.9")
+            
+        fee = request.amount * base_rate * dynamic_multiplier
+        return FeeCalculationResult(
+            request_id=request.request_id,
+            total_fee=fee,
+            fee_breakdown={"dynamic_fee": fee, "multiplier": dynamic_multiplier, "hour": current_hour},
+            calculation_method="dynamic",
+            currency=request.currency
+        )
     
     # Cache methods
     async def _get_cached_result(self, request: FeeCalculationRequest) -> Optional[FeeCalculationResult]:
@@ -670,7 +717,13 @@ class PlatformFeeCalculator:
     
     async def initialize(self) -> None:
         """Initialize platform calculator"""
-        pass
+        self.platform_rates = {
+            "youtube": Decimal("0.05"),
+            "instagram": Decimal("0.04"), 
+            "tiktok": Decimal("0.06"),
+            "spotify": Decimal("0.03")
+        }
+        logger.info("Platform fee calculator initialized")
     
     async def calculate(
         self, 
@@ -687,7 +740,12 @@ class ProcessingFeeCalculator:
     
     async def initialize(self) -> None:
         """Initialize processing calculator"""
-        pass
+        self.processing_rates = {
+            "EUR": {"rate": Decimal("0.029"), "fixed": Decimal("0.30")},
+            "USD": {"rate": Decimal("0.029"), "fixed": Decimal("0.30")},
+            "GBP": {"rate": Decimal("0.025"), "fixed": Decimal("0.25")}
+        }
+        logger.info("Processing fee calculator initialized")
     
     async def calculate(self, amount: Decimal, currency: Currency) -> Decimal:
         """Calculate processing fee"""
@@ -708,36 +766,96 @@ class PerformanceFeeCalculator:
     
     async def initialize(self) -> None:
         """Initialize performance calculator"""
-        pass
+        self.performance_thresholds = {
+            "bronze": {"min_revenue": Decimal("0"), "bonus_rate": Decimal("0.0")},
+            "silver": {"min_revenue": Decimal("1000"), "bonus_rate": Decimal("0.05")},
+            "gold": {"min_revenue": Decimal("5000"), "bonus_rate": Decimal("0.10")},
+            "platinum": {"min_revenue": Decimal("20000"), "bonus_rate": Decimal("0.15")}
+        }
+        logger.info("Performance fee calculator initialized")
     
     async def calculate_performance_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate performance-based fee"""
-        # Implementation
-        pass
+        base_fee = request.amount * Decimal("0.025")
+        performance_tier = request.metadata.get("performance_tier", "bronze")
+        
+        bonus_rate = self.performance_thresholds.get(performance_tier, {}).get("bonus_rate", Decimal("0.0"))
+        performance_bonus = base_fee * bonus_rate
+        total_fee = base_fee + performance_bonus
+        
+        return FeeCalculationResult(
+            request_id=request.request_id,
+            total_fee=total_fee,
+            fee_breakdown={"base_fee": base_fee, "performance_bonus": performance_bonus},
+            calculation_method="performance",
+            currency=request.currency
+        )
 
 class TieredFeeCalculator:
     """Tiered fee calculator with volume thresholds"""
     
     async def initialize(self) -> None:
         """Initialize tiered calculator"""
-        pass
+        self.tier_thresholds = [
+            {"min_amount": Decimal("0"), "rate": Decimal("0.030")},
+            {"min_amount": Decimal("1000"), "rate": Decimal("0.025")},
+            {"min_amount": Decimal("5000"), "rate": Decimal("0.020")},
+            {"min_amount": Decimal("10000"), "rate": Decimal("0.015")}
+        ]
+        logger.info("Tiered fee calculator initialized")
     
     async def calculate_tiered_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate tiered fee"""
-        # Implementation
-        pass
+        # Find applicable tier based on amount
+        applicable_rate = Decimal("0.030")  # default
+        for tier in reversed(self.tier_thresholds):
+            if request.amount >= tier["min_amount"]:
+                applicable_rate = tier["rate"]
+                break
+                
+        fee = request.amount * applicable_rate
+        return FeeCalculationResult(
+            request_id=request.request_id,
+            total_fee=fee,
+            fee_breakdown={"tiered_fee": fee, "rate": applicable_rate},
+            calculation_method="tiered",
+            currency=request.currency
+        )
 
 class DynamicFeeCalculator:
     """Dynamic fee calculator based on market conditions"""
     
     async def initialize(self) -> None:
         """Initialize dynamic calculator"""
-        pass
+        self.market_conditions = {
+            "peak_hours_multiplier": Decimal("1.2"),
+            "off_peak_multiplier": Decimal("0.8"),
+            "weekend_multiplier": Decimal("0.9")
+        }
+        logger.info("Dynamic fee calculator initialized")
     
     async def calculate_dynamic_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate dynamic fee"""
-        # Implementation
-        pass
+        base_fee = request.amount * Decimal("0.025")
+        now = datetime.utcnow()
+        
+        # Apply time-based multipliers
+        multiplier = Decimal("1.0")
+        if 9 <= now.hour <= 17:  # Business hours
+            multiplier = self.market_conditions["peak_hours_multiplier"]
+        elif now.weekday() >= 5:  # Weekend
+            multiplier = self.market_conditions["weekend_multiplier"]
+        else:
+            multiplier = self.market_conditions["off_peak_multiplier"]
+            
+        final_fee = base_fee * multiplier
+        return FeeCalculationResult(
+            request_id=request.request_id,
+            total_fee=final_fee,
+            fee_breakdown={"base_fee": base_fee, "multiplier": multiplier},
+            calculation_method="dynamic",
+            currency=request.currency
+        )
 
 """
 Professional Fee Calculator Engine
