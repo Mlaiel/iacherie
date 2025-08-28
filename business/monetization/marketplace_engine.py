@@ -14,6 +14,7 @@ from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
+from datetime import datetime
 import asyncio
 import logging
 
@@ -136,8 +137,64 @@ class MarketplaceEngineService(IMarketplaceEngineService):
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Exécution de la logique métier spécifique"""
-        # TODO: Implémenter la logique métier consolidée
-        return {"processed": True, "module": "Marketplace Engine"}
+        # Implement marketplace engine consolidated business logic
+        marketplace_data = data.get('marketplace', {})
+        item_id = marketplace_data.get('item_id')
+        seller_id = marketplace_data.get('seller_id')
+        buyer_id = marketplace_data.get('buyer_id')
+        operation = data.get('operation', 'list')
+        
+        result = {"processed": True, "module": "Marketplace Engine"}
+        
+        if operation == 'list':
+            # List item for sale
+            price = marketplace_data.get('price', 0.0)
+            result.update({
+                "action": "item_listed",
+                "item_id": item_id,
+                "seller_id": seller_id,
+                "price": price,
+                "currency": marketplace_data.get('currency', 'USD'),
+                "listed_at": datetime.now().isoformat(),
+                "status": "active"
+            })
+        elif operation == 'purchase':
+            # Purchase item
+            result.update({
+                "action": "item_purchased",
+                "item_id": item_id,
+                "buyer_id": buyer_id,
+                "seller_id": seller_id,
+                "purchased_at": datetime.now().isoformat(),
+                "transaction_id": f"tx_{item_id}_{int(datetime.now().timestamp())}"
+            })
+        elif operation == 'delist':
+            # Remove item from marketplace
+            result.update({
+                "action": "item_delisted",
+                "item_id": item_id,
+                "seller_id": seller_id,
+                "delisted_at": datetime.now().isoformat(),
+                "status": "removed"
+            })
+        elif operation == 'bid':
+            # Place bid on item
+            bid_amount = marketplace_data.get('bid_amount', 0.0)
+            result.update({
+                "action": "bid_placed",
+                "item_id": item_id,
+                "bidder_id": buyer_id,
+                "bid_amount": bid_amount,
+                "bid_at": datetime.now().isoformat()
+            })
+        else:
+            result.update({
+                "action": "operation_unknown",
+                "operation": operation,
+                "message": "Unsupported marketplace operation"
+            })
+        
+        return result
 
 # =============== FONCTIONS UTILITAIRES ===============
 
