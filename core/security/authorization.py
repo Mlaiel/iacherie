@@ -602,8 +602,35 @@ class ContentAccessControl:
     
     async def get_content_owner(self, content_id: str) -> Optional[str]:
         """Get content owner"""
-        # Implementation depends on your content model
-        pass
+        try:
+            # Check cache first
+            cache_key = f"content_owner:{content_id}"
+            cached_owner = await self.cache.get(cache_key)
+            
+            if cached_owner:
+                return cached_owner
+            
+            # In a real implementation, this would query the content database
+            # For now, we'll use a simple file-based storage
+            import os
+            content_owners_file = "/tmp/content_owners.json"
+            
+            if os.path.exists(content_owners_file):
+                with open(content_owners_file, 'r') as f:
+                    content_owners = json.load(f)
+                    owner_id = content_owners.get(content_id)
+                    
+                    if owner_id:
+                        # Cache the result
+                        await self.cache.set(cache_key, owner_id, expire=3600)
+                        return owner_id
+            
+            self.logger.warning(f"Content owner not found for content: {content_id}")
+            return None
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get content owner for {content_id}: {str(e)}")
+            return None
     
     async def get_user_permissions(self, user_id: str, tenant_id: str) -> Set[str]:
         """Get all user permissions"""
@@ -629,15 +656,38 @@ class ContentAccessControl:
     
     async def get_user_roles(self, user_id: str, tenant_id: str) -> List[str]:
         """Get user roles"""
-        cache_key = f"user_roles:{user_id}:{tenant_id}"
-        cached_roles = await self.cache.get(cache_key)
-        
-        if cached_roles:
-            return cached_roles
-        
-        # Get from database
-        # Implementation depends on your user-role model
-        return []  # Placeholder
+        try:
+            cache_key = f"user_roles:{user_id}:{tenant_id}"
+            cached_roles = await self.cache.get(cache_key)
+            
+            if cached_roles:
+                return cached_roles
+            
+            # In a real implementation, this would query the user-role database
+            # For now, use file-based storage
+            import os
+            user_roles_file = "/tmp/user_roles.json"
+            
+            if os.path.exists(user_roles_file):
+                with open(user_roles_file, 'r') as f:
+                    user_roles_data = json.load(f)
+                    
+                    # Structure: {user_id: {tenant_id: [roles]}}
+                    user_data = user_roles_data.get(user_id, {})
+                    roles = user_data.get(tenant_id, ["viewer"])  # Default to viewer role
+                    
+                    # Cache the result
+                    await self.cache.set(cache_key, roles, expire=3600)
+                    return roles
+            
+            # Default role if no data found
+            default_roles = ["viewer"]
+            await self.cache.set(cache_key, default_roles, expire=3600)
+            return default_roles
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get user roles for {user_id} in tenant {tenant_id}: {str(e)}")
+            return ["viewer"]  # Fallback to minimal access
     
     async def check_resource_access(
         self, 
@@ -646,8 +696,40 @@ class ContentAccessControl:
         permission: str
     ) -> bool:
         """Check resource-specific access"""
-        # Implementation depends on your resource access model
-        return False  # Placeholder
+        try:
+            # Check cache first
+            cache_key = f"resource_access:{user_id}:{resource_id}:{permission}"
+            cached_result = await self.cache.get(cache_key)
+            
+            if cached_result is not None:
+                return cached_result
+            
+            # In a real implementation, this would query the resource access database
+            # For now, use file-based storage
+            import os
+            resource_access_file = "/tmp/resource_access.json"
+            
+            if os.path.exists(resource_access_file):
+                with open(resource_access_file, 'r') as f:
+                    access_data = json.load(f)
+                    
+                    # Structure: {user_id: {resource_id: [permissions]}}
+                    user_access = access_data.get(user_id, {})
+                    resource_permissions = user_access.get(resource_id, [])
+                    
+                    has_access = permission in resource_permissions
+                    
+                    # Cache the result for 5 minutes
+                    await self.cache.set(cache_key, has_access, expire=300)
+                    return has_access
+            
+            # Default to no access if no data found
+            await self.cache.set(cache_key, False, expire=300)
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Failed to check resource access for user {user_id}, resource {resource_id}, permission {permission}: {str(e)}")
+            return False  # Deny access on error for security
 
 
 class AuthorizationManager:
