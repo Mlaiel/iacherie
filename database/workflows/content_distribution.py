@@ -1019,56 +1019,136 @@ class CrossPlatformAnalyticsEngine:
 
 # Platform adapter implementations (simplified interfaces)
 class YouTubePlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate YouTube-specific configuration"""
+        required_fields = ['api_key', 'channel_id', 'privacy_status']
+        for field in required_fields:
+            if field not in config:
+                raise ValueError(f"Missing required YouTube config field: {field}")
+        
+        if config.get('privacy_status') not in ['public', 'private', 'unlisted']:
+            raise ValueError("Invalid privacy_status for YouTube")
+        return True
+    
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict: 
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'yt_123', 'url': 'https://youtube.com/watch?v=123'}
 
 class TikTokPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate TikTok-specific configuration"""
+        required_fields = ['access_token', 'user_id']
+        for field in required_fields:
+            if field not in config:
+                raise ValueError(f"Missing required TikTok config field: {field}")
+        
+        if config.get('video_duration', 0) > 180:  # TikTok max duration
+            raise ValueError("Video duration exceeds TikTok limit (180 seconds)")
+        return True
+    
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'tt_123', 'url': 'https://tiktok.com/@user/video/123'}
 
 class InstagramPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Instagram-specific configuration"""
+        required_fields = ['access_token', 'user_id']
+        for field in required_fields:
+            if field not in config:
+                raise ValueError(f"Missing required Instagram config field: {field}")
+        
+        if config.get('post_type') not in ['feed', 'story', 'reel']:
+            raise ValueError("Invalid post_type for Instagram")
+        return True
+    
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'ig_123', 'url': 'https://instagram.com/p/123'}
 
 class FacebookPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Facebook-specific configuration"""
+        required_fields = ['access_token', 'page_id']
+        for field in required_fields:
+            if field not in config:
+                raise ValueError(f"Missing required Facebook config field: {field}")
+        
+        if config.get('published') not in [True, False]:
+            raise ValueError("Invalid published status for Facebook")
+        return True
+    
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'fb_123', 'url': 'https://facebook.com/123'}
 
 class TwitterPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Twitter-specific configuration"""
+        required_fields = ['api_key', 'api_secret', 'access_token', 'access_token_secret']
+        for field in required_fields:
+            if field not in config:
+                raise ValueError(f"Missing required Twitter config field: {field}")
+        
+        if config.get('tweet_text', '') and len(config['tweet_text']) > 280:
+            raise ValueError("Tweet text exceeds Twitter character limit (280)")
+        return True
+    
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'tw_123', 'url': 'https://twitter.com/status/123'}
 
 class LinkedInPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate LinkedIn-specific configuration"""
+        required_fields = ['access_token', 'person_id']
+        for field in required_fields:
+            if field not in config:
+                raise ValueError(f"Missing required LinkedIn config field: {field}")
+        
+        if config.get('visibility') not in ['PUBLIC', 'CONNECTIONS']:
+            raise ValueError("Invalid visibility setting for LinkedIn")
+        return True
+    
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'li_123', 'url': 'https://linkedin.com/posts/123'}
 
 class TwitchPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Twitch-specific configuration"""
+        required_fields = ['client_id', 'access_token', 'broadcaster_id']
+        for field in required_fields:
+            if field not in config:
+                raise ValueError(f"Missing required Twitch config field: {field}")
+        
+        if config.get('content_type') not in ['vod', 'clip', 'stream']:
+            raise ValueError("Invalid content_type for Twitch")
+        return True
+    
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'tw_123', 'url': 'https://twitch.tv/videos/123'}
 
 class SpotifyPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Spotify-specific configuration"""
+        required_fields = ['client_id', 'client_secret', 'artist_id']
+        for field in required_fields:
+            if field not in config:
+                raise ValueError(f"Missing required Spotify config field: {field}")
+        
+        if config.get('release_type') not in ['single', 'album', 'compilation']:
+            raise ValueError("Invalid release_type for Spotify")
+        return True
+    
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
