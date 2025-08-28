@@ -667,9 +667,10 @@ class SecurityMiddleware:
                     self.input_validator.validate_input(data, "request_body")
         except json.JSONDecodeError:
             raise SecurityException("Invalid JSON in request body")
-        except Exception:
-            # Re-parse might fail, but we already validated
-            pass
+        except Exception as e:
+            # Log parsing errors for security audit
+            logger.warning(f"Request body validation warning: {str(e)}")
+            # Continue processing if basic validation passed
     
     def _add_security_headers(self, response: Response):
         """Add security headers to response"""
