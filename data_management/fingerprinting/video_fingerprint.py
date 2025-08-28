@@ -128,7 +128,10 @@ class OpenCVProcessor(VideoProcessor):
     """Processeur OpenCV pour l'analyse vidéo de base"""
     
     def __init__(self):
-        pass
+        """Initialise le processeur OpenCV"""
+        if not CV2_AVAILABLE:
+            raise ImportError("OpenCV library not available for video processing")
+        self.name = "opencv"
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
         """Traite la vidéo avec OpenCV"""
@@ -569,7 +572,10 @@ class MotionVectorProcessor(VideoProcessor):
     """Processeur pour l'analyse des vecteurs de mouvement"""
     
     def __init__(self):
-        pass
+        """Initialise le processeur de vecteurs de mouvement"""
+        if not CV2_AVAILABLE:
+            raise ImportError("OpenCV library not available for motion vector analysis")
+        self.name = "motion_vector"
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
         """Analyse les vecteurs de mouvement dans la vidéo"""

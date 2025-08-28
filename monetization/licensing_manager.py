@@ -38,11 +38,13 @@ except ImportError:
     # Fallback for testing - create mock classes
     class LicenseRepository:
         def __init__(self):
-            pass
-    
+            """Initialize license repository with basic functionality"""
+            self.licenses = {}
+            
     class ContentRepository:
         def __init__(self):
-            pass
+            """Initialize content repository with basic functionality"""
+            self.content = {}
 
 logger = logging.getLogger(__name__)
 

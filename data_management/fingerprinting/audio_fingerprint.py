@@ -325,7 +325,10 @@ class SpectralHashProcessor(AudioProcessor):
     """Processeur pour les hash spectraux avancés"""
     
     def __init__(self):
-        pass
+        """Initialise le processeur de hash spectraux"""
+        if not LIBROSA_AVAILABLE:
+            raise ImportError("librosa library not available for spectral hash processing")
+        self.name = "spectral_hash"
     
     async def process(self, audio_path: str, config: AudioFingerprintConfig) -> Dict[str, Any]:
         """Génère des hash spectraux"""
@@ -462,7 +465,10 @@ class MelSpectrogramProcessor(AudioProcessor):
     """Processeur pour spectrogrammes mel avancés"""
     
     def __init__(self):
-        pass
+        """Initialise le processeur de spectrogrammes mel"""
+        if not LIBROSA_AVAILABLE:
+            raise ImportError("librosa library not available for mel spectrogram processing")
+        self.name = "mel_spectrogram"
     
     async def process(self, audio_path: str, config: AudioFingerprintConfig) -> Dict[str, Any]:
         """Traite les spectrogrammes mel"""
