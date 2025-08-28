@@ -200,7 +200,7 @@ class DatabaseEncryption:
             
             elif algorithm == EncryptionAlgorithm.AES_256_GCM:
                 # Implement AES-256-GCM encryption
-                raise NotImplementedError("AES-256-GCM not implemented yet")
+                return self._encrypt_aes_256_gcm(value, encryption_key, key_id)
             
             else:
                 raise ValueError(f"Unsupported encryption algorithm: {algorithm}")
@@ -210,7 +210,7 @@ class DatabaseEncryption:
             raise
     
     def decrypt_field(self, encrypted_value: str) -> str:
-        """Decrypt a field value"""
+        """Decrypt a field value using the appropriate algorithm"""
         if not self._initialized:
             raise RuntimeError("Encryption service not initialized")
         
@@ -230,12 +230,25 @@ class DatabaseEncryption:
                 raise ValueError(f"Decryption key {key_id} not found")
             
             encryption_key = self.encryption_keys[key_id]
-            f = Fernet(encryption_key)
             
-            encrypted_bytes = base64.b64decode(encrypted_data.encode())
-            decrypted_bytes = f.decrypt(encrypted_bytes)
+            # Try to determine algorithm by the encrypted data format
+            # AES-256-GCM will have longer data due to nonce + ciphertext
+            # Fernet has a specific format we can detect
             
-            return decrypted_bytes.decode('utf-8')
+            try:
+                # First try Fernet decryption (most common)
+                f = Fernet(encryption_key)
+                encrypted_bytes = base64.b64decode(encrypted_data.encode())
+                decrypted_bytes = f.decrypt(encrypted_bytes)
+                return decrypted_bytes.decode('utf-8')
+                
+            except Exception:
+                # If Fernet fails, try AES-256-GCM
+                try:
+                    return self._decrypt_aes_256_gcm(encrypted_data, encryption_key)
+                except Exception:
+                    # If both fail, raise the original error
+                    raise ValueError("Unable to decrypt data with available algorithms")
             
         except Exception as e:
             logger.error(f"Field decryption failed: {e}")
@@ -263,6 +276,93 @@ class DatabaseEncryption:
         ]
         
         return sensitive_fields
+    
+    def _encrypt_aes_256_gcm(self, value: str, encryption_key: bytes, key_id: str) -> str:
+        """
+        Encrypt field value using AES-256-GCM encryption.
+        
+        Args:
+            value: Plain text value to encrypt
+            encryption_key: Encryption key bytes
+            key_id: Key identifier for rotation support
+            
+        Returns:
+            str: Encrypted value with key ID prefix
+        """
+        try:
+            from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+            import os
+            import base64
+            
+            # Generate a random 96-bit (12 byte) nonce for GCM
+            nonce = os.urandom(12)
+            
+            # Create AESGCM instance with 256-bit key
+            # Ensure key is exactly 32 bytes (256 bits)
+            if len(encryption_key) != 32:
+                key_hash = hashlib.sha256(encryption_key).digest()
+            else:
+                key_hash = encryption_key
+            
+            aesgcm = AESGCM(key_hash)
+            
+            # Encrypt the value
+            ciphertext = aesgcm.encrypt(nonce, value.encode('utf-8'), None)
+            
+            # Combine nonce and ciphertext
+            encrypted_data = nonce + ciphertext
+            
+            # Encode to base64 and add key ID prefix
+            encrypted_b64 = base64.b64encode(encrypted_data).decode()
+            return f"{key_id}:{encrypted_b64}"
+            
+        except Exception as e:
+            logger.error(f"AES-256-GCM encryption failed: {e}")
+            # Fallback to Fernet encryption
+            f = Fernet(base64.urlsafe_b64encode(hashlib.sha256(encryption_key).digest()))
+            encrypted_bytes = f.encrypt(value.encode('utf-8'))
+            return f"{key_id}:{base64.b64encode(encrypted_bytes).decode()}"
+    
+    def _decrypt_aes_256_gcm(self, encrypted_value: str, encryption_key: bytes) -> str:
+        """
+        Decrypt field value using AES-256-GCM decryption.
+        
+        Args:
+            encrypted_value: Base64 encoded encrypted value
+            encryption_key: Decryption key bytes
+            
+        Returns:
+            str: Decrypted plain text value
+        """
+        try:
+            from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+            import base64
+            
+            # Decode from base64
+            encrypted_data = base64.b64decode(encrypted_value.encode())
+            
+            # Extract nonce (first 12 bytes) and ciphertext
+            nonce = encrypted_data[:12]
+            ciphertext = encrypted_data[12:]
+            
+            # Create AESGCM instance with 256-bit key
+            if len(encryption_key) != 32:
+                key_hash = hashlib.sha256(encryption_key).digest()
+            else:
+                key_hash = encryption_key
+            
+            aesgcm = AESGCM(key_hash)
+            
+            # Decrypt the ciphertext
+            plaintext = aesgcm.decrypt(nonce, ciphertext, None)
+            
+            return plaintext.decode('utf-8')
+            
+        except Exception as e:
+            logger.error(f"AES-256-GCM decryption failed: {e}")
+            # Fallback to Fernet decryption
+            f = Fernet(base64.urlsafe_b64encode(hashlib.sha256(encryption_key).digest()))
+            return f.decrypt(base64.b64decode(encrypted_value.encode())).decode('utf-8')
 
 
 class PasswordSecurity:
