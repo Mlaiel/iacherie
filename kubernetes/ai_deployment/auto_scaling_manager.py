@@ -134,7 +134,7 @@ class AutoScalingConfig:
     scale_down_cooldown_minutes: int = 10
     max_scale_factor: float = 10.0
     min_replicas: int = 1
-    max_replicas: int = 100
+    max_replicas: int = 1000  # Updated to meet requirement: Auto-scale 1-1000 instances
     cost_budget_daily: float = 1000.0
     performance_sla_target: float = 0.95
     energy_efficiency_target: float = 0.85
