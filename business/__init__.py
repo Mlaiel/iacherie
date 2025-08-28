@@ -187,6 +187,21 @@ class BusinessOrchestrator:
             if "subscription" in self.config.enabled_modules:
                 self.modules["subscription"] = subscription
             
+            # Import and initialize the finalized business logic core
+            try:
+                from ..business_logic_core import business_logic_core, initialize_business_logic_core
+                
+                # Initialize the business logic core with all 53 agents
+                core_initialized = await initialize_business_logic_core()
+                if core_initialized:
+                    self.modules["business_logic_core"] = business_logic_core
+                    logger.info("✅ Business Logic Core with 53 agents integrated successfully")
+                else:
+                    logger.error("❌ Failed to initialize Business Logic Core")
+                    
+            except ImportError as e:
+                logger.warning(f"Business Logic Core not available: {e}")
+            
             self.initialized = True
             logger.info(f"Business orchestrator initialized with {len(self.modules)} modules")
             return True
