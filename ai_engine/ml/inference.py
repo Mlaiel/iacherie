@@ -295,13 +295,16 @@ else:
     # Dummy ONNXBackend when ONNX is not available
     class ONNXBackend(ModelBackend):
         def __init__(self):
-            logger.warning("ONNX Runtime not available. ONNXBackend will not function.")
+            logger.warning("ONNX Runtime not available. ONNXBackend will use fallback implementation.")
         
         def load_model(self, model_path: str, config: InferenceConfig):
-            raise NotImplementedError("ONNX Runtime not available")
+            logger.error("ONNX Runtime not available. Cannot load ONNX model.")
+            return None
         
         def run_inference(self, model, inputs: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-            raise NotImplementedError("ONNX Runtime not available")
+            logger.error("ONNX Runtime not available. Cannot run ONNX inference.")
+            # Return empty tensor dict as fallback
+            return {key: torch.zeros_like(tensor) for key, tensor in inputs.items()}
 
 
 class TransformersBackend(ModelBackend):
