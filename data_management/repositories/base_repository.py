@@ -318,13 +318,70 @@ class BaseRepository(Generic[T], ABC):
     
     def search(self, query: str, fields: List[str] = None, limit: int = 100) -> List[T]:
         """Full-text search across specified fields"""
-        # To be implemented by subclasses based on their search capabilities
-        raise NotImplementedError("Subclasses must implement search functionality")
+        # Default implementation using basic filtering
+        # Subclasses should override for proper search capabilities
+        try:
+            if not query or not query.strip():
+                return []
+            
+            # Get all entities (this should be limited in production)
+            all_entities = self.get_all(limit=1000)
+            
+            # Simple search logic - convert entities to string and search
+            query_lower = query.lower().strip()
+            results = []
+            
+            for entity in all_entities:
+                # Convert entity to searchable text
+                entity_text = str(entity).lower()
+                
+                # Check if query matches
+                if query_lower in entity_text:
+                    results.append(entity)
+                    
+                    if len(results) >= limit:
+                        break
+            
+            logger.warning(f"Using basic search implementation. Override in subclass for better performance.")
+            return results
+            
+        except Exception as e:
+            logger.error(f"Error in default search implementation: {e}")
+            return []
     
     def get_or_create(self, defaults: Dict[str, Any] = None, **kwargs) -> tuple[T, bool]:
         """Get existing entity or create new one"""
-        # To be implemented by subclasses
-        raise NotImplementedError("Subclasses must implement get_or_create")
+        # Default implementation - subclasses should override for efficiency
+        try:
+            # Try to find existing entity
+            entities = self.filter(**kwargs)
+            
+            if entities:
+                # Entity exists, return first match
+                return entities[0], False
+            
+            # Entity doesn't exist, create new one
+            create_data = kwargs.copy()
+            if defaults:
+                # Add defaults for fields not specified in kwargs
+                for key, value in defaults.items():
+                    if key not in create_data:
+                        create_data[key] = value
+            
+            # Generate ID if not provided
+            if 'id' not in create_data:
+                create_data['id'] = str(uuid.uuid4())
+            
+            new_entity = self.create(create_data)
+            return new_entity, True
+            
+        except Exception as e:
+            logger.error(f"Error in get_or_create: {e}")
+            # Fallback: try to return existing or raise exception
+            entities = self.filter(**kwargs)
+            if entities:
+                return entities[0], False
+            raise
     
     def get_multiple(self, entity_ids: List[str], use_cache: bool = True) -> List[T]:
         """Get multiple entities by IDs efficiently"""
@@ -653,13 +710,70 @@ class AsyncBaseRepository(Generic[T], ABC):
     
     async def search(self, query: str, fields: List[str] = None, limit: int = 100) -> List[T]:
         """Async full-text search across specified fields"""
-        # To be implemented by subclasses based on their search capabilities
-        raise NotImplementedError("Subclasses must implement async search functionality")
+        # Default async implementation using basic filtering
+        # Subclasses should override for proper search capabilities
+        try:
+            if not query or not query.strip():
+                return []
+            
+            # Get all entities asynchronously (this should be limited in production)
+            all_entities = await self.get_all(limit=1000)
+            
+            # Simple search logic - convert entities to string and search
+            query_lower = query.lower().strip()
+            results = []
+            
+            for entity in all_entities:
+                # Convert entity to searchable text
+                entity_text = str(entity).lower()
+                
+                # Check if query matches
+                if query_lower in entity_text:
+                    results.append(entity)
+                    
+                    if len(results) >= limit:
+                        break
+            
+            logger.warning(f"Using basic async search implementation. Override in subclass for better performance.")
+            return results
+            
+        except Exception as e:
+            logger.error(f"Error in default async search implementation: {e}")
+            return []
     
     async def get_or_create(self, defaults: Dict[str, Any] = None, **kwargs) -> tuple[T, bool]:
         """Get existing entity or create new one asynchronously"""
-        # To be implemented by subclasses
-        raise NotImplementedError("Subclasses must implement async get_or_create")
+        # Default async implementation - subclasses should override for efficiency
+        try:
+            # Try to find existing entity asynchronously
+            entities = await self.filter(**kwargs)
+            
+            if entities:
+                # Entity exists, return first match
+                return entities[0], False
+            
+            # Entity doesn't exist, create new one
+            create_data = kwargs.copy()
+            if defaults:
+                # Add defaults for fields not specified in kwargs
+                for key, value in defaults.items():
+                    if key not in create_data:
+                        create_data[key] = value
+            
+            # Generate ID if not provided
+            if 'id' not in create_data:
+                create_data['id'] = str(uuid.uuid4())
+            
+            new_entity = await self.create(create_data)
+            return new_entity, True
+            
+        except Exception as e:
+            logger.error(f"Error in async get_or_create: {e}")
+            # Fallback: try to return existing or raise exception
+            entities = await self.filter(**kwargs)
+            if entities:
+                return entities[0], False
+            raise
     
     async def get_multiple(self, entity_ids: List[str], use_cache: bool = True) -> List[T]:
         """Get multiple entities by IDs efficiently with async processing"""
