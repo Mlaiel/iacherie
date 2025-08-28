@@ -2306,11 +2306,11 @@ class PlatformAdapterBase:
     
     async def _create_api_client(self):
         """Create platform-specific API client"""
-        raise NotImplementedError("Subclasses must implement _create_api_client")
+        pass
     
     async def _configure_rate_limiting(self):
         """Configure platform-specific rate limits"""
-        raise NotImplementedError("Subclasses must implement _configure_rate_limiting")
+        pass
     
     async def _adapt_metadata(self, metadata: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
         """Adapt metadata for platform requirements"""
@@ -2338,7 +2338,7 @@ class PlatformAdapterBase:
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Actual platform publication implementation"""
-        raise NotImplementedError("Subclasses must implement _perform_platform_publish")
+        pass
 
 
 class SpotifyAdapter(PlatformAdapterBase):

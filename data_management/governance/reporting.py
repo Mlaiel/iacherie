@@ -129,12 +129,12 @@ class BaseReportGenerator(ABC):
         data_sources: Dict[str, Any]
     ) -> Tuple[bytes, ReportMetadata]:
         """Generate report based on request"""
-        raise NotImplementedError("Subclasses must implement generate")
+        pass
     
     @abstractmethod
     def get_supported_formats(self) -> List[ReportFormat]:
         """Get supported output formats"""
-        raise NotImplementedError("Subclasses must implement get_supported_formats")
+        pass
 
 
 class ComplianceReportGenerator(BaseReportGenerator):

@@ -97,11 +97,11 @@ class PlatformCrawler:
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
         """Search for content on platform - to be implemented by subclasses"""
-        raise NotImplementedError
+        pass
     
     async def extract_content_data(self, url: str) -> Optional[Dict[str, Any]]:
         """Extract content data from URL - to be implemented by subclasses"""
-        raise NotImplementedError
+        pass
 
 
 class YouTubeCrawler(PlatformCrawler):

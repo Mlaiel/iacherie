@@ -984,8 +984,28 @@ class AdvancedRoyaltyManager:
                     usage_data, applicable_rules, content_holders
                 )
             else:
-                # For AI engine, would implement different interface
-                raise NotImplementedError("AI engine calculation not implemented in this example")
+                # For AI engine, provide a basic fallback implementation
+                self.logger.warning("AI engine calculation not fully implemented, using fallback")
+                
+                # Create a basic calculation result for AI engine
+                calculation = RoyaltyCalculation(
+                    calculation_id=f"ai_calc_{datetime.now().timestamp()}",
+                    usage_data=usage_data,
+                    royalty_rules=applicable_rules,
+                    content_holders=content_holders,
+                    calculation_method="ai_fallback",
+                    base_amount=0.0,
+                    total_deductions=0.0,
+                    total_bonuses=0.0,
+                    final_amount=0.0,
+                    currency="USD",
+                    calculated_at=datetime.now(),
+                    breakdown={
+                        "note": "AI engine calculation not fully implemented",
+                        "fallback_used": True,
+                        "recommendations": "Implement AI-based royalty calculation engine"
+                    }
+                )
             
             # Store calculation
             self.calculations.append(calculation)

@@ -116,7 +116,30 @@ class RateLimiter:
     
     async def check_rate_limit(self, identifier: str) -> RateLimitResult:
         """Check if request is within rate limits"""
-        raise NotImplementedError("Subclasses must implement check_rate_limit")
+        # Base implementation provides a simple fixed window rate limiter
+        current_time = int(time.time())
+        window_start = current_time - (current_time % 60)  # 1-minute windows
+        
+        key = self._get_key(identifier, str(window_start))
+        
+        # Use local storage as fallback
+        current_count = self.local_storage.get(key, 0) + 1
+        self.local_storage[key] = current_count
+        
+        allowed = current_count <= self.config.requests_per_minute
+        remaining = max(0, self.config.requests_per_minute - current_count)
+        reset_time = datetime.fromtimestamp(window_start + 60)
+        
+        retry_after = None if allowed else (window_start + 60 - current_time)
+        
+        return RateLimitResult(
+            allowed=allowed,
+            remaining_requests=remaining,
+            reset_time=reset_time,
+            retry_after_seconds=retry_after,
+            current_usage=current_count,
+            limit=self.config.requests_per_minute
+        )
     
     def _get_key(self, identifier: str, window: str = "") -> str:
         """Generate Redis key for rate limiting"""

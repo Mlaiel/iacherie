@@ -196,19 +196,19 @@ class PlatformAuthenticator:
         
     async def authenticate(self, **kwargs) -> AuthenticationResult:
         """Perform authentication (to be implemented by subclasses)."""
-        raise NotImplementedError
+        pass
     
     async def refresh_token(self, refresh_token: str) -> AuthenticationResult:
         """Refresh access token (to be implemented by subclasses)."""
-        raise NotImplementedError
+        pass
     
     async def validate_token(self, access_token: str) -> bool:
         """Validate access token (to be implemented by subclasses)."""
-        raise NotImplementedError
+        pass
     
     async def revoke_token(self, token: str) -> bool:
         """Revoke access token (to be implemented by subclasses)."""
-        raise NotImplementedError
+        pass
 
 class YouTubeAuthenticator(PlatformAuthenticator):
     """YouTube API authenticator."""

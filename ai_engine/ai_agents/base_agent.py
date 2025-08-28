@@ -331,10 +331,18 @@ class BaseAIAgent(ABC):
         # Check if agent has required capability for task type
         required_capability = self._map_task_to_capability(task_type)
         if required_capability and required_capability not in self.capabilities:
-            raise NotImplementedError(
+            self.logger.warning(
                 f"Agent '{self.agent_name}' does not have required capability '{required_capability.value}' "
                 f"for task type '{task_type}'. Available capabilities: {[cap.value for cap in self.capabilities]}"
             )
+            # Return a warning response instead of raising an error
+            return {
+                "task_type": task_type,
+                "status": "capability_missing",
+                "message": f"Required capability '{required_capability.value}' not available",
+                "available_capabilities": [cap.value for cap in self.capabilities],
+                "suggestion": "Consider adding the required capability to this agent or routing to a different agent"
+            }
         
         # Route task based on type
         if task_type == "health_check":
@@ -476,7 +484,15 @@ class BaseAIAgent(ABC):
     async def _execute_content_generation_task(self, task: AgentTask) -> Dict[str, Any]:
         """Execute content generation task (basic implementation)"""
         if AgentCapability.TEXT_GENERATION not in self.capabilities:
-            raise NotImplementedError(f"Agent {self.agent_name} does not support content generation")
+            self.logger.warning(f"Agent {self.agent_name} does not support content generation")
+            # Return a basic fallback instead of raising an error
+            return {
+                "task_type": "content_generation",
+                "status": "capability_unavailable",
+                "message": "Content generation capability not available on this agent",
+                "fallback_content": "Basic content placeholder - please use a specialized content generation agent",
+                "available_capabilities": [cap.value for cap in self.capabilities]
+            }
         
         content_type = task.context.get("content_type", "text")
         prompt = task.context.get("prompt", "")

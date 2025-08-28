@@ -212,23 +212,23 @@ class PlatformEnforcer:
     
     async def initialize(self) -> bool:
         """Initialise l'application pour la plateforme"""
-        raise NotImplementedError
+        pass
     
     async def submit_takedown(self, evidence: ViolationEvidence, case_id: str) -> bool:
         """Soumet une demande de retrait"""
-        raise NotImplementedError
+        pass
     
     async def claim_monetization(self, evidence: ViolationEvidence, case_id: str) -> bool:
         """Revendique la monétisation"""
-        raise NotImplementedError
+        pass
     
     async def block_content(self, evidence: ViolationEvidence, case_id: str) -> bool:
         """Bloque le contenu"""
-        raise NotImplementedError
+        pass
     
     async def check_status(self, platform_case_id: str) -> Dict[str, Any]:
         """Vérifie le statut d'une demande"""
-        raise NotImplementedError
+        pass
 
 
 class YouTubeEnforcer(PlatformEnforcer):

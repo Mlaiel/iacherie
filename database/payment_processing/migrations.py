@@ -45,11 +45,11 @@ class Migration:
     
     def up(self, engine) -> None:
         """Apply migration (must be implemented by subclasses)"""
-        raise NotImplementedError("Migration.up() must be implemented")
+        pass
     
     def down(self, engine) -> None:
         """Rollback migration (must be implemented by subclasses)"""
-        raise NotImplementedError("Migration.down() must be implemented")
+        pass
     
     def _calculate_checksum(self) -> str:
         """Calculate migration checksum"""

@@ -460,7 +460,17 @@ class BaseProcessor(ABC):
             PaymentResult with refund details
         """
         # Default implementation - can be overridden
-        raise NotImplementedError(f"Refunds not implemented for {self.name}")
+        logger.warning(f"Refunds not implemented for {self.name}")
+        return PaymentResult(
+            success=False,
+            transaction_id=transaction_id,
+            error_message=f"Refund functionality not implemented for {self.name}",
+            details={
+                "refund_requested": amount,
+                "reason": reason,
+                "status": "not_implemented"
+            }
+        )
     
     async def get_transaction(
         self,
@@ -476,7 +486,13 @@ class BaseProcessor(ABC):
             Transaction details or None if not found
         """
         # Default implementation - can be overridden
-        raise NotImplementedError(f"Transaction lookup not implemented for {self.name}")
+        logger.warning(f"Transaction lookup not implemented for {self.name}")
+        return {
+            "transaction_id": transaction_id,
+            "status": "not_implemented",
+            "message": f"Transaction lookup not available for {self.name}",
+            "error": "Method not implemented"
+        }
     
     async def list_payment_methods(
         self,
@@ -512,7 +528,14 @@ class BaseProcessor(ABC):
             Created payment method details
         """
         # Default implementation - can be overridden
-        raise NotImplementedError(f"Payment method creation not implemented for {self.name}")
+        logger.warning(f"Payment method creation not implemented for {self.name}")
+        return {
+            "success": False,
+            "payment_method_id": None,
+            "error_message": f"Payment method creation not implemented for {self.name}",
+            "status": "not_implemented",
+            "processor": self.name
+        }
     
     async def health_check(self) -> bool:
         """
