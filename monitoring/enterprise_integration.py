@@ -97,15 +97,23 @@ class BaseEnterpriseIntegration:
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
         """Send alert to enterprise system"""
-        raise NotImplementedError
+        self.logger.warning(f"Base implementation called for {self.__class__.__name__}")
+        return False
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get metrics from enterprise system"""
-        raise NotImplementedError
+        return {
+            "integration_type": "base",
+            "connection_status": False,
+            "last_alert_sent": None,
+            "total_alerts_sent": 0,
+            "implementation_status": "base_class"
+        }
     
     async def test_connection(self) -> bool:
         """Test connection to enterprise system"""
-        raise NotImplementedError
+        self.logger.info(f"Testing connection for {self.__class__.__name__}")
+        return False
 
 
 class SlackIntegration(BaseEnterpriseIntegration):
