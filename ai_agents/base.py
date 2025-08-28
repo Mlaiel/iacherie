@@ -174,8 +174,8 @@ class BaseAgent(ABC):
         )
         
         # Database and cache connections
-    self._db_session: Optional[Session] = None
-    self._redis_client: Optional[aioredis.Redis] = None
+        self._db_session: Optional[Session] = None
+        self._redis_client: Optional[aioredis.Redis] = None
         self._encryption = ContentEncryption()
         
         # Request tracking

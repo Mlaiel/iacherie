@@ -782,8 +782,56 @@ class BusinessIntelligenceEngine:
     
     async def _store_strategic_report(self, report: StrategicReport):
         """Store strategic report for future reference."""
-        # Implementation for storing report
-        pass
+        try:
+            # Create report storage document
+            report_doc = {
+                'report_id': report.report_id,
+                'title': report.title,
+                'category': report.category,
+                'executive_summary': report.executive_summary,
+                'key_findings': report.key_findings,
+                'recommendations': report.recommendations,
+                'strategic_priorities': report.strategic_priorities,
+                'risk_assessment': report.risk_assessment,
+                'implementation_roadmap': report.implementation_roadmap,
+                'appendices': report.appendices,
+                'metadata': report.metadata,
+                'created_at': report.created_at.isoformat(),
+                'created_by': report.created_by,
+                'status': 'stored',
+                'storage_timestamp': datetime.utcnow().isoformat()
+            }
+            
+            # Store in database
+            collection = self.db.strategic_reports
+            await collection.insert_one(report_doc)
+            
+            # Create index for fast retrieval
+            await collection.create_index([
+                ('report_id', 1),
+                ('category', 1),
+                ('created_at', -1)
+            ])
+            
+            # Also store summary for quick access
+            summary_doc = {
+                'report_id': report.report_id,
+                'title': report.title,
+                'category': report.category,
+                'executive_summary': report.executive_summary,
+                'created_at': report.created_at.isoformat(),
+                'key_metrics_count': len(report.key_findings),
+                'recommendations_count': len(report.recommendations)
+            }
+            
+            summary_collection = self.db.strategic_reports_summary
+            await summary_collection.insert_one(summary_doc)
+            
+            self.logger.info(f"Strategic report {report.report_id} stored successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to store strategic report {report.report_id}: {e}")
+            raise
     
     # Additional helper methods for customer intelligence
     async def _collect_customer_data(self) -> Dict[str, Any]:
