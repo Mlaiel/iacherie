@@ -329,8 +329,60 @@ class StreamConsumer:
                 
         except Exception as e:
             logger.error(f"Error handling message {message.message_id}: {str(e)}")
-            # TODO: Implement dead letter queue
+            
+            # Implement dead letter queue for failed messages
+            await self._send_to_dead_letter_queue(message, str(e))
             raise
+    
+    async def _send_to_dead_letter_queue(self, message: StreamMessage, error: str):
+        """Send failed message to dead letter queue"""
+        try:
+            dlq_stream = f"{message.stream_name}:dlq"
+            
+            # Add error information to message
+            dlq_message = StreamMessage(
+                message_id=f"dlq_{message.message_id}",
+                stream_name=dlq_stream,
+                event_type=f"failed_{message.event_type}",
+                payload={
+                    "original_message": {
+                        "message_id": message.message_id,
+                        "stream_name": message.stream_name,
+                        "event_type": message.event_type,
+                        "payload": message.payload,
+                        "headers": message.headers,
+                        "timestamp": message.timestamp.isoformat()
+                    },
+                    "error": error,
+                    "failed_at": datetime.now(timezone.utc).isoformat(),
+                    "retry_count": message.headers.get("retry_count", "0")
+                },
+                headers={
+                    **message.headers,
+                    "retry_count": str(int(message.headers.get("retry_count", "0")) + 1),
+                    "error_type": "processing_error"
+                },
+                timestamp=datetime.now(timezone.utc),
+                correlation_id=message.correlation_id
+            )
+            
+            # Send to dead letter queue
+            dlq_data = {
+                "event_type": dlq_message.event_type,
+                "payload": json.dumps(dlq_message.payload),
+                "headers": json.dumps(dlq_message.headers),
+                "timestamp": dlq_message.timestamp.isoformat(),
+                "correlation_id": dlq_message.correlation_id or ""
+            }
+            
+            await self.redis.xadd(dlq_stream, dlq_data, id=dlq_message.message_id)
+            
+            self.metrics.increment_counter("messages_sent_to_dlq")
+            logger.info(f"Message {message.message_id} sent to dead letter queue: {dlq_stream}")
+            
+        except Exception as dlq_error:
+            logger.error(f"Failed to send message to dead letter queue: {str(dlq_error)}")
+            self.metrics.increment_counter("dlq_send_errors")
 
 
 class EventStream:

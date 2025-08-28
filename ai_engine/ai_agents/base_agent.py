@@ -225,7 +225,18 @@ class BaseAIAgent(ABC):
     @abstractmethod
     async def _custom_initialize(self) -> None:
         """Custom initialization logic for specific agents"""
-        pass
+        # Base implementation - can be overridden by subclasses
+        self.logger.debug(f"Base initialization for {self.agent_name}")
+        
+        # Validate configuration
+        if not self.config.agent_id:
+            raise ValueError("Agent ID is required")
+        if not self.config.agent_name:
+            raise ValueError("Agent name is required")
+        
+        # Initialize any base resources
+        self._initialized_at = datetime.now(timezone.utc)
+        self.logger.debug(f"Agent {self.agent_name} base initialization complete")
     
     async def execute_task(self, task: AgentTask) -> Dict[str, Any]:
         """Execute a task with proper error handling and metrics"""
@@ -281,7 +292,11 @@ class BaseAIAgent(ABC):
     @abstractmethod
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
         """Implementation of task execution - must be overridden by subclasses"""
-        pass
+        # Base implementation that should be overridden
+        raise NotImplementedError(
+            f"Task execution not implemented for {self.__class__.__name__}. "
+            f"Must override _execute_task_impl method."
+        )
     
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
         """Check if agent can handle a specific task"""
@@ -329,7 +344,21 @@ class BaseAIAgent(ABC):
     
     async def _custom_shutdown(self) -> None:
         """Custom shutdown logic for specific agents"""
-        pass
+        # Base implementation - can be overridden by subclasses
+        self.logger.debug(f"Base shutdown for {self.agent_name}")
+        
+        # Clean up any base resources
+        self.active_tasks.clear()
+        
+        # Cancel any pending tasks in queue
+        while not self.task_queue.empty():
+            try:
+                self.task_queue.get_nowait()
+                self.task_queue.task_done()
+            except asyncio.QueueEmpty:
+                break
+        
+        self.logger.debug(f"Agent {self.agent_name} base shutdown complete")
     
     async def _task_processor(self) -> None:
         """Background task processor"""
@@ -371,8 +400,42 @@ class BaseAIAgent(ABC):
                 if self.metrics.total_tasks > 0:
                     self.metrics.error_rate = (self.metrics.failed_tasks / self.metrics.total_tasks) * 100
                 
-                # TODO: Collect system metrics (memory, CPU)
-                # This would require psutil or similar system monitoring library
+                # Collect system metrics (memory, CPU)
+                try:
+                    import psutil
+                    
+                    # Get current process
+                    process = psutil.Process()
+                    
+                    # Memory usage
+                    memory_info = process.memory_info()
+                    self.metrics.memory_usage_mb = memory_info.rss / 1024 / 1024
+                    
+                    # CPU usage (average over 1 second)
+                    self.metrics.cpu_usage_percent = process.cpu_percent()
+                    
+                except ImportError:
+                    # psutil not available, use basic metrics
+                    import sys
+                    
+                    # Basic memory estimation from sys
+                    if hasattr(sys, 'getsizeof'):
+                        # Rough estimate based on active tasks and queue
+                        estimated_memory = (
+                            sys.getsizeof(self.active_tasks) +
+                            sys.getsizeof(self.task_queue) +
+                            sys.getsizeof(self.metrics)
+                        ) / 1024 / 1024
+                        self.metrics.memory_usage_mb = estimated_memory
+                    
+                    # CPU usage not available without psutil
+                    self.metrics.cpu_usage_percent = 0.0
+                    
+                except Exception as e:
+                    self.logger.debug(f"Could not collect system metrics: {e}")
+                    # Set default values
+                    self.metrics.memory_usage_mb = 0.0
+                    self.metrics.cpu_usage_percent = 0.0
                 
             except Exception as e:
                 self.logger.error(f"Error collecting metrics: {str(e)}")
