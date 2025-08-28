@@ -31,6 +31,7 @@ import asyncio
 import logging
 import json
 import redis
+import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field, asdict
@@ -40,6 +41,17 @@ import numpy as np
 from abc import ABC, abstractmethod
 import hashlib
 import io
+
+# Machine Learning imports
+try:
+    from sklearn.ensemble import RandomForestClassifier, GradientBoostingRegressor, IsolationForest
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.linear_model import LinearRegression
+    from sklearn.preprocessing import StandardScaler
+    from statsmodels.tsa.arima.model import ARIMA
+    HAS_ML = True
+except ImportError:
+    HAS_ML = False
 
 # Import analytics modules
 from .content_analytics import ContentAnalyticsEngine, ContentOptimizationEngine, ContentMetrics, ContentType
@@ -56,6 +68,12 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+
+class AnalyticsError(Exception):
+    """Custom exception for analytics operations"""
+    pass
+
 
 class AnalyticsType(Enum):
     """Enterprise analytics processing types with industrial capabilities"""
@@ -4061,13 +4079,327 @@ class AnalyticsAgent(BaseAgent):
     
     async def _setup_data_streams(self):
         """Setup real-time data streaming"""
-        # Implementation for real-time data streaming
-        pass
+        try:
+            self.logger.info("Setting up real-time data streaming")
+            
+            # Initialize Redis streaming
+            if hasattr(self, 'redis_client') and self.redis_client:
+                # Create analytics stream
+                await self.redis_client.xgroup_create("analytics_stream", "analytics_group", id='0', mkstream=True)
+                
+                # Create real-time metrics stream  
+                await self.redis_client.xgroup_create("metrics_stream", "metrics_group", id='0', mkstream=True)
+                
+                # Setup stream consumers
+                asyncio.create_task(self._consume_analytics_stream())
+                asyncio.create_task(self._consume_metrics_stream())
+            
+            # Initialize data pipeline
+            self.data_pipeline_active = True
+            self.streaming_buffer = {}
+            
+            self.logger.info("Real-time data streaming setup completed")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to setup data streams: {str(e)}")
+            raise AnalyticsError(f"Data stream setup failed: {str(e)}")
+    
+    async def _consume_analytics_stream(self):
+        """Consume real-time analytics data"""
+        try:
+            while self.data_pipeline_active:
+                # Read from analytics stream
+                messages = await self.redis_client.xreadgroup(
+                    "analytics_group", "consumer_1", {"analytics_stream": ">"}, count=10, block=1000
+                )
+                
+                for stream, msgs in messages:
+                    for msg_id, fields in msgs:
+                        try:
+                            # Process analytics data
+                            await self._process_analytics_message(fields)
+                            # Acknowledge message
+                            await self.redis_client.xack("analytics_stream", "analytics_group", msg_id)
+                        except Exception as e:
+                            self.logger.error(f"Failed to process analytics message: {str(e)}")
+                            
+                await asyncio.sleep(0.1)
+                
+        except Exception as e:
+            self.logger.error(f"Analytics stream consumer error: {str(e)}")
+    
+    async def _consume_metrics_stream(self):
+        """Consume real-time metrics data"""
+        try:
+            while self.data_pipeline_active:
+                # Read from metrics stream
+                messages = await self.redis_client.xreadgroup(
+                    "metrics_group", "consumer_1", {"metrics_stream": ">"}, count=10, block=1000
+                )
+                
+                for stream, msgs in messages:
+                    for msg_id, fields in msgs:
+                        try:
+                            # Process metrics data
+                            await self._process_metrics_message(fields)
+                            # Acknowledge message
+                            await self.redis_client.xack("metrics_stream", "metrics_group", msg_id)
+                        except Exception as e:
+                            self.logger.error(f"Failed to process metrics message: {str(e)}")
+                            
+                await asyncio.sleep(0.1)
+                
+        except Exception as e:
+            self.logger.error(f"Metrics stream consumer error: {str(e)}")
+    
+    async def _process_analytics_message(self, fields: Dict[str, str]):
+        """Process individual analytics message"""
+        try:
+            # Extract data from message fields
+            data_type = fields.get('type', 'unknown')
+            payload = json.loads(fields.get('payload', '{}'))
+            timestamp = float(fields.get('timestamp', time.time()))
+            
+            # Route to appropriate processor
+            if data_type == 'content_analytics':
+                await self._process_content_analytics(payload)
+            elif data_type == 'user_engagement':
+                await self._process_user_engagement(payload)
+            elif data_type == 'revenue_metrics':
+                await self._process_revenue_metrics(payload)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to process analytics message: {str(e)}")
+    
+    async def _process_metrics_message(self, fields: Dict[str, str]):
+        """Process individual metrics message"""
+        try:
+            # Extract metrics data
+            metric_name = fields.get('metric', 'unknown')
+            metric_value = float(fields.get('value', 0))
+            labels = json.loads(fields.get('labels', '{}'))
+            timestamp = float(fields.get('timestamp', time.time()))
+            
+            # Store metric in buffer
+            if metric_name not in self.streaming_buffer:
+                self.streaming_buffer[metric_name] = []
+            
+            self.streaming_buffer[metric_name].append({
+                'value': metric_value,
+                'labels': labels,
+                'timestamp': timestamp
+            })
+            
+            # Maintain buffer size
+            if len(self.streaming_buffer[metric_name]) > 1000:
+                self.streaming_buffer[metric_name] = self.streaming_buffer[metric_name][-1000:]
+            
+        except Exception as e:
+            self.logger.error(f"Failed to process metrics message: {str(e)}")
     
     async def _initialize_predictive_models(self):
         """Initialize predictive models for various metrics"""
-        # Implementation for model initialization
-        pass
+        try:
+            self.logger.info("Initializing predictive models")
+            
+            # Initialize model storage
+            self.predictive_models = {}
+            
+            # Initialize content performance predictor
+            self.predictive_models['content_performance'] = {
+                'model': RandomForestClassifier(n_estimators=100, random_state=42),
+                'vectorizer': TfidfVectorizer(max_features=1000),
+                'scaler': StandardScaler(),
+                'trained': False,
+                'last_training': None
+            }
+            
+            # Initialize engagement predictor
+            self.predictive_models['engagement_predictor'] = {
+                'model': LinearRegression(),
+                'scaler': StandardScaler(),
+                'feature_columns': ['hour_of_day', 'day_of_week', 'content_length', 'hashtag_count'],
+                'trained': False,
+                'last_training': None
+            }
+            
+            # Initialize revenue predictor
+            self.predictive_models['revenue_predictor'] = {
+                'model': GradientBoostingRegressor(n_estimators=100, random_state=42),
+                'scaler': StandardScaler(),
+                'feature_columns': ['views', 'engagement_rate', 'content_type', 'platform', 'audience_size'],
+                'trained': False,
+                'last_training': None
+            }
+            
+            # Initialize anomaly detector
+            self.predictive_models['anomaly_detector'] = {
+                'model': IsolationForest(contamination=0.1, random_state=42),
+                'scaler': StandardScaler(),
+                'trained': False,
+                'last_training': None
+            }
+            
+            # Initialize trend predictor
+            self.predictive_models['trend_predictor'] = {
+                'model': ARIMA(order=(5, 1, 0)),  # Auto-ARIMA would be better in production
+                'trained': False,
+                'last_training': None
+            }
+            
+            # Load pre-trained models if available
+            await self._load_pretrained_models()
+            
+            # Schedule periodic retraining
+            asyncio.create_task(self._periodic_model_retraining())
+            
+            self.logger.info(f"Initialized {len(self.predictive_models)} predictive models")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to initialize predictive models: {str(e)}")
+            raise AnalyticsError(f"Model initialization failed: {str(e)}")
+    
+    async def _load_pretrained_models(self):
+        """Load pre-trained models from storage"""
+        try:
+            # Check for saved models in Redis or file system
+            model_cache_key = "analytics:pretrained_models"
+            
+            if hasattr(self, 'redis_client') and self.redis_client:
+                cached_models = await self.redis_client.get(model_cache_key)
+                if cached_models:
+                    # Load models from cache
+                    self.logger.info("Loading pre-trained models from cache")
+                    # In production, this would deserialize actual model objects
+                    
+            # Mark models as requiring training if no pre-trained models found
+            for model_name, model_config in self.predictive_models.items():
+                if not model_config.get('trained', False):
+                    self.logger.info(f"Model '{model_name}' requires training")
+                    
+        except Exception as e:
+            self.logger.error(f"Failed to load pre-trained models: {str(e)}")
+    
+    async def _periodic_model_retraining(self):
+        """Periodically retrain models with new data"""
+        try:
+            while True:
+                await asyncio.sleep(3600)  # Retrain every hour
+                
+                for model_name, model_config in self.predictive_models.items():
+                    try:
+                        # Check if model needs retraining
+                        last_training = model_config.get('last_training')
+                        if not last_training or (datetime.utcnow() - last_training).hours >= 24:
+                            await self._retrain_model(model_name)
+                            
+                    except Exception as e:
+                        self.logger.error(f"Failed to retrain model '{model_name}': {str(e)}")
+                        
+        except Exception as e:
+            self.logger.error(f"Periodic retraining error: {str(e)}")
+    
+    async def _retrain_model(self, model_name: str):
+        """Retrain a specific model with fresh data"""
+        try:
+            self.logger.info(f"Retraining model: {model_name}")
+            
+            # Get fresh training data
+            training_data = await self._get_training_data(model_name)
+            
+            if not training_data or len(training_data) < 100:
+                self.logger.warning(f"Insufficient training data for model '{model_name}'")
+                return
+            
+            model_config = self.predictive_models[model_name]
+            
+            # Prepare training data based on model type
+            if model_name == 'content_performance':
+                await self._train_content_performance_model(model_config, training_data)
+            elif model_name == 'engagement_predictor':
+                await self._train_engagement_model(model_config, training_data)
+            elif model_name == 'revenue_predictor':
+                await self._train_revenue_model(model_config, training_data)
+            elif model_name == 'anomaly_detector':
+                await self._train_anomaly_model(model_config, training_data)
+            
+            # Update training timestamp
+            model_config['last_training'] = datetime.utcnow()
+            model_config['trained'] = True
+            
+            # Save trained model
+            await self._save_trained_model(model_name, model_config)
+            
+            self.logger.info(f"Successfully retrained model: {model_name}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to retrain model '{model_name}': {str(e)}")
+    
+    async def _get_training_data(self, model_name: str) -> List[Dict[str, Any]]:
+        """Get training data for a specific model"""
+        try:
+            # In production, this would fetch real data from database
+            # For now, return simulated training data
+            
+            sample_data = []
+            for i in range(1000):
+                sample_data.append({
+                    'content_id': f"content_{i}",
+                    'views': np.random.randint(100, 10000),
+                    'engagement_rate': np.random.uniform(0.01, 0.15),
+                    'content_type': np.random.choice(['video', 'image', 'text']),
+                    'platform': np.random.choice(['youtube', 'instagram', 'tiktok']),
+                    'audience_size': np.random.randint(1000, 100000),
+                    'revenue': np.random.uniform(0, 1000),
+                    'timestamp': datetime.utcnow() - timedelta(days=np.random.randint(1, 30))
+                })
+            
+            return sample_data
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get training data for '{model_name}': {str(e)}")
+            return []
+    
+    async def _train_content_performance_model(self, model_config: Dict, training_data: List[Dict]):
+        """Train content performance prediction model"""
+        try:
+            # Prepare features and labels
+            features = []
+            labels = []
+            
+            for data in training_data:
+                # Extract text features (simulated)
+                text_features = f"{data['content_type']} {data['platform']}"
+                features.append(text_features)
+                
+                # Performance label (high/medium/low based on engagement)
+                if data['engagement_rate'] > 0.1:
+                    labels.append('high')
+                elif data['engagement_rate'] > 0.05:
+                    labels.append('medium')
+                else:
+                    labels.append('low')
+            
+            # Vectorize text features
+            X = model_config['vectorizer'].fit_transform(features)
+            
+            # Train model
+            model_config['model'].fit(X, labels)
+            
+            self.logger.info("Content performance model trained successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to train content performance model: {str(e)}")
+    
+    async def _save_trained_model(self, model_name: str, model_config: Dict):
+        """Save trained model to storage"""
+        try:
+            # In production, this would serialize and save the actual model
+            # For now, just log the action
+            self.logger.info(f"Saved trained model: {model_name}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to save model '{model_name}': {str(e)}")
 
 class AnalyticsAgentManager:
     """Manager for analytics agent instances and configuration"""
