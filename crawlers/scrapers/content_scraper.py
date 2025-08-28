@@ -336,7 +336,7 @@ class ContentScraper:
             word_count=word_count,
             reading_time=reading_time,
             readability_score=readability_score,
-            sentiment_score=0.0,  # TODO: Implement sentiment analysis
+            sentiment_score=self._analyze_sentiment(content),
             tags=self._extract_tags(content),
             images=images,
             videos=videos,
@@ -351,10 +351,40 @@ class ContentScraper:
         """Detect content language."""
         try:
             if len(text) > 50:
-                return langdetect.detect(text)
-        except:
-            pass
+                detected = langdetect.detect(text)
+                # Validate detected language
+                if detected in ['en', 'fr', 'de', 'es', 'it', 'pt', 'nl', 'ru', 'zh', 'ja', 'ko', 'ar']:
+                    return detected
+        except Exception as e:
+            self.logger.debug(f"Language detection failed: {e}")
         return 'unknown'
+    
+    def _analyze_sentiment(self, text: str) -> float:
+        """Analyze sentiment of content text."""
+        try:
+            # Simple sentiment analysis using TextBlob
+            from textblob import TextBlob
+            
+            if len(text) > 100:
+                blob = TextBlob(text)
+                # Return polarity (-1 to 1, where -1 is negative, 1 is positive)
+                return float(blob.sentiment.polarity)
+        except ImportError:
+            # Fallback: basic keyword-based sentiment
+            positive_words = ['good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic', 'love', 'best', 'awesome', 'perfect']
+            negative_words = ['bad', 'terrible', 'awful', 'horrible', 'hate', 'worst', 'disgusting', 'annoying', 'stupid', 'useless']
+            
+            words = text.lower().split()
+            positive_count = sum(1 for word in words if word in positive_words)
+            negative_count = sum(1 for word in words if word in negative_words)
+            
+            total_sentiment_words = positive_count + negative_count
+            if total_sentiment_words > 0:
+                return (positive_count - negative_count) / total_sentiment_words
+        except Exception as e:
+            self.logger.debug(f"Sentiment analysis failed: {e}")
+        
+        return 0.0  # Neutral sentiment
         
     def _calculate_reading_time(self, word_count: int) -> int:
         """Calculate estimated reading time in minutes."""
@@ -365,10 +395,26 @@ class ContentScraper:
         """Calculate readability score."""
         try:
             if len(text) > 100:
-                return textstat.flesch_reading_ease(text)
+                # Use Flesch Reading Ease score (0-100, higher is easier)
+                score = textstat.flesch_reading_ease(text)
+                return max(0.0, min(100.0, score))  # Clamp between 0-100
+        except Exception as e:
+            self.logger.debug(f"Readability calculation failed: {e}")
+            
+        # Fallback: simple sentence/word ratio calculation
+        try:
+            sentences = len(re.split(r'[.!?]+', text))
+            words = len(text.split())
+            if sentences > 0:
+                avg_sentence_length = words / sentences
+                # Simple score: shorter sentences = higher readability
+                # Scale to 0-100 range
+                score = max(0, 100 - (avg_sentence_length * 2))
+                return min(100.0, score)
         except:
             pass
-        return 0.0
+            
+        return 50.0  # Default medium readability
         
     def _generate_summary(self, content: str, max_sentences: int = 3) -> str:
         """Generate simple extractive summary."""
@@ -488,8 +534,9 @@ class ContentScraper:
             try:
                 data = json.loads(script.string)
                 schema_data.append(data)
-            except:
-                pass
+            except Exception as e:
+                self.logger.debug(f"Failed to parse schema.org data: {e}")
+                continue
                 
         if schema_data:
             metadata['schema_org'] = schema_data

@@ -435,14 +435,56 @@ class AudioManager:
     ):
         """Notify status change via webhook if configured"""
         if callback_url:
-            # Implement webhook notification
-            payload = {
-                "processing_id": processing_id,
-                "status": status.value,
-                "timestamp": datetime.utcnow().isoformat()
-            }
-            # TODO: Send HTTP POST to callback_url
-            self.logger.info(f"Status notification sent: {processing_id} -> {status.value}")
+            try:
+                import aiohttp
+                
+                payload = {
+                    "processing_id": processing_id,
+                    "status": status.value,
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+                
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        callback_url,
+                        json=payload,
+                        timeout=aiohttp.ClientTimeout(total=10)
+                    ) as response:
+                        if response.status == 200:
+                            self.logger.info(f"Status notification sent successfully: {processing_id} -> {status.value}")
+                        else:
+                            self.logger.warning(f"Webhook notification failed with status {response.status}")
+                            
+            except ImportError:
+                # Fallback without aiohttp
+                self.logger.warning("aiohttp not available for webhook notifications")
+                
+                # Use basic urllib for HTTP POST
+                import urllib.request
+                import urllib.parse
+                import json as json_lib
+                
+                try:
+                    data = json_lib.dumps(payload).encode('utf-8')
+                    req = urllib.request.Request(
+                        callback_url,
+                        data=data,
+                        headers={'Content-Type': 'application/json'}
+                    )
+                    
+                    with urllib.request.urlopen(req, timeout=10) as response:
+                        if response.status == 200:
+                            self.logger.info(f"Status notification sent successfully: {processing_id} -> {status.value}")
+                        else:
+                            self.logger.warning(f"Webhook notification failed with status {response.status}")
+                            
+                except Exception as e:
+                    self.logger.error(f"Failed to send webhook notification: {str(e)}")
+                    
+            except Exception as e:
+                self.logger.error(f"Failed to send webhook notification: {str(e)}")
+        else:
+            self.logger.debug(f"Status change notification (no webhook): {processing_id} -> {status.value}")
     
     def get_processing_status(self, processing_id: str) -> Optional[AudioProcessingResult]:
         """Get processing status by ID"""

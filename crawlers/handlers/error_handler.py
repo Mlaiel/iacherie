@@ -646,8 +646,21 @@ class ErrorAggregator:
             
             logger.critical(f"Error pattern alert: {json.dumps(alert_data, default=str)}")
             
-            # TODO: Send to alerting system
-            # await alert_manager.send_error_pattern_alert(alert_data)
+            # Send to alerting system
+            if hasattr(self, 'alert_manager') and self.alert_manager:
+                try:
+                    await self.alert_manager.send_error_pattern_alert(alert_data)
+                except Exception as alert_error:
+                    logger.error(f"Failed to send error pattern alert: {alert_error}")
+            else:
+                # Fallback: Log structured alert for external monitoring
+                structured_alert = {
+                    "alert_type": "error_pattern",
+                    "severity": "critical",
+                    "data": alert_data,
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+                logger.critical(f"ALERT: {json.dumps(structured_alert, default=str)}")
             
         except Exception as e:
             logger.error(f"Error alert triggering failed: {e}")
@@ -854,22 +867,99 @@ class ErrorHandler:
             cutoff_time = datetime.utcnow() - time_range
             
             async with async_session() as session:
-                # TODO: Implement database queries for error statistics
-                # This would include counts by category, severity, trends, etc.
-                pass
+                # Implement database queries for error statistics
+                from sqlalchemy import text, func
+                
+                # Total errors query
+                total_errors_query = text("""
+                    SELECT COUNT(*) as total_errors
+                    FROM error_logs 
+                    WHERE created_at >= :cutoff_time
+                """)
+                
+                # Errors by category query
+                category_query = text("""
+                    SELECT category, COUNT(*) as count
+                    FROM error_logs 
+                    WHERE created_at >= :cutoff_time
+                    GROUP BY category
+                    ORDER BY count DESC
+                """)
+                
+                # Errors by severity query
+                severity_query = text("""
+                    SELECT severity, COUNT(*) as count
+                    FROM error_logs 
+                    WHERE created_at >= :cutoff_time
+                    GROUP BY severity
+                    ORDER BY count DESC
+                """)
+                
+                # Top error types query
+                error_types_query = text("""
+                    SELECT exception_type, COUNT(*) as count
+                    FROM error_logs 
+                    WHERE created_at >= :cutoff_time
+                    GROUP BY exception_type
+                    ORDER BY count DESC
+                    LIMIT 10
+                """)
+                
+                # Error rate trend (hourly)
+                trend_query = text("""
+                    SELECT 
+                        DATE_TRUNC('hour', created_at) as hour,
+                        COUNT(*) as count
+                    FROM error_logs 
+                    WHERE created_at >= :cutoff_time
+                    GROUP BY hour
+                    ORDER BY hour
+                """)
+                
+                # Execute queries
+                total_result = await session.execute(total_errors_query, {"cutoff_time": cutoff_time})
+                total_errors = total_result.scalar() or 0
+                
+                category_result = await session.execute(category_query, {"cutoff_time": cutoff_time})
+                by_category = {row.category: row.count for row in category_result.fetchall()}
+                
+                severity_result = await session.execute(severity_query, {"cutoff_time": cutoff_time})
+                by_severity = {row.severity: row.count for row in severity_result.fetchall()}
+                
+                error_types_result = await session.execute(error_types_query, {"cutoff_time": cutoff_time})
+                top_error_types = [
+                    {"type": row.exception_type, "count": row.count} 
+                    for row in error_types_result.fetchall()
+                ]
+                
+                trend_result = await session.execute(trend_query, {"cutoff_time": cutoff_time})
+                error_rate_trend = [
+                    {"hour": row.hour.isoformat(), "count": row.count}
+                    for row in trend_result.fetchall()
+                ]
             
             return {
                 'time_range_hours': time_range.total_seconds() / 3600,
-                'total_errors': 0,  # Placeholder
-                'by_category': {},  # Placeholder
-                'by_severity': {},  # Placeholder
-                'top_error_types': [],  # Placeholder
-                'error_rate_trend': []  # Placeholder
+                'total_errors': total_errors,
+                'by_category': by_category,
+                'by_severity': by_severity,
+                'top_error_types': top_error_types,
+                'error_rate_trend': error_rate_trend
             }
             
         except Exception as e:
             logger.error(f"Error statistics collection failed: {e}")
-            return {}
+            # Return basic stats from cache if database fails
+            total_errors = sum(len(errors) for errors in self.aggregator.error_cache.values())
+            return {
+                'time_range_hours': time_range.total_seconds() / 3600,
+                'total_errors': total_errors,
+                'by_category': {},
+                'by_severity': {},
+                'top_error_types': [],
+                'error_rate_trend': [],
+                'note': 'Statistics from cache due to database error'
+            }
 
 
 # Utility functions

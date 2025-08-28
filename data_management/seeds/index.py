@@ -190,11 +190,40 @@ class SeedsOrchestrator:
                     with open(input_file, 'r', encoding='utf-8') as f:
                         seed_data = json.load(f)
                     
-                    # TODO: Implement import logic for each manager
-                    import_results[module_name] = {
-                        'status': 'success',
-                        'records_imported': len(seed_data.get('data', {}))
-                    }
+                    # Import logic for each manager
+                    manager = self.managers[module_name]
+                    
+                    # Check if manager has import capability
+                    if hasattr(manager, 'import_data'):
+                        try:
+                            result = await manager.import_data(seed_data)
+                            import_results[module_name] = {
+                                'status': 'success',
+                                'records_imported': result.get('imported_count', len(seed_data.get('data', [])))
+                            }
+                        except Exception as import_error:
+                            import_results[module_name] = {
+                                'status': 'error',
+                                'error': f"Import failed: {str(import_error)}"
+                            }
+                    else:
+                        # Fallback: Try to reinitialize with imported data
+                        try:
+                            if hasattr(manager, 'data'):
+                                manager.data = seed_data.get('data', {})
+                            elif hasattr(manager, '_seed_data'):
+                                manager._seed_data = seed_data.get('data', {})
+                            
+                            import_results[module_name] = {
+                                'status': 'success',
+                                'records_imported': len(seed_data.get('data', [])),
+                                'note': 'Direct data import (no import_data method)'
+                            }
+                        except Exception as fallback_error:
+                            import_results[module_name] = {
+                                'status': 'error',
+                                'error': f"Fallback import failed: {str(fallback_error)}"
+                            }
                     
                 except Exception as e:
                     import_results[module_name] = {

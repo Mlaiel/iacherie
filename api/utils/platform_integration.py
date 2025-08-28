@@ -26,7 +26,7 @@ import jwt
 from concurrent.futures import ThreadPoolExecutor
 import sqlite3
 import threading
-import uuid
+from abc import ABC, abstractmethod
 
 logger = logging.getLogger(__name__)
 
@@ -158,8 +158,8 @@ class PostingResult:
     posted_at: datetime = field(default_factory=datetime.utcnow)
 
 
-class BasePlatformAPI:
-    """Base class for platform API integrations"""
+class BasePlatformAPI(ABC):
+    """Abstract base class for platform API integrations"""
     
     def __init__(self, credentials: PlatformCredentials):
         self.credentials = credentials
@@ -176,29 +176,35 @@ class BasePlatformAPI:
         if self.session:
             await self.session.close()
     
+    @abstractmethod
     async def authenticate(self) -> bool:
         """Authenticate with platform API"""
-        raise NotImplementedError
+        pass
     
+    @abstractmethod
     async def refresh_token(self) -> bool:
         """Refresh authentication token"""
-        raise NotImplementedError
+        pass
     
+    @abstractmethod
     async def get_profile(self) -> Optional[PlatformProfile]:
         """Get user profile"""
-        raise NotImplementedError
+        pass
     
+    @abstractmethod
     async def post_content(self, content_data: Dict[str, Any]) -> PostingResult:
         """Post content to platform"""
-        raise NotImplementedError
+        pass
     
+    @abstractmethod
     async def get_content_analytics(self, content_id: str) -> Optional[Dict[str, Any]]:
         """Get analytics for specific content"""
-        raise NotImplementedError
+        pass
     
+    @abstractmethod
     async def delete_content(self, content_id: str) -> bool:
         """Delete content from platform"""
-        raise NotImplementedError
+        pass
     
     def _prepare_headers(self, additional_headers: Optional[Dict[str, str]] = None) -> Dict[str, str]:
         """Prepare authentication headers"""
