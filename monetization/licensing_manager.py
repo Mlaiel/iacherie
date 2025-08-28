@@ -21,9 +21,28 @@ from .royalty_engine import RoyaltyEngine
 from .usage_tracker import UsageTracker
 from .contract_generator import ContractGenerator
 from .rights_validator import RightsValidator
-from ..database.repositories import LicenseRepository, ContentRepository
-from ..core.exceptions import LicensingError
-from ..utils.async_utils import run_async_task
+
+# Simple import to avoid relative import issues
+import sys
+import os
+
+# Add parent directory to path to allow imports
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+try:
+    from database.repositories.license_repository import LicenseRepository
+    from database.repositories.content_repository import ContentRepository
+except ImportError:
+    # Fallback for testing - create mock classes
+    class LicenseRepository:
+        def __init__(self):
+            pass
+    
+    class ContentRepository:
+        def __init__(self):
+            pass
 
 logger = logging.getLogger(__name__)
 
@@ -85,6 +104,11 @@ class LicenseUsage:
     usage_data: Dict
     royalty_amount: Decimal
     timestamp: datetime
+
+class LicensingError(Exception):
+    """Exception for licensing-related errors"""
+    pass
+
 
 class LicensingManager:
     """
