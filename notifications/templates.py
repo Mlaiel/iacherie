@@ -1233,11 +1233,21 @@ __all__ = [
     "render_notification_template",
     "EMAIL_HTML_TEMPLATES",
     "SMS_TEMPLATES",
-    "PUSH_TEMPLATES",
+    "PUSH_TEMPLATES", 
     "IN_APP_TEMPLATES",
     "WEBHOOK_TEMPLATES"
 ]
-        return test_id
+
+# Fix the indentation error
+def _return_test_id(test_id):
+    """Helper function to return test ID"""
+    return test_id
+
+class ABTestManager:
+    """A/B Testing manager for notifications"""
+    
+    def __init__(self):
+        self.ab_test_results = {}
 
     async def get_ab_test_results(self, test_id: str) -> Dict[str, Any]:
         """Get A/B test results with statistical analysis."""
