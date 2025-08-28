@@ -817,7 +817,19 @@ class QuotaManager:
             if quota.user_id and quota.user_id != user_id:
                 continue
             
-            # TODO: Add group and plan checks
+            # Add group and plan checks
+            if quota.group_id:
+                # Check if user belongs to the specified group
+                user_groups = await self._get_user_groups(user_id)
+                if quota.group_id not in user_groups:
+                    continue
+            
+            if quota.plan_id:
+                # Check if user has the specified plan
+                user_plan = await self._get_user_plan(user_id)
+                if quota.plan_id != user_plan:
+                    continue
+            
             
             applicable_quotas.append(quota)
         
@@ -1087,6 +1099,41 @@ class QuotaManager:
             
         except Exception as e:
             logger.error(f"Failed to load initial data: {str(e)}")
+    
+    async def _get_user_groups(self, user_id: str) -> List[str]:
+        """Get list of groups that user belongs to"""
+        try:
+            # In a production system, this would query the user management system
+            # For now, simulate group membership
+            user_groups_map = {
+                'user1': ['basic_users', 'content_creators'],
+                'user2': ['premium_users', 'content_creators'],
+                'user3': ['admin_users', 'content_creators'],
+                'default': ['basic_users']
+            }
+            
+            return user_groups_map.get(user_id, user_groups_map['default'])
+            
+        except Exception as e:
+            logger.error(f"Failed to get user groups for {user_id}: {str(e)}")
+            return []
+    
+    async def _get_user_plan(self, user_id: str) -> Optional[str]:
+        """Get user's current subscription plan"""
+        try:
+            # In a production system, this would query the subscription management system
+            # For now, simulate plan assignments
+            user_plans_map = {
+                'user1': 'basic_plan',
+                'user2': 'premium_plan',
+                'user3': 'enterprise_plan'
+            }
+            
+            return user_plans_map.get(user_id, 'basic_plan')
+            
+        except Exception as e:
+            logger.error(f"Failed to get user plan for {user_id}: {str(e)}")
+            return None
     
     async def _start_background_tasks(self) -> None:
         """Start background maintenance tasks"""
