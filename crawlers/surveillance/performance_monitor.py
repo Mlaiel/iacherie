@@ -1079,8 +1079,21 @@ class MetricCollector:
         pass
     
     async def collect_metrics(self) -> None:
-        """Collect metrics (to be implemented by subclasses)."""
-        raise NotImplementedError
+        """
+        Collect metrics (to be implemented by subclasses).
+        
+        This is an abstract method that must be implemented by concrete
+        metric collector classes. Each collector should implement specific
+        logic for gathering its type of metrics.
+        
+        Raises:
+            NotImplementedError: If not implemented by subclass
+        """
+        raise NotImplementedError(
+            f"collect_metrics() must be implemented by {self.__class__.__name__}. "
+            f"This abstract method should contain the specific metric collection "
+            f"logic for the collector type."
+        )
     
     async def shutdown(self) -> None:
         """Shutdown collector."""
@@ -1172,8 +1185,21 @@ class PerformanceAnalyzer:
         pass
     
     async def analyze(self) -> None:
-        """Perform analysis (to be implemented by subclasses)."""
-        raise NotImplementedError
+        """
+        Perform analysis (to be implemented by subclasses).
+        
+        This is an abstract method that must be implemented by concrete
+        performance analyzer classes. Each analyzer should implement specific
+        logic for analyzing performance data and generating insights.
+        
+        Raises:
+            NotImplementedError: If not implemented by subclass
+        """
+        raise NotImplementedError(
+            f"analyze() must be implemented by {self.__class__.__name__}. "
+            f"This abstract method should contain the specific performance "
+            f"analysis logic for the analyzer type."
+        )
     
     async def shutdown(self) -> None:
         """Shutdown analyzer."""

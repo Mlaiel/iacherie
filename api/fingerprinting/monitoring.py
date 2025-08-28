@@ -133,8 +133,24 @@ class BasePlatformMonitor:
             await self.session.close()
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search for content on the platform. Must be implemented by subclasses."""
-        raise NotImplementedError("Subclasses must implement search_content")
+        """
+        Search for content on the platform. Must be implemented by subclasses.
+        
+        Args:
+            query: Search query string
+            content_type: Type of content to search for
+            
+        Returns:
+            List[Dict[str, Any]]: List of search results
+            
+        Raises:
+            NotImplementedError: If not implemented by subclass
+        """
+        raise NotImplementedError(
+            f"search_content() must be implemented by {self.__class__.__name__}. "
+            f"Platform-specific subclasses must implement content search logic "
+            f"for their respective platforms (query='{query}', content_type='{content_type}')."
+        )
     
     async def capture_evidence(self, url: str) -> Dict[str, Any]:
         """Capture evidence for a potential violation."""

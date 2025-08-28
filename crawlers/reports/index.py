@@ -747,24 +747,111 @@ security = HTTPBearer()
 
 async def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Dict[str, Any]:
     """Verify JWT token and return user info."""
-    # TODO: Implement JWT token verification
-    # This is a placeholder implementation
     
-    token = credentials.credentials
-    if not token:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    
-    # Mock user data - replace with actual JWT verification
-    return {
-        "user_id": "user123",
-        "username": "admin",
-        "roles": ["admin", "reports_access"],
-        "permissions": ["read", "write", "admin"]
-    }
+    try:
+        import jwt
+        from datetime import datetime, timezone
+        
+        token = credentials.credentials
+        if not token:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid authentication credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        
+        # Get settings for JWT verification
+        manager = get_service_manager()
+        secret_key = manager.settings.secret_key
+        
+        try:
+            # Decode and verify the JWT token
+            payload = jwt.decode(
+                token,
+                secret_key,
+                algorithms=["HS256"],
+                options={"require_exp": True}
+            )
+            
+            # Check if token is expired
+            exp = payload.get("exp")
+            if exp and datetime.fromtimestamp(exp, tz=timezone.utc) < datetime.now(timezone.utc):
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Token has expired",
+                    headers={"WWW-Authenticate": "Bearer"},
+                )
+            
+            # Extract user information
+            user_data = {
+                "user_id": payload.get("sub"),
+                "username": payload.get("username"),
+                "email": payload.get("email"),
+                "roles": payload.get("roles", []),
+                "permissions": payload.get("permissions", []),
+                "issued_at": payload.get("iat"),
+                "expires_at": payload.get("exp")
+            }
+            
+            # Validate required fields
+            if not user_data["user_id"]:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid token payload",
+                    headers={"WWW-Authenticate": "Bearer"},
+                )
+            
+            logger.debug(f"Token verified for user: {user_data['username']}")
+            return user_data
+            
+        except jwt.InvalidTokenError as e:
+            logger.warning(f"Invalid JWT token: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid token",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        except jwt.ExpiredSignatureError:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token has expired",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        except Exception as e:
+            logger.error(f"Token verification error: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token verification failed",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+            
+    except ImportError:
+        logger.warning("JWT library not available, using mock authentication")
+        
+        # Fallback to mock authentication for development
+        token = credentials.credentials
+        if not token:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid authentication credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        
+        # Mock user data for development
+        if token == "dev-token":
+            return {
+                "user_id": "dev-user-123",
+                "username": "developer",
+                "email": "dev@example.com",
+                "roles": ["admin", "reports_access"],
+                "permissions": ["read", "write", "admin"]
+            }
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid development token",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
 
 
 # Rate limiting decorator
