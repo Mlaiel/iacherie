@@ -1203,6 +1203,14 @@ class CampaignCoordinator:
     async def _aggregate_platform_metrics(self, execution_id: str): return {}
     async def _aggregate_revenue_metrics(self, execution_id: str): return {}
     async def _calculate_goal_current_value(self, execution_id: str, goal): return 0.0
-    async def _apply_engagement_boost(self, execution_id: str, platforms): pass
+    async def _apply_engagement_boost(self, execution_id: str, platforms):
+        """Apply engagement boosting strategies"""
+        try:
+            for platform in platforms:
+                boost_config = await self._get_engagement_boost_config(platform)
+                if boost_config.get('enabled'):
+                    await self._execute_engagement_boost(platform, boost_config)
+        except Exception as e:
+            logger.error(f"Failed to apply engagement boost for {execution_id}: {e}")
     async def _plan_collaboration_sync_points(self, config): return []
     async def _plan_monitoring_checkpoints(self, config): return []
