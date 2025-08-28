@@ -668,6 +668,13 @@ class MigrationEngine:
             # Update metrics
             self.metrics['active_executions'] -= 1
             
+            # Save cancelled execution to disk
+            await self._save_completed_execution(execution)
+            
+            # Remove from active executions
+            if execution_id in self.active_executions:
+                del self.active_executions[execution_id]
+            
             logger.info(f"Migration cancelled: {execution_id}")
             
             return {
@@ -720,7 +727,16 @@ class MigrationEngine:
             for execution in self.active_executions.values():
                 all_executions.append(self._execution_to_dict(execution))
             
-            # TODO: Load completed executions from disk
+            # Load completed executions from disk
+            executions_dir = Path(self.config.storage_root_path) / "executions"
+            if executions_dir.exists():
+                for execution_file in executions_dir.glob("*.json"):
+                    try:
+                        async with aiofiles.open(execution_file, 'r') as f:
+                            execution_data = json.loads(await f.read())
+                        all_executions.append(execution_data)
+                    except Exception as e:
+                        logger.warning(f"Failed to load execution from {execution_file}: {e}")
             
             # Apply filters
             filtered_executions = []
@@ -1047,6 +1063,13 @@ class MigrationEngine:
             
             logger.info(f"Migration completed successfully: {execution.execution_id}")
             
+            # Save completed execution to disk
+            await self._save_completed_execution(execution)
+            
+            # Remove from active executions
+            if execution.execution_id in self.active_executions:
+                del self.active_executions[execution.execution_id]
+            
         except Exception as e:
             logger.error(f"Migration execution failed: {str(e)}")
             
@@ -1061,6 +1084,13 @@ class MigrationEngine:
             # Update metrics
             self.metrics['failed_migrations'] += 1
             self.metrics['active_executions'] -= 1
+            
+            # Save failed execution to disk
+            await self._save_completed_execution(execution)
+            
+            # Remove from active executions
+            if execution.execution_id in self.active_executions:
+                del self.active_executions[execution.execution_id]
     
     async def _resume_migration_async(self, execution: MigrationExecution, plan: MigrationPlan) -> None:
         """Resume migration from checkpoint"""
@@ -1298,6 +1328,21 @@ class MigrationEngine:
             
         except Exception as e:
             logger.error(f"Failed to save migration plan: {str(e)}")
+
+    async def _save_completed_execution(self, execution: MigrationExecution) -> None:
+        """Save completed execution to disk"""
+        try:
+            executions_dir = Path(self.config.storage_root_path) / "executions"
+            executions_dir.mkdir(exist_ok=True)
+            
+            execution_path = executions_dir / f"{execution.execution_id}.json"
+            execution_data = self._execution_to_dict(execution)
+            
+            async with aiofiles.open(execution_path, 'w') as f:
+                await f.write(json.dumps(execution_data, indent=2))
+                
+        except Exception as e:
+            logger.error(f"Failed to save completed execution: {str(e)}")
 
 
 class SchemaManager:

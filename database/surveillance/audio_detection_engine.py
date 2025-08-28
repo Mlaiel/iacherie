@@ -474,7 +474,10 @@ class AudioDetectionEngine:
                                 detected_url=detection_metadata.get("url", ""),
                                 similarity_score=detailed_similarity,
                                 confidence_level=confidence,
-                                time_offset=0.0,  # TODO: Implement time alignment
+                                time_offset=self._calculate_time_alignment(
+                                    detection_audio_features, 
+                                    stored_fingerprint.features
+                                ),  # Time alignment calculation
                                 duration_match=min(
                                     detection_metadata.get("duration", 0.0),
                                     stored_fingerprint.duration
@@ -545,6 +548,49 @@ class AudioDetectionEngine:
             "last_updated": datetime.utcnow().isoformat()
         }
     
+    def _calculate_time_alignment(self, detected_features: Dict[str, np.ndarray], 
+                                 reference_features: Dict[str, np.ndarray]) -> float:
+        """Calculate time offset between detected and reference audio."""
+        try:
+            # Use MFCC features for time alignment
+            detected_mfcc = detected_features.get('mfcc')
+            reference_mfcc = reference_features.get('mfcc')
+            
+            if detected_mfcc is None or reference_mfcc is None:
+                return 0.0
+            
+            # Cross-correlation to find optimal alignment
+            # Ensure both arrays are 2D (features x time)
+            if len(detected_mfcc.shape) == 1:
+                detected_mfcc = detected_mfcc.reshape(-1, 1)
+            if len(reference_mfcc.shape) == 1:
+                reference_mfcc = reference_mfcc.reshape(-1, 1)
+            
+            # Use first MFCC coefficient for alignment
+            detected_signal = detected_mfcc[0, :] if detected_mfcc.shape[0] > 0 else detected_mfcc.flatten()
+            reference_signal = reference_mfcc[0, :] if reference_mfcc.shape[0] > 0 else reference_mfcc.flatten()
+            
+            # Simple cross-correlation for time alignment
+            max_lag = min(len(detected_signal), len(reference_signal)) // 2
+            correlations = np.correlate(reference_signal, detected_signal, mode='full')
+            
+            # Find peak correlation
+            center = len(correlations) // 2
+            start_idx = max(0, center - max_lag)
+            end_idx = min(len(correlations), center + max_lag)
+            
+            local_correlations = correlations[start_idx:end_idx]
+            max_corr_idx = np.argmax(local_correlations) + start_idx
+            
+            # Convert to time offset (assuming 22050 Hz sample rate, 512 hop length)
+            time_offset = (max_corr_idx - center) * 512 / 22050
+            
+            return float(time_offset)
+            
+        except Exception as e:
+            logger.warning(f"Time alignment calculation failed: {e}")
+            return 0.0
+
     async def cleanup(self) -> None:
         """Cleanup resources."""
         try:
