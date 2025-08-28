@@ -207,7 +207,7 @@ services:
       - REDIS_ADDR=redis://redis:6379
     networks:
       - monitoring
-      - backend
+      - ainflue-network
     depends_on:
       - redis
     healthcheck:
@@ -216,20 +216,42 @@ services:
       timeout: 15s
       retries: 3
 
-  # PostgreSQL Exporter - Database metrics
-  postgres-exporter:
+  # PostgreSQL Master Exporter - Database metrics
+  postgres-exporter-master:
     image: prometheuscommunity/postgres-exporter:v0.11.1
-    container_name: ainflue-postgres-exporter
+    container_name: ainflue-postgres-exporter-master
     restart: unless-stopped
     ports:
       - "9187:9187"
     environment:
-      - DATA_SOURCE_NAME=postgresql://postgres:postgres@postgres:5432/ainflue?sslmode=disable
+      - DATA_SOURCE_NAME=postgresql://ainflue:${POSTGRES_PASSWORD}@postgres-master:5432/ainflue_platform?sslmode=disable
     networks:
       - monitoring
-      - backend
+      - ainflue-network
     depends_on:
-      - postgres
+      postgres-master:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9187/metrics"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+
+  # PostgreSQL Slave Exporter - Database metrics  
+  postgres-exporter-slave:
+    image: prometheuscommunity/postgres-exporter:v0.11.1
+    container_name: ainflue-postgres-exporter-slave
+    restart: unless-stopped
+    ports:
+      - "9188:9187"
+    environment:
+      - DATA_SOURCE_NAME=postgresql://ainflue:${POSTGRES_PASSWORD}@postgres-slave:5432/ainflue_platform?sslmode=disable
+    networks:
+      - monitoring
+      - ainflue-network
+    depends_on:
+      postgres-slave:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9187/metrics"]
       interval: 30s
@@ -272,6 +294,6 @@ networks:
   monitoring:
     driver: bridge
     name: ainflue-monitoring
-  backend:
+  ainflue-network:
     external: true
-    name: ainflue-backend
+    name: ainflue-network

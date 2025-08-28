@@ -1,6 +1,6 @@
-# Prometheus Configuration for Ainflue Platform
+# Prometheus Configuration for Ainflue Platform - Docker Compose
 # Author: Fahed Mlaiel (mlaiel@live.de)
-# Production-ready Prometheus setup with service discovery
+# Production-ready Prometheus setup for master/slave PostgreSQL monitoring
 
 global:
   scrape_interval: 15s
@@ -17,7 +17,7 @@ alerting:
   alertmanagers:
     - static_configs:
         - targets:
-          - alertmanager.ainflue-monitoring.svc.cluster.local:9093
+          - alertmanager:9093
 
 scrape_configs:
   # Prometheus self-monitoring
@@ -25,259 +25,70 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
     scrape_interval: 30s
+
+  # PostgreSQL Master monitoring
+  - job_name: 'postgres-master'
+    static_configs:
+      - targets: ['postgres-exporter-master:9187']
+    scrape_interval: 10s
     metrics_path: /metrics
+
+  # PostgreSQL Slave monitoring  
+  - job_name: 'postgres-slave'
+    static_configs:
+      - targets: ['postgres-exporter-slave:9188']
+    scrape_interval: 10s
     metrics_path: /metrics
+
+  # Redis monitoring
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    scrape_interval: 10s
+
+  # Node exporter for system metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 10s
+
+  # Container metrics
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 10s
 
   # Ainflue API Service
   - job_name: 'ainflue-api'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - ainflue
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: ainflue-api
-      - source_labels: [__meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: metrics
-      - source_labels: [__meta_kubernetes_namespace]
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_service_name]
-        target_label: kubernetes_name
-      - source_labels: [__meta_kubernetes_pod_name]
-        target_label: kubernetes_pod_name
-    scrape_interval: 10s
+    static_configs:
+      - targets: ['ainflue-app:8000']
+    scrape_interval: 15s
     metrics_path: /metrics
 
   # Ainflue Crawler Service
   - job_name: 'ainflue-crawler'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - ainflue
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: ainflue-crawler
-      - source_labels: [__meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: metrics
+    static_configs:
+      - targets: ['crawler-service:8001']
     scrape_interval: 30s
+    metrics_path: /metrics
 
   # Ainflue Analytics Service
   - job_name: 'ainflue-analytics'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - ainflue
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: ainflue-analytics
+    static_configs:
+      - targets: ['analytics-service:8002']
     scrape_interval: 30s
+    metrics_path: /metrics
 
   # Ainflue AI Engine Service
   - job_name: 'ainflue-ai-engine'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - ainflue
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: ainflue-ai-engine
-    scrape_interval: 30s
-
-  # PostgreSQL Exporter
-  - job_name: 'postgresql'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - ainflue
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: postgresql-exporter
-    scrape_interval: 30s
-
-  # Redis Exporter
-  - job_name: 'redis'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - ainflue
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: redis-exporter
-    scrape_interval: 30s
-
-  # MongoDB Exporter
-  - job_name: 'mongodb'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - ainflue
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: mongodb-exporter
-    scrape_interval: 30s
-
-  # Node Exporter (Kubernetes nodes)
-  - job_name: 'node-exporter'
-    kubernetes_sd_configs:
-      - role: node
-    relabel_configs:
-      - source_labels: [__address__]
-        regex: '(.*):10250'
-        replacement: '${1}:9100'
-        target_label: __address__
-      - source_labels: [__meta_kubernetes_node_name]
-        target_label: node
-    scrape_interval: 30s
-
-  # Kubernetes API Server
-  - job_name: 'kubernetes-apiservers'
-    kubernetes_sd_configs:
-      - role: endpoints
-    scheme: https
-    tls_config:
-      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: default;kubernetes;https
-
-  # Kubernetes Kubelet
-  - job_name: 'kubernetes-kubelet'
-    scheme: https
-    tls_config:
-      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-    kubernetes_sd_configs:
-      - role: node
-    relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics
-
-  # Kubernetes Pods
-  - job_name: 'kubernetes-pods'
-    kubernetes_sd_configs:
-      - role: pod
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-        action: replace
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-        target_label: __address__
-      - action: labelmap
-        regex: __meta_kubernetes_pod_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: kubernetes_pod_name
-
-  # Kubernetes Services
-  - job_name: 'kubernetes-services'
-    kubernetes_sd_configs:
-      - role: service
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
-        action: replace
-        target_label: __scheme__
-        regex: (https?)
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
-        action: replace
-        target_label: __address__
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-      - action: labelmap
-        regex: __meta_kubernetes_service_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_service_name]
-        action: replace
-        target_label: kubernetes_name
-
-  # NGINX Ingress Controller
-  - job_name: 'nginx-ingress'
-    kubernetes_sd_configs:
-      - role: pod
-        namespaces:
-          names:
-            - ingress-nginx
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: keep
-        regex: nginx-ingress-controller.*
-      - source_labels: [__address__]
-        action: replace
-        target_label: __address__
-        regex: ([^:]+)(?::\d+)?
-        replacement: $1:10254
-
-  # Blackbox Exporter for External Endpoints
-  - job_name: 'blackbox'
-    metrics_path: /probe
-    params:
-      module: [http_2xx]
     static_configs:
-      - targets:
-        - https://api.ainflue.com/health
-        - https://www.ainflue.com
-        - https://app.ainflue.com
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: blackbox-exporter:9115
+      - targets: ['ai-service:8003']
+    scrape_interval: 30s
+    metrics_path: /metrics
 
-# Storage configuration
-storage:
-  tsdb:
-    path: /prometheus/
-    retention.time: 30d
-    retention.size: 50GB
-    wal-compression: true
-
-# Remote write configuration (optional, for long-term storage)
-# remote_write:
-#   - url: "https://prometheus-remote-write.ainflue.com/api/v1/write"
-#     basic_auth:
-#       username: "ainflue"
-#       password: "remote_write_password"
+  # Ainflue Monetization Service
+  - job_name: 'ainflue-monetization'
+    static_configs:
+      - targets: ['monetization-service:8004']
+    scrape_interval: 30s
+    metrics_path: /metrics

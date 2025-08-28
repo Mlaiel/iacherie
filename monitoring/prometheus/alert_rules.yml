@@ -4,6 +4,56 @@
 
 groups:
   # =================================================================
+  # CRITICAL DATABASE ALERTS - MASTER/SLAVE
+  # =================================================================
+  - name: ainflue.critical.database
+    rules:
+      # PostgreSQL Master Down
+      - alert: PostgreSQLMasterDown
+        expr: up{job="postgres-master"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          service: postgresql
+          database: master
+          team: platform
+          priority: P1
+        annotations:
+          summary: "🚨 CRITICAL: PostgreSQL Master is down"
+          description: "PostgreSQL Master database has been down for more than 30 seconds"
+          runbook_url: "https://docs.ainflue.com/runbooks/postgres-master-down"
+
+      # PostgreSQL Slave Down
+      - alert: PostgreSQLSlaveDown
+        expr: up{job="postgres-slave"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          service: postgresql
+          database: slave
+          team: platform
+          priority: P1
+        annotations:
+          summary: "🚨 CRITICAL: PostgreSQL Slave is down"
+          description: "PostgreSQL Slave database has been down for more than 30 seconds"
+          runbook_url: "https://docs.ainflue.com/runbooks/postgres-slave-down"
+
+      # Replication Lag Critical
+      - alert: PostgreSQLReplicationBroken
+        expr: pg_stat_replication_replay_lag{job="postgres-master"} > 300
+        for: 5m
+        labels:
+          severity: critical
+          service: postgresql
+          database: replication
+          team: platform
+          priority: P1
+        annotations:
+          summary: "🚨 CRITICAL: PostgreSQL replication severely lagged"
+          description: "Replication lag is {{ $value }} seconds - replication may be broken"
+          runbook_url: "https://docs.ainflue.com/runbooks/postgres-replication-lag"
+
+  # =================================================================
   # CRITICAL SYSTEM ALERTS
   # =================================================================
   - name: ainflue.critical.system
