@@ -711,8 +711,66 @@ class LicensingManager:
     
     async def _check_license_compliance(self, license: Dict):
         """Check license compliance and usage limits."""
-        # Implementation for compliance checking
-        pass
+        logger.info(f"Checking compliance for license {license['id']}")
+        
+        try:
+            # Check usage limits
+            current_usage = license.get('usage_count', 0)
+            usage_limit = license.get('usage_limit', float('inf'))
+            
+            if current_usage >= usage_limit:
+                logger.warning(f"License {license['id']} has exceeded usage limit")
+                await self._send_license_notification(license, "usage_limit_exceeded")
+                
+                # Auto-suspend license if configured
+                if license.get('auto_suspend_on_limit', False):
+                    await self.update_license_status(license['id'], LicenseStatus.SUSPENDED)
+                    logger.info(f"License {license['id']} auto-suspended due to usage limit")
+            
+            # Check territorial restrictions
+            if 'territorial_restrictions' in license:
+                restricted_regions = license['territorial_restrictions']
+                current_usage_regions = license.get('usage_regions', [])
+                
+                violation_regions = set(current_usage_regions) - set(restricted_regions)
+                if violation_regions:
+                    logger.warning(f"License {license['id']} violated territorial restrictions: {violation_regions}")
+                    await self._send_license_notification(license, "territorial_violation")
+            
+            # Check time-based restrictions
+            if 'time_restrictions' in license:
+                time_restrictions = license['time_restrictions']
+                current_time = datetime.utcnow().time()
+                
+                start_time = datetime.strptime(time_restrictions.get('start_time', '00:00'), '%H:%M').time()
+                end_time = datetime.strptime(time_restrictions.get('end_time', '23:59'), '%H:%M').time()
+                
+                if not (start_time <= current_time <= end_time):
+                    logger.warning(f"License {license['id']} used outside permitted time window")
+                    await self._send_license_notification(license, "time_restriction_violation")
+            
+            # Check content modification restrictions
+            if license.get('modification_restrictions', {}).get('no_modifications', False):
+                # This would be checked by the content protection system
+                # For now, we log that we should verify no modifications occurred
+                logger.debug(f"Checking modification restrictions for license {license['id']}")
+            
+            # Check commercial use restrictions
+            if not license.get('commercial_use_allowed', True):
+                # Check if content was used commercially
+                commercial_usage = license.get('commercial_usage_detected', False)
+                if commercial_usage:
+                    logger.warning(f"License {license['id']} violated commercial use restrictions")
+                    await self._send_license_notification(license, "commercial_use_violation")
+            
+            # Update last compliance check timestamp
+            license['last_compliance_check'] = datetime.utcnow().isoformat()
+            
+            logger.info(f"Compliance check completed for license {license['id']}")
+            
+        except Exception as e:
+            logger.error(f"Error checking compliance for license {license['id']}: {str(e)}")
+            raise LicensingError(f"Compliance check failed: {str(e)}")
     
     async def _send_license_notification(self, license: Dict, notification_type: str):
         """Send license notification to relevant parties."""

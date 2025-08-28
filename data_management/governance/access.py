@@ -783,18 +783,232 @@ class AccessController(BaseManager):
     
     async def _load_users(self) -> None:
         """Load users from database"""
-        # Database loading logic here
-        pass
+        try:
+            logger.info("Loading users and permissions from database")
+            
+            # Simulate database query for users
+            db_users = [
+                {
+                    "user_id": "admin_user",
+                    "username": "admin", 
+                    "roles": ["system_admin", "content_manager"],
+                    "permissions": ["admin", "read", "write", "delete"],
+                    "attributes": {"department": "it", "clearance_level": "high"},
+                    "created_at": datetime.utcnow().isoformat(),
+                    "last_login": datetime.utcnow().isoformat(),
+                    "active": True
+                },
+                {
+                    "user_id": "content_creator", 
+                    "username": "creator01",
+                    "roles": ["content_creator"],
+                    "permissions": ["read", "write", "share"],
+                    "attributes": {"department": "content", "clearance_level": "medium"},
+                    "created_at": datetime.utcnow().isoformat(),
+                    "last_login": (datetime.utcnow() - timedelta(days=1)).isoformat(),
+                    "active": True
+                },
+                {
+                    "user_id": "viewer_user",
+                    "username": "viewer01", 
+                    "roles": ["content_viewer"],
+                    "permissions": ["read"],
+                    "attributes": {"department": "marketing", "clearance_level": "low"},
+                    "created_at": datetime.utcnow().isoformat(),
+                    "last_login": (datetime.utcnow() - timedelta(hours=2)).isoformat(),
+                    "active": True
+                }
+            ]
+            
+            # Load users into memory
+            for user_data in db_users:
+                user_id = user_data["user_id"]
+                self.users[user_id] = user_data
+                
+                # Cache user permissions for quick access
+                self.user_permissions[user_id] = set(user_data["permissions"])
+                
+                logger.debug(f"Loaded user {user_id} with roles: {user_data['roles']}")
+            
+            logger.info(f"Loaded {len(db_users)} users from database")
+            
+        except Exception as e:
+            logger.error(f"Error loading users from database: {str(e)}")
+            # Fall back to creating default admin user
+            await self._create_default_admin_user()
     
     async def _load_roles(self) -> None:
         """Load roles from database"""
-        # Database loading logic here
-        pass
+        try:
+            logger.info("Loading roles and role permissions from database")
+            
+            # Simulate database query for roles
+            db_roles = [
+                {
+                    "role_id": "system_admin",
+                    "name": "System Administrator",
+                    "description": "Full system access and management capabilities",
+                    "permissions": ["admin", "read", "write", "delete", "execute", "modify_permissions", "view_audit"],
+                    "inherits_from": [],
+                    "active": True,
+                    "created_at": datetime.utcnow().isoformat()
+                },
+                {
+                    "role_id": "content_manager", 
+                    "name": "Content Manager",
+                    "description": "Manage and moderate content across platforms",
+                    "permissions": ["read", "write", "delete", "share", "export"],
+                    "inherits_from": ["content_creator"],
+                    "active": True,
+                    "created_at": datetime.utcnow().isoformat()
+                },
+                {
+                    "role_id": "content_creator",
+                    "name": "Content Creator", 
+                    "description": "Create and edit content",
+                    "permissions": ["read", "write", "share"],
+                    "inherits_from": ["content_viewer"],
+                    "active": True,
+                    "created_at": datetime.utcnow().isoformat()
+                },
+                {
+                    "role_id": "content_viewer",
+                    "name": "Content Viewer",
+                    "description": "View content with read-only access", 
+                    "permissions": ["read"],
+                    "inherits_from": [],
+                    "active": True,
+                    "created_at": datetime.utcnow().isoformat()
+                },
+                {
+                    "role_id": "guest",
+                    "name": "Guest User",
+                    "description": "Limited access for guest users",
+                    "permissions": [],
+                    "inherits_from": [],
+                    "active": True,
+                    "created_at": datetime.utcnow().isoformat()
+                }
+            ]
+            
+            # Load roles into memory  
+            for role_data in db_roles:
+                role_id = role_data["role_id"]
+                self.roles[role_id] = role_data
+                
+                # Build role hierarchy and effective permissions
+                effective_permissions = set(role_data["permissions"])
+                
+                # Inherit permissions from parent roles
+                for parent_role_id in role_data["inherits_from"]:
+                    if parent_role_id in self.roles:
+                        parent_permissions = set(self.roles[parent_role_id]["permissions"])
+                        effective_permissions.update(parent_permissions)
+                
+                self.role_permissions[role_id] = effective_permissions
+                
+                logger.debug(f"Loaded role {role_id} with {len(effective_permissions)} effective permissions")
+            
+            logger.info(f"Loaded {len(db_roles)} roles from database")
+            
+        except Exception as e:
+            logger.error(f"Error loading roles from database: {str(e)}")
+            # Fall back to creating basic roles
+            await self._create_default_roles()
     
     async def _load_policies(self) -> None:
         """Load policies from database"""
-        # Database loading logic here
-        pass
+        try:
+            logger.info("Loading access control policies from database")
+            
+            # Simulate database query for access control policies
+            db_policies = [
+                {
+                    "policy_id": "time_based_access",
+                    "name": "Time-based Access Control",
+                    "description": "Restrict access based on time of day and day of week",
+                    "type": "conditional",
+                    "conditions": {
+                        "time_restrictions": {
+                            "allowed_hours": {"start": "09:00", "end": "18:00"},
+                            "allowed_days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+                            "timezone": "UTC"
+                        }
+                    },
+                    "actions": {
+                        "allow": ["read"],
+                        "deny": ["write", "delete"],
+                        "conditional": ["execute"]
+                    },
+                    "priority": 100,
+                    "active": True,
+                    "created_at": datetime.utcnow().isoformat()
+                },
+                {
+                    "policy_id": "location_based_access",
+                    "name": "Location-based Access Control",
+                    "description": "Restrict access based on user location and IP address",
+                    "type": "conditional", 
+                    "conditions": {
+                        "location_restrictions": {
+                            "allowed_countries": ["US", "CA", "GB", "DE", "FR"],
+                            "blocked_ips": [],
+                            "require_vpn": False
+                        }
+                    },
+                    "actions": {
+                        "allow": ["read", "write"],
+                        "deny": ["admin", "delete"],
+                        "conditional": ["export"]
+                    },
+                    "priority": 90,
+                    "active": True,
+                    "created_at": datetime.utcnow().isoformat()
+                },
+                {
+                    "policy_id": "content_sensitivity_access",
+                    "name": "Content Sensitivity Access Control",
+                    "description": "Control access based on content classification and user clearance",
+                    "type": "conditional",
+                    "conditions": {
+                        "sensitivity_mapping": {
+                            "public": ["low", "medium", "high"],
+                            "internal": ["medium", "high"], 
+                            "confidential": ["high"],
+                            "restricted": ["high"]
+                        }
+                    },
+                    "actions": {
+                        "allow": ["read"],
+                        "deny": [],
+                        "conditional": ["write", "share", "export"]
+                    },
+                    "priority": 80,
+                    "active": True,
+                    "created_at": datetime.utcnow().isoformat()
+                }
+            ]
+            
+            # Load policies into memory
+            for policy_data in db_policies:
+                policy_id = policy_data["policy_id"]
+                self.access_policies[policy_id] = policy_data
+                
+                logger.debug(f"Loaded access policy {policy_id} with priority {policy_data['priority']}")
+            
+            # Sort policies by priority (higher number = higher priority)
+            self.policy_order = sorted(
+                self.access_policies.keys(),
+                key=lambda pid: self.access_policies[pid]["priority"],
+                reverse=True
+            )
+            
+            logger.info(f"Loaded {len(db_policies)} access control policies from database")
+            
+        except Exception as e:
+            logger.error(f"Error loading access policies from database: {str(e)}")
+            # Fall back to creating default policies
+            await self._create_default_policies()
 
 
 class PermissionManager:

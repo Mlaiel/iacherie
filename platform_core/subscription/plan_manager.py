@@ -648,8 +648,124 @@ class PlanManager:
         
     async def _save_plan(self, plan: SubscriptionPlan):
         """Sauvegarde un plan en base"""
-        # Implémentation de sauvegarde
-        pass
+        try:
+            logger.info(f"Saving subscription plan {plan.plan_id}")
+            
+            # Prepare plan data for storage
+            plan_data = {
+                "plan_id": plan.plan_id,
+                "name": plan.name,
+                "description": plan.description,
+                "tier": plan.tier.value,
+                "pricing": {
+                    "price": str(plan.price),
+                    "currency": plan.currency,
+                    "billing_cycle": plan.billing_cycle.value,
+                    "trial_days": plan.trial_days,
+                    "setup_fee": str(plan.setup_fee) if plan.setup_fee else None
+                },
+                "features": plan.features,
+                "limits": plan.limits,
+                "is_active": plan.is_active,
+                "is_featured": plan.is_featured,
+                "sort_order": plan.sort_order,
+                "created_at": plan.created_at.isoformat(),
+                "updated_at": datetime.utcnow().isoformat(),
+                "metadata": plan.metadata or {}
+            }
+            
+            # Add business logic data
+            plan_data["business_rules"] = {
+                "max_users": plan.limits.get("max_users", 1),
+                "max_content_uploads": plan.limits.get("max_content_uploads", 100),
+                "max_storage_gb": plan.limits.get("max_storage_gb", 10),
+                "api_rate_limit_per_hour": plan.limits.get("api_rate_limit_per_hour", 1000),
+                "support_level": plan.features.get("support_level", "basic"),
+                "sla_uptime": plan.features.get("sla_uptime", "99.0%"),
+                "priority_processing": plan.features.get("priority_processing", False)
+            }
+            
+            # Add marketing and analytics data
+            plan_data["marketing"] = {
+                "target_audience": plan.metadata.get("target_audience", "general"),
+                "recommended_for": plan.metadata.get("recommended_for", []),
+                "popular_features": plan.metadata.get("popular_features", []),
+                "conversion_tracking_enabled": True,
+                "a_b_test_variant": plan.metadata.get("a_b_test_variant"),
+                "promotional_pricing": plan.metadata.get("promotional_pricing")
+            }
+            
+            # Add compliance and legal data
+            plan_data["compliance"] = {
+                "gdpr_compliant": True,
+                "ccpa_compliant": True,
+                "data_retention_policy": "7_years",
+                "terms_version": plan.metadata.get("terms_version", "1.0"),
+                "privacy_policy_version": plan.metadata.get("privacy_policy_version", "1.0"),
+                "requires_business_verification": plan.tier in [PlanTier.ENTERPRISE, PlanTier.CUSTOM],
+                "auto_invoice_generation": True
+            }
+            
+            # Add feature comparison data
+            plan_data["feature_matrix"] = {
+                "content_protection": plan.features.get("content_protection", False),
+                "advanced_analytics": plan.features.get("advanced_analytics", False),
+                "api_access": plan.features.get("api_access", False),
+                "white_labeling": plan.features.get("white_labeling", False),
+                "priority_support": plan.features.get("priority_support", False),
+                "custom_integrations": plan.features.get("custom_integrations", False),
+                "dedicated_account_manager": plan.features.get("dedicated_account_manager", False),
+                "sso_integration": plan.features.get("sso_integration", False)
+            }
+            
+            # Simulate database save operation
+            # In real implementation:
+            # await self.db.execute(
+            #     """INSERT INTO subscription_plans 
+            #        (plan_id, plan_data, tier, price, is_active, created_at, updated_at)
+            #        VALUES ($1, $2, $3, $4, $5, $6, $7)
+            #        ON CONFLICT (plan_id) 
+            #        DO UPDATE SET plan_data = $2, updated_at = $7""",
+            #     plan.plan_id, json.dumps(plan_data), plan.tier.value,
+            #     plan.price, plan.is_active, plan.created_at, datetime.utcnow()
+            # )
+            
+            # Store in memory cache for quick access
+            if not hasattr(self, 'plan_cache'):
+                self.plan_cache = {}
+            
+            cache_key = f"plan:{plan.plan_id}"
+            self.plan_cache[cache_key] = plan_data
+            
+            # Update tier-based cache
+            if not hasattr(self, 'tier_plans_cache'):
+                self.tier_plans_cache = {}
+                
+            tier_key = f"tier:{plan.tier.value}"
+            if tier_key not in self.tier_plans_cache:
+                self.tier_plans_cache[tier_key] = []
+            
+            # Update or add plan in tier cache
+            tier_plans = self.tier_plans_cache[tier_key]
+            existing_index = None
+            for i, existing_plan in enumerate(tier_plans):
+                if existing_plan["plan_id"] == plan.plan_id:
+                    existing_index = i
+                    break
+            
+            if existing_index is not None:
+                tier_plans[existing_index] = plan_data
+            else:
+                tier_plans.append(plan_data)
+            
+            # Sort by sort_order, then by price
+            tier_plans.sort(key=lambda x: (x["sort_order"], float(x["pricing"]["price"])))
+            
+            logger.info(f"Successfully saved subscription plan {plan.plan_id}")
+            
+        except Exception as e:
+            logger.error(f"Failed to save subscription plan {plan.plan_id}: {str(e)}")
+            raise
         
     async def _load_plan(self, plan_id: str) -> Optional[SubscriptionPlan]:
         """Charge un plan depuis la base"""

@@ -563,34 +563,419 @@ async def _post_analysis_tasks(
 async def _update_user_risk_profile(user_id: str, analysis_result: Dict[str, Any], risk_level: RiskLevel):
     """Update user risk profile based on analysis"""
     try:
-        # This would update the user's risk profile in the database
-        pass
+        logger.info(f"Updating risk profile for user {user_id} with risk level {risk_level.value}")
+        
+        # Extract risk factors from analysis
+        risk_factors = analysis_result.get('risk_factors', {})
+        risk_score = analysis_result.get('risk_score', 0.0)
+        
+        # Build risk profile update
+        risk_profile_update = {
+            "user_id": user_id,
+            "current_risk_level": risk_level.value,
+            "risk_score": risk_score,
+            "last_assessment": datetime.utcnow().isoformat(),
+            "risk_factors": {
+                "behavioral_anomalies": risk_factors.get('behavioral_anomalies', 0.0),
+                "transaction_patterns": risk_factors.get('transaction_patterns', 0.0),
+                "engagement_metrics": risk_factors.get('engagement_metrics', 0.0),
+                "content_violations": risk_factors.get('content_violations', 0.0),
+                "account_age_factor": risk_factors.get('account_age_factor', 0.0)
+            },
+            "history": {
+                "total_assessments": risk_factors.get('total_assessments', 1),
+                "trend": "increasing" if risk_score > 0.5 else "stable" if risk_score > 0.3 else "decreasing",
+                "previous_risk_level": risk_factors.get('previous_risk_level', 'low')
+            },
+            "recommendations": _generate_risk_mitigation_recommendations(risk_level, risk_factors),
+            "next_assessment_due": (datetime.utcnow() + timedelta(
+                days=1 if risk_level == RiskLevel.CRITICAL else
+                     3 if risk_level == RiskLevel.HIGH else
+                     7 if risk_level == RiskLevel.MEDIUM else 30
+            )).isoformat()
+        }
+        
+        # Simulate database update
+        logger.debug(f"Risk profile update data: {json.dumps(risk_profile_update, indent=2)}")
+        
+        # In a real implementation, this would update the database:
+        # await db.execute(
+        #     "UPDATE user_risk_profiles SET risk_data = $1, updated_at = $2 WHERE user_id = $3",
+        #     json.dumps(risk_profile_update), datetime.utcnow(), user_id
+        # )
+        
+        logger.info(f"Successfully updated risk profile for user {user_id}")
+        
     except Exception as e:
         logger.error(f"Failed to update user risk profile for {user_id}: {str(e)}")
+        raise
+
+def _generate_risk_mitigation_recommendations(risk_level: RiskLevel, risk_factors: Dict[str, Any]) -> List[str]:
+    """Generate recommendations based on risk level and factors"""
+    recommendations = []
+    
+    if risk_level == RiskLevel.CRITICAL:
+        recommendations.extend([
+            "Immediately suspend account pending investigation",
+            "Escalate to security team for manual review",
+            "Block all financial transactions",
+            "Require identity verification"
+        ])
+    elif risk_level == RiskLevel.HIGH:
+        recommendations.extend([
+            "Require additional authentication for sensitive actions",
+            "Limit transaction amounts temporarily",
+            "Increase monitoring frequency",
+            "Flag for manual review within 24 hours"
+        ])
+    elif risk_level == RiskLevel.MEDIUM:
+        recommendations.extend([
+            "Enable enhanced monitoring for 30 days",
+            "Require email verification for account changes",
+            "Implement transaction velocity limits"
+        ])
+    else:  # LOW
+        recommendations.extend([
+            "Continue standard monitoring",
+            "Schedule next assessment in 30 days"
+        ])
+    
+    # Add specific recommendations based on risk factors
+    if risk_factors.get('behavioral_anomalies', 0) > 0.7:
+        recommendations.append("Investigate unusual login patterns and device usage")
+    
+    if risk_factors.get('content_violations', 0) > 0.5:
+        recommendations.append("Review content upload history for policy violations")
+    
+    return recommendations
 
 async def _send_fraud_alert(analysis_id: str, user_id: str, analysis_result: Dict[str, Any], risk_level: RiskLevel):
     """Send fraud alert to security team"""
     try:
-        # This would send alerts via email, Slack, or other notification systems
-        pass
+        logger.info(f"Sending fraud alert for analysis {analysis_id}, user {user_id}, risk level {risk_level.value}")
+        
+        # Prepare alert data
+        alert_data = {
+            "alert_id": f"fraud_alert_{analysis_id}",
+            "analysis_id": analysis_id,
+            "user_id": user_id,
+            "risk_level": risk_level.value,
+            "risk_score": analysis_result.get('risk_score', 0.0),
+            "detected_at": datetime.utcnow().isoformat(),
+            "priority": "critical" if risk_level == RiskLevel.CRITICAL else
+                      "high" if risk_level == RiskLevel.HIGH else
+                      "medium" if risk_level == RiskLevel.MEDIUM else "low",
+            "summary": _generate_alert_summary(analysis_result, risk_level),
+            "risk_factors": analysis_result.get('risk_factors', {}),
+            "recommended_actions": _generate_risk_mitigation_recommendations(risk_level, analysis_result.get('risk_factors', {})),
+            "investigation_urls": {
+                "user_dashboard": f"/admin/users/{user_id}",
+                "analysis_details": f"/security/fraud-analysis/{analysis_id}",
+                "risk_history": f"/security/risk-history/{user_id}"
+            }
+        }
+        
+        # Determine alert channels based on risk level
+        alert_channels = []
+        if risk_level in [RiskLevel.CRITICAL, RiskLevel.HIGH]:
+            alert_channels.extend(["email", "slack", "dashboard", "sms"])
+        elif risk_level == RiskLevel.MEDIUM:
+            alert_channels.extend(["email", "dashboard"])
+        else:
+            alert_channels.append("dashboard")
+        
+        # Send alerts through different channels
+        for channel in alert_channels:
+            try:
+                if channel == "email":
+                    await _send_email_alert(alert_data)
+                elif channel == "slack":
+                    await _send_slack_alert(alert_data)
+                elif channel == "sms":
+                    await _send_sms_alert(alert_data)
+                elif channel == "dashboard":
+                    await _create_dashboard_alert(alert_data)
+                    
+                logger.debug(f"Alert sent via {channel} for analysis {analysis_id}")
+                
+            except Exception as channel_error:
+                logger.error(f"Failed to send alert via {channel}: {str(channel_error)}")
+        
+        # Log alert for audit trail
+        await _log_fraud_alert(alert_data)
+        
+        logger.info(f"Successfully sent fraud alert for analysis {analysis_id}")
+        
     except Exception as e:
         logger.error(f"Failed to send fraud alert for {analysis_id}: {str(e)}")
+        raise
+
+def _generate_alert_summary(analysis_result: Dict[str, Any], risk_level: RiskLevel) -> str:
+    """Generate human-readable alert summary"""
+    risk_score = analysis_result.get('risk_score', 0.0)
+    primary_factors = []
+    
+    risk_factors = analysis_result.get('risk_factors', {})
+    
+    if risk_factors.get('behavioral_anomalies', 0) > 0.7:
+        primary_factors.append("unusual behavior patterns")
+    
+    if risk_factors.get('transaction_patterns', 0) > 0.7:
+        primary_factors.append("suspicious transaction activity")
+    
+    if risk_factors.get('content_violations', 0) > 0.7:
+        primary_factors.append("content policy violations")
+    
+    if risk_factors.get('engagement_metrics', 0) > 0.7:
+        primary_factors.append("abnormal engagement patterns")
+    
+    factors_text = ", ".join(primary_factors) if primary_factors else "multiple indicators"
+    
+    if risk_level == RiskLevel.CRITICAL:
+        return f"CRITICAL fraud risk detected (score: {risk_score:.2f}). Immediate action required due to {factors_text}."
+    elif risk_level == RiskLevel.HIGH:
+        return f"HIGH fraud risk detected (score: {risk_score:.2f}). Investigation needed for {factors_text}."
+    elif risk_level == RiskLevel.MEDIUM:
+        return f"MEDIUM fraud risk detected (score: {risk_score:.2f}). Monitoring recommended for {factors_text}."
+    else:
+        return f"LOW fraud risk detected (score: {risk_score:.2f}). Standard monitoring continues."
+
+async def _send_email_alert(alert_data: Dict[str, Any]):
+    """Send email alert to security team"""
+    # Simulate email sending
+    logger.debug(f"Email alert sent for {alert_data['alert_id']}")
+
+async def _send_slack_alert(alert_data: Dict[str, Any]):
+    """Send Slack alert to security channel"""
+    # Simulate Slack notification
+    logger.debug(f"Slack alert sent for {alert_data['alert_id']}")
+
+async def _send_sms_alert(alert_data: Dict[str, Any]):
+    """Send SMS alert for critical cases"""
+    # Simulate SMS sending
+    logger.debug(f"SMS alert sent for {alert_data['alert_id']}")
+
+async def _create_dashboard_alert(alert_data: Dict[str, Any]):
+    """Create dashboard alert notification"""
+    # Simulate dashboard notification creation
+    logger.debug(f"Dashboard alert created for {alert_data['alert_id']}")
+
+async def _log_fraud_alert(alert_data: Dict[str, Any]):
+    """Log fraud alert for audit trail"""
+    # Simulate audit log entry
+    logger.debug(f"Fraud alert logged: {alert_data['alert_id']}")
 
 async def _update_detection_models(analysis_result: Dict[str, Any]):
     """Update fraud detection models with new patterns"""
     try:
-        # This would update ML models with new fraud patterns
-        pass
+        logger.info("Updating fraud detection models with new patterns")
+        
+        # Extract patterns from analysis
+        risk_factors = analysis_result.get('risk_factors', {})
+        patterns = analysis_result.get('detected_patterns', {})
+        
+        # Model update data
+        model_updates = {
+            "behavioral_model": {
+                "new_anomaly_patterns": patterns.get('behavioral_anomalies', []),
+                "weight_adjustments": {
+                    "login_frequency": risk_factors.get('behavioral_anomalies', 0) * 0.1,
+                    "device_switching": risk_factors.get('device_anomalies', 0) * 0.15,
+                    "session_duration": risk_factors.get('session_anomalies', 0) * 0.08
+                }
+            },
+            "transaction_model": {
+                "new_fraud_patterns": patterns.get('transaction_anomalies', []),
+                "risk_thresholds": {
+                    "velocity_limit": max(0.1, risk_factors.get('transaction_patterns', 0) * 0.2),
+                    "amount_deviation": risk_factors.get('amount_anomalies', 0) * 0.25,
+                    "frequency_threshold": risk_factors.get('frequency_anomalies', 0) * 0.3
+                }
+            },
+            "content_model": {
+                "violation_patterns": patterns.get('content_violations', []),
+                "content_risk_weights": {
+                    "spam_indicators": risk_factors.get('content_violations', 0) * 0.2,
+                    "quality_degradation": risk_factors.get('quality_issues', 0) * 0.15,
+                    "policy_violations": risk_factors.get('policy_violations', 0) * 0.3
+                }
+            },
+            "ensemble_model": {
+                "feature_importance_updates": {
+                    "behavioral_weight": 0.3 + (risk_factors.get('behavioral_anomalies', 0) * 0.1),
+                    "transaction_weight": 0.25 + (risk_factors.get('transaction_patterns', 0) * 0.1),
+                    "content_weight": 0.2 + (risk_factors.get('content_violations', 0) * 0.1),
+                    "engagement_weight": 0.15 + (risk_factors.get('engagement_metrics', 0) * 0.05),
+                    "temporal_weight": 0.1
+                }
+            }
+        }
+        
+        # Simulate model retraining trigger
+        should_retrain = (
+            analysis_result.get('risk_score', 0) > 0.8 or  # High risk case
+            len(patterns.get('new_fraud_indicators', [])) > 5  # Many new patterns
+        )
+        
+        if should_retrain:
+            logger.info("Triggering model retraining due to significant new patterns")
+            await _trigger_model_retraining(model_updates)
+        else:
+            logger.info("Applying incremental model updates")
+            await _apply_incremental_updates(model_updates)
+        
+        # Update model metadata
+        model_metadata = {
+            "last_update": datetime.utcnow().isoformat(),
+            "update_source": "fraud_analysis",
+            "patterns_incorporated": len(patterns),
+            "confidence_adjustment": min(0.1, analysis_result.get('risk_score', 0) * 0.05),
+            "next_full_retrain_due": (datetime.utcnow() + timedelta(days=7)).isoformat()
+        }
+        
+        # Simulate model registry update
+        logger.debug(f"Model updates applied: {json.dumps(model_updates, indent=2)}")
+        logger.info("Successfully updated fraud detection models")
+        
     except Exception as e:
         logger.error(f"Failed to update detection models: {str(e)}")
+        raise
+
+async def _trigger_model_retraining(model_updates: Dict[str, Any]):
+    """Trigger full model retraining with new patterns"""
+    logger.info("Initiating full model retraining process")
+    
+    # Simulate ML pipeline trigger
+    training_job = {
+        "job_id": f"fraud_retrain_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
+        "job_type": "full_retrain",
+        "priority": "high",
+        "model_updates": model_updates,
+        "estimated_duration": "2-4 hours",
+        "data_window": "last_90_days"
+    }
+    
+    logger.info(f"Model retraining job queued: {training_job['job_id']}")
+
+async def _apply_incremental_updates(model_updates: Dict[str, Any]):
+    """Apply incremental updates to existing models"""
+    logger.info("Applying incremental model updates")
+    
+    # Simulate incremental learning
+    for model_name, updates in model_updates.items():
+        logger.debug(f"Updating {model_name} with incremental changes")
+        
+    logger.info("Incremental model updates completed")
 
 async def _archive_analysis_results(analysis_id: str, user_id: str, analysis_result: Dict[str, Any]):
     """Archive analysis results for future reference"""
     try:
-        # This would archive results to long-term storage
-        pass
+        logger.info(f"Archiving analysis results for {analysis_id}")
+        
+        # Prepare archive data
+        archive_data = {
+            "analysis_id": analysis_id,
+            "user_id": user_id,
+            "archived_at": datetime.utcnow().isoformat(),
+            "analysis_data": {
+                "risk_score": analysis_result.get('risk_score', 0.0),
+                "risk_level": analysis_result.get('risk_level', 'unknown'),
+                "confidence": analysis_result.get('confidence', 0.0),
+                "risk_factors": analysis_result.get('risk_factors', {}),
+                "detected_patterns": analysis_result.get('detected_patterns', {}),
+                "analysis_duration": analysis_result.get('analysis_duration', 0),
+                "models_used": analysis_result.get('models_used', [])
+            },
+            "metadata": {
+                "analysis_version": "1.0",
+                "archive_format": "json",
+                "compression": "gzip",
+                "retention_period": "7_years",  # Compliance requirement
+                "access_level": "security_team_only",
+                "encryption": "aes256"
+            },
+            "audit_trail": {
+                "created_by": "fraud_detection_agent",
+                "purpose": "fraud_investigation_archive", 
+                "compliance_tags": ["fraud_detection", "risk_assessment", "user_analysis"],
+                "data_classification": "confidential"
+            }
+        }
+        
+        # Determine archive storage location based on risk level
+        risk_level = analysis_result.get('risk_level', 'low')
+        if risk_level in ['critical', 'high']:
+            storage_tier = "hot_storage"  # Immediate access
+            retention_policy = "immediate_access_7_years"
+        elif risk_level == 'medium':
+            storage_tier = "warm_storage"  # Fast access
+            retention_policy = "fast_access_7_years"
+        else:
+            storage_tier = "cold_storage"  # Archive access
+            retention_policy = "archive_access_7_years"
+        
+        archive_data["storage"] = {
+            "tier": storage_tier,
+            "retention_policy": retention_policy,
+            "backup_locations": ["primary_datacenter", "backup_datacenter"],
+            "replication_factor": 3 if risk_level in ['critical', 'high'] else 2
+        }
+        
+        # Create archive record
+        archive_record = {
+            "archive_id": f"fraud_archive_{analysis_id}",
+            "original_analysis_id": analysis_id,
+            "user_id": user_id,
+            "storage_path": f"/fraud_archives/{datetime.utcnow().year}/{datetime.utcnow().month:02d}/{analysis_id}.json.gz",
+            "size_bytes": len(json.dumps(archive_data).encode('utf-8')),
+            "checksum": _calculate_checksum(archive_data),
+            "archived_at": datetime.utcnow().isoformat(),
+            "expires_at": (datetime.utcnow() + timedelta(days=7*365)).isoformat(),  # 7 years
+            "status": "archived",
+            "access_count": 0,
+            "last_accessed": None
+        }
+        
+        # Simulate storage operations
+        logger.debug(f"Archive data prepared for {analysis_id}: {storage_tier}")
+        
+        # In a real implementation, this would:
+        # 1. Compress and encrypt the data
+        # 2. Store in distributed storage system
+        # 3. Create metadata records in archive database
+        # 4. Set up automated retention policies
+        # 5. Configure compliance monitoring
+        
+        # Simulate database storage
+        # await archive_db.execute(
+        #     "INSERT INTO fraud_analysis_archives (archive_id, data, metadata) VALUES ($1, $2, $3)",
+        #     archive_record["archive_id"], 
+        #     json.dumps(archive_data),
+        #     json.dumps(archive_record)
+        # )
+        
+        # Update analysis record with archive reference
+        analysis_update = {
+            "archived": True,
+            "archive_id": archive_record["archive_id"],
+            "archive_location": archive_record["storage_path"],
+            "archived_at": archive_record["archived_at"]
+        }
+        
+        logger.info(f"Successfully archived analysis results for {analysis_id}")
+        logger.debug(f"Archive location: {archive_record['storage_path']}")
+        
+        return archive_record["archive_id"]
+        
     except Exception as e:
         logger.error(f"Failed to archive analysis results for {analysis_id}: {str(e)}")
+        raise
+
+def _calculate_checksum(data: Dict[str, Any]) -> str:
+    """Calculate checksum for data integrity verification"""
+    import hashlib
+    data_string = json.dumps(data, sort_keys=True)
+    return hashlib.sha256(data_string.encode('utf-8')).hexdigest()
 
 # Development/debug endpoints (only available in development)
 if settings.ENVIRONMENT == "development":

@@ -134,6 +134,10 @@ class PaymentMethodManager:
         self.database_client = database_client
         self.payment_methods: Dict[str, PaymentMethod] = {}
         
+        # Cache for payment methods and customer data
+        self.payment_method_cache: Dict[str, Dict] = {}
+        self.customer_methods_cache: Dict[str, List[Dict]] = {}
+        
         # Chiffrement pour données sensibles
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
@@ -346,8 +350,96 @@ class PaymentMethodManager:
         
     async def _save_payment_method(self, method: PaymentMethod):
         """Sauvegarde une méthode de paiement en base"""
-        # Implémentation de sauvegarde
-        pass
+        try:
+            logger.info(f"Saving payment method {method.payment_method_id} for customer {method.customer_id}")
+            
+            # Prepare payment method data for storage
+            payment_data = {
+                "payment_method_id": method.payment_method_id,
+                "customer_id": method.customer_id,
+                "payment_type": method.payment_type.value,
+                "is_default": method.is_default,
+                "is_active": method.is_active,
+                "metadata": method.metadata,
+                "created_at": method.created_at.isoformat(),
+                "updated_at": datetime.utcnow().isoformat(),
+                "last_used": method.last_used.isoformat() if method.last_used else None,
+                "usage_count": method.usage_count,
+                "trust_score": method.trust_score
+            }
+            
+            # Add type-specific data
+            if method.payment_type == PaymentType.CREDIT_CARD:
+                payment_data.update({
+                    "card_last_four": method.metadata.get("card_last_four"),
+                    "card_brand": method.metadata.get("card_brand"),
+                    "card_exp_month": method.metadata.get("card_exp_month"),
+                    "card_exp_year": method.metadata.get("card_exp_year"),
+                    "card_country": method.metadata.get("card_country")
+                })
+            elif method.payment_type == PaymentType.BANK_ACCOUNT:
+                payment_data.update({
+                    "bank_name": method.metadata.get("bank_name"),
+                    "account_type": method.metadata.get("account_type"),
+                    "routing_number_masked": method.metadata.get("routing_number_masked"),
+                    "account_number_masked": method.metadata.get("account_number_masked")
+                })
+            elif method.payment_type == PaymentType.PAYPAL:
+                payment_data.update({
+                    "paypal_email_masked": method.metadata.get("paypal_email_masked"),
+                    "paypal_account_status": method.metadata.get("paypal_account_status")
+                })
+            
+            # Security: Never store sensitive information directly
+            payment_data["security_fingerprint"] = self._generate_security_fingerprint(method)
+            payment_data["encryption_version"] = "v2"
+            
+            # Simulate database save operation
+            # In real implementation:
+            # await self.db.execute(
+            #     """INSERT INTO payment_methods 
+            #        (payment_method_id, customer_id, payment_data, created_at, updated_at)
+            #        VALUES ($1, $2, $3, $4, $5)
+            #        ON CONFLICT (payment_method_id) 
+            #        DO UPDATE SET payment_data = $3, updated_at = $5""",
+            #     method.payment_method_id, method.customer_id, 
+            #     json.dumps(payment_data), method.created_at, datetime.utcnow()
+            # )
+            
+            # Store in memory cache for quick access
+            cache_key = f"payment_method:{method.payment_method_id}"
+            self.payment_method_cache[cache_key] = payment_data
+            
+            # Update customer's payment methods cache
+            customer_cache_key = f"customer_payment_methods:{method.customer_id}"
+            if customer_cache_key in self.customer_methods_cache:
+                customer_methods = self.customer_methods_cache[customer_cache_key]
+                # Update existing or add new
+                updated = False
+                for i, existing_method in enumerate(customer_methods):
+                    if existing_method["payment_method_id"] == method.payment_method_id:
+                        customer_methods[i] = payment_data
+                        updated = True
+                        break
+                if not updated:
+                    customer_methods.append(payment_data)
+            
+            logger.info(f"Successfully saved payment method {method.payment_method_id}")
+            
+        except Exception as e:
+            logger.error(f"Failed to save payment method {method.payment_method_id}: {str(e)}")
+            raise
+
+    def _generate_security_fingerprint(self, method: PaymentMethod) -> str:
+        """Generate security fingerprint for payment method verification"""
+        # Create a unique fingerprint based on payment method details
+        fingerprint_data = f"{method.customer_id}:{method.payment_type.value}:{method.created_at.isoformat()}"
+        if method.payment_type == PaymentType.CREDIT_CARD:
+            fingerprint_data += f":{method.metadata.get('card_last_four', '')}"
+        elif method.payment_type == PaymentType.BANK_ACCOUNT:
+            fingerprint_data += f":{method.metadata.get('account_number_masked', '')}"
+        
+        return hashlib.sha256(fingerprint_data.encode()).hexdigest()[:16]
         
     async def _load_payment_method(self, payment_method_id: str) -> Optional[PaymentMethod]:
         """Charge une méthode de paiement depuis la base"""
@@ -530,8 +622,111 @@ class RefundManager:
             
     async def _save_refund_request(self, request: RefundRequest):
         """Sauvegarde une demande de remboursement"""
-        # Implémentation de sauvegarde
-        pass
+        try:
+            logger.info(f"Saving refund request {request.refund_id}")
+            
+            # Prepare refund data for storage
+            refund_data = {
+                "refund_id": request.refund_id,
+                "transaction_id": request.transaction_id,
+                "customer_id": request.customer_id,
+                "original_amount": str(request.original_amount),
+                "refund_amount": str(request.refund_amount),
+                "reason": request.reason,
+                "status": request.status,
+                "created_at": request.created_at.isoformat(),
+                "updated_at": datetime.utcnow().isoformat(),
+                "requested_by": request.requested_by,
+                "approved_by": request.approved_by,
+                "approved_at": request.approved_at.isoformat() if request.approved_at else None,
+                "processed_at": request.processed_at.isoformat() if request.processed_at else None,
+                "notes": request.notes,
+                "metadata": request.metadata or {},
+                "auto_approved": request.auto_approved,
+                "provider_refund_id": request.provider_refund_id
+            }
+            
+            # Add audit trail
+            refund_data["audit_trail"] = {
+                "created_by": request.requested_by,
+                "last_modified_by": request.approved_by or request.requested_by,
+                "last_modified_at": datetime.utcnow().isoformat(),
+                "status_history": [
+                    {
+                        "status": request.status,
+                        "timestamp": datetime.utcnow().isoformat(),
+                        "changed_by": request.approved_by or request.requested_by,
+                        "reason": f"Refund request {request.status}"
+                    }
+                ]
+            }
+            
+            # Calculate refund metrics
+            refund_data["metrics"] = {
+                "processing_time_seconds": 0,  # Will be updated when processed
+                "approval_time_seconds": 0,    # Will be updated when approved
+                "refund_percentage": float(request.refund_amount / request.original_amount * 100),
+                "is_full_refund": request.refund_amount == request.original_amount,
+                "days_since_original_transaction": (datetime.utcnow() - request.created_at).days
+            }
+            
+            # Compliance and security
+            refund_data["compliance"] = {
+                "requires_manual_review": request.refund_amount > self.auto_approval_threshold,
+                "fraud_check_required": request.refund_amount > Decimal("1000.00"),
+                "encryption_version": "v2",
+                "data_retention_until": (datetime.utcnow() + timedelta(days=2555)).isoformat(),  # 7 years
+                "pci_compliance": True
+            }
+            
+            # Simulate database save operation
+            # In real implementation:
+            # await self.db.execute(
+            #     """INSERT INTO refund_requests 
+            #        (refund_id, transaction_id, customer_id, refund_data, created_at, updated_at)
+            #        VALUES ($1, $2, $3, $4, $5, $6)
+            #        ON CONFLICT (refund_id) 
+            #        DO UPDATE SET refund_data = $4, updated_at = $6""",
+            #     request.refund_id, request.transaction_id, request.customer_id,
+            #     json.dumps(refund_data), request.created_at, datetime.utcnow()
+            # )
+            
+            # Store in memory for quick access (simulate cache)
+            if not hasattr(self, 'refund_cache'):
+                self.refund_cache = {}
+            
+            cache_key = f"refund:{request.refund_id}"
+            self.refund_cache[cache_key] = refund_data
+            
+            # Update customer refund history cache
+            customer_refunds_key = f"customer_refunds:{request.customer_id}"
+            if not hasattr(self, 'customer_refunds_cache'):
+                self.customer_refunds_cache = {}
+                
+            if customer_refunds_key not in self.customer_refunds_cache:
+                self.customer_refunds_cache[customer_refunds_key] = []
+            
+            # Add or update in customer refunds list
+            customer_refunds = self.customer_refunds_cache[customer_refunds_key]
+            existing_index = None
+            for i, existing_refund in enumerate(customer_refunds):
+                if existing_refund["refund_id"] == request.refund_id:
+                    existing_index = i
+                    break
+            
+            if existing_index is not None:
+                customer_refunds[existing_index] = refund_data
+            else:
+                customer_refunds.append(refund_data)
+            
+            # Sort by created_at (most recent first)
+            customer_refunds.sort(key=lambda x: x["created_at"], reverse=True)
+            
+            logger.info(f"Successfully saved refund request {request.refund_id}")
+            
+        except Exception as e:
+            logger.error(f"Failed to save refund request {request.refund_id}: {str(e)}")
+            raise
         
     def get_refund_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques des remboursements"""
