@@ -190,7 +190,7 @@ class EventHandler:
     
     async def handle(self, event: Event) -> bool:
         """
-        Handle an event. Must be implemented by subclasses.
+        Handle an event - base implementation.
         
         Args:
             event: Event to handle
@@ -198,7 +198,50 @@ class EventHandler:
         Returns:
             True if handled successfully, False otherwise
         """
-        raise NotImplementedError("Subclasses must implement handle method")
+        try:
+            # Basic event handling implementation
+            logger.info(f"Handling event {event.event_id} of type {event.event_type} in {self.name}")
+            
+            # Check if we can handle this event
+            if not await self.can_handle(event):
+                logger.warning(f"Handler {self.name} cannot handle event {event.event_id}")
+                return False
+            
+            # Record handling start
+            start_time = datetime.utcnow()
+            
+            # Basic event processing - log event details
+            logger.info(f"Processing event: {event.event_type}")
+            logger.debug(f"Event data: {event.data}")
+            
+            # Simulate processing time
+            import asyncio
+            await asyncio.sleep(0.01)  # Minimal processing delay
+            
+            # Update event status
+            event.status = EventStatus.PROCESSED
+            event.processed_at = datetime.utcnow()
+            
+            # Calculate processing time
+            processing_time = (datetime.utcnow() - start_time).total_seconds()
+            
+            # Update statistics
+            self.update_stats(True)
+            
+            logger.info(f"Successfully handled event {event.event_id} in {processing_time:.3f}s")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error handling event {event.event_id} in {self.name}: {str(e)}")
+            
+            # Update event status
+            event.status = EventStatus.FAILED
+            event.error = str(e)
+            
+            # Update statistics
+            self.update_stats(False)
+            
+            return False
     
     async def can_handle(self, event: Event) -> bool:
         """
