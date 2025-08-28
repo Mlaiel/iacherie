@@ -25,23 +25,68 @@ import json
 import traceback
 from contextlib import asynccontextmanager
 
-import redis.asyncio as aioredis
-import psycopg2
-from sqlalchemy.orm import Session
-from prometheus_client import Counter, Histogram, Gauge
+# Optional imports for enhanced functionality
+try:
+    import redis.asyncio as aioredis
+except ImportError:
+    aioredis = None
 
-from core.config import settings
-from core.exceptions import (
-    AgentError, 
-    ValidationError, 
-    ProcessingError,
-    ResourceLimitError,
-    SecurityError
-)
-from security.encryption import ContentEncryption
-from utils.performance_monitor import PerformanceMonitor
-from utils.rate_limiter import RateLimiter
-from utils.circuit_breaker import CircuitBreaker
+try:
+    import psycopg2
+except ImportError:
+    psycopg2 = None
+
+try:
+    from sqlalchemy.orm import Session
+except ImportError:
+    Session = None
+
+try:
+    from prometheus_client import Counter, Histogram, Gauge
+except ImportError:
+    Counter = Histogram = Gauge = None
+
+# Framework imports with fallbacks
+try:
+    from core.config import settings
+except ImportError:
+    settings = type('Settings', (), {'redis_url': 'redis://localhost:6379'})()
+
+try:
+    from core.exceptions import (
+        AgentError, 
+        ValidationError, 
+        ProcessingError,
+        ResourceLimitError,
+        SecurityError
+    )
+except ImportError:
+    # Define minimal exceptions
+    class AgentError(Exception): pass
+    class ValidationError(Exception): pass
+    class ProcessingError(Exception): pass
+    class ResourceLimitError(Exception): pass
+    class SecurityError(Exception): pass
+
+try:
+    from security.encryption import ContentEncryption
+except ImportError:
+    ContentEncryption = None
+
+try:
+    from utils.performance_monitor import PerformanceMonitor
+except ImportError:
+    PerformanceMonitor = None
+
+try:
+    from utils.rate_limiter import RateLimiter
+except ImportError:
+    RateLimiter = None
+
+try:
+    from utils.circuit_breaker import CircuitBreaker
+except ImportError:
+    CircuitBreaker = None
 
 logger = logging.getLogger(__name__)
 
@@ -135,10 +180,22 @@ class BaseAgent(ABC):
     - Audit logging and compliance tracking
     """
     
-    # Prometheus metrics
-    REQUEST_COUNT = Counter('agent_requests_total', 'Total agent requests', ['agent_type', 'status'])
-    REQUEST_DURATION = Histogram('agent_request_duration_seconds', 'Request duration', ['agent_type'])
-    ACTIVE_CONNECTIONS = Gauge('agent_active_connections', 'Active connections', ['agent_type'])
+    # Prometheus metrics (with fallbacks)
+    if Counter is not None:
+        REQUEST_COUNT = Counter('agent_requests_total', 'Total agent requests', ['agent_type', 'status'])
+        REQUEST_DURATION = Histogram('agent_request_duration_seconds', 'Request duration', ['agent_type'])
+        ACTIVE_CONNECTIONS = Gauge('agent_active_connections', 'Active connections', ['agent_type'])
+    else:
+        # Fallback metrics (no-op)
+        class MockMetric:
+            def labels(self, **kwargs): return self
+            def inc(self): pass
+            def observe(self, value): pass
+            def set(self, value): pass
+        
+        REQUEST_COUNT = MockMetric()
+        REQUEST_DURATION = MockMetric()
+        ACTIVE_CONNECTIONS = MockMetric()
     
     def __init__(
         self,
