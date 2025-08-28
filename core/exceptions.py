@@ -30,6 +30,21 @@ class SecurityError(AgentError):
     pass
 
 
+class CrawlerError(AgentError):
+    """Exception for crawler operations"""
+    pass
+
+
+class RateLimitError(CrawlerError):
+    """Exception for rate limit violations"""
+    pass
+
+
+class ContentMatchError(AgentError):
+    """Exception for content matching operations"""
+    pass
+
+
 class WorkflowError(AgentError):
     """Exception for workflow failures"""
     pass

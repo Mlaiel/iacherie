@@ -259,11 +259,6 @@ def get_platforms_by_category(category: str):
         platform for platform, metadata in PLATFORM_METADATA.items()
         if metadata.get("category") == category
     ]
-    "LinkedInCrawler",
-    "TwitchCrawler",
-    "SoundCloudCrawler",
-    "GenericWebCrawler",
-]
 
 # Platform capabilities matrix
 PLATFORM_CAPABILITIES = {
