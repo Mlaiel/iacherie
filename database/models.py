@@ -201,4 +201,40 @@ class ContentPerformance(Base):
     comments = Column(BigInteger, default=0)
     revenue_generated = Column(Float, default=0.0)
     engagement_rate = Column(Float)
+    collected_at = Column(DateTime, default=datetime.utcnow)
+
+
+class CrawlResult(Base):
+    """Crawl result model for storing crawler data"""
+    __tablename__ = "crawl_results"
+    
+    id = Column(String(36), primary_key=True)
+    platform = Column(String(50), nullable=False)
+    crawler_type = Column(String(50), nullable=False)
+    source_url = Column(Text, nullable=False)
+    content_data = Column(JSON, nullable=False)
+    metadata = Column(JSON)
+    status = Column(String(20), default="success")
+    error_message = Column(Text)
+    crawled_at = Column(DateTime, default=datetime.utcnow)
+    processed = Column(Boolean, default=False)
+
+
+class ContentMatch(Base):
+    """Content match model for storing detected matches"""
+    __tablename__ = "content_matches"
+    
+    id = Column(String(36), primary_key=True)
+    original_content_id = Column(String(36), ForeignKey("content.id"), nullable=False)
+    matched_url = Column(Text, nullable=False)
+    platform = Column(String(50), nullable=False)
+    similarity_score = Column(Float, nullable=False)
+    match_type = Column(String(30), nullable=False)  # exact, similar, partial
+    detection_method = Column(String(50), nullable=False)
+    match_data = Column(JSON)
+    confidence_score = Column(Float)
+    status = Column(String(20), default="pending")
+    verified = Column(Boolean, default=False)
+    detected_at = Column(DateTime, default=datetime.utcnow)
+    verified_at = Column(DateTime)
     recorded_at = Column(DateTime, default=datetime.utcnow)

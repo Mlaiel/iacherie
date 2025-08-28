@@ -25,12 +25,11 @@ import json
 
 # Third-party imports
 from bs4 import BeautifulSoup, Comment
-import readability
+from readability import Document
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import aiohttp
-from readability import Document
 import langdetect
 from textstat import flesch_reading_ease, automated_readability_index
 import nltk

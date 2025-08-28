@@ -32,6 +32,25 @@ class Settings:
     # Security settings
     SECRET_KEY: str = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
     
+    # Platform API credentials
+    SPOTIFY_CLIENT_ID: Optional[str] = os.getenv("SPOTIFY_CLIENT_ID")
+    SPOTIFY_CLIENT_SECRET: Optional[str] = os.getenv("SPOTIFY_CLIENT_SECRET")
+    YOUTUBE_API_KEY: Optional[str] = os.getenv("YOUTUBE_API_KEY")
+    TWITTER_API_KEY: Optional[str] = os.getenv("TWITTER_API_KEY")
+    TWITTER_API_SECRET: Optional[str] = os.getenv("TWITTER_API_SECRET")
+    TWITTER_ACCESS_TOKEN: Optional[str] = os.getenv("TWITTER_ACCESS_TOKEN")
+    TWITTER_ACCESS_TOKEN_SECRET: Optional[str] = os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
+    INSTAGRAM_ACCESS_TOKEN: Optional[str] = os.getenv("INSTAGRAM_ACCESS_TOKEN")
+    FACEBOOK_ACCESS_TOKEN: Optional[str] = os.getenv("FACEBOOK_ACCESS_TOKEN")
+    LINKEDIN_CLIENT_ID: Optional[str] = os.getenv("LINKEDIN_CLIENT_ID")
+    LINKEDIN_CLIENT_SECRET: Optional[str] = os.getenv("LINKEDIN_CLIENT_SECRET")
+    TIKTOK_ACCESS_TOKEN: Optional[str] = os.getenv("TIKTOK_ACCESS_TOKEN")
+    TWITCH_CLIENT_ID: Optional[str] = os.getenv("TWITCH_CLIENT_ID")
+    TWITCH_CLIENT_SECRET: Optional[str] = os.getenv("TWITCH_CLIENT_SECRET")
+    SOUNDCLOUD_CLIENT_ID: Optional[str] = os.getenv("SOUNDCLOUD_CLIENT_ID")
+    APPLE_MUSIC_KEY_ID: Optional[str] = os.getenv("APPLE_MUSIC_KEY_ID")
+    APPLE_MUSIC_TEAM_ID: Optional[str] = os.getenv("APPLE_MUSIC_TEAM_ID")
+    
     def __post_init__(self):
         if self.SUPPORTED_FORMATS is None:
             self.SUPPORTED_FORMATS = {
@@ -44,3 +63,7 @@ class Settings:
 
 # Global settings instance
 settings = Settings()
+
+def get_settings() -> Settings:
+    """Get global settings instance"""
+    return settings
