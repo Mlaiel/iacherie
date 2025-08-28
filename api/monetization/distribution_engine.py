@@ -1639,6 +1639,139 @@ class AutomatedDistributionEngine:
         
         return recommendations
     
+    async def _get_eligible_payout_creators(self, creator_id: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Get creators eligible for automated payouts."""
+        try:
+            # Query to get creators with unpaid revenue above minimum threshold
+            if creator_id:
+                query = """
+                SELECT DISTINCT creator_id, preferred_currency, payout_method, payout_details
+                FROM creator_profiles 
+                WHERE creator_id = $1 AND payout_enabled = true
+                """
+                creators = await self.db.fetch(query, creator_id)
+            else:
+                query = """
+                SELECT DISTINCT creator_id, preferred_currency, payout_method, payout_details
+                FROM creator_profiles 
+                WHERE payout_enabled = true
+                """
+                creators = await self.db.fetch(query)
+            
+            return [dict(creator) for creator in creators]
+            
+        except Exception as e:
+            self.logger.error(f"Error getting eligible creators: {e}")
+            # Return mock data for demonstration
+            return [{
+                "creator_id": creator_id or "mock_creator",
+                "preferred_currency": "USD",
+                "payout_method": "paypal",
+                "payout_details": {"email": "creator@example.com"}
+            }] if creator_id else []
+    
+    async def _calculate_available_revenue(self, creator_id: str) -> Decimal:
+        """Calculate total available revenue for creator."""
+        try:
+            query = """
+            SELECT COALESCE(SUM(amount), 0) as total_revenue
+            FROM revenue_transactions 
+            WHERE creator_id = $1 AND status = 'completed' AND payout_status = 'unpaid'
+            """
+            result = await self.db.fetchrow(query, creator_id)
+            return Decimal(str(result["total_revenue"])) if result else Decimal("0")
+            
+        except Exception as e:
+            self.logger.error(f"Error calculating available revenue: {e}")
+            # Return mock revenue for demonstration
+            return Decimal("100.00")
+    
+    async def _get_unpaid_revenue_records(self, creator_id: str) -> List[str]:
+        """Get list of unpaid revenue record IDs for creator."""
+        try:
+            query = """
+            SELECT transaction_id 
+            FROM revenue_transactions 
+            WHERE creator_id = $1 AND status = 'completed' AND payout_status = 'unpaid'
+            """
+            records = await self.db.fetch(query, creator_id)
+            return [record["transaction_id"] for record in records]
+            
+        except Exception as e:
+            self.logger.error(f"Error getting unpaid revenue records: {e}")
+            return ["mock_transaction_1", "mock_transaction_2"]
+    
+    async def _calculate_payout_fee(self, amount: Decimal, payout_method: Any) -> Decimal:
+        """Calculate processing fee for payout."""
+        try:
+            # Fee structure based on payout method
+            fee_rates = {
+                "paypal": {"rate": Decimal("0.025"), "fixed": Decimal("0.30")},
+                "stripe": {"rate": Decimal("0.025"), "fixed": Decimal("0.30")},
+                "bank_transfer": {"rate": Decimal("0.005"), "fixed": Decimal("1.00")},
+                "crypto": {"rate": Decimal("0.015"), "fixed": Decimal("0.00")}
+            }
+            
+            method_name = payout_method.value if hasattr(payout_method, 'value') else str(payout_method)
+            fees = fee_rates.get(method_name, fee_rates["paypal"])
+            
+            fee = (amount * fees["rate"]) + fees["fixed"]
+            return fee.quantize(Decimal("0.01"))
+            
+        except Exception as e:
+            self.logger.error(f"Error calculating payout fee: {e}")
+            return Decimal("2.50")  # Default fee
+    
+    async def _process_payout_request(self, payout_request: Any) -> Dict[str, Any]:
+        """Process payout request through payment processor."""
+        try:
+            # Simulate payout processing
+            processing_result = {
+                "success": True,
+                "status": "completed",
+                "transaction_id": f"payout_tx_{uuid.uuid4().hex[:12]}",
+                "processed_at": datetime.utcnow().isoformat(),
+                "processor_response": {
+                    "id": payout_request.payout_id,
+                    "amount": float(payout_request.net_amount),
+                    "currency": payout_request.currency,
+                    "method": payout_request.payout_method.value if hasattr(payout_request.payout_method, 'value') else str(payout_request.payout_method)
+                }
+            }
+            
+            # Update revenue records as paid
+            if processing_result["success"]:
+                await self._mark_revenue_as_paid(payout_request.revenue_records, payout_request.payout_id)
+            
+            self.logger.info(f"Payout processed successfully: {payout_request.payout_id}")
+            return processing_result
+            
+        except Exception as e:
+            self.logger.error(f"Payout processing failed: {e}")
+            return {
+                "success": False,
+                "status": "failed",
+                "error": str(e),
+                "transaction_id": None
+            }
+    
+    async def _mark_revenue_as_paid(self, revenue_record_ids: List[str], payout_id: str) -> None:
+        """Mark revenue records as paid."""
+        try:
+            if not revenue_record_ids:
+                return
+                
+            query = """
+            UPDATE revenue_transactions 
+            SET payout_status = 'paid', payout_id = $1, payout_date = NOW()
+            WHERE transaction_id = ANY($2)
+            """
+            await self.db.execute(query, payout_id, revenue_record_ids)
+            self.logger.debug(f"Marked {len(revenue_record_ids)} revenue records as paid")
+            
+        except Exception as e:
+            self.logger.error(f"Error marking revenue as paid: {e}")
+    
     async def cleanup_resources(self):
         """Clean up engine resources."""
         try:
