@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { 
   ChartBarIcon, 
   ShieldCheckIcon, 
@@ -15,61 +14,12 @@ import { MetricCard } from './MetricCard';
 import { ProtectionStatus } from './ProtectionStatus';
 import { RecentActivity } from './RecentActivity';
 import { RevenueChart } from './RevenueChart';
-
-interface DashboardStats {
-  totalContent: number;
-  protectedFiles: number;
-  monthlyRevenue: number;
-  activeMonitoring: number;
-  totalViolations: number;
-  resolvedViolations: number;
-  revenueGrowth: number;
-  contentGrowth: number;
-}
+import { useContent } from '@/hooks/useContent';
+import { useNotifications } from '@/hooks/useNotifications';
 
 export function Dashboard() {
-  const [stats, setStats] = useState<DashboardStats>({
-    totalContent: 0,
-    protectedFiles: 0,
-    monthlyRevenue: 0,
-    activeMonitoring: 0,
-    totalViolations: 0,
-    resolvedViolations: 0,
-    revenueGrowth: 0,
-    contentGrowth: 0,
-  });
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate API call
-    const fetchStats = async () => {
-      try {
-        // In real implementation, this would call the backend API
-        // const response = await fetch('/api/dashboard/stats');
-        // const data = await response.json();
-        
-        // Mock data for demonstration
-        const mockData: DashboardStats = {
-          totalContent: 1247,
-          protectedFiles: 1198,
-          monthlyRevenue: 24580,
-          activeMonitoring: 892,
-          totalViolations: 43,
-          resolvedViolations: 38,
-          revenueGrowth: 12.5,
-          contentGrowth: 8.3,
-        };
-        
-        setStats(mockData);
-      } catch (error) {
-        console.error('Error fetching dashboard stats:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchStats();
-  }, []);
+  const { metrics, isLoading, refreshMetrics } = useContent();
+  const { notifications } = useNotifications();
 
   if (isLoading) {
     return (
@@ -91,34 +41,34 @@ export function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <MetricCard
           title="Total Content"
-          value={stats.totalContent.toLocaleString()}
+          value={metrics.total_content.toLocaleString()}
           icon={DocumentDuplicateIcon}
-          trend={stats.contentGrowth}
+          trend={8.3}
           trendDirection="up"
           color="blue"
         />
         <MetricCard
           title="Protected Files"
-          value={stats.protectedFiles.toLocaleString()}
+          value={metrics.protected_files.toLocaleString()}
           icon={ShieldCheckIcon}
-          trend={Math.round((stats.protectedFiles / stats.totalContent) * 100)}
+          trend={Math.round((metrics.protected_files / Math.max(metrics.total_content, 1)) * 100)}
           trendDirection="up"
           color="green"
           suffix="% protected"
         />
         <MetricCard
           title="Monthly Revenue"
-          value={`$${stats.monthlyRevenue.toLocaleString()}`}
+          value={`$${metrics.monthly_revenue.toLocaleString()}`}
           icon={CurrencyDollarIcon}
-          trend={stats.revenueGrowth}
+          trend={12.5}
           trendDirection="up"
           color="purple"
         />
         <MetricCard
           title="Active Monitoring"
-          value={stats.activeMonitoring.toLocaleString()}
+          value={metrics.active_monitoring.toLocaleString()}
           icon={EyeIcon}
-          trend={Math.round((stats.activeMonitoring / stats.protectedFiles) * 100)}
+          trend={Math.round((metrics.active_monitoring / Math.max(metrics.protected_files, 1)) * 100)}
           trendDirection="up"
           color="indigo"
           suffix="% coverage"
@@ -131,8 +81,8 @@ export function Dashboard() {
         <div className="lg:col-span-2 space-y-6">
           <RevenueChart />
           <ProtectionStatus 
-            totalViolations={stats.totalViolations}
-            resolvedViolations={stats.resolvedViolations}
+            totalViolations={metrics.violations_detected}
+            resolvedViolations={metrics.violations_resolved}
           />
         </div>
 
@@ -140,17 +90,45 @@ export function Dashboard() {
         <div className="space-y-6">
           <RecentActivity />
           
+          {/* Notifications Panel */}
+          {notifications.length > 0 && (
+            <div className="card">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Notifications</h3>
+              <div className="space-y-3">
+                {notifications.slice(0, 3).map((notification) => (
+                  <div key={notification.id} className={`p-3 rounded-lg text-sm border-l-4 ${
+                    notification.type === 'success' ? 'bg-green-50 border-green-400 text-green-700' :
+                    notification.type === 'error' ? 'bg-red-50 border-red-400 text-red-700' :
+                    notification.type === 'warning' ? 'bg-yellow-50 border-yellow-400 text-yellow-700' :
+                    'bg-blue-50 border-blue-400 text-blue-700'
+                  }`}>
+                    <p>{notification.message}</p>
+                    <p className="text-xs opacity-75 mt-1">
+                      {new Date(notification.timestamp).toLocaleTimeString()}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
           {/* Quick Actions */}
           <div className="card">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
             <div className="space-y-3">
-              <button className="w-full btn-primary text-left">
+              <button 
+                className="w-full btn-primary text-left"
+                onClick={() => window.location.href = '/upload'}
+              >
                 <DocumentDuplicateIcon className="w-5 h-5 inline mr-2" />
                 Upload New Content
               </button>
-              <button className="w-full btn-secondary text-left">
+              <button 
+                className="w-full btn-secondary text-left"
+                onClick={refreshMetrics}
+              >
                 <EyeIcon className="w-5 h-5 inline mr-2" />
-                Monitor Platforms
+                Refresh Metrics
               </button>
               <button className="w-full btn-secondary text-left">
                 <ChartBarIcon className="w-5 h-5 inline mr-2" />

@@ -9,6 +9,8 @@ import {
   DocumentTextIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline';
+import { useContent } from '@/hooks/useContent';
+import { useNotifications } from '@/hooks/useNotifications';
 
 interface UploadedFile {
   file: File;
@@ -19,8 +21,10 @@ interface UploadedFile {
 
 export function UploadInterface() {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
-  const [isUploading, setIsUploading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
+  
+  const { uploadContent, isLoading } = useContent();
+  const { success, error } = useNotifications();
 
   const getFileType = (file: File): UploadedFile['type'] => {
     if (file.type.startsWith('audio/')) return 'audio';
@@ -92,31 +96,23 @@ export function UploadInterface() {
   const handleUpload = async () => {
     if (uploadedFiles.length === 0) return;
 
-    setIsUploading(true);
     try {
-      // Simulate upload process
-      for (const { file } of uploadedFiles) {
-        const formData = new FormData();
-        formData.append('file', file);
-        
-        // In real implementation, this would call the backend API
-        // const response = await fetch('/api/upload', {
-        //   method: 'POST',
-        //   body: formData,
-        // });
-        
-        // Mock upload delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
+      const files = uploadedFiles.map(f => f.file);
+      await uploadContent(files);
       
       // Clear files after successful upload
+      uploadedFiles.forEach(f => {
+        if (f.preview) {
+          URL.revokeObjectURL(f.preview);
+        }
+      });
       setUploadedFiles([]);
-      alert('Files uploaded successfully!');
-    } catch (error) {
-      console.error('Upload error:', error);
-      alert('Upload failed. Please try again.');
-    } finally {
-      setIsUploading(false);
+      
+      success(`${files.length} file(s) uploaded and processing started!`);
+      
+    } catch (uploadError) {
+      console.error('Upload error:', uploadError);
+      error('Upload failed. Please try again.');
     }
   };
 
@@ -223,15 +219,15 @@ export function UploadInterface() {
           <div className="mt-6 flex justify-center">
             <button
               onClick={handleUpload}
-              disabled={isUploading || uploadedFiles.length === 0}
+              disabled={isLoading || uploadedFiles.length === 0}
               className={`btn-primary px-8 py-3 text-lg ${
-                isUploading ? 'opacity-50 cursor-not-allowed' : ''
+                isLoading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
             >
-              {isUploading ? (
+              {isLoading ? (
                 <div className="flex items-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Uploading...
+                  Processing...
                 </div>
               ) : (
                 `Upload ${uploadedFiles.length} File${uploadedFiles.length > 1 ? 's' : ''}`
