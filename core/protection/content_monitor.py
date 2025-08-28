@@ -120,7 +120,32 @@ class PlatformMonitor:
     
     async def scan_content(self) -> MonitoringResult:
         """Perform content scan on platform"""
-        raise NotImplementedError
+        start_time = datetime.utcnow()
+        result = MonitoringResult(platform=self.config.platform)
+        
+        try:
+            # Platform-specific scanning logic
+            if self.config.platform == MonitoringPlatform.YOUTUBE:
+                result = await self._scan_youtube()
+            elif self.config.platform == MonitoringPlatform.INSTAGRAM:
+                result = await self._scan_instagram()
+            elif self.config.platform == MonitoringPlatform.TIKTOK:
+                result = await self._scan_tiktok()
+            elif self.config.platform == MonitoringPlatform.TWITTER:
+                result = await self._scan_twitter()
+            elif self.config.platform == MonitoringPlatform.SPOTIFY:
+                result = await self._scan_spotify()
+            else:
+                result = await self._scan_generic_web()
+                
+            result.scan_duration = (datetime.utcnow() - start_time).total_seconds()
+            logger.info(f"Scan completed for {self.config.platform.value} in {result.scan_duration:.2f}s")
+            
+        except Exception as e:
+            result.error_message = str(e)
+            logger.error(f"Scan failed for {self.config.platform.value}: {e}")
+            
+        return result
     
     def _setup_selenium_driver(self) -> webdriver.Chrome:
         """Setup Selenium Chrome driver for dynamic content"""
@@ -133,6 +158,125 @@ class PlatformMonitor:
         
         driver = webdriver.Chrome(options=chrome_options)
         return driver
+
+    async def _scan_youtube(self) -> MonitoringResult:
+        """Scan YouTube for content"""
+        result = MonitoringResult(platform=MonitoringPlatform.YOUTUBE)
+        
+        for search_term in self.config.search_terms:
+            search_url = f"https://www.youtube.com/results?search_query={search_term}"
+            
+            async with aiohttp.ClientSession() as session:
+                async with session.get(search_url) as response:
+                    if response.status == 200:
+                        html = await response.text()
+                        soup = BeautifulSoup(html, 'html.parser')
+                        
+                        # Extract video URLs from search results
+                        video_links = soup.find_all('a', href=re.compile(r'/watch\?v='))
+                        for link in video_links[:self.config.max_results]:
+                            full_url = f"https://www.youtube.com{link['href']}"
+                            result.detected_urls.append(full_url)
+                            
+        return result
+
+    async def _scan_instagram(self) -> MonitoringResult:
+        """Scan Instagram for content"""
+        result = MonitoringResult(platform=MonitoringPlatform.INSTAGRAM)
+        
+        # Note: Instagram has strict API requirements, using basic search approach
+        for search_term in self.config.search_terms:
+            search_url = f"https://www.instagram.com/explore/tags/{search_term}/"
+            
+            async with aiohttp.ClientSession() as session:
+                async with session.get(search_url) as response:
+                    if response.status == 200:
+                        html = await response.text()
+                        # Extract post URLs using regex (simplified approach)
+                        post_pattern = r'/p/[A-Za-z0-9_-]+/'
+                        matches = re.findall(post_pattern, html)
+                        
+                        for match in matches[:self.config.max_results]:
+                            full_url = f"https://www.instagram.com{match}"
+                            result.detected_urls.append(full_url)
+                            
+        return result
+
+    async def _scan_tiktok(self) -> MonitoringResult:
+        """Scan TikTok for content"""
+        result = MonitoringResult(platform=MonitoringPlatform.TIKTOK)
+        
+        for search_term in self.config.search_terms:
+            search_url = f"https://www.tiktok.com/search?q={search_term}"
+            
+            async with aiohttp.ClientSession() as session:
+                async with session.get(search_url) as response:
+                    if response.status == 200:
+                        html = await response.text()
+                        # Extract TikTok video URLs using regex
+                        video_pattern = r'/@[\w.-]+/video/\d+'
+                        matches = re.findall(video_pattern, html)
+                        
+                        for match in matches[:self.config.max_results]:
+                            full_url = f"https://www.tiktok.com{match}"
+                            result.detected_urls.append(full_url)
+                            
+        return result
+
+    async def _scan_twitter(self) -> MonitoringResult:
+        """Scan Twitter for content"""
+        result = MonitoringResult(platform=MonitoringPlatform.TWITTER)
+        
+        for search_term in self.config.search_terms:
+            search_url = f"https://twitter.com/search?q={search_term}"
+            
+            async with aiohttp.ClientSession() as session:
+                async with session.get(search_url) as response:
+                    if response.status == 200:
+                        html = await response.text()
+                        # Extract tweet URLs using regex
+                        tweet_pattern = r'/[\w]+/status/\d+'
+                        matches = re.findall(tweet_pattern, html)
+                        
+                        for match in matches[:self.config.max_results]:
+                            full_url = f"https://twitter.com{match}"
+                            result.detected_urls.append(full_url)
+                            
+        return result
+
+    async def _scan_spotify(self) -> MonitoringResult:
+        """Scan Spotify for content"""
+        result = MonitoringResult(platform=MonitoringPlatform.SPOTIFY)
+        
+        for search_term in self.config.search_terms:
+            search_url = f"https://open.spotify.com/search/{search_term}"
+            
+            async with aiohttp.ClientSession() as session:
+                async with session.get(search_url) as response:
+                    if response.status == 200:
+                        html = await response.text()
+                        # Extract Spotify track/album URLs
+                        spotify_pattern = r'/track/[A-Za-z0-9]+|/album/[A-Za-z0-9]+|/playlist/[A-Za-z0-9]+'
+                        matches = re.findall(spotify_pattern, html)
+                        
+                        for match in matches[:self.config.max_results]:
+                            full_url = f"https://open.spotify.com{match}"
+                            result.detected_urls.append(full_url)
+                            
+        return result
+
+    async def _scan_generic_web(self) -> MonitoringResult:
+        """Generic web content scanning"""
+        result = MonitoringResult(platform=MonitoringPlatform.GENERIC_WEB)
+        
+        # Simple search engine simulation
+        for search_term in self.config.search_terms:
+            # Would integrate with search APIs or web crawling
+            # For now, return empty result as this is a complex implementation
+            result.metadata['search_term'] = search_term
+            result.metadata['note'] = 'Generic web scanning requires external search API integration'
+            
+        return result
 
 
 class YouTubeMonitor(PlatformMonitor):
