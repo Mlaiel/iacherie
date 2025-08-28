@@ -647,6 +647,13 @@ class DatabasePoolManager:
         self.monitoring_task: Optional[asyncio.Task] = None
         self.is_running = False
         self._pool_locks: Dict[str, asyncio.Lock] = {}
+        
+        # Enhanced pool management features
+        self.load_balancers: Dict[str, 'LoadBalancer'] = {}
+        self.circuit_breakers: Dict[str, 'CircuitBreaker'] = {}
+        self.connection_metrics: Dict[str, Dict[str, Any]] = defaultdict(dict)
+        self.adaptive_sizing_enabled = True
+        self.optimization_history: List[Dict[str, Any]] = []
     
     def register_pool_config(self, db_type: DatabaseType, config: PoolConfig) -> None:
         """Register pool configuration for database type"""
