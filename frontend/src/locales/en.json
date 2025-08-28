@@ -102,5 +102,19 @@
   "currency_localization": "Currency Localization",
   "date_preferences": "Date Format Preferences",
   "number_formatting": "Number Formatting",
-  "phone_standards": "Phone Number Standards"
+  "phone_standards": "Phone Number Standards",
+  "local_dialects": "Local Dialects",
+  "indigenous_languages": "Indigenous Languages",
+  "regional_customization": "Regional Customization",
+  "cultural_nuances": "Cultural Nuances",
+  "local_expressions": "Local Expressions",
+  "dialect_variants": "Dialect Variants",
+  "community_language": "Community Language",
+  "traditional_speech": "Traditional Speech",
+  "colloquial_terms": "Colloquial Terms",
+  "vernacular_support": "Vernacular Support",
+  "heritage_languages": "Heritage Languages",
+  "minority_languages": "Minority Languages",
+  "tribal_languages": "Tribal Languages",
+  "ancestral_tongues": "Ancestral Tongues"
 }

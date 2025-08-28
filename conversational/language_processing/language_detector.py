@@ -551,7 +551,12 @@ class LanguageDetector:
                     'scottish': ['ken', 'bairn', 'bonnie', 'dreich', 'nae', 'wee', 'kirk', 'loch'],
                     'indian': ['prepone', 'out of station', 'good name', 'do the needful', 'revert back', 'timepass'],
                     'nigerian': ['abeg', 'wahala', 'sha', 'abi', 'chop', 'gist', 'package', 'waka'],
-                    'jamaican': ['bredrin', 'yute', 'ting', 'nuh', 'mi deh', 'wha gwaan', 'big up', 'likkle']
+                    'jamaican': ['bredrin', 'yute', 'ting', 'nuh', 'mi deh', 'wha gwaan', 'big up', 'likkle'],
+                    # Enhanced local dialects
+                    'singapore': ['lah', 'lor', 'meh', 'sia', 'steady', 'shiok', 'chope', 'kiasu', 'dabao'],
+                    'malaysia': ['lah', 'mah', 'lor', 'kan', 'alamak', 'cincai', 'tapau', 'kampong'],
+                    'new_zealand': ['chur', 'bro', 'sweet as', 'yeah nah', 'she'll be right', 'choice'],
+                    'philippines': ['po', 'opo', 'kuya', 'ate', 'jeepney', 'barangay', 'sari-sari']
                 },
                 'de': {
                     'standard': ['sprechen', 'haben', 'machen', 'schauen', 'gehen'],
@@ -577,13 +582,22 @@ class LanguageDetector:
                     'belgian': ['nonante', 'septante', 'wassingue', 'kot', 'drache'],
                     'swiss': ['huitante', 'septante', 'linge', 'panosse', 'fœhn'],
                     'african': ['taxi-brousse', 'maquis', 'daba', 'palabre', 'concession'],
-                    'maghreb': ['baraka', 'walou', 'bezef', 'khlass', 'benna']
+                    'maghreb': ['baraka', 'walou', 'bezef', 'khlass', 'benna'],
+                    # Enhanced French local dialects
+                    'haitian': ['map', 'pale', 'bagay', 'kote', 'kijan', 'pase'],
+                    'acadian': ['icitte', 'asteur', 'tantôt', 'bâdrer', 'jaser'],
+                    'ivorian': ['dja', 'gnama', 'gbangban', 'tchoko', 'wassa'],
+                    'senegalese': ['amoul', 'dafa', 'mooy', 'sama', 'waye']
                 },
                 'pt': {
                     'brazilian': ['você', 'trem', 'garoto', 'geladeira', 'ônibus', 'celular'],
                     'portugal': ['tu', 'comboio', 'miúdo', 'frigorífico', 'autocarro', 'telemóvel'],
                     'angolan': ['bué', 'garina', 'bazar', 'fixe', 'catita'],
-                    'mozambican': ['xima', 'capulana', 'machamba', 'biscate']
+                    'mozambican': ['xima', 'capulana', 'machamba', 'biscate'],
+                    # Enhanced Portuguese local dialects  
+                    'cape_verdean': ['catchupa', 'morança', 'sodade', 'txon', 'nha'],
+                    'timorese': ['malae', 'foho', 'uma', 'suku', 'aldeia'],
+                    'macanese': ['patuá', 'chádi', 'nhonhô', 'lacassá', 'mingau']
                 },
                 'ar': {
                     'egyptian': ['عايز', 'جامد', 'زي', 'خالاص', 'برضه', 'كده'],
@@ -591,33 +605,72 @@ class LanguageDetector:
                     'gulf': ['شلون', 'وايد', 'زين', 'يلا', 'خوش', 'عاد'],
                     'maghreb': ['آش', 'بزاف', 'مليح', 'يلاه', 'واخا', 'بصح'],
                     'iraqi': ['شلونك', 'آني', 'هم', 'ماكو', 'هوايه', 'زين'],
-                    'sudanese': ['كيفك', 'جداً', 'هسه', 'شديد', 'خلاص']
+                    'sudanese': ['كيفك', 'جداً', 'هسه', 'شديد', 'خلاص'],
+                    # Enhanced Arabic local dialects
+                    'palestinian': ['يسلام', 'صح', 'اكيد', 'بلاش', 'زلمة'],
+                    'jordanian': ['يعني', 'منيح', 'اكيد', 'ولا', 'صاحب'],
+                    'libyan': ['يزي', 'شنو', 'الله', 'باهي', 'زين'],
+                    'yemeni': ['صح', 'ايش', 'ولا', 'زين', 'خلاص']
                 },
                 'it': {
                     'northern': ['ghe', 'xe', 'ciao belo', 'va ben', 'massa'],
                     'central': ['aò', 'magnà', 'morì', 'che dici', 'annamo'],
                     'southern': ['guagliò', 'massì', 'assaje', 'ammuina', 'uagliò'],
                     'sicilian': ['picciotto', 'arrusbigliato', 'travagghiare', 'sceccu'],
-                    'sardinian': ['deu', 'de', 'si', 'nde', 'chi']
+                    'sardinian': ['deu', 'de', 'si', 'nde', 'chi'],
+                    # Enhanced Italian local dialects
+                    'venetian': ['ciao', 'xe', 'ghe', 'so', 'te'],
+                    'neapolitan': ['guaglió', 'jammò', 'bell', 'simm', 'chest'],
+                    'milanese': ['porca miseria', 'cosa', 'belin', 'scialla']
                 },
                 'zh': {
                     'mandarin': ['你好', '谢谢', '再见', '什么', '怎么'],
                     'cantonese': ['你好', '多謝', '再見', '乜嘢', '點解'],
                     'taiwanese': ['你好', '多謝', '掰掰', '啥物', '按怎'],
-                    'shanghainese': ['侬好', '谢谢侬', '再会', '啥个', '哪能']
+                    'shanghainese': ['侬好', '谢谢侬', '再会', '啥个', '哪能'],
+                    # Enhanced Chinese local dialects
+                    'hakka': ['你好無', '恁仔', '还好', '麼个', '仰般'],
+                    'teochew': ['汝好', '多谢', '再會', '乜个', '怎呢'],
+                    'hokkien': ['汝好', '多謝', '閣會', '啥物', '按怎'],
+                    'wenzhounese': ['侬好', '夜谢', '再会', '啥号', '哪恁']
                 },
                 'hi': {
                     'standard': ['आप', 'है', 'में', 'और', 'का'],
                     'punjabi': ['ਤੁਸੀਂ', 'ਹੈ', 'ਵਿਚ', 'ਅਤੇ', 'ਦਾ'],
                     'gujarati': ['તમે', 'છે', 'માં', 'અને', 'ના'],
                     'bengali': ['আপনি', 'আছে', 'মধ্যে', 'এবং', 'এর'],
-                    'marathi': ['तुम्ही', 'आहे', 'मध्ये', 'आणि', 'चा']
+                    'marathi': ['तुम्ही', 'आहे', 'मध्ये', 'आणि', 'चा'],
+                    # Enhanced Hindi local dialects
+                    'bihari': ['राउर', 'बा', 'में', 'आउर', 'के'],
+                    'rajasthani': ['थे', 'है', 'में', 'अर', 'रो'],
+                    'haryanvi': ['थे', 'सै', 'में', 'अर', 'का'],
+                    'bhojpuri': ['राउर', 'बा', 'में', 'अउर', 'के']
                 },
                 'ru': {
                     'standard': ['привет', 'спасибо', 'пожалуйста', 'хорошо', 'плохо'],
                     'ukrainian': ['привіт', 'дякую', 'будь ласка', 'добре', 'погано'],
                     'belarusian': ['прывітанне', 'дзякуй', 'калі ласка', 'добра', 'дрэнна'],
-                    'siberian': ['здорово', 'давай', 'нормально', 'ништяк']
+                    'siberian': ['здорово', 'давай', 'нормально', 'ништяк'],
+                    # Enhanced Slavic local dialects
+                    'kazakh_russian': ['сәлем', 'рахмет', 'жақсы', 'жаман', 'дұрыс'],
+                    'tatar_russian': ['сәлам', 'рәхмәт', 'яхшы', 'начар', 'дөрес'],
+                    'caucasian_russian': ['гамарджоба', 'мадлоба', 'карги', 'цуди', 'свали']
+                },
+                # Indigenous and local languages support
+                'quechua': {
+                    'cusco': ['rimaykullayki', 'munay', 'kay', 'chay', 'ima'],
+                    'bolivian': ['qawsaykama', 'sumaj', 'kay', 'chay', 'ima'],
+                    'ecuadorian': ['kichwamanta', 'sumak', 'kay', 'chay', 'ima']
+                },
+                'nahuatl': {
+                    'central': ['niltze', 'tlazohcamati', 'nican', 'ompa', 'tlen'],
+                    'huasteca': ['piya', 'tlasojkamati', 'nikan', 'ompa', 'tlen'],
+                    'guerrero': ['nia', 'tlasokamati', 'nikan', 'ompa', 'tlen']
+                },
+                'berber': {
+                    'tamazight': ['azul', 'tanmirt', 'da', 'din', 'ma'],
+                    'tashelhit': ['azul', 'tanmirt', 'gid', 'nna', 'ma'],
+                    'tarifit': ['azul', 'tanmirt', 'da', 'din', 'ma']
                 }
             }
             
