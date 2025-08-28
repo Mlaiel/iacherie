@@ -1,0 +1,797 @@
+# Production Network Policies for Ainflue Platform
+# Micro-segmentation and network security rules
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+---
+# Default Deny All Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: ainflue-production
+  labels:
+    app: security
+    environment: production
+  annotations:
+    description: "Default deny all ingress and egress traffic"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+# Frontend Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-frontend-netpol
+  namespace: ainflue-production
+  labels:
+    app: ainflue-frontend
+    environment: production
+  annotations:
+    description: "Network policy for frontend pods"
+spec:
+  podSelector:
+    matchLabels:
+      app: ainflue-frontend
+      component: frontend
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress-controller
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Allow traffic from load balancer
+  - from:
+    - podSelector:
+        matchLabels:
+          app: nginx-load-balancer
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow connection to API service
+  - to:
+    - podSelector:
+        matchLabels:
+          app: ainflue-api
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 8000
+  # Allow HTTPS egress for external APIs
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+# API Backend Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-api-netpol
+  namespace: ainflue-production
+  labels:
+    app: ainflue-api
+    environment: production
+  annotations:
+    description: "Network policy for API backend pods"
+spec:
+  podSelector:
+    matchLabels:
+      app: ainflue-api
+      component: backend
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from frontend
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-frontend
+          component: frontend
+    ports:
+    - protocol: TCP
+      port: 8000
+  # Allow traffic from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress-controller
+    ports:
+    - protocol: TCP
+      port: 8000
+  # Allow traffic from AI engine
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-ai-engine
+          component: ai-processing
+    ports:
+    - protocol: TCP
+      port: 8000
+  # Allow traffic from content protection
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-content-protection
+          component: protection
+    ports:
+    - protocol: TCP
+      port: 8000
+  # Allow traffic from analytics
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-analytics
+          component: analytics
+    ports:
+    - protocol: TCP
+      port: 8000
+  # Allow monitoring scraping
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+          component: monitoring
+    ports:
+    - protocol: TCP
+      port: 9090
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow connection to database
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgresql
+          component: database
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow connection to Redis
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+          component: cache
+    ports:
+    - protocol: TCP
+      port: 6379
+  # Allow connection to Elasticsearch
+  - to:
+    - podSelector:
+        matchLabels:
+          app: elasticsearch
+          component: search
+    ports:
+    - protocol: TCP
+      port: 9200
+  # Allow HTTPS egress for external APIs
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+  # Allow SMTP for email
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 587
+    - protocol: TCP
+      port: 465
+
+---
+# AI Engine Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-ai-engine-netpol
+  namespace: ainflue-production
+  labels:
+    app: ainflue-ai-engine
+    environment: production
+  annotations:
+    description: "Network policy for AI engine pods"
+spec:
+  podSelector:
+    matchLabels:
+      app: ainflue-ai-engine
+      component: ai-processing
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from API
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-api
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 8001
+  # Allow traffic from ingress controller for AI endpoints
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress-controller
+    ports:
+    - protocol: TCP
+      port: 8001
+  # Allow monitoring scraping
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+          component: monitoring
+    ports:
+    - protocol: TCP
+      port: 9091
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow connection to Redis for job queues
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+          component: cache
+    ports:
+    - protocol: TCP
+      port: 6379
+  # Allow connection to MongoDB for model storage
+  - to:
+    - podSelector:
+        matchLabels:
+          app: mongodb
+          component: document-db
+    ports:
+    - protocol: TCP
+      port: 27017
+  # Allow HTTPS egress for model downloads
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+# Content Protection Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-content-protection-netpol
+  namespace: ainflue-production
+  labels:
+    app: ainflue-content-protection
+    environment: production
+  annotations:
+    description: "Network policy for content protection pods"
+spec:
+  podSelector:
+    matchLabels:
+      app: ainflue-content-protection
+      component: protection
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from API
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-api
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 8002
+  # Allow traffic from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress-controller
+    ports:
+    - protocol: TCP
+      port: 8002
+  # Allow monitoring scraping
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+          component: monitoring
+    ports:
+    - protocol: TCP
+      port: 9092
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow connection to Redis
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+          component: cache
+    ports:
+    - protocol: TCP
+      port: 6379
+  # Allow connection to database for logs
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgresql
+          component: database
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow HTTPS egress for threat intelligence feeds
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+# Analytics Engine Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-analytics-netpol
+  namespace: ainflue-production
+  labels:
+    app: ainflue-analytics
+    environment: production
+  annotations:
+    description: "Network policy for analytics engine pods"
+spec:
+  podSelector:
+    matchLabels:
+      app: ainflue-analytics
+      component: analytics
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from API
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-api
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 8003
+  # Allow traffic from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress-controller
+    ports:
+    - protocol: TCP
+      port: 8003
+  # Allow monitoring scraping
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+          component: monitoring
+    ports:
+    - protocol: TCP
+      port: 9093
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow connection to Elasticsearch
+  - to:
+    - podSelector:
+        matchLabels:
+          app: elasticsearch
+          component: search
+    ports:
+    - protocol: TCP
+      port: 9200
+  # Allow connection to Redis
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+          component: cache
+    ports:
+    - protocol: TCP
+      port: 6379
+  # Allow connection to database
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgresql
+          component: database
+    ports:
+    - protocol: TCP
+      port: 5432
+
+---
+# Database Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgresql-netpol
+  namespace: ainflue-production
+  labels:
+    app: postgresql
+    environment: production
+  annotations:
+    description: "Network policy for PostgreSQL database pods"
+spec:
+  podSelector:
+    matchLabels:
+      app: postgresql
+      component: database
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from API
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-api
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow traffic from analytics
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-analytics
+          component: analytics
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow traffic from content protection
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-content-protection
+          component: protection
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow traffic from backup jobs
+  - from:
+    - podSelector:
+        matchLabels:
+          app: database-backup
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow monitoring
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+          component: monitoring
+    ports:
+    - protocol: TCP
+      port: 9187  # postgres_exporter port
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow replication traffic between database pods
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgresql
+          component: database
+    ports:
+    - protocol: TCP
+      port: 5432
+
+---
+# Redis Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: redis-netpol
+  namespace: ainflue-production
+  labels:
+    app: redis
+    environment: production
+  annotations:
+    description: "Network policy for Redis cache pods"
+spec:
+  podSelector:
+    matchLabels:
+      app: redis
+      component: cache
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from API
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-api
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 6379
+  # Allow traffic from AI engine
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-ai-engine
+          component: ai-processing
+    ports:
+    - protocol: TCP
+      port: 6379
+  # Allow traffic from analytics
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-analytics
+          component: analytics
+    ports:
+    - protocol: TCP
+      port: 6379
+  # Allow traffic from content protection
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-content-protection
+          component: protection
+    ports:
+    - protocol: TCP
+      port: 6379
+  # Allow monitoring
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+          component: monitoring
+    ports:
+    - protocol: TCP
+      port: 9121  # redis_exporter port
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow cluster communication between Redis pods
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+          component: cache
+    ports:
+    - protocol: TCP
+      port: 6379
+    - protocol: TCP
+      port: 16379  # Redis cluster bus
+
+---
+# Monitoring Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: monitoring-netpol
+  namespace: ainflue-production
+  labels:
+    app: monitoring
+    environment: production
+  annotations:
+    description: "Network policy for monitoring components"
+spec:
+  podSelector:
+    matchLabels:
+      component: monitoring
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from ingress controller for monitoring UI
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress-controller
+    ports:
+    - protocol: TCP
+      port: 9090  # Prometheus
+    - protocol: TCP
+      port: 3000  # Grafana
+  # Allow internal monitoring communication
+  - from:
+    - podSelector:
+        matchLabels:
+          component: monitoring
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow scraping all pods with prometheus.io/scrape annotation
+  - to:
+    - podSelector: {}
+  # Allow HTTPS egress for external alerting
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+# Elasticsearch Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: elasticsearch-netpol
+  namespace: ainflue-production
+  labels:
+    app: elasticsearch
+    environment: production
+  annotations:
+    description: "Network policy for Elasticsearch pods"
+spec:
+  podSelector:
+    matchLabels:
+      app: elasticsearch
+      component: search
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from API
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-api
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 9200
+  # Allow traffic from analytics
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ainflue-analytics
+          component: analytics
+    ports:
+    - protocol: TCP
+      port: 9200
+  # Allow monitoring
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+          component: monitoring
+    ports:
+    - protocol: TCP
+      port: 9114  # elasticsearch_exporter port
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow cluster communication between Elasticsearch pods
+  - to:
+    - podSelector:
+        matchLabels:
+          app: elasticsearch
+          component: search
+    ports:
+    - protocol: TCP
+      port: 9200
+    - protocol: TCP
+      port: 9300
+
+---
+# Egress Policy for External Services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: external-services-egress
+  namespace: ainflue-production
+  labels:
+    app: external-egress
+    environment: production
+  annotations:
+    description: "Allow specific egress to external services"
+spec:
+  podSelector:
+    matchLabels:
+      external-access: "allowed"
+  policyTypes:
+  - Egress
+  egress:
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow HTTPS to external APIs
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+  # Allow HTTP for health checks and webhooks
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 80
+  # Allow SMTP for email notifications
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 587
+    - protocol: TCP
+      port: 465

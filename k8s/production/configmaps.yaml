@@ -1,0 +1,479 @@
+# Production ConfigMaps for Ainflue Platform
+# Application configuration and environment variables
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+---
+# Main Application Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-config
+  namespace: ainflue-production
+  labels:
+    app: ainflue
+    environment: production
+  annotations:
+    description: "Main application configuration for Ainflue platform"
+data:
+  # Environment Configuration
+  ENVIRONMENT: "production"
+  LOG_LEVEL: "INFO"
+  DEBUG: "false"
+  
+  # Application Settings
+  APP_NAME: "Ainflue Platform"
+  APP_VERSION: "1.0.0"
+  APP_URL: "https://ainflue.com"
+  API_URL: "https://api.ainflue.com"
+  
+  # Database Configuration
+  DATABASE_HOST: "postgresql-service"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "ainflue_production"
+  DATABASE_SSL_MODE: "require"
+  DATABASE_POOL_SIZE: "20"
+  DATABASE_MAX_CONNECTIONS: "100"
+  
+  # Redis Configuration
+  REDIS_HOST: "redis-service"
+  REDIS_PORT: "6379"
+  REDIS_DB: "0"
+  REDIS_CLUSTER_MODE: "true"
+  REDIS_SENTINEL_MODE: "false"
+  REDIS_MAX_CONNECTIONS: "50"
+  
+  # Cache Configuration
+  CACHE_TTL: "3600"
+  CACHE_PREFIX: "ainflue:prod:"
+  CACHE_COMPRESSION: "true"
+  
+  # Session Configuration
+  SESSION_TIMEOUT: "86400"
+  SESSION_COOKIE_SECURE: "true"
+  SESSION_COOKIE_HTTPONLY: "true"
+  SESSION_COOKIE_SAMESITE: "Strict"
+  
+  # Security Configuration
+  CORS_ORIGINS: "https://ainflue.com,https://www.ainflue.com,https://app.ainflue.com"
+  CSRF_PROTECTION: "true"
+  RATE_LIMIT_ENABLED: "true"
+  RATE_LIMIT_REQUESTS: "1000"
+  RATE_LIMIT_WINDOW: "60"
+  
+  # File Upload Configuration
+  UPLOAD_MAX_SIZE: "100MB"
+  UPLOAD_ALLOWED_TYPES: "image/jpeg,image/png,image/gif,video/mp4,audio/mp3,audio/wav"
+  UPLOAD_STORAGE_PATH: "/uploads"
+  
+  # AI Configuration
+  AI_MODEL_PATH: "/models"
+  AI_PROCESSING_TIMEOUT: "300"
+  AI_MAX_CONCURRENT_JOBS: "10"
+  AI_GPU_ENABLED: "true"
+  
+  # Analytics Configuration
+  ANALYTICS_ENABLED: "true"
+  ANALYTICS_SAMPLING_RATE: "1.0"
+  ANALYTICS_BATCH_SIZE: "100"
+  
+  # Monitoring Configuration
+  METRICS_ENABLED: "true"
+  METRICS_PORT: "9090"
+  METRICS_PATH: "/metrics"
+  HEALTH_CHECK_INTERVAL: "30"
+  
+  # Email Configuration
+  EMAIL_SMTP_HOST: "smtp.gmail.com"
+  EMAIL_SMTP_PORT: "587"
+  EMAIL_USE_TLS: "true"
+  EMAIL_FROM_ADDRESS: "noreply@ainflue.com"
+  
+  # Third-party Services
+  SPOTIFY_API_URL: "https://api.spotify.com/v1"
+  YOUTUBE_API_URL: "https://www.googleapis.com/youtube/v3"
+  INSTAGRAM_API_URL: "https://graph.instagram.com"
+  
+  # Feature Flags
+  FEATURE_AI_RECOMMENDATIONS: "true"
+  FEATURE_CONTENT_PROTECTION: "true"
+  FEATURE_ADVANCED_ANALYTICS: "true"
+  FEATURE_MULTI_PLATFORM_SYNC: "true"
+
+---
+# Nginx Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: ainflue-production
+  labels:
+    app: nginx
+    environment: production
+  annotations:
+    description: "Nginx configuration for load balancing and reverse proxy"
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+    error_log /var/log/nginx/error.log warn;
+    pid /var/run/nginx.pid;
+    
+    # Optimize worker connections
+    events {
+        worker_connections 4096;
+        use epoll;
+        multi_accept on;
+    }
+    
+    http {
+        # Basic Settings
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+        
+        # Logging
+        log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                       '$status $body_bytes_sent "$http_referer" '
+                       '"$http_user_agent" "$http_x_forwarded_for" '
+                       'rt=$request_time uct="$upstream_connect_time" '
+                       'uht="$upstream_header_time" urt="$upstream_response_time"';
+        
+        access_log /var/log/nginx/access.log main;
+        
+        # Performance Settings
+        sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        keepalive_requests 1000;
+        types_hash_max_size 2048;
+        server_tokens off;
+        
+        # Buffer Settings
+        client_body_buffer_size 128k;
+        client_max_body_size 100m;
+        client_header_buffer_size 1k;
+        large_client_header_buffers 4 4k;
+        output_buffers 1 32k;
+        postpone_output 1460;
+        
+        # Gzip Settings
+        gzip on;
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_types
+            text/plain
+            text/css
+            text/xml
+            text/javascript
+            application/json
+            application/javascript
+            application/xml+rss
+            application/atom+xml
+            image/svg+xml;
+        
+        # Rate Limiting
+        limit_req_zone $binary_remote_addr zone=api_limit:10m rate=1000r/m;
+        limit_req_zone $binary_remote_addr zone=upload_limit:10m rate=100r/m;
+        limit_req_zone $binary_remote_addr zone=auth_limit:10m rate=50r/m;
+        
+        # Upstream Configuration
+        upstream ainflue_api {
+            least_conn;
+            server ainflue-api-service:80 max_fails=3 fail_timeout=30s;
+            keepalive 32;
+        }
+        
+        upstream ainflue_frontend {
+            least_conn;
+            server ainflue-frontend-service:80 max_fails=3 fail_timeout=30s;
+            keepalive 32;
+        }
+        
+        # Cache Configuration
+        proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=app_cache:10m max_size=1g inactive=60m use_temp_path=off;
+        
+        # Default Server
+        server {
+            listen 80 default_server;
+            server_name _;
+            return 301 https://$host$request_uri;
+        }
+        
+        # Main Server Block
+        server {
+            listen 443 ssl http2;
+            server_name ainflue.com www.ainflue.com;
+            
+            # SSL Configuration
+            ssl_certificate /etc/ssl/certs/ainflue.crt;
+            ssl_certificate_key /etc/ssl/private/ainflue.key;
+            ssl_protocols TLSv1.2 TLSv1.3;
+            ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+            ssl_prefer_server_ciphers off;
+            ssl_session_cache shared:SSL:10m;
+            ssl_session_timeout 5m;
+            ssl_stapling on;
+            ssl_stapling_verify on;
+            
+            # Security Headers
+            add_header X-Frame-Options "SAMEORIGIN" always;
+            add_header X-Content-Type-Options "nosniff" always;
+            add_header X-XSS-Protection "1; mode=block" always;
+            add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+            add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+            
+            # Proxy Configuration
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_connect_timeout 5s;
+            proxy_send_timeout 60s;
+            proxy_read_timeout 60s;
+            
+            # Root Location
+            location / {
+                proxy_pass http://ainflue_frontend;
+                proxy_cache app_cache;
+                proxy_cache_valid 200 10m;
+                proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+                proxy_cache_lock on;
+                add_header X-Cache-Status $upstream_cache_status;
+            }
+            
+            # API Routes
+            location /api/ {
+                limit_req zone=api_limit burst=200 nodelay;
+                proxy_pass http://ainflue_api;
+                proxy_buffering off;
+                proxy_request_buffering off;
+            }
+            
+            # Health Check
+            location /health {
+                access_log off;
+                return 200 "healthy\n";
+                add_header Content-Type text/plain;
+            }
+        }
+    }
+
+---
+# Database Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-config
+  namespace: ainflue-production
+  labels:
+    app: database
+    environment: production
+  annotations:
+    description: "Database configuration for PostgreSQL"
+data:
+  postgresql.conf: |
+    # Performance Settings
+    max_connections = 200
+    shared_buffers = 512MB
+    effective_cache_size = 2GB
+    maintenance_work_mem = 128MB
+    checkpoint_completion_target = 0.9
+    wal_buffers = 16MB
+    default_statistics_target = 100
+    random_page_cost = 1.1
+    effective_io_concurrency = 200
+    work_mem = 8MB
+    min_wal_size = 1GB
+    max_wal_size = 4GB
+    
+    # Logging
+    log_destination = 'stderr'
+    logging_collector = on
+    log_directory = 'logs'
+    log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
+    log_rotation_age = 1d
+    log_rotation_size = 100MB
+    log_min_duration_statement = 1000
+    log_line_prefix = '%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '
+    log_statement = 'ddl'
+    
+    # Security
+    ssl = on
+    ssl_cert_file = '/etc/ssl/certs/server.crt'
+    ssl_key_file = '/etc/ssl/private/server.key'
+    
+  pg_hba.conf: |
+    # TYPE  DATABASE        USER            ADDRESS                 METHOD
+    local   all             postgres                                peer
+    local   all             all                                     md5
+    host    all             all             127.0.0.1/32            md5
+    host    all             all             ::1/128                 md5
+    host    all             all             10.0.0.0/8              md5
+    hostssl all             all             0.0.0.0/0               md5
+
+---
+# Monitoring Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monitoring-config
+  namespace: ainflue-production
+  labels:
+    app: monitoring
+    environment: production
+  annotations:
+    description: "Monitoring configuration for Prometheus and Grafana"
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+      external_labels:
+        cluster: 'ainflue-production'
+        environment: 'production'
+    
+    rule_files:
+      - "/etc/prometheus/rules/*.yml"
+    
+    alerting:
+      alertmanagers:
+        - static_configs:
+            - targets:
+              - alertmanager:9093
+    
+    scrape_configs:
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+      
+      - job_name: 'ainflue-api'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - ainflue-production
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+      
+      - job_name: 'kubernetes-nodes'
+        kubernetes_sd_configs:
+          - role: node
+        relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+      
+      - job_name: 'kubernetes-pods'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - ainflue-production
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+
+---
+# Error Pages Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: error-pages-config
+  namespace: ainflue-production
+  labels:
+    app: error-pages
+    environment: production
+  annotations:
+    description: "Custom error pages configuration"
+data:
+  404.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>404 - Page Not Found | Ainflue</title>
+        <style>
+            body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; background: #f8f9fa; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            h1 { color: #dc3545; font-size: 4em; margin: 0; }
+            h2 { color: #495057; }
+            p { color: #6c757d; font-size: 1.1em; }
+            .btn { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>404</h1>
+            <h2>Oops! Page Not Found</h2>
+            <p>The page you're looking for doesn't exist or has been moved.</p>
+            <a href="/" class="btn">Go Home</a>
+        </div>
+    </body>
+    </html>
+  
+  500.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>500 - Internal Server Error | Ainflue</title>
+        <style>
+            body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; background: #f8f9fa; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            h1 { color: #dc3545; font-size: 4em; margin: 0; }
+            h2 { color: #495057; }
+            p { color: #6c757d; font-size: 1.1em; }
+            .btn { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>500</h1>
+            <h2>Internal Server Error</h2>
+            <p>Something went wrong on our end. Please try again later.</p>
+            <a href="/" class="btn">Go Home</a>
+        </div>
+    </body>
+    </html>
+  
+  503.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>503 - Service Unavailable | Ainflue</title>
+        <style>
+            body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; background: #f8f9fa; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            h1 { color: #ffc107; font-size: 4em; margin: 0; }
+            h2 { color: #495057; }
+            p { color: #6c757d; font-size: 1.1em; }
+            .btn { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>503</h1>
+            <h2>Service Temporarily Unavailable</h2>
+            <p>We're currently performing maintenance. Please check back shortly.</p>
+            <a href="/" class="btn">Try Again</a>
+        </div>
+    </body>
+    </html>
