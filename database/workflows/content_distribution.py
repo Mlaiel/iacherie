@@ -1019,56 +1019,187 @@ class CrossPlatformAnalyticsEngine:
 
 # Platform adapter implementations (simplified interfaces)
 class YouTubePlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate YouTube-specific configuration"""
+        required_fields = ['api_key', 'channel_id', 'title', 'description']
+        missing_fields = [field for field in required_fields if field not in config]
+        if missing_fields:
+            raise ValueError(f"Missing required YouTube config fields: {missing_fields}")
+        
+        # Validate title length (YouTube max: 100 chars)
+        if len(config.get('title', '')) > 100:
+            raise ValueError("YouTube title cannot exceed 100 characters")
+        
+        # Validate description length (YouTube max: 5000 chars)  
+        if len(config.get('description', '')) > 5000:
+            raise ValueError("YouTube description cannot exceed 5000 characters")
+        
+        return True
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict: 
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'yt_123', 'url': 'https://youtube.com/watch?v=123'}
 
 class TikTokPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate TikTok-specific configuration"""
+        required_fields = ['access_token', 'video_description']
+        missing_fields = [field for field in required_fields if field not in config]
+        if missing_fields:
+            raise ValueError(f"Missing required TikTok config fields: {missing_fields}")
+        
+        # Validate description length (TikTok max: 300 chars)
+        if len(config.get('video_description', '')) > 300:
+            raise ValueError("TikTok description cannot exceed 300 characters")
+        
+        # Validate video duration (TikTok max: 10 minutes)
+        if config.get('duration', 0) > 600:
+            raise ValueError("TikTok videos cannot exceed 10 minutes")
+        
+        return True
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'tt_123', 'url': 'https://tiktok.com/@user/video/123'}
 
 class InstagramPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Instagram-specific configuration"""
+        required_fields = ['access_token', 'caption']
+        missing_fields = [field for field in required_fields if field not in config]
+        if missing_fields:
+            raise ValueError(f"Missing required Instagram config fields: {missing_fields}")
+        
+        # Validate caption length (Instagram max: 2200 chars)
+        if len(config.get('caption', '')) > 2200:
+            raise ValueError("Instagram caption cannot exceed 2200 characters")
+        
+        # Validate hashtag count (Instagram max: 30)
+        hashtags = config.get('hashtags', [])
+        if len(hashtags) > 30:
+            raise ValueError("Instagram posts cannot have more than 30 hashtags")
+        
+        return True
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'ig_123', 'url': 'https://instagram.com/p/123'}
 
 class FacebookPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Facebook-specific configuration"""
+        required_fields = ['access_token', 'page_id']
+        missing_fields = [field for field in required_fields if field not in config]
+        if missing_fields:
+            raise ValueError(f"Missing required Facebook config fields: {missing_fields}")
+        
+        # Validate message length (Facebook max: 63,206 chars)
+        if len(config.get('message', '')) > 63206:
+            raise ValueError("Facebook message cannot exceed 63,206 characters")
+        
+        # Validate link URL format if provided
+        link = config.get('link')
+        if link and not link.startswith(('http://', 'https://')):
+            raise ValueError("Facebook link must be a valid URL")
+        
+        return True
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'fb_123', 'url': 'https://facebook.com/123'}
 
 class TwitterPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Twitter-specific configuration"""
+        required_fields = ['api_key', 'api_secret', 'access_token', 'access_token_secret']
+        missing_fields = [field for field in required_fields if field not in config]
+        if missing_fields:
+            raise ValueError(f"Missing required Twitter config fields: {missing_fields}")
+        
+        # Validate tweet length (Twitter max: 280 chars)
+        tweet_text = config.get('text', '')
+        if len(tweet_text) > 280:
+            raise ValueError("Twitter posts cannot exceed 280 characters")
+        
+        # Validate media count (Twitter max: 4 images or 1 video)
+        media_count = len(config.get('media', []))
+        if media_count > 4:
+            raise ValueError("Twitter posts cannot have more than 4 media files")
+        
+        return True
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'tw_123', 'url': 'https://twitter.com/status/123'}
 
 class LinkedInPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate LinkedIn-specific configuration"""
+        required_fields = ['access_token', 'person_id', 'text']
+        missing_fields = [field for field in required_fields if field not in config]
+        if missing_fields:
+            raise ValueError(f"Missing required LinkedIn config fields: {missing_fields}")
+        
+        # Validate post text length (LinkedIn max: 1300 chars)
+        if len(config.get('text', '')) > 1300:
+            raise ValueError("LinkedIn posts cannot exceed 1300 characters")
+        
+        # Validate article title if provided
+        title = config.get('title')
+        if title and len(title) > 150:
+            raise ValueError("LinkedIn article titles cannot exceed 150 characters")
+        
+        return True
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'li_123', 'url': 'https://linkedin.com/posts/123'}
 
 class TwitchPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Twitch-specific configuration"""
+        required_fields = ['client_id', 'client_secret', 'title', 'category_id']
+        missing_fields = [field for field in required_fields if field not in config]
+        if missing_fields:
+            raise ValueError(f"Missing required Twitch config fields: {missing_fields}")
+        
+        # Validate stream title length (Twitch max: 140 chars)
+        if len(config.get('title', '')) > 140:
+            raise ValueError("Twitch stream titles cannot exceed 140 characters")
+        
+        # Validate video title if uploading VOD
+        video_title = config.get('video_title')
+        if video_title and len(video_title) > 100:
+            raise ValueError("Twitch video titles cannot exceed 100 characters")
+        
+        return True
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:
         return {'content_id': 'tw_123', 'url': 'https://twitch.tv/videos/123'}
 
 class SpotifyPlatformAdapter:
-    async def validate_config(self, config: Dict[str, Any]): pass
+    async def validate_config(self, config: Dict[str, Any]):
+        """Validate Spotify-specific configuration"""
+        required_fields = ['client_id', 'client_secret', 'track_name', 'artist_name']
+        missing_fields = [field for field in required_fields if field not in config]
+        if missing_fields:
+            raise ValueError(f"Missing required Spotify config fields: {missing_fields}")
+        
+        # Validate track name length
+        if len(config.get('track_name', '')) > 100:
+            raise ValueError("Spotify track names cannot exceed 100 characters")
+        
+        # Validate artist name length
+        if len(config.get('artist_name', '')) > 100:
+            raise ValueError("Spotify artist names cannot exceed 100 characters")
+        
+        # Validate album name if provided
+        album_name = config.get('album_name')
+        if album_name and len(album_name) > 100:
+            raise ValueError("Spotify album names cannot exceed 100 characters")
+        
+        return True
     async def adapt_content(self, content_path: str, config: Dict, adaptations: Dict) -> Dict:
         return {'file_path': content_path, 'adaptations': []}
     async def publish_content(self, content_path: str, metadata: Dict, settings: Dict) -> Dict:

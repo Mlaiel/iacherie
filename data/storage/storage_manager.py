@@ -561,8 +561,14 @@ class StorageManager:
                 return await self._store_to_s3(client, config, file_content, file_path, metadata)
             elif provider == StorageProvider.LOCAL:
                 return await self._store_to_local(client, config, file_content, file_path, metadata)
+            elif provider == StorageProvider.GOOGLE_CLOUD:
+                return await self._store_to_gcs(client, config, file_content, file_path, metadata)
+            elif provider == StorageProvider.AZURE_BLOB:
+                return await self._store_to_azure(client, config, file_content, file_path, metadata)
+            elif provider == StorageProvider.MINIO:
+                return await self._store_to_minio(client, config, file_content, file_path, metadata)
             else:
-                # Placeholder for other providers
+                # Provider not supported
                 raise NotImplementedError(f"Provider {provider} not yet implemented")
                 
         except Exception as e:
@@ -662,6 +668,117 @@ class StorageManager:
             
         except Exception as e:
             self.logger.error(f"Local storage failed: {str(e)}")
+            raise
+    
+    async def _store_to_gcs(self, client, config: StorageConfig, file_content: bytes,
+                           file_path: str, metadata: Dict[str, Any]) -> StorageResult:
+        """Store file to Google Cloud Storage"""
+        try:
+            bucket = client.bucket(config.bucket_name)
+            blob = bucket.blob(file_path)
+            
+            # Prepare metadata
+            gcs_metadata = {
+                'uploaded_at': datetime.utcnow().isoformat(),
+                'file_size': str(len(file_content)),
+                'file_hash': hashlib.sha256(file_content).hexdigest()
+            }
+            gcs_metadata.update(metadata or {})
+            
+            # Upload file
+            blob.metadata = gcs_metadata
+            blob.upload_from_string(file_content)
+            
+            return StorageResult(
+                success=True,
+                file_path=file_path,
+                provider=config.provider.value,
+                bucket=config.bucket_name,
+                file_size=len(file_content),
+                file_hash=gcs_metadata['file_hash'],
+                url=blob.public_url,
+                version_id=blob.generation,
+                metadata=metadata or {}
+            )
+            
+        except Exception as e:
+            self.logger.error(f"GCS upload failed: {str(e)}")
+            raise
+    
+    async def _store_to_azure(self, client, config: StorageConfig, file_content: bytes,
+                             file_path: str, metadata: Dict[str, Any]) -> StorageResult:
+        """Store file to Azure Blob Storage"""
+        try:
+            # Prepare metadata
+            azure_metadata = {
+                'uploaded_at': datetime.utcnow().isoformat(),
+                'file_size': str(len(file_content)),
+                'file_hash': hashlib.sha256(file_content).hexdigest()
+            }
+            azure_metadata.update(metadata or {})
+            
+            # Upload file
+            blob_client = client.get_blob_client(container=config.bucket_name, blob=file_path)
+            await blob_client.upload_blob(
+                file_content,
+                metadata=azure_metadata,
+                overwrite=True
+            )
+            
+            return StorageResult(
+                success=True,
+                file_path=file_path,
+                provider=config.provider.value,
+                bucket=config.bucket_name,
+                file_size=len(file_content),
+                file_hash=azure_metadata['file_hash'],
+                url=blob_client.url,
+                version_id=None,
+                metadata=metadata or {}
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Azure upload failed: {str(e)}")
+            raise
+    
+    async def _store_to_minio(self, client, config: StorageConfig, file_content: bytes,
+                             file_path: str, metadata: Dict[str, Any]) -> StorageResult:
+        """Store file to MinIO (S3-compatible storage)"""
+        try:
+            # MinIO uses S3-compatible API
+            file_hash = hashlib.sha256(file_content).hexdigest()
+            
+            # Prepare metadata
+            minio_metadata = {
+                'uploaded_at': datetime.utcnow().isoformat(),
+                'file_size': str(len(file_content)),
+                'file_hash': file_hash
+            }
+            minio_metadata.update(metadata or {})
+            
+            # Upload file (using S3-compatible client)
+            response = client.put_object(
+                Bucket=config.bucket_name,
+                Key=file_path,
+                Body=file_content,
+                Metadata=minio_metadata,
+                ContentType=mimetypes.guess_type(file_path)[0] or 'application/octet-stream'
+            )
+            
+            return StorageResult(
+                success=True,
+                file_path=file_path,
+                provider=config.provider.value,
+                bucket=config.bucket_name,
+                file_size=len(file_content),
+                file_hash=file_hash,
+                url=f"{config.endpoint_url}/{config.bucket_name}/{file_path}",
+                version_id=response.get('VersionId'),
+                metadata=metadata or {}
+            )
+            
+        except Exception as e:
+            self.logger.error(f"MinIO upload failed: {str(e)}")
             raise
     
     # Additional helper methods would be implemented here

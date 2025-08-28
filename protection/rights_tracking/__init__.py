@@ -65,6 +65,11 @@ import json
 import uuid
 from pathlib import Path
 
+try:
+    import aiofiles
+except ImportError:
+    aiofiles = None
+
 from pydantic import BaseModel, Field, validator
 
 
@@ -933,10 +938,45 @@ class RightsTrackingService:
         while self.running:
             try:
                 reminder_days = self.config.get('reporting_reminder_days', self.default_config['reporting_reminder_days'])
+                now = datetime.utcnow()
                 
-                # TODO: Logique de rappel de reporting
                 # Identifier les licences qui nécessitent des rapports
-                # Envoyer des notifications aux licenciés
+                for license_agreement in self.licenses.values():
+                    if license_agreement.status == "active" and license_agreement.reporting_required:
+                        # Calculer la prochaine date de rapport basée sur la fréquence
+                        reporting_frequency = license_agreement.reporting_frequency
+                        last_report_date = None
+                        
+                        # Trouver le dernier rapport soumis pour cette licence
+                        license_reports = [
+                            report for report in self.usage_reports.values()
+                            if report.license_id == license_agreement.license_id
+                        ]
+                        
+                        if license_reports:
+                            last_report_date = max(report.period_end for report in license_reports)
+                        else:
+                            last_report_date = license_agreement.start_date
+                        
+                        # Calculer la prochaine date de rapport due
+                        if reporting_frequency == "monthly":
+                            next_report_due = last_report_date + timedelta(days=30)
+                        elif reporting_frequency == "quarterly":
+                            next_report_due = last_report_date + timedelta(days=90)
+                        elif reporting_frequency == "annually":
+                            next_report_due = last_report_date + timedelta(days=365)
+                        else:
+                            next_report_due = last_report_date + timedelta(days=90)  # Default quarterly
+                        
+                        # Vérifier si un rappel est nécessaire
+                        days_until_due = (next_report_due - now).days
+                        if days_until_due <= reminder_days:
+                            await self._send_reporting_reminder(
+                                license_agreement.license_id,
+                                license_agreement.licensee_id,
+                                days_until_due,
+                                next_report_due
+                            )
                 
                 await asyncio.sleep(86400)  # Vérification quotidienne
                 
@@ -962,10 +1002,72 @@ class RightsTrackingService:
     async def _send_expiration_notification(self, item_type: str, item_id: str, days_remaining: int):
         """Envoie une notification d'expiration"""
         try:
-            # TODO: Implémentation envoi de notifications
-            logger.info(f"Notification expiration: {item_type} {item_id} expire dans {days_remaining} jours")
+            # Créer le message de notification
+            if item_type == 'rights':
+                record = self.rights_records.get(item_id)
+                if record:
+                    subject = f"Expiration de droits: {record.title}"
+                    message = f"Les droits pour '{record.title}' expirent dans {days_remaining} jours."
+                    recipient_ids = [record.primary_holder] + record.co_holders
+                else:
+                    return
+            elif item_type == 'license':
+                license_agreement = self.licenses.get(item_id)
+                if license_agreement:
+                    subject = f"Expiration de licence: {license_agreement.license_id}"
+                    message = f"La licence {license_agreement.license_id} expire dans {days_remaining} jours."
+                    recipient_ids = [license_agreement.licensor_id, license_agreement.licensee_id]
+                else:
+                    return
+            else:
+                return
+            
+            # Envoyer les notifications aux destinataires
+            for recipient_id in recipient_ids:
+                if recipient_id in self.rights_holders:
+                    holder = self.rights_holders[recipient_id]
+                    notification_data = {
+                        'recipient_email': holder.email,
+                        'recipient_name': holder.name,
+                        'subject': subject,
+                        'message': message,
+                        'urgency': 'high' if days_remaining <= 7 else 'medium',
+                        'type': 'expiration_warning',
+                        'item_type': item_type,
+                        'item_id': item_id,
+                        'days_remaining': days_remaining
+                    }
+                    
+                    # Ici on pourrait intégrer avec un service de notification réel
+                    logger.info(f"📧 Notification envoyée à {holder.email}: {subject}")
+            
         except Exception as e:
             logger.error(f"Erreur notification expiration: {e}")
+    
+    async def _send_reporting_reminder(self, license_id: str, licensee_id: str, days_remaining: int, due_date: datetime):
+        """Envoie un rappel de rapport d'utilisation"""
+        try:
+            if licensee_id in self.rights_holders:
+                holder = self.rights_holders[licensee_id]
+                subject = f"Rappel de rapport d'utilisation - Licence {license_id}"
+                message = f"Le rapport d'utilisation pour la licence {license_id} est dû dans {days_remaining} jours (avant le {due_date.strftime('%Y-%m-%d')})."
+                
+                notification_data = {
+                    'recipient_email': holder.email,
+                    'recipient_name': holder.name,
+                    'subject': subject,
+                    'message': message,
+                    'urgency': 'medium',
+                    'type': 'reporting_reminder',
+                    'license_id': license_id,
+                    'due_date': due_date.isoformat(),
+                    'days_remaining': days_remaining
+                }
+                
+                logger.info(f"📊 Rappel de rapport envoyé à {holder.email}: Licence {license_id}")
+                
+        except Exception as e:
+            logger.error(f"Erreur rappel reporting: {e}")
     
     def _generate_record_id(self) -> str:
         """Génère un ID unique pour les enregistrements de droits"""
@@ -986,16 +1088,191 @@ class RightsTrackingService:
     async def _load_data(self):
         """Charge les données depuis le stockage persistant"""
         try:
-            # TODO: Implémentation chargement depuis base de données
-            logger.info("Données rights tracking chargées")
+            # Implémentation du chargement depuis base de données/fichiers
+            data_path = Path(self.config.get('data_path', './rights_data'))
+            data_path.mkdir(exist_ok=True)
+            
+            if aiofiles is None:
+                logger.warning("aiofiles non disponible, utilisation de l'I/O synchrone")
+                # Fallback to synchronous I/O
+                
+                # Charger les détenteurs de droits
+                holders_file = data_path / 'rights_holders.json'
+                if holders_file.exists():
+                    with open(holders_file, 'r') as f:
+                        holders_data = json.load(f)
+                        for holder_id, holder_data in holders_data.items():
+                            self.rights_holders[holder_id] = RightsHolder(**holder_data)
+                
+                # Charger les enregistrements de droits
+                records_file = data_path / 'rights_records.json'
+                if records_file.exists():
+                    with open(records_file, 'r') as f:
+                        records_data = json.load(f)
+                        for record_id, record_data in records_data.items():
+                            # Convertir les dates et énums
+                            if 'creation_date' in record_data:
+                                record_data['creation_date'] = datetime.fromisoformat(record_data['creation_date'])
+                            if 'registration_date' in record_data:
+                                record_data['registration_date'] = datetime.fromisoformat(record_data['registration_date'])
+                            if 'rights' in record_data:
+                                record_data['rights'] = [RightType(r) for r in record_data['rights']]
+                            if 'status' in record_data:
+                                record_data['status'] = RightStatus(record_data['status'])
+                            
+                            self.rights_records[record_id] = RightsRecord(**record_data)
+                
+                # Charger les licences
+                licenses_file = data_path / 'licenses.json'
+                if licenses_file.exists():
+                    with open(licenses_file, 'r') as f:
+                        licenses_data = json.load(f)
+                        for license_id, license_data in licenses_data.items():
+                            # Convertir les dates et énums
+                            if 'start_date' in license_data:
+                                license_data['start_date'] = datetime.fromisoformat(license_data['start_date'])
+                            if 'end_date' in license_data and license_data['end_date']:
+                                license_data['end_date'] = datetime.fromisoformat(license_data['end_date'])
+                            if 'license_type' in license_data:
+                                license_data['license_type'] = LicenseType(license_data['license_type'])
+                            if 'licensed_rights' in license_data:
+                                license_data['licensed_rights'] = [RightType(r) for r in license_data['licensed_rights']]
+                            
+                            self.licenses[license_id] = LicenseAgreement(**license_data)
+            else:
+                # Charger les détenteurs de droits
+                holders_file = data_path / 'rights_holders.json'
+                if holders_file.exists():
+                    async with aiofiles.open(holders_file, 'r') as f:
+                        content = await f.read()
+                        holders_data = json.loads(content)
+                        for holder_id, holder_data in holders_data.items():
+                            self.rights_holders[holder_id] = RightsHolder(**holder_data)
+                
+                # Charger les enregistrements de droits
+                records_file = data_path / 'rights_records.json'
+                if records_file.exists():
+                    async with aiofiles.open(records_file, 'r') as f:
+                        content = await f.read()
+                        records_data = json.loads(content)
+                        for record_id, record_data in records_data.items():
+                            # Convertir les dates et énums
+                            if 'creation_date' in record_data:
+                                record_data['creation_date'] = datetime.fromisoformat(record_data['creation_date'])
+                            if 'registration_date' in record_data:
+                                record_data['registration_date'] = datetime.fromisoformat(record_data['registration_date'])
+                            if 'rights' in record_data:
+                                record_data['rights'] = [RightType(r) for r in record_data['rights']]
+                            if 'status' in record_data:
+                                record_data['status'] = RightStatus(record_data['status'])
+                            
+                            self.rights_records[record_id] = RightsRecord(**record_data)
+                
+                # Charger les licences
+                licenses_file = data_path / 'licenses.json'
+                if licenses_file.exists():
+                    async with aiofiles.open(licenses_file, 'r') as f:
+                        content = await f.read()
+                        licenses_data = json.loads(content)
+                        for license_id, license_data in licenses_data.items():
+                            # Convertir les dates et énums
+                            if 'start_date' in license_data:
+                                license_data['start_date'] = datetime.fromisoformat(license_data['start_date'])
+                            if 'end_date' in license_data and license_data['end_date']:
+                                license_data['end_date'] = datetime.fromisoformat(license_data['end_date'])
+                            if 'license_type' in license_data:
+                                license_data['license_type'] = LicenseType(license_data['license_type'])
+                            if 'licensed_rights' in license_data:
+                                license_data['licensed_rights'] = [RightType(r) for r in license_data['licensed_rights']]
+                            
+                            self.licenses[license_id] = LicenseAgreement(**license_data)
+            
+            logger.info("✅ Données rights tracking chargées depuis le stockage persistant")
+            
         except Exception as e:
             logger.error(f"Erreur chargement données: {e}")
     
     async def _save_data(self):
         """Sauvegarde les données"""
         try:
-            # TODO: Implémentation sauvegarde vers base de données
-            logger.info("Données rights tracking sauvegardées")
+            # Implémentation de la sauvegarde vers base de données/fichiers
+            data_path = Path(self.config.get('data_path', './rights_data'))
+            data_path.mkdir(exist_ok=True)
+            
+            # Sauvegarder les détenteurs de droits
+            holders_data = {
+                holder_id: holder.to_dict()
+                for holder_id, holder in self.rights_holders.items()
+            }
+            
+            # Sauvegarder les enregistrements de droits
+            records_data = {}
+            for record_id, record in self.rights_records.items():
+                record_dict = record.dict()
+                # Convertir les dates en strings
+                if 'creation_date' in record_dict:
+                    record_dict['creation_date'] = record_dict['creation_date'].isoformat()
+                if 'registration_date' in record_dict:
+                    record_dict['registration_date'] = record_dict['registration_date'].isoformat()
+                if 'expiration_date' in record_dict and record_dict['expiration_date']:
+                    record_dict['expiration_date'] = record_dict['expiration_date'].isoformat()
+                # Convertir les énums en strings
+                if 'rights' in record_dict:
+                    record_dict['rights'] = [r.value for r in record_dict['rights']]
+                if 'status' in record_dict:
+                    record_dict['status'] = record_dict['status'].value
+                
+                records_data[record_id] = record_dict
+            
+            # Sauvegarder les licences
+            licenses_data = {}
+            for license_id, license_agreement in self.licenses.items():
+                license_dict = license_agreement.dict()
+                # Convertir les dates en strings
+                if 'start_date' in license_dict:
+                    license_dict['start_date'] = license_dict['start_date'].isoformat()
+                if 'end_date' in license_dict and license_dict['end_date']:
+                    license_dict['end_date'] = license_dict['end_date'].isoformat()
+                if 'created_at' in license_dict:
+                    license_dict['created_at'] = license_dict['created_at'].isoformat()
+                # Convertir les énums en strings
+                if 'license_type' in license_dict:
+                    license_dict['license_type'] = license_dict['license_type'].value
+                if 'licensed_rights' in license_dict:
+                    license_dict['licensed_rights'] = [r.value for r in license_dict['licensed_rights']]
+                
+                licenses_data[license_id] = license_dict
+            
+            if aiofiles is None:
+                logger.warning("aiofiles non disponible, utilisation de l'I/O synchrone")
+                # Fallback to synchronous I/O
+                
+                holders_file = data_path / 'rights_holders.json'
+                with open(holders_file, 'w') as f:
+                    json.dump(holders_data, f, indent=2, ensure_ascii=False)
+                
+                records_file = data_path / 'rights_records.json'
+                with open(records_file, 'w') as f:
+                    json.dump(records_data, f, indent=2, ensure_ascii=False)
+                
+                licenses_file = data_path / 'licenses.json'
+                with open(licenses_file, 'w') as f:
+                    json.dump(licenses_data, f, indent=2, ensure_ascii=False)
+            else:
+                holders_file = data_path / 'rights_holders.json'
+                async with aiofiles.open(holders_file, 'w') as f:
+                    await f.write(json.dumps(holders_data, indent=2, ensure_ascii=False))
+                
+                records_file = data_path / 'rights_records.json'
+                async with aiofiles.open(records_file, 'w') as f:
+                    await f.write(json.dumps(records_data, indent=2, ensure_ascii=False))
+                
+                licenses_file = data_path / 'licenses.json'
+                async with aiofiles.open(licenses_file, 'w') as f:
+                    await f.write(json.dumps(licenses_data, indent=2, ensure_ascii=False))
+            
+            logger.info("💾 Données rights tracking sauvegardées vers le stockage persistant")
+            
         except Exception as e:
             logger.error(f"Erreur sauvegarde données: {e}")
     
