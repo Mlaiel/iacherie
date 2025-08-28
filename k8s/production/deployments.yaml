@@ -1,0 +1,573 @@
+# Production Deployments for Ainflue Platform
+# High-availability deployments for production environment
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+---
+# Main API Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-api
+  namespace: ainflue-production
+  labels:
+    app: ainflue-api
+    component: backend
+    environment: production
+    version: "1.0.0"
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    description: "Main API service for Ainflue platform"
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ainflue-api
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: ainflue-api
+        component: backend
+        environment: production
+        version: "1.0.0"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-api
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-api
+        image: ainflue/api:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8000
+          protocol: TCP
+        - name: metrics
+          containerPort: 9090
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: jwt-secret
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: api-key
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /startup
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: temp-storage
+          mountPath: /tmp
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: config-volume
+        configMap:
+          name: ainflue-config
+      - name: temp-storage
+        emptyDir: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - ainflue-api
+              topologyKey: kubernetes.io/hostname
+
+---
+# Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-frontend
+  namespace: ainflue-production
+  labels:
+    app: ainflue-frontend
+    component: frontend
+    environment: production
+    version: "1.0.0"
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    description: "Frontend application for Ainflue platform"
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
+  selector:
+    matchLabels:
+      app: ainflue-frontend
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: ainflue-frontend
+        component: frontend
+        environment: production
+        version: "1.0.0"
+    spec:
+      serviceAccountName: ainflue-frontend
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-frontend
+        image: ainflue/frontend:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 3000
+          protocol: TCP
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: NEXT_PUBLIC_API_URL
+          value: "https://api.ainflue.com"
+        - name: NEXT_PUBLIC_APP_VERSION
+          value: "1.0.0"
+        - name: NEXT_PUBLIC_ENVIRONMENT
+          value: "production"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: nginx-cache
+          mountPath: /var/cache/nginx
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: nginx-cache
+        emptyDir: {}
+      - name: temp-storage
+        emptyDir: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - ainflue-frontend
+              topologyKey: kubernetes.io/hostname
+
+---
+# AI Engine Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-ai-engine
+  namespace: ainflue-production
+  labels:
+    app: ainflue-ai-engine
+    component: ai-processing
+    environment: production
+    version: "1.0.0"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ainflue-ai-engine
+      component: ai-processing
+  template:
+    metadata:
+      labels:
+        app: ainflue-ai-engine
+        component: ai-processing
+        environment: production
+        version: "1.0.0"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8001"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-ai-engine
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-ai-engine
+        image: ainflue/ai-engine:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8001
+          protocol: TCP
+        - name: metrics
+          containerPort: 9091
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: MODEL_PATH
+          value: "/models"
+        - name: GPU_ENABLED
+          value: "true"
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+            nvidia.com/gpu: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        volumeMounts:
+        - name: model-storage
+          mountPath: /models
+          readOnly: true
+        - name: temp-storage
+          mountPath: /tmp
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: model-storage
+        persistentVolumeClaim:
+          claimName: ai-models-pvc
+      - name: temp-storage
+        emptyDir: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+      nodeSelector:
+        node-type: gpu-enabled
+
+---
+# Content Protection Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-content-protection
+  namespace: ainflue-production
+  labels:
+    app: ainflue-content-protection
+    component: protection
+    environment: production
+    version: "1.0.0"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ainflue-content-protection
+      component: protection
+  template:
+    metadata:
+      labels:
+        app: ainflue-content-protection
+        component: protection
+        environment: production
+        version: "1.0.0"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8002"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-content-protection
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-content-protection
+        image: ainflue/content-protection:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8002
+          protocol: TCP
+        - name: metrics
+          containerPort: 9092
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: temp-storage
+          mountPath: /tmp
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: temp-storage
+        emptyDir: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+
+---
+# Analytics Engine Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-analytics
+  namespace: ainflue-production
+  labels:
+    app: ainflue-analytics
+    component: analytics
+    environment: production
+    version: "1.0.0"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ainflue-analytics
+      component: analytics
+  template:
+    metadata:
+      labels:
+        app: ainflue-analytics
+        component: analytics
+        environment: production
+        version: "1.0.0"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8003"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-analytics
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-analytics
+        image: ainflue/analytics:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8003
+          protocol: TCP
+        - name: metrics
+          containerPort: 9093
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: analytics-data
+          mountPath: /data
+        - name: temp-storage
+          mountPath: /tmp
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: analytics-data
+        persistentVolumeClaim:
+          claimName: analytics-data-pvc
+      - name: temp-storage
+        emptyDir: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

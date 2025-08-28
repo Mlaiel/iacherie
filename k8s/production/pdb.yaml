@@ -1,0 +1,340 @@
+# Production Pod Disruption Budgets for Ainflue Platform
+# Ensure high availability during cluster maintenance and disruptions
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+---
+# Main API PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ainflue-api-pdb
+  namespace: ainflue-production
+  labels:
+    app: ainflue-api
+    component: backend
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Ainflue API - ensures minimum availability"
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: ainflue-api
+      component: backend
+  maxUnavailable: 1
+
+---
+# Frontend PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ainflue-frontend-pdb
+  namespace: ainflue-production
+  labels:
+    app: ainflue-frontend
+    component: frontend
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Ainflue Frontend - ensures continuous user access"
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: ainflue-frontend
+      component: frontend
+
+---
+# AI Engine PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ainflue-ai-engine-pdb
+  namespace: ainflue-production
+  labels:
+    app: ainflue-ai-engine
+    component: ai-processing
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for AI Engine - protects AI processing capacity"
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: ainflue-ai-engine
+      component: ai-processing
+  maxUnavailable: 1
+
+---
+# Content Protection PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ainflue-content-protection-pdb
+  namespace: ainflue-production
+  labels:
+    app: ainflue-content-protection
+    component: protection
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Content Protection - maintains security monitoring"
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: ainflue-content-protection
+      component: protection
+  maxUnavailable: 1
+
+---
+# Analytics Engine PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ainflue-analytics-pdb
+  namespace: ainflue-production
+  labels:
+    app: ainflue-analytics
+    component: analytics
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Analytics Engine - ensures data processing continuity"
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: ainflue-analytics
+      component: analytics
+  maxUnavailable: 50%
+
+---
+# Database PDB (PostgreSQL)
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: postgresql-pdb
+  namespace: ainflue-production
+  labels:
+    app: postgresql
+    component: database
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for PostgreSQL - critical database protection"
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: postgresql
+      component: database
+  maxUnavailable: 1
+
+---
+# Redis PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: redis-pdb
+  namespace: ainflue-production
+  labels:
+    app: redis
+    component: cache
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Redis - maintains cache availability"
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: redis
+      component: cache
+  maxUnavailable: 1
+
+---
+# Elasticsearch PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: elasticsearch-pdb
+  namespace: ainflue-production
+  labels:
+    app: elasticsearch
+    component: search
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Elasticsearch - protects search and analytics data"
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: elasticsearch
+      component: search
+  maxUnavailable: 33%
+
+---
+# MongoDB PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: mongodb-pdb
+  namespace: ainflue-production
+  labels:
+    app: mongodb
+    component: document-db
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for MongoDB - ensures document storage availability"
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: mongodb
+      component: document-db
+  maxUnavailable: 1
+
+---
+# Nginx Ingress Controller PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: nginx-ingress-controller-pdb
+  namespace: ainflue-production
+  labels:
+    app: nginx-ingress-controller
+    component: load-balancer
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Nginx Ingress Controller - maintains traffic routing"
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: nginx-ingress-controller
+      component: load-balancer
+  maxUnavailable: 1
+
+---
+# Prometheus PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: prometheus-pdb
+  namespace: ainflue-production
+  labels:
+    app: prometheus
+    component: monitoring
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Prometheus - ensures monitoring continuity"
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: prometheus
+      component: monitoring
+  maxUnavailable: 1
+
+---
+# Grafana PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: grafana-pdb
+  namespace: ainflue-production
+  labels:
+    app: grafana
+    component: visualization
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Grafana - maintains dashboard availability"
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: grafana
+      component: visualization
+  maxUnavailable: 0
+
+---
+# Alertmanager PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: alertmanager-pdb
+  namespace: ainflue-production
+  labels:
+    app: alertmanager
+    component: alerting
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Alertmanager - ensures alert delivery"
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: alertmanager
+      component: alerting
+  maxUnavailable: 1
+
+---
+# Web Crawler PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ainflue-crawler-pdb
+  namespace: ainflue-production
+  labels:
+    app: ainflue-crawler
+    component: crawler
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Web Crawler - allows graceful scaling"
+spec:
+  minAvailable: 0
+  selector:
+    matchLabels:
+      app: ainflue-crawler
+      component: crawler
+  maxUnavailable: 50%
+
+---
+# Message Queue PDB (if using RabbitMQ or similar)
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: message-queue-pdb
+  namespace: ainflue-production
+  labels:
+    app: message-queue
+    component: messaging
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Message Queue - maintains async processing"
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: message-queue
+      component: messaging
+  maxUnavailable: 1
+
+---
+# Background Workers PDB
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: background-workers-pdb
+  namespace: ainflue-production
+  labels:
+    app: background-workers
+    component: workers
+    environment: production
+  annotations:
+    description: "Pod Disruption Budget for Background Workers - ensures job processing"
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: background-workers
+      component: workers
+  maxUnavailable: 75%
