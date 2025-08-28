@@ -661,7 +661,7 @@ class VideoQualityAnalyzer:
                 technical_metrics=technical_metrics,
                 improvement_suggestions=improvement_suggestions,
                 compliance_issues=[],
-                accessibility_score=0.8,  # TODO: implémenter
+                accessibility_score=self._calculate_accessibility_score(technical_metrics),
                 creator_specific_feedback={},
                 metadata={
                     "file_path": file_path,
@@ -991,7 +991,8 @@ class QualityAssessor:
         # Analyseurs spécialisés
         self.audio_analyzer = AudioQualityAnalyzer()
         self.video_analyzer = VideoQualityAnalyzer()
-        # TODO: Ajouter image_analyzer et text_analyzer
+        self.image_analyzer = ImageQualityAnalyzer()
+        self.text_analyzer = TextQualityAnalyzer()
         
         # Cache des résultats
         self._assessment_cache: Dict[str, QualityAssessmentResult] = {}
@@ -1010,11 +1011,9 @@ class QualityAssessor:
             elif content_type == 'video':
                 result = self.video_analyzer.assess_video_quality(file_path, creator_type)
             elif content_type == 'image':
-                # TODO: Implémenter
-                result = self._create_placeholder_result("Image analysis not yet implemented")
+                result = self.image_analyzer.assess_image_quality(file_path, creator_type)
             elif content_type == 'text':
-                # TODO: Implémenter  
-                result = self._create_placeholder_result("Text analysis not yet implemented")
+                result = self.text_analyzer.assess_text_quality(file_path, creator_type)
             else:
                 result = self._create_error_result(f"Type de contenu non supporté: {content_type}")
             
@@ -1054,8 +1053,234 @@ class QualityAssessor:
             creator_specific_feedback={},
             metadata={"error": error_msg}
         )
+    
+    def _calculate_accessibility_score(self, technical_metrics: Dict[str, Any]) -> float:
+        """Calculate accessibility score based on technical metrics"""
+        try:
+            score = 0.8  # Base score
+            
+            # Adjust based on resolution for video content
+            if 'resolution' in technical_metrics:
+                resolution = technical_metrics['resolution']
+                if isinstance(resolution, str) and 'x' in resolution:
+                    width, height = map(int, resolution.split('x'))
+                    if width >= 1920:  # HD or higher
+                        score += 0.1
+                    elif width >= 1280:  # HD ready
+                        score += 0.05
+            
+            # Adjust based on audio quality
+            if 'audio_bitrate' in technical_metrics:
+                bitrate = technical_metrics.get('audio_bitrate', 0)
+                if bitrate >= 320:  # High quality
+                    score += 0.1
+                elif bitrate >= 128:  # Good quality
+                    score += 0.05
+            
+            return min(1.0, score)
+        except Exception as e:
+            logger.warning(f"Error calculating accessibility score: {e}")
+            return 0.8
 
-class AsyncQualityAssessor:
+
+class ImageQualityAnalyzer:
+    """Analyzer for image quality assessment"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(f"{__name__}.ImageQualityAnalyzer")
+    
+    def assess_image_quality(self, file_path: str, creator_type: str = "photographer") -> QualityAssessmentResult:
+        """Assess image quality"""
+        try:
+            # Basic image quality assessment
+            img_path = Path(file_path)
+            if not img_path.exists():
+                return self._create_error_result(f"Image file not found: {file_path}")
+            
+            # Load image
+            with Image.open(img_path) as img:
+                width, height = img.size
+                format_name = img.format
+                mode = img.mode
+            
+            # Calculate basic metrics
+            megapixels = (width * height) / 1_000_000
+            aspect_ratio = width / height if height > 0 else 1.0
+            
+            # Scoring logic
+            resolution_score = min(1.0, megapixels / 10)  # Normalize to 10MP max
+            format_score = 1.0 if format_name in ['JPEG', 'PNG', 'TIFF'] else 0.7
+            
+            overall_score = (resolution_score + format_score) / 2
+            
+            return QualityAssessmentResult(
+                overall_score=overall_score,
+                overall_level=self._score_to_level(overall_score),
+                dimension_scores={
+                    'resolution': resolution_score,
+                    'format': format_score
+                },
+                technical_metrics={
+                    'width': width,
+                    'height': height,
+                    'megapixels': megapixels,
+                    'format': format_name,
+                    'mode': mode,
+                    'aspect_ratio': aspect_ratio
+                },
+                improvement_suggestions=self._get_image_suggestions(overall_score, megapixels, format_name),
+                compliance_issues=[],
+                accessibility_score=0.9,
+                creator_specific_feedback={},
+                metadata={'file_path': file_path, 'creator_type': creator_type}
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Image quality assessment failed: {e}")
+            return self._create_error_result(f"Image analysis error: {str(e)}")
+    
+    def _score_to_level(self, score: float) -> QualityLevel:
+        """Convert score to quality level"""
+        if score >= 0.8:
+            return QualityLevel.EXCELLENT
+        elif score >= 0.6:
+            return QualityLevel.GOOD
+        elif score >= 0.4:
+            return QualityLevel.AVERAGE
+        else:
+            return QualityLevel.POOR
+    
+    def _get_image_suggestions(self, score: float, megapixels: float, format_name: str) -> List[str]:
+        """Get improvement suggestions for images"""
+        suggestions = []
+        
+        if megapixels < 2:
+            suggestions.append("Consider using higher resolution images (2MP minimum)")
+        
+        if format_name not in ['JPEG', 'PNG']:
+            suggestions.append("Use standard image formats (JPEG, PNG) for better compatibility")
+        
+        if score < 0.7:
+            suggestions.append("Overall image quality could be improved")
+        
+        return suggestions
+    
+    def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
+        """Create error result for images"""
+        return QualityAssessmentResult(
+            overall_score=0.0,
+            overall_level=QualityLevel.POOR,
+            dimension_scores={},
+            technical_metrics={},
+            improvement_suggestions=[],
+            compliance_issues=[f"Error: {error_msg}"],
+            accessibility_score=0.0,
+            creator_specific_feedback={},
+            metadata={"error": error_msg}
+        )
+
+
+class TextQualityAnalyzer:
+    """Analyzer for text quality assessment"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(f"{__name__}.TextQualityAnalyzer")
+    
+    def assess_text_quality(self, file_path: str, creator_type: str = "writer") -> QualityAssessmentResult:
+        """Assess text quality"""
+        try:
+            # Read text content
+            text_path = Path(file_path)
+            if not text_path.exists():
+                return self._create_error_result(f"Text file not found: {file_path}")
+            
+            with open(text_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Basic text metrics
+            word_count = len(content.split())
+            char_count = len(content)
+            sentence_count = content.count('.') + content.count('!') + content.count('?')
+            paragraph_count = content.count('\n\n') + 1
+            
+            # Calculate readability (basic version)
+            avg_words_per_sentence = word_count / max(1, sentence_count)
+            avg_chars_per_word = char_count / max(1, word_count)
+            
+            # Scoring logic
+            length_score = min(1.0, word_count / 500)  # Normalize to 500 words
+            readability_score = max(0.3, 1.0 - (avg_words_per_sentence - 15) / 50)  # Penalize very long sentences
+            structure_score = min(1.0, paragraph_count / max(1, word_count / 100))  # Good paragraph structure
+            
+            overall_score = (length_score + readability_score + structure_score) / 3
+            
+            return QualityAssessmentResult(
+                overall_score=overall_score,
+                overall_level=self._score_to_level(overall_score),
+                dimension_scores={
+                    'length': length_score,
+                    'readability': readability_score,
+                    'structure': structure_score
+                },
+                technical_metrics={
+                    'word_count': word_count,
+                    'char_count': char_count,
+                    'sentence_count': sentence_count,
+                    'paragraph_count': paragraph_count,
+                    'avg_words_per_sentence': avg_words_per_sentence,
+                    'avg_chars_per_word': avg_chars_per_word
+                },
+                improvement_suggestions=self._get_text_suggestions(overall_score, word_count, avg_words_per_sentence),
+                compliance_issues=[],
+                accessibility_score=0.8,
+                creator_specific_feedback={},
+                metadata={'file_path': file_path, 'creator_type': creator_type}
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Text quality assessment failed: {e}")
+            return self._create_error_result(f"Text analysis error: {str(e)}")
+    
+    def _score_to_level(self, score: float) -> QualityLevel:
+        """Convert score to quality level"""
+        if score >= 0.8:
+            return QualityLevel.EXCELLENT
+        elif score >= 0.6:
+            return QualityLevel.GOOD
+        elif score >= 0.4:
+            return QualityLevel.AVERAGE
+        else:
+            return QualityLevel.POOR
+    
+    def _get_text_suggestions(self, score: float, word_count: int, avg_words_per_sentence: float) -> List[str]:
+        """Get improvement suggestions for text"""
+        suggestions = []
+        
+        if word_count < 100:
+            suggestions.append("Consider adding more content (minimum 100 words recommended)")
+        
+        if avg_words_per_sentence > 25:
+            suggestions.append("Try shorter sentences for better readability")
+        
+        if score < 0.6:
+            suggestions.append("Overall text quality could be improved")
+        
+        return suggestions
+    
+    def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
+        """Create error result for text"""
+        return QualityAssessmentResult(
+            overall_score=0.0,
+            overall_level=QualityLevel.POOR,
+            dimension_scores={},
+            technical_metrics={},
+            improvement_suggestions=[],
+            compliance_issues=[f"Error: {error_msg}"],
+            accessibility_score=0.0,
+            creator_specific_feedback={},
+            metadata={"error": error_msg}
+        )
+
     """Version asynchrone de l'évaluateur de qualité"""
     
     def __init__(self):
