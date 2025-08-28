@@ -747,6 +747,182 @@ DIALECT_LOCALIZATIONS: Dict[str, DialectLocalization] = {
         country_code="44",
         greeting_style="visual",
         politeness_level="medium"
+    ),
+    
+    # Additional Critical Languages for Complete Worldwide Coverage
+    "fa": DialectLocalization(
+        dialect_code="fa",
+        region="Iran (Persian/Farsi)",
+        currency_symbol="﷼",
+        currency_position="after",
+        date_format="%Y/%m/%d",
+        phone_format="+98 {area_code} {number}",
+        country_code="98",
+        greeting_style="formal",
+        politeness_level="high",
+        directness_preference="indirect"
+    ),
+    
+    "arn": DialectLocalization(
+        dialect_code="arn",
+        region="Chile/Argentina (Mapuche)",
+        currency_symbol="$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+56 {area_code} {number}",
+        country_code="56",
+        greeting_style="traditional",
+        politeness_level="high"
+    ),
+    
+    "nv": DialectLocalization(
+        dialect_code="nv",
+        region="USA (Navajo/Diné)",
+        currency_symbol="$",
+        currency_position="before",
+        date_format="%m/%d/%Y",
+        phone_format="+1 ({area_code}) {number}",
+        country_code="1",
+        greeting_style="traditional",
+        politeness_level="medium",
+        temperature_unit="fahrenheit",
+        distance_unit="imperial"
+    ),
+    
+    "chr": DialectLocalization(
+        dialect_code="chr",
+        region="USA (Cherokee)",
+        currency_symbol="$",
+        currency_position="before",
+        date_format="%m/%d/%Y",
+        phone_format="+1 ({area_code}) {number}",
+        country_code="1",
+        greeting_style="traditional",
+        politeness_level="high",
+        temperature_unit="fahrenheit",
+        distance_unit="imperial"
+    ),
+    
+    "ff": DialectLocalization(
+        dialect_code="ff",
+        region="West Africa (Fulani)",
+        currency_symbol="CFA",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+221 {number}",
+        country_code="221",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "my": DialectLocalization(
+        dialect_code="my",
+        region="Myanmar (Burmese)",
+        currency_symbol="Ks",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+95 {area_code} {number}",
+        country_code="95",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "km": DialectLocalization(
+        dialect_code="km",
+        region="Cambodia (Khmer)",
+        currency_symbol="៛",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+855 {area_code} {number}",
+        country_code="855",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "lo": DialectLocalization(
+        dialect_code="lo",
+        region="Laos (Lao)",
+        currency_symbol="₭",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+856 {area_code} {number}",
+        country_code="856",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "fj": DialectLocalization(
+        dialect_code="fj",
+        region="Fiji (Fijian)",
+        currency_symbol="FJ$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+679 {number}",
+        country_code="679",
+        greeting_style="warm",
+        politeness_level="medium"
+    ),
+    
+    # Celtic Languages
+    "eu": DialectLocalization(
+        dialect_code="eu",
+        region="Spain/France (Basque)",
+        currency_symbol="€",
+        currency_position="after",
+        date_format="%Y/%m/%d",
+        phone_format="+34 {area_code} {number}",
+        country_code="34",
+        greeting_style="formal",
+        politeness_level="medium"
+    ),
+    
+    "cy": DialectLocalization(
+        dialect_code="cy",
+        region="Wales (Welsh)",
+        currency_symbol="£",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+44 {area_code} {number}",
+        country_code="44",
+        greeting_style="warm",
+        politeness_level="medium"
+    ),
+    
+    "ga": DialectLocalization(
+        dialect_code="ga",
+        region="Ireland (Irish Gaelic)",
+        currency_symbol="€",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+353 {area_code} {number}",
+        country_code="353",
+        greeting_style="warm",
+        politeness_level="medium"
+    ),
+    
+    # Additional Sign Languages for Complete Accessibility
+    "ssp": DialectLocalization(
+        dialect_code="ssp",
+        region="Spain (Spanish Sign Language)",
+        currency_symbol="€",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+34 {area_code} {number}",
+        country_code="34",
+        greeting_style="visual",
+        politeness_level="high"
+    ),
+    
+    "bzs": DialectLocalization(
+        dialect_code="bzs",
+        region="Brazil (Brazilian Sign Language - Libras)",
+        currency_symbol="R$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+55 {area_code} {number}",
+        country_code="55",
+        greeting_style="visual",
+        politeness_level="medium"
     )
 }
 
