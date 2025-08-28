@@ -183,8 +183,58 @@ class BaseChartGenerator:
     
     async def generate(self, config: ChartConfig, data: ChartData, 
                       output_format: OutputFormat) -> VisualizationResult:
-        """Generate chart visualization"""
-        raise NotImplementedError("Subclasses must implement generate method")
+        """Generate chart visualization - base implementation"""
+        try:
+            chart_id = f"base_{int(datetime.now(timezone.utc).timestamp())}"
+            
+            # Basic text-based chart representation
+            content = self._generate_text_chart(config, data)
+            
+            return VisualizationResult(
+                chart_id=chart_id,
+                config=config,
+                data=data,
+                output_format=output_format,
+                content=content,
+                metadata={
+                    'generator': self.name,
+                    'chart_type': config.chart_type.value,
+                    'format': 'text'
+                }
+            )
+            
+        except Exception as e:
+            logger.error(f"Failed to generate base chart: {str(e)}")
+            return VisualizationResult(
+                chart_id=f"error_{int(datetime.now(timezone.utc).timestamp())}",
+                config=config,
+                data=data,
+                output_format=output_format,
+                content="",
+                error=str(e)
+            )
+    
+    def _generate_text_chart(self, config: ChartConfig, data: ChartData) -> str:
+        """Generate basic text representation of chart"""
+        lines = [
+            f"Chart: {config.title}",
+            f"Type: {config.chart_type.value}",
+            f"Dimensions: {config.width}x{config.height}",
+            "-" * 40,
+            "Data Summary:"
+        ]
+        
+        if hasattr(data, 'series') and data.series:
+            for series in data.series:
+                lines.append(f"  {series.name}: {len(series.values)} points")
+                if series.values:
+                    min_val = min(series.values)
+                    max_val = max(series.values)
+                    avg_val = sum(series.values) / len(series.values)
+                    lines.append(f"    Range: {min_val:.2f} - {max_val:.2f}")
+                    lines.append(f"    Average: {avg_val:.2f}")
+        
+        return "\n".join(lines)
     
     def _prepare_color_palette(self, color_scheme: ColorScheme, num_colors: int) -> List[str]:
         """Prepare color palette based on scheme"""

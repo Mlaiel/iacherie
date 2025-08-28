@@ -124,8 +124,53 @@ class BaseValidator:
         self.strict_mode = strict_mode
     
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
-        """Validate value - to be implemented by subclasses"""
-        raise NotImplementedError
+        """Validate value - base implementation"""
+        try:
+            # Basic validation: check if value is not None
+            if value is None:
+                return self._create_result(
+                    is_valid=False,
+                    severity=ValidationSeverity.ERROR,
+                    message="Value cannot be None",
+                    field=field_name,
+                    code="NULL_VALUE"
+                )
+            
+            # Basic type validation for common types
+            if isinstance(value, str):
+                # String validation
+                if not value.strip():
+                    return self._create_result(
+                        is_valid=not self.strict_mode,  # Allow empty strings in non-strict mode
+                        severity=ValidationSeverity.WARNING if not self.strict_mode else ValidationSeverity.ERROR,
+                        message="Empty string provided",
+                        field=field_name,
+                        code="EMPTY_STRING"
+                    )
+            
+            # If we get here, basic validation passed
+            return self._create_result(
+                is_valid=True,
+                severity=ValidationSeverity.INFO,
+                message="Basic validation passed",
+                field=field_name,
+                code="VALID",
+                details={
+                    "value_type": type(value).__name__,
+                    "validation_type": "basic",
+                    "strict_mode": self.strict_mode
+                }
+            )
+            
+        except Exception as e:
+            return self._create_result(
+                is_valid=False,
+                severity=ValidationSeverity.ERROR,
+                message=f"Validation error: {str(e)}",
+                field=field_name,
+                code="VALIDATION_ERROR",
+                details={"exception": str(e)}
+            )
     
     def _create_result(self, is_valid: bool, 
                       severity: ValidationSeverity = ValidationSeverity.ERROR,

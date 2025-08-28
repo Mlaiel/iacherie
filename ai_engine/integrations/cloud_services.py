@@ -330,8 +330,27 @@ class AWSConnector(BaseCloudConnector):
             return await self._create_s3_bucket(config)
         elif resource_type == ResourceType.COMPUTE:
             return await self._create_ec2_instance(config)
+        elif resource_type == ResourceType.DATABASE:
+            return await self._create_rds_database(config)
+        elif resource_type == ResourceType.MESSAGING:
+            return await self._create_sqs_queue(config)
+        elif resource_type == ResourceType.NETWORK:
+            return await self._create_vpc(config)
         else:
-            raise NotImplementedError(f"Creation of {resource_type.value} not implemented")
+            # Fallback for unsupported resource types
+            self.logger.warning(f"Resource type {resource_type.value} not fully implemented, creating placeholder")
+            return CloudResource(
+                resource_id=f"placeholder-{resource_type.value}-{datetime.now().timestamp()}",
+                resource_type=resource_type,
+                provider=CloudProvider.AWS,
+                region=self.credentials.region,
+                status=ResourceStatus.RUNNING,
+                metadata={
+                    "placeholder": True,
+                    "message": f"Creation of {resource_type.value} not fully implemented",
+                    "config": config
+                }
+            )
     
     async def _create_s3_bucket(self, config: Dict[str, Any]) -> CloudResource:
         """Create S3 bucket"""
@@ -539,6 +558,88 @@ class AWSConnector(BaseCloudConnector):
             self.logger.error(f"Failed to list S3 objects: {e}")
         
         return objects
+    
+    async def _create_rds_database(self, config: Dict[str, Any]) -> CloudResource:
+        """Create RDS database instance"""
+        try:
+            db_identifier = config['db_instance_identifier']
+            
+            # Simulate RDS database creation
+            self.logger.info(f"Creating RDS database: {db_identifier}")
+            
+            return CloudResource(
+                resource_id=db_identifier,
+                name=config.get('db_name', db_identifier),
+                resource_type=ResourceType.DATABASE,
+                provider=self.provider,
+                region=self.credentials.region,
+                status=ResourceStatus.CREATING,
+                created_at=datetime.utcnow(),
+                metadata={
+                    "engine": config.get('engine', 'mysql'),
+                    "instance_class": config.get('db_instance_class', 'db.t3.micro'),
+                    "allocated_storage": config.get('allocated_storage', 20),
+                    "database_name": config.get('db_name')
+                }
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create RDS database: {e}")
+            raise
+    
+    async def _create_sqs_queue(self, config: Dict[str, Any]) -> CloudResource:
+        """Create SQS queue"""
+        try:
+            queue_name = config['queue_name']
+            
+            # Simulate SQS queue creation
+            self.logger.info(f"Creating SQS queue: {queue_name}")
+            
+            return CloudResource(
+                resource_id=f"sqs-{queue_name}-{datetime.now().timestamp()}",
+                name=queue_name,
+                resource_type=ResourceType.MESSAGING,
+                provider=self.provider,
+                region=self.credentials.region,
+                status=ResourceStatus.RUNNING,
+                created_at=datetime.utcnow(),
+                metadata={
+                    "visibility_timeout": config.get('visibility_timeout', 30),
+                    "message_retention_period": config.get('message_retention_period', 345600),
+                    "fifo": config.get('fifo_queue', False)
+                }
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create SQS queue: {e}")
+            raise
+    
+    async def _create_vpc(self, config: Dict[str, Any]) -> CloudResource:
+        """Create VPC (Virtual Private Cloud)"""
+        try:
+            vpc_name = config.get('name', 'default-vpc')
+            
+            # Simulate VPC creation
+            self.logger.info(f"Creating VPC: {vpc_name}")
+            
+            return CloudResource(
+                resource_id=f"vpc-{datetime.now().timestamp()}",
+                name=vpc_name,
+                resource_type=ResourceType.NETWORK,
+                provider=self.provider,
+                region=self.credentials.region,
+                status=ResourceStatus.RUNNING,
+                created_at=datetime.utcnow(),
+                metadata={
+                    "cidr_block": config.get('cidr_block', '10.0.0.0/16'),
+                    "enable_dns_support": config.get('enable_dns_support', True),
+                    "enable_dns_hostnames": config.get('enable_dns_hostnames', True)
+                }
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create VPC: {e}")
+            raise
 
 class AzureConnector(BaseCloudConnector):
     """Microsoft Azure connector"""

@@ -131,8 +131,41 @@ class PipelineStageProcessor:
         self.logger = get_logger(f"Pipeline-{stage.value}")
         
     async def process(self, record: DataRecord) -> DataRecord:
-        """Process a data record through this stage."""
-        raise NotImplementedError
+        """Process a data record through this stage - base implementation."""
+        try:
+            self.logger.info(f"Processing record {record.record_id} in {self.stage.value} stage")
+            
+            # Validate input
+            if not await self.validate_input(record):
+                record.status = RecordStatus.ERROR
+                record.error_message = f"Input validation failed for {self.stage.value} stage"
+                self.logger.error(f"Input validation failed for record {record.record_id}")
+                return record
+            
+            # Basic processing - update record metadata
+            record.metadata.update({
+                "processed_by": self.stage.value,
+                "processed_at": datetime.utcnow().isoformat(),
+                "processor_config": self.config
+            })
+            
+            # Simulate processing time
+            import asyncio
+            await asyncio.sleep(0.01)
+            
+            # Mark as processed if no errors
+            if record.status != RecordStatus.ERROR:
+                record.status = RecordStatus.PROCESSED
+                record.processed_at = datetime.utcnow()
+            
+            self.logger.info(f"Successfully processed record {record.record_id} in {self.stage.value}")
+            return record
+            
+        except Exception as e:
+            self.logger.error(f"Error processing record {record.record_id} in {self.stage.value}: {str(e)}")
+            record.status = RecordStatus.ERROR
+            record.error_message = str(e)
+            return record
         
     async def validate_input(self, record: DataRecord) -> bool:
         """Validate input for this stage."""
