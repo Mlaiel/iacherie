@@ -228,28 +228,109 @@ class StorageProvider:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Upload file to storage."""
-        raise NotImplementedError
+        """
+        Upload file to storage.
+        
+        Args:
+            content: File content as bytes
+            key: Storage key/path for the file
+            content_type: MIME type of the content
+            metadata: Optional metadata to store with the file
+            
+        Returns:
+            str: Storage URL or identifier for the uploaded file
+            
+        Raises:
+            NotImplementedError: If not implemented by storage provider subclass
+        """
+        raise NotImplementedError(
+            f"upload_file() must be implemented by {self.__class__.__name__} storage provider"
+        )
         
     async def download_file(self, key: str) -> bytes:
-        """Download file from storage.""" 
-        raise NotImplementedError
+        """
+        Download file from storage.
+        
+        Args:
+            key: Storage key/path for the file
+            
+        Returns:
+            bytes: File content
+            
+        Raises:
+            NotImplementedError: If not implemented by storage provider subclass
+        """
+        raise NotImplementedError(
+            f"download_file() must be implemented by {self.__class__.__name__} storage provider"
+        )
         
     async def delete_file(self, key: str) -> bool:
-        """Delete file from storage."""
-        raise NotImplementedError
+        """
+        Delete file from storage.
+        
+        Args:
+            key: Storage key/path for the file
+            
+        Returns:
+            bool: True if deletion was successful
+            
+        Raises:
+            NotImplementedError: If not implemented by storage provider subclass
+        """
+        raise NotImplementedError(
+            f"delete_file() must be implemented by {self.__class__.__name__} storage provider"
+        )
         
     async def file_exists(self, key: str) -> bool:
-        """Check if file exists in storage."""
-        raise NotImplementedError
+        """
+        Check if file exists in storage.
+        
+        Args:
+            key: Storage key/path for the file
+            
+        Returns:
+            bool: True if file exists
+            
+        Raises:
+            NotImplementedError: If not implemented by storage provider subclass
+        """
+        raise NotImplementedError(
+            f"file_exists() must be implemented by {self.__class__.__name__} storage provider"
+        )
         
     async def get_file_metadata(self, key: str) -> Dict[str, Any]:
-        """Get file metadata."""
-        raise NotImplementedError
+        """
+        Get file metadata.
+        
+        Args:
+            key: Storage key/path for the file
+            
+        Returns:
+            Dict[str, Any]: File metadata
+            
+        Raises:
+            NotImplementedError: If not implemented by storage provider subclass
+        """
+        raise NotImplementedError(
+            f"get_file_metadata() must be implemented by {self.__class__.__name__} storage provider"
+        )
         
     async def list_files(self, prefix: str = "") -> List[Dict[str, Any]]:
-        """List files with optional prefix."""
-        raise NotImplementedError
+        """
+        List files with optional prefix.
+        
+        Args:
+            prefix: Optional prefix to filter files
+            
+        Returns:
+            List[Dict[str, Any]]: List of file information
+            
+        Raises:
+            NotImplementedError: If not implemented by storage provider subclass
+        """
+        raise NotImplementedError(
+            f"list_files() must be implemented by {self.__class__.__name__} storage provider"
+        )
         
     async def generate_presigned_url(
         self, 
@@ -257,8 +338,23 @@ class StorageProvider:
         expiration: int = 3600,
         method: str = "GET"
     ) -> str:
-        """Generate presigned URL."""
-        raise NotImplementedError
+        """
+        Generate presigned URL.
+        
+        Args:
+            key: Storage key/path for the file
+            expiration: URL expiration time in seconds
+            method: HTTP method for the URL
+            
+        Returns:
+            str: Presigned URL
+            
+        Raises:
+            NotImplementedError: If not implemented by storage provider subclass
+        """
+        raise NotImplementedError(
+            f"generate_presigned_url() must be implemented by {self.__class__.__name__} storage provider"
+        )
 
 
 class S3StorageProvider(StorageProvider):
