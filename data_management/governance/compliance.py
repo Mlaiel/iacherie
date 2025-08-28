@@ -103,17 +103,17 @@ class BaseComplianceChecker(ABC):
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
         """Assess compliance for given content"""
-        pass
+        raise NotImplementedError("Subclasses must implement assess_compliance")
     
     @abstractmethod
     def get_requirements(self) -> List[str]:
         """Get list of compliance requirements"""
-        pass
+        raise NotImplementedError("Subclasses must implement get_requirements")
     
     @abstractmethod
     def get_framework_info(self) -> Dict[str, Any]:
         """Get information about the compliance framework"""
-        pass
+        raise NotImplementedError("Subclasses must implement get_framework_info")
 
 
 class GDPRCompliance(BaseComplianceChecker):
