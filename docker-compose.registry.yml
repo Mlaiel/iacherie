@@ -1,0 +1,234 @@
+# =============================================================================
+# CONTAINER REGISTRY CONFIGURATION FOR AINFLUE PLATFORM
+# =============================================================================
+# Enterprise container registry setup with security scanning,
+# image signing, and vulnerability management.
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # Harbor Enterprise Registry
+  harbor-registry:
+    image: goharbor/harbor-core:v2.9.0
+    container_name: ainflue-harbor-registry
+    environment:
+      - HARBOR_ADMIN_PASSWORD=${HARBOR_ADMIN_PASSWORD}
+      - DATABASE_TYPE=postgresql
+      - DATABASE_HOST=harbor-db
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=harbor
+      - DATABASE_PASSWORD=${HARBOR_DB_PASSWORD}
+      - DATABASE_DATABASE=harbor
+      - REDIS_HOST=harbor-redis
+      - REDIS_PORT=6379
+    depends_on:
+      - harbor-db
+      - harbor-redis
+    volumes:
+      - harbor_data:/data
+      - harbor_config:/etc/core
+    networks:
+      - registry-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/v2.0/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Harbor Database
+  harbor-db:
+    image: postgres:15
+    container_name: ainflue-harbor-db
+    environment:
+      POSTGRES_DB: harbor
+      POSTGRES_USER: harbor
+      POSTGRES_PASSWORD: ${HARBOR_DB_PASSWORD}
+    volumes:
+      - harbor_db_data:/var/lib/postgresql/data
+    networks:
+      - registry-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.2'
+          memory: 512M
+
+  # Harbor Redis
+  harbor-redis:
+    image: redis:7-alpine
+    container_name: ainflue-harbor-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - harbor_redis_data:/data
+    networks:
+      - registry-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  # Trivy Security Scanner
+  trivy-scanner:
+    image: aquasec/trivy:latest
+    container_name: ainflue-trivy-scanner
+    command: ["server", "--listen", "0.0.0.0:4954"]
+    volumes:
+      - trivy_cache:/root/.cache
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - registry-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.2'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4954/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Clair Security Scanner
+  clair-scanner:
+    image: quay.io/coreos/clair:v4.7.0
+    container_name: ainflue-clair-scanner
+    environment:
+      - CLAIR_CONF=/etc/clair/config.yaml
+      - CLAIR_MODE=combo
+    volumes:
+      - ./security/clair-config.yaml:/etc/clair/config.yaml:ro
+      - clair_data:/var/lib/clair
+    networks:
+      - registry-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.2'
+          memory: 512M
+
+  # Notary for Image Signing
+  notary-server:
+    image: notary:server-0.7.0
+    container_name: ainflue-notary-server
+    environment:
+      - NOTARY_SERVER_STORAGE_TYPE=mysql
+      - NOTARY_SERVER_STORAGE_DB_URL=server@tcp(notary-mysql:3306)/notaryserver?parseTime=True
+      - NOTARY_SERVER_TRUST_SERVICE_TYPE=remote
+      - NOTARY_SERVER_TRUST_SERVICE_HOSTNAME=notary-signer
+      - NOTARY_SERVER_TRUST_SERVICE_PORT=7899
+    depends_on:
+      - notary-mysql
+      - notary-signer
+    volumes:
+      - notary_server_data:/var/lib/notary
+    networks:
+      - registry-network
+
+  # Notary Signer
+  notary-signer:
+    image: notary:signer-0.7.0
+    container_name: ainflue-notary-signer
+    environment:
+      - NOTARY_SIGNER_STORAGE_TYPE=mysql
+      - NOTARY_SIGNER_STORAGE_DB_URL=signer@tcp(notary-mysql:3306)/notarysigner?parseTime=True
+    depends_on:
+      - notary-mysql
+    volumes:
+      - notary_signer_data:/var/lib/notary
+    networks:
+      - registry-network
+
+  # Notary Database
+  notary-mysql:
+    image: mysql:8.0
+    container_name: ainflue-notary-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${NOTARY_MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: notary
+      MYSQL_USER: notary
+      MYSQL_PASSWORD: ${NOTARY_MYSQL_PASSWORD}
+    volumes:
+      - notary_mysql_data:/var/lib/mysql
+      - ./security/notary-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - registry-network
+
+  # Docker Registry (backup/private)
+  docker-registry:
+    image: registry:2.8
+    container_name: ainflue-docker-registry
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+      REGISTRY_HTTP_SECRET: ${REGISTRY_HTTP_SECRET}
+    volumes:
+      - registry_data:/var/lib/registry
+      - ./security/registry-auth:/auth:ro
+    ports:
+      - "5000:5000"
+    networks:
+      - registry-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+
+volumes:
+  harbor_data:
+    driver: local
+  harbor_config:
+    driver: local
+  harbor_db_data:
+    driver: local
+  harbor_redis_data:
+    driver: local
+  trivy_cache:
+    driver: local
+  clair_data:
+    driver: local
+  notary_server_data:
+    driver: local
+  notary_signer_data:
+    driver: local
+  notary_mysql_data:
+    driver: local
+  registry_data:
+    driver: local
+
+networks:
+  registry-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.26.0.0/24

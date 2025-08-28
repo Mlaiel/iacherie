@@ -1,0 +1,77 @@
+# =============================================================================
+# PRODUCTION REQUIREMENTS FOR AINFLUE PLATFORM
+# =============================================================================
+# Additional dependencies for production environment with enhanced
+# security, monitoring, and performance optimizations.
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# =============================================================================
+
+# Production WSGI/ASGI Server
+gunicorn==21.2.0
+uvicorn[standard]==0.24.0
+
+# Enhanced Security
+cryptography==41.0.7
+pyjwt==2.8.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# Production Database Drivers
+psycopg2-binary==2.9.7
+redis[hiredis]==5.0.1
+
+# Monitoring and Observability
+prometheus-client==0.19.0
+statsd==4.0.1
+sentry-sdk[fastapi]==1.38.0
+
+# Performance Optimizations
+orjson==3.9.10
+uvloop==0.19.0
+httptools==0.6.1
+
+# Production Logging
+structlog==23.2.0
+python-json-logger==2.0.7
+
+# Health Checks and Diagnostics
+psutil==5.9.6
+
+# Background Task Processing
+celery[redis]==5.3.4
+flower==2.0.1
+
+# Production Utilities
+python-dotenv==1.0.0
+click==8.1.7
+
+# SSL/TLS Support
+pyopenssl==23.3.0
+certifi==2023.11.17
+
+# Rate Limiting
+slowapi==0.1.9
+
+# Caching
+aiocache==0.12.2
+
+# File Upload and Storage
+aiofiles==23.2.1
+
+# Email Support (for notifications)
+aiosmtplib==3.0.1
+jinja2==3.1.2
+
+# Data Validation
+pydantic[email]==2.5.0
+
+# Timezone Support
+pytz==2023.3.post1
+
+# Process Management
+supervisor==4.2.5
+
+# Container Health Checks
+requests==2.31.0

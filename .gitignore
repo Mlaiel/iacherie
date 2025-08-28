@@ -48,6 +48,124 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+# =============================================================================
+# DOCKER & CONTAINERISATION SECURITY
+# =============================================================================
+
+# Environment files with secrets
+.env.production
+.env.staging
+.env
+
+# SSL certificates and keys
+nginx/ssl/*.crt
+nginx/ssl/*.key
+nginx/ssl/*.pem
+nginx/ssl/*.p12
+security/certs/
+security/keys/
+
+# Container registry authentication
+registry-auth/
+.docker/config.json
+
+# Security reports and scans
+security-reports/
+health-reports/
+vulnerability-reports/
+trivy-reports/
+
+# Database credentials and initialization scripts
+database/init/*.sql
+database/config/secrets/
+postgres-data/
+mongodb-data/
+redis-data/
+
+# Backup files
+backups/
+*.backup
+*.dump
+*.sql.gz
+
+# Deployment logs
+deployment-logs/
+*.deployment.log
+deploy-*.log
+
+# Container volumes and persistent data
+storage/
+uploads/
+logs/
+temp/
+cache/
+data/faiss_indexes/
+
+# Docker Compose override files
+docker-compose.override.yml
+docker-compose.local.yml
+docker-compose.*.yml.backup
+
+# Monitoring and metrics data
+prometheus-data/
+grafana-data/
+elasticsearch-data/
+alertmanager-data/
+
+# Harbor registry data
+harbor-data/
+harbor-config/
+
+# Notary signing keys
+notary-keys/
+notary-data/
+
+# Load balancer configurations with secrets
+nginx/conf.d/secrets/
+nginx/htpasswd
+
+# Container runtime secrets
+secrets/
+config/secrets/
+
+# Temporary files and caches
+tmp/
+*.tmp
+*.swp
+*.swo
+
+# =============================================================================
+# PLATFORM-SPECIFIC DOCKER IGNORES
+# =============================================================================
+
+# AI model files (too large for git)
+models/
+ai_models/
+ml_models/
+transformers_cache/
+torch_cache/
+
+# Large media processing files
+media_cache/
+processed_media/
+crawled_data/
+fingerprint_cache/
+
+# Analytics and reporting data
+analytics_data/
+reports/generated/
+exports/
+
+# Payment processing logs (sensitive)
+payment_logs/
+transaction_logs/
+audit_logs/
+
+# Container orchestration secrets
+k8s-secrets/
+kubernetes/secrets/
+helm/secrets/
+
 # Translations
 *.mo
 *.pot
