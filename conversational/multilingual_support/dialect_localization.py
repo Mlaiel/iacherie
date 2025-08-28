@@ -249,6 +249,273 @@ DIALECT_LOCALIZATIONS: Dict[str, DialectLocalization] = {
         country_code="213",
         greeting_style="formal",
         politeness_level="high"
+    ),
+    
+    # Additional Arabic dialects - Middle East & North Africa
+    "ar_EG": DialectLocalization(
+        dialect_code="ar_EG",
+        region="Egypt",
+        currency_symbol="ج.م",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+20 {area_code} {number}",
+        country_code="20",
+        greeting_style="friendly",
+        politeness_level="medium"
+    ),
+    
+    "ar_LB": DialectLocalization(
+        dialect_code="ar_LB",
+        region="Lebanon (Levantine)",
+        currency_symbol="ل.ل",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+961 {area_code} {number}",
+        country_code="961",
+        greeting_style="warm",
+        politeness_level="medium"
+    ),
+    
+    "ar_AE": DialectLocalization(
+        dialect_code="ar_AE",
+        region="UAE (Gulf)",
+        currency_symbol="د.إ",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+971 {area_code} {number}",
+        country_code="971",
+        greeting_style="formal",
+        politeness_level="high",
+        business_hours_format="12h"
+    ),
+    
+    "ar_IQ": DialectLocalization(
+        dialect_code="ar_IQ",
+        region="Iraq (Mesopotamian)",
+        currency_symbol="د.ع",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+964 {area_code} {number}",
+        country_code="964",
+        greeting_style="formal",
+        politeness_level="high"
+    ),
+    
+    # Extended Spanish dialects - Latin America
+    "es_AR": DialectLocalization(
+        dialect_code="es_AR",
+        region="Argentina (Rioplatense)",
+        currency_symbol="$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+54 {area_code} {number}",
+        country_code="54",
+        greeting_style="friendly",
+        politeness_level="medium",
+        directness_preference="direct"
+    ),
+    
+    "es_CO": DialectLocalization(
+        dialect_code="es_CO",
+        region="Colombia (Andean)",
+        currency_symbol="$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+57 {area_code} {number}",
+        country_code="57",
+        greeting_style="warm",
+        politeness_level="high"
+    ),
+    
+    "es_PE": DialectLocalization(
+        dialect_code="es_PE",
+        region="Peru (Andean)",
+        currency_symbol="S/",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+51 {area_code} {number}",
+        country_code="51",
+        greeting_style="formal",
+        politeness_level="high"
+    ),
+    
+    "es_CU": DialectLocalization(
+        dialect_code="es_CU",
+        region="Cuba (Caribbean)",
+        currency_symbol="$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+53 {area_code} {number}",
+        country_code="53",
+        greeting_style="warm",
+        politeness_level="medium"
+    ),
+    
+    # Extended French dialects - Francophonie
+    "fr_BE": DialectLocalization(
+        dialect_code="fr_BE",
+        region="Belgium (Wallonia)",
+        currency_symbol="€",
+        currency_position="after",
+        decimal_separator=",",
+        thousand_separator=" ",
+        date_format="%d/%m/%Y",
+        phone_format="+32 {area_code} {number}",
+        country_code="32",
+        greeting_style="formal",
+        politeness_level="high"
+    ),
+    
+    "fr_CI": DialectLocalization(
+        dialect_code="fr_CI",
+        region="Côte d'Ivoire (West African)",
+        currency_symbol="CFA",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+225 {number}",
+        country_code="225",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "fr_SN": DialectLocalization(
+        dialect_code="fr_SN",
+        region="Senegal (West African)",
+        currency_symbol="CFA",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+221 {number}",
+        country_code="221",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    # Extended Portuguese dialects
+    "pt_AO": DialectLocalization(
+        dialect_code="pt_AO",
+        region="Angola (African Portuguese)",
+        currency_symbol="Kz",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+244 {area_code} {number}",
+        country_code="244",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    "pt_MZ": DialectLocalization(
+        dialect_code="pt_MZ",
+        region="Mozambique (African Portuguese)",
+        currency_symbol="MT",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+258 {area_code} {number}",
+        country_code="258",
+        greeting_style="respectful",
+        politeness_level="high"
+    ),
+    
+    # Extended Chinese dialects
+    "zh_HK": DialectLocalization(
+        dialect_code="zh_HK",
+        region="Hong Kong (Cantonese)",
+        currency_symbol="HK$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+852 {number}",
+        country_code="852",
+        greeting_style="respectful",
+        politeness_level="high",
+        business_hours_format="12h"
+    ),
+    
+    "zh_SG": DialectLocalization(
+        dialect_code="zh_SG",
+        region="Singapore (Mandarin)",
+        currency_symbol="S$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+65 {number}",
+        country_code="65",
+        greeting_style="neutral",
+        politeness_level="medium"
+    ),
+    
+    # Additional Amazigh/Berber dialects
+    "rif_MA": DialectLocalization(
+        dialect_code="rif_MA",
+        region="Morocco (Rif Mountains)",
+        currency_symbol="د.م.",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+212 {area_code} {number}",
+        country_code="212",
+        greeting_style="traditional",
+        politeness_level="high"
+    ),
+    
+    "shi_MA": DialectLocalization(
+        dialect_code="shi_MA",
+        region="Morocco (Tashelhit/Souss)",
+        currency_symbol="د.م.",
+        currency_position="after",
+        date_format="%d/%m/%Y",
+        phone_format="+212 {area_code} {number}",
+        country_code="212",
+        greeting_style="traditional",
+        politeness_level="high"
+    ),
+    
+    # Extended German dialects
+    "de_AT": DialectLocalization(
+        dialect_code="de_AT",
+        region="Austria (Austrian German)",
+        currency_symbol="€",
+        currency_position="after",
+        decimal_separator=",",
+        thousand_separator=".",
+        date_format="%d.%m.%Y",
+        phone_format="+43 {area_code} {number}",
+        country_code="43",
+        greeting_style="formal",
+        politeness_level="high"
+    ),
+    
+    "de_LU": DialectLocalization(
+        dialect_code="de_LU",
+        region="Luxembourg (Luxembourgish German)",
+        currency_symbol="€",
+        currency_position="after",
+        date_format="%d.%m.%Y",
+        phone_format="+352 {number}",
+        country_code="352",
+        greeting_style="formal",
+        politeness_level="high"
+    ),
+    
+    # Additional indigenous and regional languages
+    "qu_PE": DialectLocalization(
+        dialect_code="qu_PE",
+        region="Peru (Quechua)",
+        currency_symbol="S/",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+51 {area_code} {number}",
+        country_code="51",
+        greeting_style="traditional",
+        politeness_level="high"
+    ),
+    
+    "nah_MX": DialectLocalization(
+        dialect_code="nah_MX",
+        region="Mexico (Nahuatl)",
+        currency_symbol="$",
+        currency_position="before",
+        date_format="%d/%m/%Y",
+        phone_format="+52 {area_code} {number}",
+        country_code="52",
+        greeting_style="traditional",
+        politeness_level="high"
     )
 }
 

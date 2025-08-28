@@ -448,6 +448,84 @@ class SupportedLanguage(Enum):
     VENDA_ZA = "ve_ZA"                # Venda (South Africa)
     NORTHERN_SOTHO = "nso"            # Northern Sotho/Pedi (South Africa)
     SOUTHERN_NDEBELE = "nr"           # Southern Ndebele (South Africa)
+    
+    # Additional Indigenous Languages - Americas
+    MAYA_YUC = "yua"                   # Yucatec Maya (Mexico)
+    MAYA_KAQ = "caq"                   # Kaqchikel Maya (Guatemala)
+    MAYA_MAM = "mam"                   # Mam Maya (Guatemala)
+    GUARANI_PY = "gn_PY"              # Guarani (Paraguay)
+    GUARANI_AR = "gn_AR"              # Guarani (Argentina)
+    MAPUDUNGUN = "arn"                 # Mapudungun (Chile, Argentina)
+    WAYUU = "guc"                      # Wayuu (Colombia, Venezuela)
+    EMBERA = "emp"                     # Embera (Colombia, Panama)
+    KUNA = "cuk"                       # Kuna (Panama)
+    MISKITO = "miq"                    # Miskito (Nicaragua, Honduras)
+    GARIFUNA = "cab"                   # Garifuna (Honduras, Belize, Guatemala)
+    
+    # Additional Indigenous Languages - North America
+    NAVAJO = "nv"                      # Navajo (USA)
+    CHEROKEE = "chr"                   # Cherokee (USA)
+    OJIBWE = "oj"                      # Ojibwe (USA, Canada)
+    CREE = "cr"                        # Cree (Canada)
+    INUKTITUT = "iu"                   # Inuktitut (Canada)
+    MOHAWK = "moh"                     # Mohawk (USA, Canada)
+    LAKOTA = "lkt"                     # Lakota (USA)
+    DAKOTA = "dak"                     # Dakota (USA)
+    
+    # Additional African Languages
+    SHONA_ZW = "sn_ZW"                # Shona (Zimbabwe)
+    NDEBELE_ZW = "nd_ZW"              # Ndebele (Zimbabwe)
+    TONGA_ZM = "to_ZM"                # Tonga (Zambia)
+    LOZI = "loz"                       # Lozi (Zambia)
+    KIKONGO = "kg"                     # Kikongo (DRC, Angola)
+    LINGALA = "ln"                     # Lingala (DRC, Congo)
+    TEKE = "tek"                       # Teke (Congo)
+    FANG = "fan"                       # Fang (Equatorial Guinea, Gabon)
+    BULU = "bum"                       # Bulu (Cameroon)
+    DOUALA = "dua"                     # Douala (Cameroon)
+    FULFULDE = "ff"                    # Fulfulde (West Africa)
+    KANURI = "kr"                      # Kanuri (Nigeria, Chad)
+    
+    # Additional Asian Regional Languages
+    UYGHUR = "ug"                      # Uyghur (China)
+    TIBETAN = "bo"                     # Tibetan (China, Tibet)
+    MONGOLIAN = "mn"                   # Mongolian (Mongolia, China)
+    BURYAT = "bua"                     # Buryat (Russia, Mongolia)
+    YAKUT = "sah"                      # Yakut/Sakha (Russia)
+    CHUKCHI = "ckt"                    # Chukchi (Russia)
+    EVENK = "evn"                      # Evenk (Russia, China)
+    MANCHU = "mnc"                     # Manchu (China)
+    
+    # Additional Pacific Languages
+    MAORI = "mi"                       # Maori (New Zealand)
+    FIJIAN = "fj"                      # Fijian (Fiji)
+    TONGAN = "to"                      # Tongan (Tonga)
+    SAMOAN = "sm"                      # Samoan (Samoa)
+    TAHITIAN = "ty"                    # Tahitian (French Polynesia)
+    MARSHALLESE = "mh"                 # Marshallese (Marshall Islands)
+    PALAUAN = "pau"                    # Palauan (Palau)
+    YAPESE = "yap"                     # Yapese (Micronesia)
+    CHUUKESE = "chk"                   # Chuukese (Micronesia)
+    
+    # Additional European Regional Languages
+    CATALAN_ES = "ca_ES"              # Catalan (Spain)
+    CATALAN_AD = "ca_AD"              # Catalan (Andorra)
+    BASQUE_ES = "eu_ES"               # Basque (Spain)
+    BASQUE_FR = "eu_FR"               # Basque (France)
+    GALICIAN = "gl"                    # Galician (Spain)
+    ARANESE = "oc_ES"                  # Aranese (Spain)
+    MIRANDESE = "mwl"                  # Mirandese (Portugal)
+    LEONESE = "roa_leo"                # Leonese (Spain)
+    ARAGONESE = "an"                   # Aragonese (Spain)
+    ASTURIAN = "ast"                   # Asturian (Spain)
+    EXTREMADURAN = "ext"               # Extremaduran (Spain)
+    
+    # Middle Eastern Regional Dialects
+    KURDISH_KURMANJI = "ku_latn"       # Kurdish Kurmanji (Latin script)
+    KURDISH_SORANI = "ku_arab"         # Kurdish Sorani (Arabic script)
+    ASSYRIAN_NEO = "aii"               # Neo-Assyrian
+    ARAMAIC = "arc"                    # Aramaic
+    MALTESE = "mt"                     # Maltese
     SISWATI = "ss"                    # Siswati (Eswatini, South Africa)
     
     # Additional Asian Languages

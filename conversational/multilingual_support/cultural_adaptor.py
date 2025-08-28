@@ -488,7 +488,96 @@ class CulturalAdaptor:
                 "time_references": {
                     "patterns": [
                         (r"Christmas", "holiday season"),
-                        (r"weekend", "end of week")
+                        (r"weekend", "end of week"),
+                        (r"New Year", "year-end celebrations"),
+                        (r"Easter", "spring celebrations"),
+                        (r"Sunday", "day of rest")
+                    ]
+                },
+                "religious_sensitivity": {
+                    "patterns": [
+                        (r"pork", "meat"),
+                        (r"alcohol", "beverages"),
+                        (r"gambling", "entertainment"),
+                        (r"interest rates", "financial returns")
+                    ]
+                }
+            },
+            
+            "regional_business_culture": {
+                "middle_east": {
+                    "patterns": [
+                        (r"quick meeting", "consultation meeting"),
+                        (r"let's get to business", "I hope you are well. After proper greetings, we can discuss"),
+                        (r"deadline", "target completion date"),
+                        (r"no problem", "inshallah, it will be done")
+                    ]
+                },
+                "east_asia": {
+                    "patterns": [
+                        (r"I disagree", "I have a different perspective"),
+                        (r"that's wrong", "perhaps there's another way"),
+                        (r"speak up", "please share your valuable opinion"),
+                        (r"direct feedback", "constructive suggestions")
+                    ]
+                },
+                "latin_america": {
+                    "patterns": [
+                        (r"business hours", "flexible schedule"),
+                        (r"punctual", "timely"),
+                        (r"formal meeting", "collaborative discussion"),
+                        (r"individual achievement", "team success")
+                    ]
+                },
+                "nordic": {
+                    "patterns": [
+                        (r"hierarchy", "flat organization"),
+                        (r"formal titles", "first names"),
+                        (r"elaborate explanation", "concise summary"),
+                        (r"excessive politeness", "direct communication")
+                    ]
+                }
+            },
+            
+            "indigenous_cultural_adaptation": {
+                "respect_patterns": {
+                    "patterns": [
+                        (r"discover", "learn about"),
+                        (r"primitive", "traditional"),
+                        (r"tribes", "communities"),
+                        (r"folklore", "oral tradition"),
+                        (r"beliefs", "knowledge systems")
+                    ]
+                },
+                "land_acknowledgment": {
+                    "patterns": [
+                        (r"our territory", "this traditional territory"),
+                        (r"empty land", "ancestral lands"),
+                        (r"resources", "sacred resources"),
+                        (r"ownership", "stewardship")
+                    ]
+                }
+            },
+            
+            "gender_cultural_sensitivity": {
+                "inclusive_language": {
+                    "patterns": [
+                        (r"\\bguys\\b", "everyone"),
+                        (r"\\bmankind\\b", "humanity"),
+                        (r"\\bmanpower\\b", "workforce"),
+                        (r"\\bchairman\\b", "chairperson"),
+                        (r"\\bfireman\\b", "firefighter")
+                    ]
+                }
+            },
+            
+            "age_cultural_sensitivity": {
+                "respectful_aging": {
+                    "patterns": [
+                        (r"elderly", "older adults"),
+                        (r"senior citizens", "older community members"),
+                        (r"aging population", "mature population"),
+                        (r"old-fashioned", "traditional")
                     ]
                 }
             }
