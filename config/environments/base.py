@@ -23,7 +23,8 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List, Union
 import os
 from dataclasses import dataclass
-from pydantic import BaseSettings, Field, validator
+from pydantic import Field, validator
+from pydantic_settings import BaseSettings
 import json
 
 
@@ -74,10 +75,10 @@ class RedisConfig:
 class SecurityConfig:
     """Configuration sécurité enterprise"""
     jwt_secret_key: str
-    jwt_algorithm: str = "HS256"
-    jwt_expiry_hours: int = 24
     oauth2_secret_key: str
     encryption_key: str
+    jwt_algorithm: str = "HS256"
+    jwt_expiry_hours: int = 24
     api_rate_limit: int = 1000
     session_timeout: int = 3600
 
@@ -98,8 +99,8 @@ class StorageConfig:
     """Configuration stockage cloud et local"""
     aws_access_key_id: str
     aws_secret_access_key: str
-    aws_region: str = "eu-central-1"
     s3_bucket_name: str
+    aws_region: str = "eu-central-1"
     local_storage_path: str = "/data/storage"
     max_file_size_mb: int = 100
 
