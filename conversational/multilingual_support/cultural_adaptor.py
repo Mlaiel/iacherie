@@ -287,6 +287,144 @@ class CulturalAdaptor:
                 meeting_culture="structured",
                 decision_making_style="hierarchical",
                 feedback_style="implicit"
+            ),
+            
+            # Arabic cultures - Middle East
+            CulturalContext(
+                language=SupportedLanguage.ARABIC,
+                country_code="SA",
+                region="Gulf",
+                directness_level=0.4,
+                formality_preference=0.8,
+                hierarchy_awareness=0.8,
+                context_dependency=0.7,
+                power_distance=0.95,
+                individualism=0.25,
+                uncertainty_avoidance=0.80,
+                response_time_expectation=420.0,
+                punctuality_importance=0.6,
+                relationship_focus=0.9,
+                datetime_format="%d/%m/%Y %H:%M",
+                currency_symbol="ر.س",
+                cultural_references=["Islamic greetings", "family honor"],
+                avoided_topics=["alcohol", "personal relationships"],
+                meeting_culture="relationship-based",
+                decision_making_style="hierarchical",
+                feedback_style="implicit"
+            ),
+            
+            # North African Arabic
+            CulturalContext(
+                language=SupportedLanguage.ARABIC,
+                country_code="MA",
+                region="Maghreb",
+                directness_level=0.5,
+                formality_preference=0.7,
+                hierarchy_awareness=0.7,
+                context_dependency=0.6,
+                power_distance=0.70,
+                individualism=0.46,
+                uncertainty_avoidance=0.68,
+                response_time_expectation=360.0,
+                punctuality_importance=0.5,
+                relationship_focus=0.8,
+                datetime_format="%d/%m/%Y %H:%M",
+                currency_symbol="د.م.",
+                cultural_references=["Berber heritage", "French influences"],
+                meeting_culture="relationship-based",
+                decision_making_style="consensus",
+                feedback_style="diplomatic"
+            ),
+            
+            # Korean culture
+            CulturalContext(
+                language=SupportedLanguage.KOREAN,
+                country_code="KR",
+                directness_level=0.3,
+                formality_preference=0.9,
+                hierarchy_awareness=0.9,
+                context_dependency=0.8,
+                power_distance=0.60,
+                individualism=0.18,
+                uncertainty_avoidance=0.85,
+                response_time_expectation=120.0,
+                punctuality_importance=0.9,
+                relationship_focus=0.8,
+                datetime_format="%Y-%m-%d %H:%M",
+                currency_symbol="₩",
+                cultural_references=["age-based respect", "Confucian values"],
+                avoided_topics=["North Korea", "personal age"],
+                meeting_culture="structured",
+                decision_making_style="hierarchical",
+                feedback_style="implicit"
+            ),
+            
+            # Indian culture
+            CulturalContext(
+                language=SupportedLanguage.HINDI,
+                country_code="IN",
+                directness_level=0.4,
+                formality_preference=0.7,
+                hierarchy_awareness=0.8,
+                context_dependency=0.7,
+                power_distance=0.77,
+                individualism=0.48,
+                uncertainty_avoidance=0.40,
+                response_time_expectation=300.0,
+                punctuality_importance=0.6,
+                relationship_focus=0.8,
+                datetime_format="%d/%m/%Y %H:%M",
+                currency_symbol="₹",
+                cultural_references=["family respect", "spiritual values"],
+                avoided_topics=["beef consumption", "Pakistan relations"],
+                meeting_culture="relationship-based",
+                decision_making_style="consensus",
+                feedback_style="diplomatic"
+            ),
+            
+            # Brazilian Portuguese
+            CulturalContext(
+                language=SupportedLanguage.PORTUGUESE,
+                country_code="BR",
+                directness_level=0.6,
+                formality_preference=0.5,
+                hierarchy_awareness=0.6,
+                context_dependency=0.6,
+                power_distance=0.69,
+                individualism=0.38,
+                uncertainty_avoidance=0.76,
+                response_time_expectation=360.0,
+                punctuality_importance=0.4,
+                relationship_focus=0.8,
+                datetime_format="%d/%m/%Y %H:%M",
+                currency_symbol="R$",
+                cultural_references=["carnival spirit", "family bonds"],
+                appropriate_humor_styles=["warm", "playful"],
+                meeting_culture="relationship-based",
+                decision_making_style="consensus",
+                feedback_style="diplomatic"
+            ),
+            
+            # Russian culture
+            CulturalContext(
+                language=SupportedLanguage.RUSSIAN,
+                country_code="RU",
+                directness_level=0.8,
+                formality_preference=0.6,
+                hierarchy_awareness=0.7,
+                context_dependency=0.5,
+                power_distance=0.93,
+                individualism=0.39,
+                uncertainty_avoidance=0.95,
+                response_time_expectation=300.0,
+                punctuality_importance=0.7,
+                relationship_focus=0.6,
+                datetime_format="%d.%m.%Y %H:%M",
+                currency_symbol="₽",
+                cultural_references=["literary tradition", "historical pride"],
+                meeting_culture="structured",
+                decision_making_style="hierarchical",
+                feedback_style="direct"
             )
         ]
         
