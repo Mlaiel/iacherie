@@ -109,7 +109,8 @@ class GrafanaManager:
             'infrastructure_monitoring': self._get_infrastructure_monitoring_template(),
             'user_activity': self._get_user_activity_template(),
             'security_monitoring': self._get_security_monitoring_template(),
-            'business_intelligence': self._get_business_intelligence_template()
+            'business_intelligence': self._get_business_intelligence_template(),
+            'api_analytics': self._get_api_analytics_template()
         }
     
     async def create_dashboard(
@@ -540,6 +541,56 @@ class GrafanaManager:
                             "legendFormat": "{{license_type}} {{status}}"
                         }],
                         "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 3,
+                        "title": "Total Revenue (24h)",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "sum(increase(ia_influencer_revenue_tracked_total[24h]))",
+                            "legendFormat": "Total Revenue"
+                        }],
+                        "gridPos": {"x": 0, "y": 8, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 4,
+                        "title": "Revenue Growth Rate",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_revenue_tracked_total[7d])",
+                            "legendFormat": "Weekly Growth"
+                        }],
+                        "gridPos": {"x": 6, "y": 8, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 5,
+                        "title": "Revenue by Content Type",
+                        "type": "piechart",
+                        "targets": [{
+                            "expr": "sum by (content_type) (increase(ia_influencer_revenue_tracked_total[24h]))",
+                            "legendFormat": "{{content_type}}"
+                        }],
+                        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 6,
+                        "title": "Top Revenue Generating Users",
+                        "type": "table",
+                        "targets": [{
+                            "expr": "topk(10, sum by (user_id) (increase(ia_influencer_revenue_tracked_total[24h])))",
+                            "legendFormat": "{{user_id}}"
+                        }],
+                        "gridPos": {"x": 0, "y": 12, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 7,
+                        "title": "Payment Success Rate",
+                        "type": "gauge",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_payments_successful_total[5m]) / rate(ia_influencer_payments_total[5m])",
+                            "legendFormat": "Success Rate"
+                        }],
+                        "gridPos": {"x": 12, "y": 12, "w": 12, "h": 8}
                     }
                 ]
             },
@@ -573,6 +624,62 @@ class GrafanaManager:
                             "legendFormat": "{{type}}"
                         }],
                         "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 3,
+                        "title": "Disk I/O",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_disk_reads_total[5m])",
+                            "legendFormat": "Disk Reads"
+                        }, {
+                            "expr": "rate(ia_influencer_disk_writes_total[5m])",
+                            "legendFormat": "Disk Writes"
+                        }],
+                        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 4,
+                        "title": "Network Traffic",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_network_bytes_received_total[5m])",
+                            "legendFormat": "Bytes Received"
+                        }, {
+                            "expr": "rate(ia_influencer_network_bytes_sent_total[5m])",
+                            "legendFormat": "Bytes Sent"
+                        }],
+                        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 5,
+                        "title": "Database Connections",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "ia_influencer_database_connections_active",
+                            "legendFormat": "Active Connections"
+                        }],
+                        "gridPos": {"x": 0, "y": 16, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 6,
+                        "title": "Redis Cache Hit Rate",
+                        "type": "gauge",
+                        "targets": [{
+                            "expr": "ia_influencer_redis_cache_hit_rate",
+                            "legendFormat": "Cache Hit Rate"
+                        }],
+                        "gridPos": {"x": 6, "y": 16, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 7,
+                        "title": "Container Resource Usage",
+                        "type": "table",
+                        "targets": [{
+                            "expr": "topk(10, ia_influencer_container_cpu_usage_percent)",
+                            "legendFormat": "{{container_name}} CPU"
+                        }],
+                        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8}
                     }
                 ]
             },
@@ -595,7 +702,67 @@ class GrafanaManager:
                             "expr": "ia_influencer_active_users",
                             "legendFormat": "{{user_type}} - {{time_window}}"
                         }],
-                        "gridPos": {"x": 0, "y": 0, "w": 24, "h": 8}
+                        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 2,
+                        "title": "User Engagement Score",
+                        "type": "gauge",
+                        "targets": [{
+                            "expr": "avg(ia_influencer_user_engagement_score)",
+                            "legendFormat": "Average Engagement"
+                        }],
+                        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 3,
+                        "title": "Content Uploads by User Type",
+                        "type": "piechart",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_content_uploads_total[1h])",
+                            "legendFormat": "{{user_type}}"
+                        }],
+                        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 4,
+                        "title": "User Session Duration",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "histogram_quantile(0.95, rate(ia_influencer_session_duration_seconds_bucket[5m]))",
+                            "legendFormat": "Session Duration P95"
+                        }],
+                        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 5,
+                        "title": "User Registration Rate",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_user_registrations_total[1h])",
+                            "legendFormat": "New Users/hour"
+                        }],
+                        "gridPos": {"x": 0, "y": 16, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 6,
+                        "title": "User Retention Rate",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "ia_influencer_user_retention_rate",
+                            "legendFormat": "{{period}} Retention"
+                        }],
+                        "gridPos": {"x": 6, "y": 16, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 7,
+                        "title": "Most Active Users",
+                        "type": "table",
+                        "targets": [{
+                            "expr": "topk(10, sum by (user_id) (rate(ia_influencer_user_actions_total[24h])))",
+                            "legendFormat": "{{user_id}}"
+                        }],
+                        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8}
                     }
                 ]
             },
@@ -619,6 +786,56 @@ class GrafanaManager:
                             "legendFormat": "Failed logins"
                         }],
                         "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 2,
+                        "title": "Security Incidents by Severity",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "ia_influencer_security_incidents_total",
+                            "legendFormat": "{{severity}}"
+                        }],
+                        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 3,
+                        "title": "Suspicious Activity Score",
+                        "type": "heatmap",
+                        "targets": [{
+                            "expr": "ia_influencer_suspicious_activity_score",
+                            "legendFormat": "{{source_ip}}"
+                        }],
+                        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 4,
+                        "title": "Rate Limiting Violations",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_rate_limit_exceeded_total[5m])",
+                            "legendFormat": "{{endpoint}} violations"
+                        }],
+                        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 5,
+                        "title": "Content Protection Threats",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_content_protection_threats_total[5m])",
+                            "legendFormat": "{{threat_type}}"
+                        }],
+                        "gridPos": {"x": 0, "y": 16, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 6,
+                        "title": "User Account Anomalies",
+                        "type": "table",
+                        "targets": [{
+                            "expr": "topk(10, ia_influencer_user_anomaly_score > 0.7)",
+                            "legendFormat": "{{user_id}} - {{anomaly_type}}"
+                        }],
+                        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8}
                     }
                 ]
             },
@@ -629,9 +846,9 @@ class GrafanaManager:
         """Business intelligence dashboard template"""
         return {
             "dashboard": {
-                "title": "Business Intelligence",
+                "title": "Business Overview",
                 "description": "High-level business metrics and KPIs",
-                "tags": ["business", "intelligence", "kpis"],
+                "tags": ["business", "overview", "kpis"],
                 "panels": [
                     {
                         "id": 1,
@@ -642,6 +859,162 @@ class GrafanaManager:
                             "legendFormat": "Total Revenue"
                         }],
                         "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 2,
+                        "title": "Active Users",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "sum(ia_influencer_active_users)",
+                            "legendFormat": "Active Users"
+                        }],
+                        "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 3,
+                        "title": "Content Protected",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "sum(ia_influencer_content_protected_total)",
+                            "legendFormat": "Protected Items"
+                        }],
+                        "gridPos": {"x": 12, "y": 0, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 4,
+                        "title": "Platform Health",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "avg(up)",
+                            "legendFormat": "System Uptime"
+                        }],
+                        "gridPos": {"x": 18, "y": 0, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 5,
+                        "title": "Revenue Trend (7 days)",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "increase(ia_influencer_revenue_tracked_total[1d])",
+                            "legendFormat": "Daily Revenue"
+                        }],
+                        "gridPos": {"x": 0, "y": 4, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 6,
+                        "title": "User Growth",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "increase(ia_influencer_user_registrations_total[1d])",
+                            "legendFormat": "New Users/Day"
+                        }],
+                        "gridPos": {"x": 12, "y": 4, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 7,
+                        "title": "Top Performing Platforms",
+                        "type": "table",
+                        "targets": [{
+                            "expr": "topk(5, sum by (platform) (increase(ia_influencer_revenue_tracked_total[24h])))",
+                            "legendFormat": "{{platform}}"
+                        }],
+                        "gridPos": {"x": 0, "y": 12, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 8,
+                        "title": "Content Protection Efficiency",
+                        "type": "gauge",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_content_matches_total[5m]) / rate(ia_influencer_content_scans_total[5m])",
+                            "legendFormat": "Match Rate"
+                        }],
+                        "gridPos": {"x": 12, "y": 12, "w": 12, "h": 8}
+                    }
+                ]
+            },
+            "overwrite": True
+        }
+    
+    def _get_api_analytics_template(self) -> Dict[str, Any]:
+        """API analytics dashboard template"""
+        return {
+            "dashboard": {
+                "title": "API Analytics",
+                "description": "API usage, performance, and endpoint analytics",
+                "tags": ["api", "analytics", "performance"],
+                "panels": [
+                    {
+                        "id": 1,
+                        "title": "API Request Rate",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_http_requests_total[5m])",
+                            "legendFormat": "{{method}} {{endpoint}}"
+                        }],
+                        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 2,
+                        "title": "API Response Times",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "histogram_quantile(0.95, rate(ia_influencer_http_request_duration_seconds_bucket[5m]))",
+                            "legendFormat": "{{endpoint}} P95"
+                        }],
+                        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 3,
+                        "title": "API Error Rate by Endpoint",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_http_requests_total{status_code=~\"4..|5..\"}[5m]) / rate(ia_influencer_http_requests_total[5m])",
+                            "legendFormat": "{{endpoint}} {{status_code}}"
+                        }],
+                        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 4,
+                        "title": "Top API Endpoints by Usage",
+                        "type": "table",
+                        "targets": [{
+                            "expr": "topk(10, sum by (endpoint) (rate(ia_influencer_http_requests_total[1h])))",
+                            "legendFormat": "{{endpoint}}"
+                        }],
+                        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8}
+                    },
+                    {
+                        "id": 5,
+                        "title": "API Rate Limiting Events",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "rate(ia_influencer_rate_limit_exceeded_total[5m])",
+                            "legendFormat": "Rate Limited Requests/sec"
+                        }],
+                        "gridPos": {"x": 0, "y": 16, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 6,
+                        "title": "Active API Clients",
+                        "type": "stat",
+                        "targets": [{
+                            "expr": "count by (client_id) (rate(ia_influencer_http_requests_total[5m]) > 0)",
+                            "legendFormat": "Active Clients"
+                        }],
+                        "gridPos": {"x": 6, "y": 16, "w": 6, "h": 4}
+                    },
+                    {
+                        "id": 7,
+                        "title": "API Payload Size Distribution",
+                        "type": "graph",
+                        "targets": [{
+                            "expr": "histogram_quantile(0.95, rate(ia_influencer_http_request_size_bytes_bucket[5m]))",
+                            "legendFormat": "Request Size P95"
+                        }, {
+                            "expr": "histogram_quantile(0.95, rate(ia_influencer_http_response_size_bytes_bucket[5m]))",
+                            "legendFormat": "Response Size P95"
+                        }],
+                        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8}
                     }
                 ]
             },
