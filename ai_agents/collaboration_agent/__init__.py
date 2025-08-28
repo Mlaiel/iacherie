@@ -1,40 +1,44 @@
 """
-Collaboration Agent Module - AI-Powered Creator Matching & Partnership System
+Collaboration Agent - Ultra-Advanced Enterprise System
 
-Advanced intelligent collaboration system that matches creators based on content analysis,
-style compatibility, audience overlap, and collaboration history for optimal partnerships.
+This module provides enterprise-grade collaboration capabilities with
+intelligent optimization and comprehensive functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
-This code and concept are the exclusive intellectual property of Fahed Mlaiel.
-Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
+⚠️  CRITICAL LEGAL NOTICE:
+This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
+Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
 
-from .collaboration_agent import CollaborationAgent
-from .collaboration_manager import CollaborationAgentManager
-from .matching_engine import (
-    CreatorMatcher,
-    StyleAnalyzer,
-    AudienceAnalyzer,
-    CompatibilityScorer
-)
-from .workflow_manager import (
-    CollaborationWorkflow,
-    ProjectManager,
-    TaskCoordinator
+# Master Manager
+from .manager import (
+    CollaborationManager,
+    CollaborationSystemStatus
 )
 
+# Core System
+from .core.collaboration_engine import (
+    CollaborationEngine,
+    CollaborationJob,
+    CollaborationResult
+)
+
+# Legacy compatibility (for smooth migration)
+from .manager import CollaborationManager as CollaborationAgent
+
 __all__ = [
-    'CollaborationAgent',
-    'CollaborationAgentManager',
-    'CreatorMatcher',
-    'StyleAnalyzer',
-    'AudienceAnalyzer',
-    'CompatibilityScorer',
-    'CollaborationWorkflow',
-    'ProjectManager',
-    'TaskCoordinator'
+    # Master Manager
+    'CollaborationManager',
+    'CollaborationSystemStatus',
+    
+    # Core System
+    'CollaborationEngine',
+    'CollaborationJob',
+    'CollaborationResult',
+    
+    # Legacy compatibility
+    'CollaborationAgent'
 ]

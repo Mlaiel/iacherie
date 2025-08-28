@@ -1,39 +1,44 @@
 """
-Marketplace Agent - Enterprise Content Marketplace & Collaboration Platform
+Marketplace Agent - Ultra-Advanced Enterprise System
 
-This module provides comprehensive marketplace management, creator collaboration,
-content distribution, and AI-powered monetization optimization.
+This module provides enterprise-grade marketplace capabilities with
+intelligent optimization and comprehensive functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-License: Proprietary - Unauthorized use strictly prohibited
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+⚠️  CRITICAL LEGAL NOTICE:
+This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
+Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
+Contact: mlaiel@live.de for licensing inquiries.
 """
 
-from .marketplace_agent import MarketplaceAgent
-from .listing_manager import ListingManager
-from .collaboration_orchestrator import CollaborationOrchestrator
-from .marketplace_analytics import MarketplaceAnalytics
-from .monetization_engine import MonetizationEngine
-from .matching_engine import MatchingEngine
-from .transaction_processor import TransactionProcessor
-from .content_validator import ContentValidator
-from .marketplace_security import MarketplaceSecurity
-from .distribution_manager import DistributionManager
+# Master Manager
+from .manager import (
+    MarketplaceManager,
+    MarketplaceSystemStatus
+)
+
+# Core System
+from .core.marketplace_engine import (
+    MarketplaceEngine,
+    MarketplaceJob,
+    MarketplaceResult
+)
+
+# Legacy compatibility (for smooth migration)
+from .manager import MarketplaceManager as MarketplaceAgent
 
 __all__ = [
-    'MarketplaceAgent',
-    'ListingManager',
-    'CollaborationOrchestrator',
-    'MarketplaceAnalytics',
-    'MonetizationEngine',
-    'MatchingEngine',
-    'TransactionProcessor',
-    'ContentValidator',
-    'MarketplaceSecurity',
-    'DistributionManager',
+    # Master Manager
+    'MarketplaceManager',
+    'MarketplaceSystemStatus',
+    
+    # Core System
+    'MarketplaceEngine',
+    'MarketplaceJob',
+    'MarketplaceResult',
+    
+    # Legacy compatibility
+    'MarketplaceAgent'
 ]
-
-__version__ = '2.0.0'
-__author__ = 'Fahed Mlaiel'
-__email__ = 'mlaiel@live.de'
-__status__ = 'Production'

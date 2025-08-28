@@ -1,44 +1,44 @@
 """
-IA-Influencer Agent - Intelligence Agent Module
+Intelligence Agent - Ultra-Advanced Enterprise System
 
-Central AI coordination and orchestration for multi-format content creators.
-Provides intelligent decision-making, agent coordination, and system optimization.
+This module provides enterprise-grade intelligence capabilities with
+intelligent optimization and comprehensive functionality.
 
-Author: Fahed Mlaiel
-Contact: mlaiel@live.de
-Copyright: 2025 - All rights reserved
+Author: Fahed Mlaiel <mlaiel@live.de>
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
-This code is the exclusive intellectual property of Fahed Mlaiel.
-Unauthorized copying, distribution, or use is strictly prohibited.
-Any violation will result in legal action.
-
-Expert Team Specializations:
-- Lead AI Developer: Fahed Mlaiel
-- Senior Backend Engineer
-- AI/ML Engineer
-- Neural Network Architect
-- Decision Science Expert
-- System Orchestrator
-- Performance Optimizer
+⚠️  CRITICAL LEGAL NOTICE:
+This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
+Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
+Contact: mlaiel@live.de for licensing inquiries.
 """
 
-from .intelligence_agent import IntelligenceAgent
-from .decision_engine import DecisionEngine
-from .agent_coordinator import AgentCoordinator
-from .system_optimizer import SystemOptimizer
-from .learning_engine import LearningEngine
-from .prediction_engine import PredictionEngine
+# Master Manager
+from .manager import (
+    IntelligenceManager,
+    IntelligenceSystemStatus
+)
+
+# Core System
+from .core.intelligence_engine import (
+    IntelligenceEngine,
+    IntelligenceJob,
+    IntelligenceResult
+)
+
+# Legacy compatibility (for smooth migration)
+from .manager import IntelligenceManager as IntelligenceAgent
 
 __all__ = [
-    'IntelligenceAgent',
-    'DecisionEngine',
-    'AgentCoordinator',
-    'SystemOptimizer',
-    'LearningEngine',
-    'PredictionEngine',
+    # Master Manager
+    'IntelligenceManager',
+    'IntelligenceSystemStatus',
+    
+    # Core System
+    'IntelligenceEngine',
+    'IntelligenceJob',
+    'IntelligenceResult',
+    
+    # Legacy compatibility
+    'IntelligenceAgent'
 ]
-
-__version__ = "2.0.0"
-__author__ = "Fahed Mlaiel"
-__email__ = "mlaiel@live.de"

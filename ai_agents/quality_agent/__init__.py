@@ -1,40 +1,44 @@
 """
-Quality Agent Module - Advanced Content Quality Assessment & Enhancement System
+Quality Agent - Ultra-Advanced Enterprise System
 
-Comprehensive quality control, assessment, and enhancement system for all content types.
-Handles quality scoring, automated improvement suggestions, and content optimization.
+This module provides enterprise-grade quality capabilities with
+intelligent optimization and comprehensive functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
-This code and concept are the exclusive intellectual property of Fahed Mlaiel.
-Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
+⚠️  CRITICAL LEGAL NOTICE:
+This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
+Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-
-Team Specialties:
-- Lead AI Developer & Backend Senior Engineer
-- Machine Learning Engineer & Audio Processing Specialist  
-- Database Administrator & Security Expert
-- Microservices Architect & DevOps Engineer
-- AI Prompt Engineer & Content Protection Specialist
 """
 
-from .quality_agent import QualityAgent, QualityAgentManager
-from .quality_assessor import QualityAssessor, ContentScorer
-from .quality_enhancer import QualityEnhancer, ImprovementEngine
-from .standards_checker import StandardsChecker, ComplianceValidator
-from .performance_analyzer import PerformanceAnalyzer, MetricsCalculator
+# Master Manager
+from .manager import (
+    QualityManager,
+    QualitySystemStatus
+)
+
+# Core System
+from .core.quality_engine import (
+    QualityEngine,
+    QualityJob,
+    QualityResult
+)
+
+# Legacy compatibility (for smooth migration)
+from .manager import QualityManager as QualityAgent
 
 __all__ = [
-    'QualityAgent',
-    'QualityAgentManager', 
-    'QualityAssessor',
-    'ContentScorer',
-    'QualityEnhancer',
-    'ImprovementEngine',
-    'StandardsChecker',
-    'ComplianceValidator',
-    'PerformanceAnalyzer',
-    'MetricsCalculator'
+    # Master Manager
+    'QualityManager',
+    'QualitySystemStatus',
+    
+    # Core System
+    'QualityEngine',
+    'QualityJob',
+    'QualityResult',
+    
+    # Legacy compatibility
+    'QualityAgent'
 ]
