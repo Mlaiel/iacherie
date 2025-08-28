@@ -413,8 +413,23 @@ class BackgroundProcessor:
                 logger.info(f"🚫 Job cancelled: {job_id}")
                 return True
             
-            # TODO: Cancel pending jobs in queue
-            # This would require queue inspection and removal
+            # Cancel pending jobs in queue
+            if hasattr(self.queue_processor, 'cancel_pending_task'):
+                try:
+                    cancelled_from_queue = await self.queue_processor.cancel_pending_task(job_id)
+                    if cancelled_from_queue:
+                        logger.info(f"🚫 Job cancelled from queue: {job_id}")
+                        return True
+                except Exception as queue_error:
+                    logger.warning(f"Failed to cancel job from queue: {queue_error}")
+            
+            # Check if job is in our pending queue
+            if hasattr(self, '_pending_jobs'):
+                for i, pending_job in enumerate(self._pending_jobs):
+                    if pending_job.job_id == job_id:
+                        removed_job = self._pending_jobs.pop(i)
+                        logger.info(f"🚫 Job cancelled from pending queue: {job_id}")
+                        return True
             
             return False
             
@@ -1202,7 +1217,8 @@ class BackgroundProcessor:
                     try:
                         self.completed_jobs.remove(old_exec)
                     except ValueError:
-                        pass
+                        logger.debug(f"Job {old_exec.job_id} already removed from completed jobs")
+                        continue
                 
                 # Remove old failed jobs
                 old_failed = [
@@ -1214,7 +1230,8 @@ class BackgroundProcessor:
                     try:
                         self.failed_jobs.remove(old_exec)
                     except ValueError:
-                        pass
+                        logger.debug(f"Job {old_exec.job_id} already removed from failed jobs")
+                        continue
                 
                 if old_completed or old_failed:
                     logger.info(f"🧹 Cleaned up {len(old_completed)} completed and {len(old_failed)} failed jobs")
