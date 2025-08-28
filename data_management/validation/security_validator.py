@@ -236,8 +236,9 @@ class MalwareScanner:
                 if expected_mimes and real_mime != expected_mimes:
                     result['suspicious'] = True
                     result['indicators'].append(f'Extension mismatch: {declared_ext} vs {real_mime}')
-            except:
-                pass
+            except Exception as e:
+                self.logger.debug(f"Could not analyze MIME type for {file_path}: {e}")
+                result['warnings'].append(f"Could not verify MIME type: {str(e)}")
             
             # 3. Analyse des headers suspects
             with open(file_path, 'rb') as f:
@@ -693,8 +694,9 @@ class IntegrityValidator:
                 try:
                     with Image.open(file_path) as img:
                         pil_data = {'size': img.size, 'mode': img.mode}
-                except:
-                    pass
+                except Exception as e:
+                    self.logger.debug(f"Could not read image with PIL: {e}")
+                    result['metadata_warnings'].append(f"PIL analysis failed: {str(e)}")
                 
                 try:
                     with open(file_path, 'rb') as f:
@@ -704,8 +706,9 @@ class IntegrityValidator:
                                 int(str(tags['EXIF ExifImageWidth'])),
                                 int(str(tags['EXIF ExifImageLength']))
                             )
-                except:
-                    pass
+                except Exception as e:
+                    self.logger.debug(f"Could not read EXIF data: {e}")
+                    result['metadata_warnings'].append(f"EXIF analysis failed: {str(e)}")
                 
                 # Vérification cohérence
                 if pil_data.get('size') and exif_data.get('size'):
@@ -815,8 +818,9 @@ class AccessControlValidator:
                                 metadata['access_restrictions'].append('Contains GPS location data')
                             elif 'Owner' in str(tag) or 'Author' in str(tag):
                                 metadata['file_owner'] = str(value)
-                except:
-                    pass
+                except Exception as e:
+                    self.logger.debug(f"Could not extract EXIF security metadata: {e}")
+                    metadata['warnings'].append(f"EXIF security analysis failed: {str(e)}")
         
         except Exception as e:
             self.logger.error(f"Erreur extraction métadonnées sécurité: {e}")
@@ -1007,8 +1011,9 @@ class SecurityValidator:
                                 if isinstance(value, str) and len(value) > 500:
                                     analysis['suspicious'] = True
                                     analysis['indicators'].append(f'Large PDF metadata field: {key}')
-                except:
-                    pass
+                except Exception as e:
+                    self.logger.debug(f"Could not analyze PDF metadata: {e}")
+                    analysis['warnings'].append(f"PDF metadata analysis failed: {str(e)}")
         
         except Exception as e:
             self.logger.debug(f"Erreur analyse métadonnées: {e}")

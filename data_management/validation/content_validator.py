@@ -924,8 +924,17 @@ class ContentValidator:
                     return 'image'
                 elif file_type.startswith('text/') or 'text' in file_type:
                     return 'text'
-            except:
-                pass
+            except Exception as detection_error:
+                self.logger.debug(f"Could not detect MIME type for {file_path}: {detection_error}")
+                # Fallback to file extension
+                if file_path.suffix.lower() in ['.mp3', '.wav', '.flac', '.aac', '.ogg']:
+                    return 'audio'
+                elif file_path.suffix.lower() in ['.mp4', '.avi', '.mov', '.mkv', '.webm']:
+                    return 'video'
+                elif file_path.suffix.lower() in ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg']:
+                    return 'image'
+                elif file_path.suffix.lower() in ['.txt', '.md', '.json', '.xml', '.csv']:
+                    return 'text'
             
             return 'unknown'
             

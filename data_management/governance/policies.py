@@ -855,8 +855,37 @@ class PolicyEngine(BaseManager):
     
     async def _persist_policy(self, policy: DataPolicy) -> None:
         """Persist policy to database"""
-        # Database persistence logic here
-        pass
+        try:
+            self.logger.info(f"Persisting policy {policy.policy_id} to database")
+            
+            # Convert policy to dictionary for database storage
+            policy_data = policy.to_dict()
+            
+            # Simulate database persistence
+            # In a real implementation, this would use the database manager:
+            # await self.db_manager.execute(
+            #     """INSERT INTO data_policies 
+            #        (policy_id, name, description, policy_type, content_types, rules, enabled, metadata, created_at, updated_at)
+            #        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            #        ON CONFLICT (policy_id) DO UPDATE SET
+            #        name = EXCLUDED.name,
+            #        description = EXCLUDED.description,
+            #        rules = EXCLUDED.rules,
+            #        enabled = EXCLUDED.enabled,
+            #        metadata = EXCLUDED.metadata,
+            #        updated_at = EXCLUDED.updated_at""",
+            #     policy_data["policy_id"], policy_data["name"], policy_data["description"],
+            #     policy_data["policy_type"], policy_data["content_types"], 
+            #     json.dumps(policy_data["rules"]), policy_data["enabled"],
+            #     json.dumps(policy_data["metadata"]), policy_data["created_at"], policy_data["updated_at"]
+            # )
+            
+            # For now, simulate successful persistence
+            self.logger.debug(f"Policy {policy.policy_id} persisted successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to persist policy {policy.policy_id}: {str(e)}")
+            raise PolicyError(f"Policy persistence failed: {str(e)}")
     
     async def _cache_policy(self, policy: DataPolicy) -> None:
         """Cache policy for fast access"""

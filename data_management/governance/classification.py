@@ -16,6 +16,7 @@ Contact: mlaiel@live.de
 
 import logging
 import re
+import json
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime
 from enum import Enum
@@ -133,12 +134,121 @@ class BaseClassifier(ABC):
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Classify content and return predictions"""
-        pass
+        try:
+            self.logger.info(f"Starting classification for content type: {content_type}")
+            
+            if content_type not in self.get_supported_types():
+                raise ValidationError(f"Unsupported content type: {content_type}")
+            
+            # Extract text for classification
+            text_content = self._extract_text_content(content, content_type, metadata)
+            
+            # Initialize classification results
+            results = {
+                "content_categories": {},
+                "sensitivity_labels": {},
+                "confidence_scores": {},
+                "metadata": {
+                    "classifier_type": "pattern",
+                    "content_type": content_type,
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+            }
+            
+            # Classify content categories
+            for category, patterns in self.content_patterns.items():
+                confidence = self._calculate_pattern_confidence(text_content, patterns)
+                if confidence > 0.1:  # Minimum confidence threshold
+                    results["content_categories"][category.value] = confidence
+                    results["confidence_scores"][f"{category.value}_confidence"] = confidence
+            
+            # Classify sensitivity levels
+            for sensitivity, patterns in self.sensitivity_patterns.items():
+                confidence = self._calculate_pattern_confidence(text_content, patterns)
+                if confidence > 0.1:
+                    results["sensitivity_labels"][sensitivity.value] = confidence
+                    results["confidence_scores"][f"{sensitivity.value}_confidence"] = confidence
+            
+            # Add default categories if none found
+            if not results["content_categories"]:
+                results["content_categories"][ContentCategory.GENERAL.value] = 0.5
+                results["confidence_scores"]["general_confidence"] = 0.5
+            
+            if not results["sensitivity_labels"]:
+                results["sensitivity_labels"][SensitivityLabel.LOW_SENSITIVITY.value] = 0.5
+                results["confidence_scores"]["low_sensitivity_confidence"] = 0.5
+            
+            self.logger.info(f"Classification completed with {len(results['content_categories'])} categories")
+            return results
+            
+        except Exception as e:
+            self.logger.error(f"Classification failed: {str(e)}")
+            raise ClassificationError(f"Classification failed: {str(e)}")
     
     @abstractmethod
     def get_supported_types(self) -> List[str]:
         """Get supported content types"""
-        pass
+        return [
+            "text",
+            "document", 
+            "json",
+            "xml",
+            "csv",
+            "audio",
+            "video", 
+            "image",
+            "metadata"
+        ]
+    
+    def _extract_text_content(self, content: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> str:
+        """Extract text content for pattern matching"""
+        try:
+            text_content = ""
+            
+            if content_type == "text" or isinstance(content, str):
+                text_content = str(content)
+            elif content_type == "json" and isinstance(content, dict):
+                text_content = json.dumps(content, indent=2)
+            elif content_type == "metadata" and metadata:
+                text_content = json.dumps(metadata, indent=2)
+            elif hasattr(content, '__dict__'):
+                text_content = str(content.__dict__)
+            else:
+                text_content = str(content)
+            
+            # Include metadata in text analysis
+            if metadata:
+                metadata_text = json.dumps(metadata, indent=2)
+                text_content = f"{text_content}\n{metadata_text}"
+            
+            return text_content[:10000]  # Limit to first 10k characters for performance
+            
+        except Exception as e:
+            self.logger.error(f"Error extracting text content: {str(e)}")
+            return str(content)[:1000] if content else ""
+    
+    def _calculate_pattern_confidence(self, text: str, patterns: List) -> float:
+        """Calculate confidence score based on pattern matches"""
+        if not text or not patterns:
+            return 0.0
+        
+        total_matches = 0
+        total_patterns = len(patterns)
+        
+        for pattern in patterns:
+            if hasattr(pattern, 'search'):  # regex pattern
+                matches = len(pattern.findall(text.lower()))
+                if matches > 0:
+                    total_matches += min(matches / 10.0, 1.0)  # Normalize multiple matches
+            elif isinstance(pattern, str):
+                if pattern.lower() in text.lower():
+                    total_matches += 1
+        
+        if total_patterns == 0:
+            return 0.0
+        
+        confidence = total_matches / total_patterns
+        return min(confidence, 1.0)  # Cap at 1.0
 
 
 class PatternClassifier(BaseClassifier):
@@ -828,7 +938,8 @@ class ClassificationEngine:
             try:
                 return ContentCategory(best_category[0])
             except ValueError:
-                pass
+                self.logger.warning(f"Invalid content category: {best_category[0]}")
+                return ContentCategory.OPERATIONAL_DATA
         
         return None
     
@@ -848,7 +959,8 @@ class ClassificationEngine:
             try:
                 return SensitivityLabel(best_label[0])
             except ValueError:
-                pass
+                self.logger.warning(f"Invalid sensitivity label: {best_label[0]}")
+                return SensitivityLabel.LOW_SENSITIVITY
         
         return None
     
