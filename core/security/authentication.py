@@ -350,9 +350,57 @@ class OAuth2Manager:
         state: str
     ) -> Dict[str, Any]:
         """Exchange authorization code for access token"""
-        # Implementation for OAuth2 token exchange
-        # This would make HTTP request to provider's token endpoint
-        pass
+        try:
+            if provider not in self.providers:
+                raise AuthenticationError("Unsupported OAuth2 provider")
+            
+            config = self.providers[provider]
+            
+            # Prepare token exchange request
+            token_data = {
+                "grant_type": "authorization_code",
+                "code": code,
+                "client_id": config["client_id"],
+                "client_secret": config["client_secret"],
+                "redirect_uri": f"{self.settings.BASE_URL}/auth/oauth2/{provider}/callback"
+            }
+            
+            headers = {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": "application/json"
+            }
+            
+            # Make HTTP request to provider's token endpoint
+            import httpx
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    config["token_url"],
+                    data=token_data,
+                    headers=headers,
+                    timeout=30.0
+                )
+                
+                if response.status_code != 200:
+                    self.logger.error(f"OAuth2 token exchange failed: {response.status_code} - {response.text}")
+                    raise AuthenticationError("Token exchange failed")
+                
+                token_response = response.json()
+                
+                # Validate response
+                if "access_token" not in token_response:
+                    raise AuthenticationError("Invalid token response")
+                
+                # Cache the token
+                cache_key = f"oauth2_token:{provider}:{state}"
+                await self.cache.set(cache_key, token_response, expire=token_response.get("expires_in", 3600))
+                
+                self.logger.info(f"OAuth2 token exchange successful for provider: {provider}")
+                
+                return token_response
+                
+        except Exception as e:
+            self.logger.error(f"OAuth2 token exchange failed: {str(e)}")
+            raise AuthenticationError(f"OAuth2 authentication failed: {str(e)}")
 
 
 class TwoFactorAuth:

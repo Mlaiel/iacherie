@@ -25,6 +25,7 @@ import hashlib
 import hmac
 import base64
 import struct
+import json
 from typing import Dict, List, Optional, Union, Any, Tuple, Protocol
 from dataclasses import dataclass, field
 from enum import Enum
@@ -244,23 +245,132 @@ class KeyManager:
     
     async def _store_key(self, key_id: str, encrypted_key: bytes, metadata: EncryptionKey):
         """Store encrypted key in database"""
-        # Implementation depends on your key storage model
-        pass
+        try:
+            # Store in cache for immediate access
+            cache_key = f"encryption_key_data:{key_id}"
+            key_data = {
+                "encrypted_key": base64.b64encode(encrypted_key).decode(),
+                "metadata": {
+                    "key_id": metadata.key_id,
+                    "key_type": metadata.key_type.value,
+                    "algorithm": metadata.algorithm.value,
+                    "created_at": metadata.created_at.isoformat(),
+                    "expires_at": metadata.expires_at.isoformat() if metadata.expires_at else None,
+                    "is_active": metadata.is_active,
+                    "metadata": metadata.metadata or {}
+                }
+            }
+            
+            await self.cache.set(cache_key, key_data, expire=86400)  # 24 hours
+            
+            # Also store in file system as backup (in production would use proper DB)
+            import os
+            from pathlib import Path
+            
+            key_storage_dir = Path("/tmp/encryption_keys")
+            key_storage_dir.mkdir(exist_ok=True)
+            
+            key_file = key_storage_dir / f"{key_id}.json"
+            with open(key_file, 'w') as f:
+                json.dump(key_data, f)
+                
+            self.logger.info(f"Key stored: {key_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to store key {key_id}: {str(e)}")
+            raise
     
     async def _retrieve_key(self, key_id: str) -> Optional[bytes]:
         """Retrieve encrypted key from database"""
-        # Implementation depends on your key storage model
-        pass
+        try:
+            # Try cache first
+            cache_key = f"encryption_key_data:{key_id}"
+            key_data = await self.cache.get(cache_key)
+            
+            if key_data:
+                return base64.b64decode(key_data["encrypted_key"])
+            
+            # Try file system backup
+            from pathlib import Path
+            key_file = Path(f"/tmp/encryption_keys/{key_id}.json")
+            
+            if key_file.exists():
+                with open(key_file, 'r') as f:
+                    key_data = json.load(f)
+                    
+                # Re-cache the key
+                await self.cache.set(cache_key, key_data, expire=86400)
+                
+                return base64.b64decode(key_data["encrypted_key"])
+            
+            self.logger.warning(f"Key not found: {key_id}")
+            return None
+            
+        except Exception as e:
+            self.logger.error(f"Failed to retrieve key {key_id}: {str(e)}")
+            return None
     
     async def _get_key_metadata(self, key_id: str) -> Optional[EncryptionKey]:
         """Get key metadata"""
-        # Implementation depends on your key storage model
-        pass
+        try:
+            # Try cache first
+            cache_key = f"encryption_key_data:{key_id}"
+            key_data = await self.cache.get(cache_key)
+            
+            if not key_data:
+                # Try file system backup
+                from pathlib import Path
+                key_file = Path(f"/tmp/encryption_keys/{key_id}.json")
+                
+                if key_file.exists():
+                    with open(key_file, 'r') as f:
+                        key_data = json.load(f)
+                        
+                    # Re-cache the key
+                    await self.cache.set(cache_key, key_data, expire=86400)
+                else:
+                    return None
+            
+            # Reconstruct metadata object
+            meta = key_data["metadata"]
+            return EncryptionKey(
+                key_id=meta["key_id"],
+                key_type=KeyType(meta["key_type"]),
+                algorithm=EncryptionAlgorithm(meta["algorithm"]),
+                created_at=datetime.fromisoformat(meta["created_at"]),
+                expires_at=datetime.fromisoformat(meta["expires_at"]) if meta["expires_at"] else None,
+                is_active=meta["is_active"],
+                metadata=meta.get("metadata")
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get key metadata {key_id}: {str(e)}")
+            return None
     
     async def _deactivate_key(self, key_id: str):
         """Deactivate key"""
-        # Implementation depends on your key storage model
-        pass
+        try:
+            # Get current metadata
+            key_metadata = await self._get_key_metadata(key_id)
+            if not key_metadata:
+                self.logger.warning(f"Cannot deactivate key - not found: {key_id}")
+                return
+            
+            # Mark as inactive
+            key_metadata.is_active = False
+            
+            # Get the encrypted key data
+            encrypted_key = await self._retrieve_key(key_id)
+            if encrypted_key:
+                # Re-store with updated metadata
+                await self._store_key(key_id, encrypted_key, key_metadata)
+                self.logger.info(f"Key deactivated: {key_id}")
+            else:
+                self.logger.error(f"Could not retrieve key data for deactivation: {key_id}")
+                
+        except Exception as e:
+            self.logger.error(f"Failed to deactivate key {key_id}: {str(e)}")
+            raise
 
 
 class CryptoService:

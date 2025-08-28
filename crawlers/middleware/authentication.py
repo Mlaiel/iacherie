@@ -247,8 +247,20 @@ class MultiFactorAuthenticator:
             if not mfa_secret:
                 return False
             
+            # Check for replay attacks
+            replay_key = f"mfa_used:{user_id}:{mfa_token}"
+            if await self.redis_client.get(replay_key):
+                logger.warning(f"MFA token replay attempt detected for user: {user_id}")
+                return False
+            
             # Verify TOTP token
-            return self.verify_totp_token(mfa_secret, mfa_token)
+            if self.verify_totp_token(mfa_secret, mfa_token):
+                # Mark token as used (valid for 30 seconds window)
+                await self.redis_client.setex(replay_key, 30, "used")
+                logger.info(f"MFA verification successful for user: {user_id}")
+                return True
+            
+            return False
             
         except Exception as e:
             logger.error(f"MFA verification error: {e}")
@@ -256,9 +268,71 @@ class MultiFactorAuthenticator:
     
     async def get_user_mfa_secret(self, user_id: str) -> Optional[str]:
         """Get user's MFA secret"""
-        # This would typically query your user database
-        # For now, return a mock secret
-        return "JBSWY3DPEHPK3PXP"  # Mock secret
+        try:
+            # Check cache first
+            cache_key = f"mfa_secret:{user_id}"
+            cached_secret = await self.redis_client.get(cache_key)
+            
+            if cached_secret:
+                return cached_secret.decode() if isinstance(cached_secret, bytes) else cached_secret
+            
+            # In production, this would query the user database
+            # For now, use file-based storage
+            import os
+            mfa_secrets_file = "/tmp/mfa_secrets.json"
+            
+            if os.path.exists(mfa_secrets_file):
+                with open(mfa_secrets_file, 'r') as f:
+                    mfa_secrets = json.load(f)
+                    
+                    secret = mfa_secrets.get(user_id)
+                    if secret:
+                        # Cache for 1 hour
+                        await self.redis_client.setex(cache_key, 3600, secret)
+                        return secret
+            
+            # Generate new secret if none exists
+            import pyotp
+            new_secret = pyotp.random_base32()
+            
+            # Store the new secret
+            await self.store_user_mfa_secret(user_id, new_secret)
+            
+            return new_secret
+            
+        except Exception as e:
+            logger.error(f"Failed to get MFA secret for user {user_id}: {e}")
+            return None
+    
+    async def store_user_mfa_secret(self, user_id: str, secret: str):
+        """Store user's MFA secret"""
+        try:
+            # Cache the secret
+            cache_key = f"mfa_secret:{user_id}"
+            await self.redis_client.setex(cache_key, 3600, secret)
+            
+            # Store in file (in production would use encrypted database)
+            import os
+            mfa_secrets_file = "/tmp/mfa_secrets.json"
+            
+            # Load existing secrets
+            mfa_secrets = {}
+            if os.path.exists(mfa_secrets_file):
+                with open(mfa_secrets_file, 'r') as f:
+                    mfa_secrets = json.load(f)
+            
+            # Add/update the secret
+            mfa_secrets[user_id] = secret
+            
+            # Save back to file
+            with open(mfa_secrets_file, 'w') as f:
+                json.dump(mfa_secrets, f)
+                
+            logger.info(f"MFA secret stored for user: {user_id}")
+            
+        except Exception as e:
+            logger.error(f"Failed to store MFA secret for user {user_id}: {e}")
+            raise
     
     def verify_totp_token(self, secret: str, token: str) -> bool:
         """Verify Time-based One-Time Password"""
