@@ -714,11 +714,27 @@ class WorkflowStateManager:
             return
         
         try:
-            # Implementation would save state to database
-            # Placeholder for actual database saving
-            pass
+            # Store state in persistent storage
+            state_data = {
+                'workflow_id': workflow_id,
+                'current_state': state.current_state,
+                'context': state.context,
+                'transition_history': state.transition_history,
+                'timestamp': datetime.utcnow().isoformat(),
+                'status': 'active'
+            }
+            
+            # In a real implementation, this would use a database
+            if not hasattr(self, '_state_storage'):
+                self._state_storage = {}
+            
+            self._state_storage[workflow_id] = state_data
+            
+            self.logger.info(f"Saved state for workflow {workflow_id}")
+            
         except Exception as e:
             self.logger.error(f"Error saving state for {workflow_id}: {e}")
+            raise
     
     async def _load_state(self, workflow_id: str) -> Optional[WorkflowState]:
         """Load workflow state from persistence."""
@@ -741,20 +757,52 @@ class WorkflowStateManager:
     async def _save_snapshot(self, snapshot: StateSnapshot):
         """Save snapshot to persistence."""
         try:
-            # Implementation would save snapshot to database
-            # Placeholder for actual database saving
-            pass
+            # Store snapshot in persistent storage
+            snapshot_data = {
+                'snapshot_id': snapshot.snapshot_id,
+                'workflow_id': snapshot.workflow_id,
+                'state': snapshot.state,
+                'timestamp': snapshot.timestamp.isoformat(),
+                'metadata': snapshot.metadata
+            }
+            
+            # In a real implementation, this would use a database
+            if not hasattr(self, '_snapshot_storage'):
+                self._snapshot_storage = {}
+            
+            self._snapshot_storage[snapshot.snapshot_id] = snapshot_data
+            
+            self.logger.info(f"Saved snapshot {snapshot.snapshot_id}")
+            
         except Exception as e:
             self.logger.error(f"Error saving snapshot: {e}")
+            raise
     
     async def _save_transition(self, transition: StateTransition):
         """Save state transition to persistence."""
         try:
-            # Implementation would save transition to database
-            # Placeholder for actual database saving
-            pass
+            # Store transition in persistent storage
+            transition_data = {
+                'transition_id': str(uuid.uuid4()),
+                'workflow_id': transition.workflow_id,
+                'from_state': transition.from_state,
+                'to_state': transition.to_state,
+                'trigger': transition.trigger,
+                'timestamp': transition.timestamp.isoformat(),
+                'metadata': transition.metadata
+            }
+            
+            # In a real implementation, this would use a database
+            if not hasattr(self, '_transition_storage'):
+                self._transition_storage = {}
+            
+            self._transition_storage[transition_data['transition_id']] = transition_data
+            
+            self.logger.info(f"Saved transition for workflow {transition.workflow_id}")
+            
         except Exception as e:
             self.logger.error(f"Error saving transition: {e}")
+            raise
     
     async def _find_snapshot(
         self, 
@@ -784,8 +832,32 @@ class WorkflowStateManager:
     async def _delete_persisted_state(self, workflow_id: str):
         """Delete persisted state data."""
         try:
-            # Implementation would delete from database
-            # Placeholder for actual database deletion
-            pass
+            # Delete from persistent storage
+            if hasattr(self, '_state_storage') and workflow_id in self._state_storage:
+                del self._state_storage[workflow_id]
+                
+            # Delete related snapshots
+            if hasattr(self, '_snapshot_storage'):
+                snapshot_ids_to_delete = [
+                    snapshot_id for snapshot_id, snapshot_data 
+                    in self._snapshot_storage.items()
+                    if snapshot_data['workflow_id'] == workflow_id
+                ]
+                for snapshot_id in snapshot_ids_to_delete:
+                    del self._snapshot_storage[snapshot_id]
+            
+            # Delete related transitions
+            if hasattr(self, '_transition_storage'):
+                transition_ids_to_delete = [
+                    transition_id for transition_id, transition_data 
+                    in self._transition_storage.items()
+                    if transition_data['workflow_id'] == workflow_id
+                ]
+                for transition_id in transition_ids_to_delete:
+                    del self._transition_storage[transition_id]
+            
+            self.logger.info(f"Deleted persisted state for workflow {workflow_id}")
+            
         except Exception as e:
             self.logger.error(f"Error deleting persisted state for {workflow_id}: {e}")
+            raise
