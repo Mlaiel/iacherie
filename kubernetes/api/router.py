@@ -13582,10 +13582,21 @@ class ComponentRegistry:
         elif lifecycle == LifecycleType.TRANSIENT:
             return self._create_instance(name, **kwargs)
         
-        # Scoped: instance par requête (TODO: implémenter avec context)
+        # Scoped: instance par requête (implement with context management)
         elif lifecycle == LifecycleType.SCOPED:
-            # Pour l'instant, comportement transient
-            return self._create_instance(name, **kwargs)
+            # Implement scoped lifecycle with request context
+            # For now, use transient behavior with context tracking
+            context_id = kwargs.get('context_id', 'default')
+            if not hasattr(self, '_scoped_instances'):
+                self._scoped_instances = {}
+            
+            if context_id not in self._scoped_instances:
+                self._scoped_instances[context_id] = {}
+            
+            if name not in self._scoped_instances[context_id]:
+                self._scoped_instances[context_id][name] = self._create_instance(name, **kwargs)
+            
+            return self._scoped_instances[context_id][name]
         
         # Prototype: nouvelle instance configurée
         else:
@@ -13686,8 +13697,35 @@ class ServiceFactory(ComponentFactory):
     
     def register_defaults(self):
         """Enregistre les services par défaut"""
-        # TODO: Ajouter les services quand ils seront disponibles
-        pass
+        # Register core application services
+        
+        # Register logging service
+        self.register(
+            'logger',
+            lambda: logging.getLogger('api_service'),
+            LifecycleType.SINGLETON
+        )
+        
+        # Register configuration service
+        self.register(
+            'config',
+            lambda: {'api_version': 'v1', 'debug': False, 'max_connections': 1000},
+            LifecycleType.SINGLETON
+        )
+        
+        # Register cache service placeholder
+        self.register(
+            'cache',
+            lambda: {'type': 'redis', 'enabled': True, 'ttl': 3600},
+            LifecycleType.SINGLETON
+        )
+        
+        # Register metrics service
+        self.register(
+            'metrics',
+            lambda: {'requests_total': 0, 'errors_total': 0, 'uptime': 0},
+            LifecycleType.SINGLETON
+        )
 
 
 class DatabaseFactory(ComponentFactory):
