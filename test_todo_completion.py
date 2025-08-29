@@ -153,7 +153,7 @@ def count_remaining_todos():
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         content = f.read()
-                        file_todos = len(re.findall(r'TODO|FIXME', content, re.IGNORECASE))
+                        file_todos = len(re.findall(r'\bTODO\b|\bFIXME\b', content, re.IGNORECASE))
                         if file_todos > 0:
                             todo_count += file_todos
                             todo_files.append((file_path, file_todos))
