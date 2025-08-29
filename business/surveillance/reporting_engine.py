@@ -628,10 +628,17 @@ class ReportingEngine:
             self.generators[ReportType.INFRINGEMENT_SUMMARY] = InfringementSummaryGenerator(self.surveillance_system)
             self.generators[ReportType.CREATOR_PROTECTION] = CreatorProtectionGenerator(self.surveillance_system)
             
-            # TODO: Initialize other generators
-            # self.generators[ReportType.PLATFORM_ANALYSIS] = PlatformAnalysisGenerator(self.surveillance_system)
-            # self.generators[ReportType.TAKEDOWN_EFFECTIVENESS] = TakedownEffectivenessGenerator(self.surveillance_system)
-            # etc.
+            # Initialize other generators
+            self.generators[ReportType.PLATFORM_ANALYSIS] = PlatformAnalysisGenerator(self.surveillance_system)
+            self.generators[ReportType.TAKEDOWN_EFFECTIVENESS] = TakedownEffectivenessGenerator(self.surveillance_system)
+            self.generators[ReportType.CONTENT_DISTRIBUTION] = ContentDistributionGenerator(self.surveillance_system)
+            self.generators[ReportType.THREAT_ANALYSIS] = ThreatAnalysisGenerator(self.surveillance_system)
+            self.generators[ReportType.COMPLIANCE_AUDIT] = ComplianceAuditGenerator(self.surveillance_system)
+            self.generators[ReportType.PERFORMANCE_METRICS] = PerformanceMetricsGenerator(self.surveillance_system)
+            self.generators[ReportType.FINANCIAL_IMPACT] = FinancialImpactGenerator(self.surveillance_system)
+            self.generators[ReportType.TREND_ANALYSIS] = TrendAnalysisGenerator(self.surveillance_system)
+            
+            logger.info(f"Initialized {len(self.generators)} report generators successfully")
             
             self.initialized = True
             logger.info(f"Reporting Engine initialized with {len(self.generators)} generators")
