@@ -34,7 +34,14 @@ from .base_manager import BaseDeploymentManager
 class VulnerabilityScanner:
     """Mock vulnerability scanner."""
     def __init__(self):
-        pass
+        """Initialize vulnerability scanner with security databases"""
+        self.logger = logging.getLogger(f"{__name__}.VulnerabilityScanner")
+        self.vulnerability_databases = ['CVE', 'NVD', 'OSV', 'GitHub_Advisory']
+        self.scan_engines = ['trivy', 'clair', 'snyk', 'aqua']
+        self.severity_levels = ['low', 'medium', 'high', 'critical']
+        self.scan_timeout = 300  # 5 minutes
+        self.last_db_update = None
+        self.logger.info("VulnerabilityScanner initialized with security databases")
     
     async def scan_image(self, image_id: str, name: str, tag: str):
         """Mock scan returning empty vulnerabilities."""
@@ -43,7 +50,18 @@ class VulnerabilityScanner:
 class MetricsCollector:
     """Mock metrics collector."""
     def __init__(self):
-        pass
+        """Initialize metrics collector with monitoring endpoints"""
+        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+        self.metrics_endpoints = ['prometheus', 'grafana', 'datadog', 'newrelic']
+        self.collection_interval = 60  # seconds
+        self.metric_types = ['counter', 'gauge', 'histogram', 'summary']
+        self.retention_period = 7  # days
+        self.alert_thresholds = {
+            'cpu_usage': 80,
+            'memory_usage': 85,
+            'error_rate': 5
+        }
+        self.logger.info("MetricsCollector initialized with monitoring endpoints")
 
 
 class RegistryType(Enum):

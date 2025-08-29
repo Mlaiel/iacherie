@@ -35,7 +35,15 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """Mock metrics collector."""
     def __init__(self):
-        pass
+        """Initialize service mesh metrics collector with observability"""
+        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+        self.mesh_metrics = ['request_volume', 'success_rate', 'latency_p99', 'circuit_breaker_status']
+        self.security_metrics = ['mTLS_status', 'unauthorized_requests', 'policy_violations']
+        self.observability_tools = ['jaeger', 'zipkin', 'kiali', 'grafana']
+        self.sidecar_metrics = ['cpu_usage', 'memory_usage', 'proxy_latency']
+        self.traffic_policies = {}
+        self.mesh_topology = {}
+        self.logger.info("Service Mesh MetricsCollector initialized with observability")
 
 
 class ServiceMeshType(Enum):

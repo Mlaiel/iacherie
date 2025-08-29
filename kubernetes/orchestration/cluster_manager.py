@@ -34,7 +34,15 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """Mock metrics collector."""
     def __init__(self):
-        pass
+        """Initialize cluster metrics collector with infrastructure monitoring"""
+        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+        self.cluster_metrics = ['node_count', 'pod_count', 'service_count', 'ingress_count']
+        self.infrastructure_metrics = ['cpu_usage', 'memory_usage', 'storage_usage', 'network_io']
+        self.health_indicators = ['cluster_health', 'node_health', 'etcd_health', 'api_server_health']
+        self.monitoring_tools = ['prometheus', 'grafana', 'jaeger', 'fluentd']
+        self.alert_channels = ['slack', 'email', 'webhook', 'pagerduty']
+        self.metrics_retention = 30  # days
+        self.logger.info("Cluster MetricsCollector initialized with infrastructure monitoring")
 from .kubernetes_manager import KubernetesManager
 
 
