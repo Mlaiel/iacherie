@@ -58,7 +58,7 @@ class ComprehensiveTestRunner:
             ("Core Infrastructure", "tests/unit/test_core_api.py"),
             
             # Additional Coverage Tests
-            ("Fingerprinting Systems", "tests/unit/test_fingerprinting_agent.py"),
+            ("Fingerprinting Systems", "tests/unit/test_fingerprinting_agent_mock.py"),
             ("Monitoring Workflows", "tests/unit/test_monitoring_workflow_metrics.py"),
             ("Utils Performance", "tests/unit/test_utils_performance_monitor.py"),
         ]
