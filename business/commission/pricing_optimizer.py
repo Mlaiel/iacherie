@@ -1100,13 +1100,144 @@ class DemandModeler:
     
     async def initialize(self): 
         """Initialize demand modeling components"""
-        logger.info("DemandModeler initialized")
-        return True
+        try:
+            # Initialize historical data collection
+            self.historical_data = {
+                'pricing_history': {},
+                'demand_patterns': {},
+                'seasonal_trends': {},
+                'market_conditions': {}
+            }
+            
+            # Initialize demand prediction models
+            self.demand_models = {
+                'linear_regression': None,
+                'time_series': None,
+                'ml_ensemble': None
+            }
+            
+            # Load existing data if available
+            await self._load_historical_data()
+            
+            # Initialize ML models for demand prediction
+            await self._initialize_demand_models()
+            
+            logger.info("DemandModeler initialized successfully")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize DemandModeler: {e}")
+            return False
     
     async def shutdown(self): 
         """Shutdown demand modeling components"""
-        logger.info("DemandModeler shutdown")
-        return True
+        try:
+            # Save current state
+            await self._save_historical_data()
+            
+            # Clean up models
+            if self.demand_models:
+                for model_name, model in self.demand_models.items():
+                    if model:
+                        try:
+                            # Cleanup model resources if needed
+                            if hasattr(model, 'close'):
+                                model.close()
+                        except Exception as e:
+                            logger.warning(f"Error cleaning up model {model_name}: {e}")
+            
+            # Clear data structures
+            self.historical_data.clear()
+            self.demand_models.clear()
+            
+            logger.info("DemandModeler shutdown completed")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error during DemandModeler shutdown: {e}")
+            return False
+    
+    async def _load_historical_data(self):
+        """Load historical demand data from storage"""
+        try:
+            # In a real implementation, this would load from database
+            # For now, just initialize with empty structures
+            logger.debug("Loading historical demand data")
+            
+            # Could load from cache or database
+            # self.historical_data = await load_from_database()
+            
+        except Exception as e:
+            logger.error(f"Failed to load historical data: {e}")
+    
+    async def _save_historical_data(self):
+        """Save historical demand data to storage"""
+        try:
+            # In a real implementation, this would save to database
+            logger.debug("Saving historical demand data")
+            
+            # Could save to cache or database
+            # await save_to_database(self.historical_data)
+            
+        except Exception as e:
+            logger.error(f"Failed to save historical data: {e}")
+    
+    async def _initialize_demand_models(self):
+        """Initialize machine learning models for demand prediction"""
+        try:
+            # Initialize simple demand prediction models
+            # In production, these would be more sophisticated
+            
+            # Linear regression for basic trend analysis
+            from sklearn.linear_model import LinearRegression
+            self.demand_models['linear_regression'] = LinearRegression()
+            
+            # Simple moving average for time series
+            self.demand_models['time_series'] = {
+                'window_size': 30,
+                'weights': None
+            }
+            
+            # Placeholder for ensemble model
+            self.demand_models['ml_ensemble'] = {
+                'models': [],
+                'weights': [],
+                'initialized': False
+            }
+            
+            logger.debug("Demand models initialized")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize demand models: {e}")
+    
+    async def predict_demand(self, pricing_scenario: Dict[str, Any]) -> float:
+        """Predict demand for a given pricing scenario"""
+        try:
+            # Simple demand prediction based on price elasticity
+            base_demand = 1000.0  # Base demand
+            current_price = pricing_scenario.get('price', 0.1)
+            base_price = 0.1
+            elasticity = pricing_scenario.get('elasticity', 0.8)
+            
+            # Simple demand function: Q = Q0 * (P0/P)^elasticity
+            predicted_demand = base_demand * ((base_price / current_price) ** elasticity)
+            
+            # Apply market condition adjustments
+            market_condition = pricing_scenario.get('market_condition', 'stable')
+            market_multipliers = {
+                'bull': 1.2,
+                'bear': 0.8,
+                'stable': 1.0,
+                'volatile': 0.9
+            }
+            
+            predicted_demand *= market_multipliers.get(market_condition, 1.0)
+            
+            return max(0.0, predicted_demand)
+            
+        except Exception as e:
+            logger.error(f"Demand prediction failed: {e}")
+            return 0.0
 
 class ElasticityCalculator:
     """Price elasticity calculation component"""
