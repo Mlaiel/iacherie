@@ -1241,10 +1241,89 @@ class DemandModeler:
 
 class ElasticityCalculator:
     """Price elasticity calculation component"""
-    def __init__(self, config): self.config = config
-    async def initialize(self): pass
-    async def calculate_elasticity(self, request, market_data): return Decimal("0.8")
-    async def shutdown(self): pass
+    def __init__(self, config): 
+        self.config = config
+        self.historical_data = {}
+        self.elasticity_models = {}
+        self.logger = logging.getLogger(f"{__name__}.ElasticityCalculator")
+    
+    async def initialize(self): 
+        """Initialize elasticity calculation models and data"""
+        try:
+            # Initialize machine learning models for elasticity calculation
+            self.elasticity_models = {
+                'music': {'base_elasticity': 0.8, 'seasonal_factor': 0.1},
+                'video': {'base_elasticity': 0.7, 'seasonal_factor': 0.15},
+                'podcast': {'base_elasticity': 0.9, 'seasonal_factor': 0.05},
+                'default': {'base_elasticity': 0.8, 'seasonal_factor': 0.1}
+            }
+            
+            # Initialize historical data cache
+            self.historical_data = {}
+            
+            self.logger.info("ElasticityCalculator initialized successfully")
+            return True
+        except Exception as e:
+            self.logger.error(f"Failed to initialize ElasticityCalculator: {e}")
+            return False
+    
+    async def calculate_elasticity(self, request, market_data): 
+        """Calculate price elasticity based on request and market conditions"""
+        try:
+            # Get base elasticity for content type
+            content_type = getattr(request, 'content_type', 'default')
+            model_params = self.elasticity_models.get(content_type, self.elasticity_models['default'])
+            base_elasticity = Decimal(str(model_params['base_elasticity']))
+            
+            # Adjust for market conditions
+            market_condition = market_data.get('market_condition', 'stable')
+            market_adjustments = {
+                'bullish': Decimal('0.9'),    # Lower elasticity in strong market
+                'stable': Decimal('1.0'),     # Base elasticity
+                'bearish': Decimal('1.2'),    # Higher elasticity in weak market
+                'volatile': Decimal('1.1')    # Slightly higher elasticity
+            }
+            
+            market_factor = market_adjustments.get(market_condition, Decimal('1.0'))
+            
+            # Adjust for competitive position
+            current_rate = float(request.current_rate)
+            competitor_rates = market_data.get('competitor_rates', [])
+            
+            if competitor_rates:
+                avg_competitor_rate = sum(competitor_rates) / len(competitor_rates)
+                relative_position = current_rate / avg_competitor_rate
+                
+                # If we're more expensive, demand is more elastic
+                position_factor = Decimal('1.0') + (Decimal(str(relative_position)) - Decimal('1.0')) * Decimal('0.3')
+            else:
+                position_factor = Decimal('1.0')
+            
+            # Calculate final elasticity
+            elasticity = base_elasticity * market_factor * position_factor
+            
+            # Ensure elasticity stays within reasonable bounds
+            elasticity = max(Decimal('0.1'), min(Decimal('2.5'), elasticity))
+            
+            self.logger.debug(f"Calculated elasticity: {elasticity} for {content_type} in {market_condition} market")
+            return elasticity
+            
+        except Exception as e:
+            self.logger.error(f"Elasticity calculation failed: {e}")
+            return Decimal("0.8")  # Safe fallback
+    
+    async def shutdown(self): 
+        """Clean up elasticity calculator resources"""
+        try:
+            # Clear caches and models
+            self.historical_data.clear()
+            self.elasticity_models.clear()
+            
+            self.logger.info("ElasticityCalculator shutdown completed")
+            return True
+        except Exception as e:
+            self.logger.error(f"Error during ElasticityCalculator shutdown: {e}")
+            return False
 
 class CompetitorAnalyzer:
     """Competitor analysis component"""
