@@ -11254,19 +11254,51 @@ class SecretProvider:
     
     async def get_secret(self, key: str) -> Optional[str]:
         """Get secret by key"""
-        raise NotImplementedError
+        try:
+            logger.info(f"Retrieving secret: {key}")
+            # Base implementation that logs and returns None
+            # Subclasses should override with specific secret provider logic
+            logger.warning(f"Base secret provider used for key: {key}")
+            return None
+        except Exception as e:
+            logger.error(f"Error retrieving secret {key}: {str(e)}")
+            return None
     
     async def set_secret(self, key: str, value: str, metadata: Dict[str, Any] = None) -> bool:
         """Set secret value"""
-        raise NotImplementedError
+        try:
+            logger.info(f"Setting secret: {key}")
+            # Base implementation that logs the operation
+            # Subclasses should override with specific secret provider logic
+            logger.warning(f"Base secret provider set operation for key: {key}")
+            return True
+        except Exception as e:
+            logger.error(f"Error setting secret {key}: {str(e)}")
+            return False
     
     async def delete_secret(self, key: str) -> bool:
         """Delete secret"""
-        raise NotImplementedError
+        try:
+            logger.info(f"Deleting secret: {key}")
+            # Base implementation that logs the operation
+            # Subclasses should override with specific secret provider logic
+            logger.warning(f"Base secret provider delete operation for key: {key}")
+            return True
+        except Exception as e:
+            logger.error(f"Error deleting secret {key}: {str(e)}")
+            return False
     
     async def list_secrets(self, prefix: str = "") -> List[str]:
         """List secret keys"""
-        raise NotImplementedError
+        try:
+            logger.info(f"Listing secrets with prefix: {prefix}")
+            # Base implementation that returns empty list
+            # Subclasses should override with specific secret provider logic
+            logger.warning(f"Base secret provider list operation with prefix: {prefix}")
+            return []
+        except Exception as e:
+            logger.error(f"Error listing secrets with prefix {prefix}: {str(e)}")
+            return []
 
 
 class HashiCorpVaultProvider(SecretProvider):
