@@ -928,8 +928,13 @@ class DMCAAutomationService:
             # Configuration SMTP selon la config
             smtp_config = self.config.get('smtp', {})
             if smtp_config:
-                # TODO: Configurer client SMTP asyncio
-                logger.info("Client email configuré")
+                # Configure asyncio SMTP client
+                self.smtp_host = smtp_config.get('host', 'localhost')
+                self.smtp_port = smtp_config.get('port', 587)
+                self.smtp_user = smtp_config.get('user', '')
+                self.smtp_password = smtp_config.get('password', '')
+                self.smtp_tls = smtp_config.get('tls', True)
+                logger.info("Email client configured with SMTP settings")
             else:
                 logger.warning("Aucune configuration SMTP - mode manuel uniquement")
         except Exception as e:
@@ -1088,10 +1093,40 @@ class DMCAAutomationService:
                 logger.error("Client email non configuré")
                 return False
             
-            # TODO: Implémentation envoi email avec client SMTP
-            # await self.email_client.send_email(
-            #     to=contact.email,
-            #     subject=f"DMCA {notice.type.value.title()} Notice - {notice.id}",
+            # Implementation: Send email with SMTP client
+            try:
+                import smtplib
+                from email.mime.text import MIMEText
+                from email.mime.multipart import MIMEMultipart
+                
+                # Create message
+                msg = MIMEMultipart()
+                msg['From'] = self.smtp_user
+                msg['To'] = contact.email
+                msg['Subject'] = f"DMCA {notice.type.value.title()} Notice - {notice.id}"
+                
+                msg.attach(MIMEText(content, 'html'))
+                
+                # Send via SMTP
+                if hasattr(self, 'smtp_host'):
+                    server = smtplib.SMTP(self.smtp_host, getattr(self, 'smtp_port', 587))
+                    if getattr(self, 'smtp_tls', True):
+                        server.starttls()
+                    if getattr(self, 'smtp_user', '') and getattr(self, 'smtp_password', ''):
+                        server.login(self.smtp_user, self.smtp_password)
+                    
+                    server.send_message(msg)
+                    server.quit()
+                    
+                    logger.info(f"DMCA notice sent via email to {contact.email}")
+                    return True
+                else:
+                    logger.warning("SMTP not configured - email sending skipped")
+                    return False
+                    
+            except Exception as e:
+                logger.error(f"Failed to send email: {e}")
+                return False
             #     body=content
             # )
             
@@ -1129,9 +1164,33 @@ class DMCAAutomationService:
     async def _send_via_form(self, notice: DMCANotice, contact: PlatformContact, content: str) -> bool:
         """Soumet la notification via formulaire web"""
         try:
-            # TODO: Implémentation avec Selenium pour soumission automatique de formulaires
-            logger.info(f"Formulaire DMCA préparé pour {contact.form_url}")
-            return True
+            # Implementation with web form submission
+            try:
+                # Basic implementation using requests/aiohttp for form submission
+                if contact.form_url:
+                    async with aiohttp.ClientSession() as session:
+                        form_data = {
+                            'notice_content': content,
+                            'notice_type': notice.type.value,
+                            'content_url': notice.infringing_urls[0] if notice.infringing_urls else '',
+                            'submitter_name': 'DMCA Automation System',
+                            'submitter_email': getattr(self, 'smtp_user', 'dmca@example.com')
+                        }
+                        
+                        async with session.post(contact.form_url, data=form_data) as response:
+                            if response.status == 200:
+                                logger.info(f"DMCA form submitted successfully to {contact.form_url}")
+                                return True
+                            else:
+                                logger.warning(f"Form submission failed with status {response.status}")
+                                return False
+                else:
+                    logger.warning("No form URL provided for platform contact")
+                    return False
+                    
+            except Exception as e:
+                logger.error(f"Form submission failed: {e}")
+                return False
             
         except Exception as e:
             logger.error(f"Erreur soumission formulaire DMCA: {e}")
@@ -1215,7 +1274,15 @@ class DMCAAutomationService:
                     if notice.status == DMCAStatus.SENT and notice.response_deadline:
                         if datetime.utcnow() > notice.response_deadline:
                             logger.warning(f"Notice {notice_id} en retard de réponse")
-                            # TODO: Implémenter vérification automatique des réponses
+                            # Implement automatic response verification
+                            await self._check_notice_response(notice_id)
+                            
+                            # Update notice status if needed
+                            notice = self.active_notices.get(notice_id)
+                            if notice and notice.status == DMCAStatus.SENT:
+                                # Mark as requiring manual follow-up after deadline
+                                notice.status = DMCAStatus.REQUIRES_FOLLOWUP
+                                logger.info(f"Notice {notice_id} marked for manual follow-up")
                 
                 await asyncio.sleep(3600)  # Vérification horaire
                 
@@ -1246,8 +1313,25 @@ class DMCAAutomationService:
     async def _load_active_notices(self):
         """Charge les notices actives depuis le stockage persistant"""
         try:
-            # TODO: Implémentation chargement depuis base de données
-            logger.info("Notices DMCA actives chargées")
+            # Implementation: Load from database/storage
+            try:
+                # Basic implementation - could be replaced with actual DB calls
+                stored_notices_file = Path("./data/active_dmca_notices.json")
+                if stored_notices_file.exists():
+                    with open(stored_notices_file, 'r', encoding='utf-8') as f:
+                        notices_data = json.load(f)
+                        
+                    for notice_data in notices_data:
+                        notice = DMCANotice(**notice_data)
+                        self.active_notices[notice.id] = notice
+                        
+                    logger.info(f"Loaded {len(self.active_notices)} active DMCA notices")
+                else:
+                    logger.info("No stored DMCA notices found")
+                    
+            except Exception as e:
+                logger.error(f"Error loading DMCA notices: {e}")
+                self.active_notices = {}
         except Exception as e:
             logger.error(f"Erreur chargement notices DMCA: {e}")
     
@@ -1362,8 +1446,35 @@ class DMCAAutomationService:
     async def _save_active_notices(self):
         """Sauvegarde les notices actives"""
         try:
-            # TODO: Implémentation sauvegarde vers base de données
-            logger.info("Notices DMCA sauvegardées")
+            # Implementation: Save to database/storage
+            try:
+                # Basic implementation - could be replaced with actual DB calls
+                notices_data = []
+                for notice in self.active_notices.values():
+                    notice_dict = {
+                        'id': notice.id,
+                        'type': notice.type.value,
+                        'content_id': notice.content_id,
+                        'infringing_urls': notice.infringing_urls,
+                        'status': notice.status.value,
+                        'created_at': notice.created_at.isoformat(),
+                        'response_deadline': notice.response_deadline.isoformat() if notice.response_deadline else None
+                    }
+                    notices_data.append(notice_dict)
+                
+                # Ensure data directory exists
+                data_dir = Path("./data")
+                data_dir.mkdir(exist_ok=True)
+                
+                # Save to file
+                stored_notices_file = data_dir / "active_dmca_notices.json"
+                with open(stored_notices_file, 'w', encoding='utf-8') as f:
+                    json.dump(notices_data, f, indent=2)
+                    
+                logger.info(f"Saved {len(notices_data)} active DMCA notices to storage")
+                
+            except Exception as e:
+                logger.error(f"Error saving DMCA notices: {e}")
         except Exception as e:
             logger.error(f"Erreur sauvegarde notices DMCA: {e}")
 
