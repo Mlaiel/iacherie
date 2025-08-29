@@ -670,19 +670,199 @@ class PartnershipEngine:
         return False
         
     async def _accept_offer(self, partnership, counter_offer, user_id) -> None:
-        pass
-        
-    async def _validate_digital_signature(self, partnership, user_id, signature) -> bool:
-        return True
-        
-    async def _deploy_to_blockchain(self, partnership) -> str:
-        return "blockchain_hash_placeholder"
-        
+        """Accept a partnership offer and update partnership status"""
+        try:
+            # Validate the counter offer
+            if not counter_offer or not isinstance(counter_offer, dict):
+                raise ValueError("Invalid counter offer provided")
+            
+            # Update partnership with accepted terms
+            partnership.status = "ACCEPTED"
+            partnership.accepted_at = datetime.utcnow()
+            partnership.accepted_by = user_id
+            partnership.final_terms = counter_offer
+            
+            # Save to database
+            if hasattr(self, 'db_manager') and self.db_manager:
+                update_query = """
+                UPDATE partnerships 
+                SET status = $1, accepted_at = $2, accepted_by = $3, 
+                    final_terms = $4, updated_at = $5
+                WHERE partnership_id = $6
+                """
+                await self.db_manager.execute(
+                    update_query,
+                    partnership.status,
+                    partnership.accepted_at.isoformat(),
+                    user_id,
+                    json.dumps(counter_offer),
+                    datetime.utcnow().isoformat(),
+                    partnership.partnership_id
+                )
+            
+            # Update cache
+            if hasattr(self, 'cache_manager') and self.cache_manager:
+                cache_key = f"partnership:{partnership.partnership_id}"
+                partnership_data = {
+                    "partnership_id": partnership.partnership_id,
+                    "status": partnership.status,
+                    "accepted_at": partnership.accepted_at.isoformat(),
+                    "accepted_by": user_id
+                }
+                await self.cache_manager.set(cache_key, json.dumps(partnership_data), expire_seconds=3600)
+            
+            # Send notifications to all parties
+            if hasattr(self, 'notification_manager') and self.notification_manager:
+                notification = {
+                    "subject": "🤝 Partnership Offer Accepted!",
+                    "body": f"Partnership {partnership.partnership_id} has been accepted. Contract preparation will begin shortly.",
+                    "template_type": "partnership_accepted",
+                    "priority": "high"
+                }
+                
+                # Notify all participants
+                for participant in getattr(partnership, 'participants', []):
+                    await self.notification_manager.send_notification(
+                        user_id=participant,
+                        template=notification,
+                        channel="email",
+                        priority="high"
+                    )
+            
+            logger.info(f"🤝 Partnership offer accepted: {partnership.partnership_id} by {user_id}")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to accept partnership offer: {e}")
+            raise
+    
     async def _initialize_performance_tracking(self, partnership) -> None:
-        pass
-        
+        """Initialize performance tracking for the partnership"""
+        try:
+            # Create performance tracking configuration
+            tracking_config = {
+                "partnership_id": partnership.partnership_id,
+                "metrics": [
+                    "delivery_timeliness",
+                    "quality_score", 
+                    "communication_rating",
+                    "milestone_completion",
+                    "client_satisfaction"
+                ],
+                "tracking_frequency": "daily",
+                "alert_thresholds": {
+                    "quality_score": 7.0,
+                    "delivery_timeliness": 0.8,
+                    "communication_rating": 7.5
+                },
+                "initialized_at": datetime.utcnow().isoformat(),
+                "status": "active"
+            }
+            
+            # Save tracking configuration
+            if hasattr(self, 'db_manager') and self.db_manager:
+                insert_query = """
+                INSERT INTO partnership_performance_tracking 
+                (partnership_id, metrics_config, tracking_frequency, 
+                 alert_thresholds, initialized_at, status)
+                VALUES ($1, $2, $3, $4, $5, $6)
+                """
+                await self.db_manager.execute(
+                    insert_query,
+                    partnership.partnership_id,
+                    json.dumps(tracking_config["metrics"]),
+                    tracking_config["tracking_frequency"],
+                    json.dumps(tracking_config["alert_thresholds"]),
+                    tracking_config["initialized_at"],
+                    tracking_config["status"]
+                )
+            
+            # Initialize performance baseline
+            baseline_data = {
+                "partnership_id": partnership.partnership_id,
+                "baseline_date": datetime.utcnow().isoformat(),
+                "initial_expectations": getattr(partnership, 'performance_expectations', {}),
+                "kpis": tracking_config["metrics"]
+            }
+            
+            # Cache tracking configuration
+            if hasattr(self, 'cache_manager') and self.cache_manager:
+                cache_key = f"performance_tracking:{partnership.partnership_id}"
+                await self.cache_manager.set(
+                    cache_key,
+                    json.dumps(tracking_config),
+                    expire_seconds=7200  # 2 hours cache
+                )
+            
+            logger.info(f"📊 Performance tracking initialized for partnership: {partnership.partnership_id}")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to initialize performance tracking: {e}")
+            raise
+    
     async def _setup_automated_payments(self, partnership) -> None:
-        pass
+        """Setup automated payment system for the partnership"""
+        try:
+            # Get payment configuration from partnership terms
+            payment_terms = getattr(partnership, 'payment_terms', {})
+            
+            # Create automated payment configuration
+            payment_config = {
+                "partnership_id": partnership.partnership_id,
+                "payment_schedule": payment_terms.get('schedule', 'milestone_based'),
+                "payment_method": payment_terms.get('method', 'bank_transfer'),
+                "currency": payment_terms.get('currency', 'USD'),
+                "split_rules": payment_terms.get('split_rules', {}),
+                "escrow_enabled": payment_terms.get('escrow_enabled', True),
+                "auto_release_conditions": payment_terms.get('auto_release_conditions', []),
+                "setup_date": datetime.utcnow().isoformat(),
+                "status": "configured"
+            }
+            
+            # Save payment configuration
+            if hasattr(self, 'db_manager') and self.db_manager:
+                insert_query = """
+                INSERT INTO partnership_payment_automation 
+                (partnership_id, payment_schedule, payment_method, currency,
+                 split_rules, escrow_enabled, auto_release_conditions, 
+                 setup_date, status)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                """
+                await self.db_manager.execute(
+                    insert_query,
+                    partnership.partnership_id,
+                    payment_config["payment_schedule"],
+                    payment_config["payment_method"],
+                    payment_config["currency"],
+                    json.dumps(payment_config["split_rules"]),
+                    payment_config["escrow_enabled"],
+                    json.dumps(payment_config["auto_release_conditions"]),
+                    payment_config["setup_date"],
+                    payment_config["status"]
+                )
+            
+            # Initialize payment processing webhook
+            if hasattr(self, 'payment_processor') and self.payment_processor:
+                webhook_config = {
+                    "partnership_id": partnership.partnership_id,
+                    "events": ["payment_received", "milestone_completed", "dispute_resolved"],
+                    "endpoint": f"/api/partnerships/{partnership.partnership_id}/payment-webhook"
+                }
+                await self.payment_processor.setup_webhook(webhook_config)
+            
+            # Cache payment configuration
+            if hasattr(self, 'cache_manager') and self.cache_manager:
+                cache_key = f"payment_automation:{partnership.partnership_id}"
+                await self.cache_manager.set(
+                    cache_key,
+                    json.dumps(payment_config),
+                    expire_seconds=3600  # 1 hour cache
+                )
+            
+            logger.info(f"💳 Automated payments setup for partnership: {partnership.partnership_id}")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to setup automated payments: {e}")
+            raise
         
     async def _select_legal_template(self, partnership_type) -> str:
         return "standard_template"

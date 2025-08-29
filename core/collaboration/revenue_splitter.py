@@ -1607,4 +1607,100 @@ class RevenueSplitter:
             # Don't raise - notification failure shouldn't block dispute creation
         
     async def _hold_disputed_funds(self, payout: Dict[str, Any]) -> None:
-        pass
+        """Hold disputed funds in escrow until dispute is resolved"""
+        try:
+            payout_id = payout.get('payout_id')
+            amount = payout.get('amount', 0)
+            currency = payout.get('currency', 'USD')
+            
+            # Create escrow hold record
+            escrow_data = {
+                "escrow_id": str(uuid.uuid4()),
+                "payout_id": payout_id,
+                "amount": amount,
+                "currency": currency,
+                "status": "HELD_DISPUTE",
+                "hold_reason": "payment_dispute",
+                "held_at": datetime.utcnow().isoformat(),
+                "release_conditions": {
+                    "requires": "dispute_resolution",
+                    "authorized_parties": payout.get('participants', []),
+                    "timeout_days": 90  # Auto-release after 90 days if unresolved
+                },
+                "original_payout": payout
+            }
+            
+            # Save escrow hold to database
+            if hasattr(self, 'db_manager') and self.db_manager:
+                insert_query = """
+                INSERT INTO disputed_funds_escrow 
+                (escrow_id, payout_id, amount, currency, status, hold_reason,
+                 held_at, release_conditions, original_payout_data)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                """
+                await self.db_manager.execute(
+                    insert_query,
+                    escrow_data["escrow_id"],
+                    payout_id,
+                    float(amount),
+                    currency,
+                    escrow_data["status"],
+                    escrow_data["hold_reason"],
+                    escrow_data["held_at"],
+                    json.dumps(escrow_data["release_conditions"]),
+                    json.dumps(payout)
+                )
+                
+                # Update payout status to reflect hold
+                update_payout_query = """
+                UPDATE payout_records 
+                SET status = 'HELD_DISPUTE', 
+                    held_at = $1, 
+                    escrow_id = $2,
+                    updated_at = $3
+                WHERE payout_id = $4
+                """
+                await self.db_manager.execute(
+                    update_payout_query,
+                    escrow_data["held_at"],
+                    escrow_data["escrow_id"],
+                    datetime.utcnow().isoformat(),
+                    payout_id
+                )
+            
+            # Cache escrow status
+            if hasattr(self, 'cache_manager') and self.cache_manager:
+                cache_key = f"disputed_escrow:{escrow_data['escrow_id']}"
+                cache_data = {
+                    "payout_id": payout_id,
+                    "amount": amount,
+                    "status": "HELD_DISPUTE",
+                    "held_at": escrow_data["held_at"]
+                }
+                await self.cache_manager.set(
+                    cache_key,
+                    json.dumps(cache_data),
+                    expire_seconds=7200  # 2 hours cache
+                )
+                
+                # Update payout cache
+                payout_cache_key = f"payout:{payout_id}"
+                await self.cache_manager.hset(payout_cache_key, {
+                    "status": "HELD_DISPUTE",
+                    "escrow_id": escrow_data["escrow_id"],
+                    "held_at": escrow_data["held_at"]
+                })
+            
+            # Block any automated payment processing for this payout
+            if hasattr(self, 'payment_processor') and self.payment_processor:
+                await self.payment_processor.block_payout(
+                    payout_id=payout_id,
+                    reason="dispute_hold",
+                    hold_until="dispute_resolved"
+                )
+            
+            logger.warning(f"🔒 Disputed funds held in escrow: {payout_id} -> ${amount} {currency}")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to hold disputed funds for {payout.get('payout_id')}: {e}")
+            raise
