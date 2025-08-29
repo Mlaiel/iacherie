@@ -18,8 +18,7 @@ import {
   PencilIcon,
   TrashIcon,
   ShareIcon,
-  DownloadIcon,
-  TagIcon,
+  ArrowDownTrayIcon,
   CalendarDaysIcon,
   ShieldCheckIcon
 } from '@heroicons/react/24/outline';
@@ -569,7 +568,7 @@ const ContentLibrary: React.FC = () => {
                           <ShareIcon className="h-4 w-4" />
                         </button>
                         <button className="text-gray-600 hover:text-gray-700">
-                          <DownloadIcon className="h-4 w-4" />
+                          <ArrowDownTrayIcon className="h-4 w-4" />
                         </button>
                         <button className="text-red-600 hover:text-red-700">
                           <TrashIcon className="h-4 w-4" />

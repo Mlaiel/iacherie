@@ -33,7 +33,7 @@ async function loadTranslations(language: Language): Promise<TranslationMap> {
   try {
     const translations = await import(`../locales/${language}.json`);
     return translations.default || translations;
-  } catch (error) {
+  } catch (_error) {
     console.warn(`Failed to load translations for ${language}, falling back to English`);
     const fallbackTranslations = await import('../locales/en.json');
     return fallbackTranslations.default || fallbackTranslations;

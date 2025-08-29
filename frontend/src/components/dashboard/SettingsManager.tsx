@@ -11,10 +11,8 @@ import {
   UserIcon,
   BellIcon,
   ShieldCheckIcon,
-  GlobeAltIcon,
   KeyIcon,
   DevicePhoneMobileIcon,
-  ComputerDesktopIcon,
   EnvelopeIcon
 } from '@heroicons/react/24/outline';
 

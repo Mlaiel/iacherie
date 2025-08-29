@@ -6,9 +6,7 @@ import {
   CurrencyDollarIcon,
   EyeIcon,
   UsersIcon,
-  DocumentDuplicateIcon,
-  ArrowUpIcon,
-  ArrowDownIcon
+  DocumentDuplicateIcon
 } from '@heroicons/react/24/outline';
 import { MetricCard } from './MetricCard';
 import { ProtectionStatus } from './ProtectionStatus';

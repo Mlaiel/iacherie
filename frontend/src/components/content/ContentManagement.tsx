@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { 
   EyeIcon,
   TrashIcon,
-  ShieldCheckIcon,
   ExclamationTriangleIcon,
   ClockIcon,
   CheckCircleIcon,
@@ -77,7 +76,7 @@ export function ContentManagement() {
       try {
         await deleteContent(contentId);
         success(`Content "${contentName}" deleted successfully`);
-      } catch (err) {
+      } catch (_err) {
         error(`Failed to delete "${contentName}"`);
       }
     }

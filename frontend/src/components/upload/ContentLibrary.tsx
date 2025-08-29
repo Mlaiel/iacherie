@@ -13,13 +13,11 @@ import {
   VideoCameraIcon,
   PhotoIcon,
   MagnifyingGlassIcon,
-  FunnelIcon,
   EyeIcon,
   PencilIcon,
   TrashIcon,
   ArrowDownTrayIcon,
-  ShareIcon,
-  TagIcon
+  ShareIcon
 } from '@heroicons/react/24/outline';
 
 interface ContentItem {
@@ -299,7 +297,7 @@ const ContentLibrary: React.FC = () => {
           <div className="flex space-x-3">
             <select
               value={filterType}
-              onChange={(e) => setFilterType(e.target.value as any)}
+              onChange={(e) => setFilterType(e.target.value as 'all' | 'audio' | 'video' | 'image' | 'document')}
               className="border border-gray-300 rounded-md px-3 py-2"
             >
               <option value="all">All Types</option>
@@ -311,7 +309,7 @@ const ContentLibrary: React.FC = () => {
 
             <select
               value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value as any)}
+              onChange={(e) => setFilterStatus(e.target.value as 'all' | 'protected' | 'processing' | 'unprotected')}
               className="border border-gray-300 rounded-md px-3 py-2"
             >
               <option value="all">All Status</option>
