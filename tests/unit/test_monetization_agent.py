@@ -114,14 +114,15 @@ class MockMonetizationEngine:
         user_id = subscription_data.get("user_id")
         plan_type = subscription_data.get("plan_type", "basic")
         
+        # Define plan prices for all actions
+        plan_prices = {
+            "basic": Decimal("9.99"),
+            "premium": Decimal("19.99"),
+            "enterprise": Decimal("49.99")
+        }
+        
         if action == "create":
             subscription_id = str(uuid.uuid4())
-            
-            plan_prices = {
-                "basic": Decimal("9.99"),
-                "premium": Decimal("19.99"),
-                "enterprise": Decimal("49.99")
-            }
             
             subscription = {
                 "subscription_id": subscription_id,
