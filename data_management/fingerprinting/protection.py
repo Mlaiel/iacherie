@@ -508,8 +508,20 @@ class ProtectionManager:
     async def _store_violation_report(self, violation_report: ViolationReport):
         """Stocke un rapport de violation"""
         # Store in database
-        # Implementation would use SQLAlchemy models
-        pass
+        try:
+            # In a real implementation, this would use SQLAlchemy models
+            self.violation_reports[violation_report.id] = violation_report
+            
+            # Log the storage
+            logger.info(f"Stored violation report {violation_report.id} for content {violation_report.content_fingerprint}")
+            
+            # Update metrics
+            if hasattr(self, 'metrics'):
+                self.metrics['total_violations'] = self.metrics.get('total_violations', 0) + 1
+                
+        except Exception as e:
+            logger.error(f"Failed to store violation report {violation_report.id}: {e}")
+            raise
     
     async def _send_violation_alert(self, violation_report: ViolationReport):
         """Envoie une alerte de violation"""
@@ -518,8 +530,18 @@ class ProtectionManager:
     
     async def _update_violation_report(self, violation_report: ViolationReport):
         """Met à jour un rapport de violation"""
-        # Update in database
-        pass
+        try:
+            # Update in database/storage
+            if violation_report.id in self.violation_reports:
+                self.violation_reports[violation_report.id] = violation_report
+                logger.info(f"Updated violation report {violation_report.id}")
+            else:
+                # Store if not exists
+                await self._store_violation_report(violation_report)
+                
+        except Exception as e:
+            logger.error(f"Failed to update violation report {violation_report.id}: {e}")
+            raise
     
     async def _queue_for_manual_review(self, takedown_request: TakedownRequest):
         """Met en queue pour révision manuelle"""
@@ -531,8 +553,27 @@ class ProtectionManager:
     
     async def _track_takedown_request(self, takedown_request: TakedownRequest):
         """Suit une demande de takedown"""
-        # Store tracking information
-        pass
+        try:
+            # Store tracking information
+            tracking_info = {
+                'request_id': takedown_request.id,
+                'created_at': datetime.utcnow().isoformat(),
+                'status': 'submitted',
+                'platform': takedown_request.platform,
+                'content_id': takedown_request.content_id
+            }
+            
+            # Store in tracking system
+            if not hasattr(self, 'takedown_tracking'):
+                self.takedown_tracking = {}
+            
+            self.takedown_tracking[takedown_request.id] = tracking_info
+            
+            logger.info(f"Tracking takedown request {takedown_request.id} for platform {takedown_request.platform}")
+            
+        except Exception as e:
+            logger.error(f"Failed to track takedown request {takedown_request.id}: {e}")
+            raise
     
     async def _get_takedown_request(self, request_id: str) -> Optional[TakedownRequest]:
         """Récupère une demande de takedown"""
@@ -556,8 +597,33 @@ class ProtectionManager:
                                      appeal_data: Dict[str, Any],
                                      appeal_analysis: Dict[str, Any]):
         """Log un appel pour analyse"""
-        # Store appeal data for ML model training
-        pass
+        try:
+            # Store appeal data for ML model training
+            appeal_entry = {
+                'appeal_id': appeal_data.get('appeal_id', str(uuid.uuid4())),
+                'violation_report_id': violation_report.id,
+                'appeal_reason': appeal_data.get('reason', ''),
+                'user_id': appeal_data.get('user_id'),
+                'analysis_results': appeal_analysis,
+                'timestamp': datetime.utcnow().isoformat(),
+                'status': 'pending_review'
+            }
+            
+            # Store for ML training data
+            if not hasattr(self, 'appeal_logs'):
+                self.appeal_logs = {}
+            
+            self.appeal_logs[appeal_entry['appeal_id']] = appeal_entry
+            
+            logger.info(f"Logged appeal {appeal_entry['appeal_id']} for analysis")
+            
+            # Update metrics
+            if hasattr(self, 'metrics'):
+                self.metrics['total_appeals'] = self.metrics.get('total_appeals', 0) + 1
+                
+        except Exception as e:
+            logger.error(f"Failed to log appeal for analysis: {e}")
+            raise
     
     async def _check_previous_violations(self, user_id: str) -> int:
         """Vérifie les violations précédentes"""
@@ -635,8 +701,39 @@ class TakedownManager:
     
     def _init_platform_clients(self):
         """Initialise les clients API de plateformes"""
-        # Initialize API clients for each platform
-        pass
+        try:
+            # Initialize API clients for each platform
+            self.platform_clients = {}
+            
+            # YouTube client
+            if 'youtube_api_key' in self.config:
+                self.platform_clients['youtube'] = {
+                    'api_key': self.config['youtube_api_key'],
+                    'takedown_endpoint': 'https://www.googleapis.com/youtube/v3/takedown',
+                    'status': 'initialized'
+                }
+            
+            # TikTok client
+            if 'tiktok_api_key' in self.config:
+                self.platform_clients['tiktok'] = {
+                    'api_key': self.config['tiktok_api_key'],
+                    'takedown_endpoint': 'https://api.tiktok.com/v1/takedown',
+                    'status': 'initialized'
+                }
+            
+            # Instagram client
+            if 'instagram_api_key' in self.config:
+                self.platform_clients['instagram'] = {
+                    'api_key': self.config['instagram_api_key'],
+                    'takedown_endpoint': 'https://graph.facebook.com/v12.0/takedown',
+                    'status': 'initialized'
+                }
+            
+            logger.info(f"Initialized {len(self.platform_clients)} platform clients")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize platform clients: {e}")
+            self.platform_clients = {}
     
     async def create_takedown_request(self, violation_report: ViolationReport) -> TakedownRequest:
         """Crée une demande de takedown"""
