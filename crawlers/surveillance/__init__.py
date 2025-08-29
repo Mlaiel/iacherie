@@ -91,6 +91,18 @@ from .realtime_surveillance import (
     ResponseManager
 )
 
+# Import new surveillance modules
+from .youtube_monitor import YouTubeMonitor, YouTubeMonitorTarget, YouTubeViolation, YouTubeMonitoringMetrics
+from .tiktok_crawler import TikTokCrawler, TikTokUser, TikTokVideo, TikTokComment, TikTokHashtag, TikTokCrawlResult
+from .instagram_detector import InstagramDetector, InstagramPost, InstagramStory, InstagramUser, InstagramReel, InstagramViolation, InstagramDetectionMetrics
+from .facebook_scanner import FacebookScanner, FacebookPost, FacebookPage, FacebookGroup, FacebookUser, FacebookComment, FacebookViolation, FacebookScanMetrics
+from .twitter_monitor import TwitterMonitor, Tweet, TwitterUser, TwitterTrend, TwitterSpace, TwitterViolation, TwitterMonitoringMetrics
+from .spotify_tracker import SpotifyTracker, SpotifyTrack, SpotifyArtist, SpotifyAlbum, SpotifyPlaylist, SpotifyUser, SpotifyViolation, SpotifyTrackingMetrics
+from .universal_web_crawler import UniversalWebCrawler, WebPage, CrawlJob, CrawlResult, WebViolation, CrawlerMetrics
+from .violation_alert_system import ViolationAlertSystem, Alert, AlertRule, AlertTemplate, AlertMetrics, AlertSeverity as AlertSystemSeverity, AlertStatus, AlertChannel
+from .content_matching_engine import ContentMatchingEngine, ContentFingerprint, ProtectedContent, ContentMatch, MatchingTask, MatchingMetrics, ContentType, MatchType
+from .surveillance_orchestrator import SurveillanceOrchestrator, SurveillanceTarget as OrchestratorTarget, SurveillancePolicy, SurveillanceMetrics as OrchestratorMetrics, SurveillanceStatus as OrchestratorStatus, ModuleStatus, ModuleState
+
 logger = logging.getLogger(__name__)
 
 
@@ -269,6 +281,18 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __copyright__ = "© 2024 IA Influencer Agent Development Team. All rights reserved."
 __license__ = "Proprietary"
 
+# Import new surveillance modules
+from .youtube_monitor import YouTubeMonitor, YouTubeMonitorTarget, YouTubeViolation, YouTubeMonitoringMetrics
+from .tiktok_crawler import TikTokCrawler, TikTokUser, TikTokVideo, TikTokComment, TikTokHashtag, TikTokCrawlResult
+from .instagram_detector import InstagramDetector, InstagramPost, InstagramStory, InstagramUser, InstagramReel, InstagramViolation, InstagramDetectionMetrics
+from .facebook_scanner import FacebookScanner, FacebookPost, FacebookPage, FacebookGroup, FacebookUser, FacebookComment, FacebookViolation, FacebookScanMetrics
+from .twitter_monitor import TwitterMonitor, Tweet, TwitterUser, TwitterTrend, TwitterSpace, TwitterViolation, TwitterMonitoringMetrics
+from .spotify_tracker import SpotifyTracker, SpotifyTrack, SpotifyArtist, SpotifyAlbum, SpotifyPlaylist, SpotifyUser, SpotifyViolation, SpotifyTrackingMetrics
+from .universal_web_crawler import UniversalWebCrawler, WebPage, CrawlJob, CrawlResult, WebViolation, CrawlerMetrics
+from .violation_alert_system import ViolationAlertSystem, Alert, AlertRule, AlertTemplate, AlertMetrics, AlertSeverity, AlertStatus, AlertChannel
+from .content_matching_engine import ContentMatchingEngine, ContentFingerprint, ProtectedContent, ContentMatch, MatchingTask, MatchingMetrics, ContentType, MatchType
+from .surveillance_orchestrator import SurveillanceOrchestrator, SurveillanceTarget as OrchestratorTarget, SurveillancePolicy, SurveillanceMetrics as OrchestratorMetrics, SurveillanceStatus as OrchestratorStatus, ModuleStatus, ModuleState
+
 # Export main classes and functions
 __all__ = [
     # Main system
@@ -326,7 +350,96 @@ __all__ = [
     'SurveillanceTask',
     'SurveillanceMetrics',
     'SurveillanceStatus',
-    'SurveillancePriority'
+    'SurveillancePriority',
+    
+    # YouTube Monitor
+    'YouTubeMonitor',
+    'YouTubeMonitorTarget',
+    'YouTubeViolation',
+    'YouTubeMonitoringMetrics',
+    
+    # TikTok Crawler
+    'TikTokCrawler',
+    'TikTokUser',
+    'TikTokVideo',
+    'TikTokComment',
+    'TikTokHashtag',
+    'TikTokCrawlResult',
+    
+    # Instagram Detector
+    'InstagramDetector',
+    'InstagramPost',
+    'InstagramStory',
+    'InstagramUser',
+    'InstagramReel',
+    'InstagramViolation',
+    'InstagramDetectionMetrics',
+    
+    # Facebook Scanner
+    'FacebookScanner',
+    'FacebookPost',
+    'FacebookPage',
+    'FacebookGroup',
+    'FacebookUser',
+    'FacebookComment',
+    'FacebookViolation',
+    'FacebookScanMetrics',
+    
+    # Twitter Monitor
+    'TwitterMonitor',
+    'Tweet',
+    'TwitterUser',
+    'TwitterTrend',
+    'TwitterSpace',
+    'TwitterViolation',
+    'TwitterMonitoringMetrics',
+    
+    # Spotify Tracker
+    'SpotifyTracker',
+    'SpotifyTrack',
+    'SpotifyArtist',
+    'SpotifyAlbum',
+    'SpotifyPlaylist',
+    'SpotifyUser',
+    'SpotifyViolation',
+    'SpotifyTrackingMetrics',
+    
+    # Universal Web Crawler
+    'UniversalWebCrawler',
+    'WebPage',
+    'CrawlJob',
+    'CrawlResult',
+    'WebViolation',
+    'CrawlerMetrics',
+    
+    # Violation Alert System
+    'ViolationAlertSystem',
+    'Alert',
+    'AlertRule',
+    'AlertTemplate',
+    'AlertMetrics',
+    'AlertSeverity',
+    'AlertStatus',
+    'AlertChannel',
+    
+    # Content Matching Engine
+    'ContentMatchingEngine',
+    'ContentFingerprint',
+    'ProtectedContent',
+    'ContentMatch',
+    'MatchingTask',
+    'MatchingMetrics',
+    'ContentType',
+    'MatchType',
+    
+    # Surveillance Orchestrator
+    'SurveillanceOrchestrator',
+    'OrchestratorTarget',
+    'SurveillancePolicy',
+    'OrchestratorMetrics',
+    'OrchestratorStatus',
+    'ModuleStatus',
+    'ModuleState'
 ]
 
 class SurveillanceStatus(Enum):
