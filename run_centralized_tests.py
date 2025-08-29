@@ -25,14 +25,12 @@ def run_tests():
     test_files = [
         # Core working tests
         "tests/unit/test_ai_agents_core.py",
-        
-        # New comprehensive module tests
-        "tests/unit/test_business_logic_modules.py",  # Fixed name
-        "tests/unit/test_api_modules.py", 
-        "tests/unit/test_database_modules.py",
+        "tests/unit/test_business_logic_modules.py",
         "tests/unit/test_security_modules.py",
         "tests/unit/test_analytics_modules.py",
         "tests/unit/test_data_management_modules.py",
+        "tests/unit/test_api_modules.py", 
+        "tests/unit/test_database_modules.py",
         "tests/unit/test_monetization_modules.py",
         "tests/unit/test_infrastructure_modules.py"
         
