@@ -3,16 +3,32 @@
 import re
 from typing import Dict, List, Tuple
 from collections import Counter
-import spacy
+import logging
+
+logger = logging.getLogger(__name__)
+
+# Try to import spacy, fallback to None if not available
+try:
+    import spacy
+    SPACY_AVAILABLE = True
+except ImportError:
+    spacy = None
+    SPACY_AVAILABLE = False
+    logger.warning("spaCy not available, using fallback NLP implementation")
 
 
 class TextAnalyzer:
     def __init__(self):
-        try:
-            self.nlp = spacy.load("en_core_web_sm")
-        except OSError:
-            # Fallback to basic processing if spaCy model not available
-            self.nlp = None
+        self.nlp = None
+        if SPACY_AVAILABLE:
+            try:
+                self.nlp = spacy.load("en_core_web_sm")
+                logger.info("spaCy model loaded successfully")
+            except OSError:
+                logger.warning("spaCy model 'en_core_web_sm' not found, using fallback")
+                self.nlp = None
+        else:
+            logger.info("Using fallback NLP implementation")
 
     def analyze_sentiment(self, text: str) -> Dict:
         """Simple sentiment analysis using word scoring."""

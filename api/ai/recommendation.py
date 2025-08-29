@@ -1,14 +1,30 @@
 """Recommendation engine for content optimization and collaboration matching."""
 
+import logging
 from typing import Dict, List, Tuple
-import numpy as np
 from collections import defaultdict
+import math
+
+logger = logging.getLogger(__name__)
+
+# Try to import numpy, fallback to math if not available
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    np = None
+    NUMPY_AVAILABLE = False
+    logger.warning("NumPy not available, using fallback math implementation")
 
 
 class RecommendationEngine:
     def __init__(self):
         self.content_features = {}
         self.user_preferences = defaultdict(dict)
+        if NUMPY_AVAILABLE:
+            logger.info("RecommendationEngine initialized with NumPy support")
+        else:
+            logger.info("RecommendationEngine initialized with fallback math support")
 
     def analyze_content_similarity(self, content_features: Dict) -> Dict:
         """Analyze content similarity for recommendations."""
@@ -130,7 +146,7 @@ class RecommendationEngine:
         
         return sorted(potential_collaborators, key=lambda x: x["compatibility_score"], reverse=True)
 
-    def _extract_feature_vector(self, content_features: Dict) -> np.ndarray:
+    def _extract_feature_vector(self, content_features: Dict) -> List[float]:
         """Extract numerical feature vector from content features."""
         # Simple feature extraction - in reality would be much more sophisticated
         features = []
@@ -147,13 +163,34 @@ class RecommendationEngine:
         features.append(content_features.get("contrast", 0.0))
         features.append(len(content_features.get("keywords", [])))
         
-        return np.array(features)
+        if NUMPY_AVAILABLE:
+            return np.array(features)
+        else:
+            return features
 
-    def _compute_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
+    def _compute_similarity(self, vec1, vec2) -> float:
         """Compute cosine similarity between two feature vectors."""
-        if np.linalg.norm(vec1) == 0 or np.linalg.norm(vec2) == 0:
-            return 0.0
-        return float(np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2)))
+        if NUMPY_AVAILABLE and hasattr(vec1, 'shape') and hasattr(vec2, 'shape'):
+            # Use numpy implementation
+            if np.linalg.norm(vec1) == 0 or np.linalg.norm(vec2) == 0:
+                return 0.0
+            return float(np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2)))
+        else:
+            # Fallback implementation using basic math
+            if not vec1 or not vec2 or len(vec1) != len(vec2):
+                return 0.0
+            
+            # Compute dot product
+            dot_product = sum(a * b for a, b in zip(vec1, vec2))
+            
+            # Compute norms
+            norm1 = math.sqrt(sum(a * a for a in vec1))
+            norm2 = math.sqrt(sum(b * b for b in vec2))
+            
+            if norm1 == 0 or norm2 == 0:
+                return 0.0
+            
+            return dot_product / (norm1 * norm2)
 
     def _get_match_reasons(self, features1: Dict, features2: Dict) -> List[str]:
         """Get reasons why two pieces of content are similar."""
@@ -185,5 +222,12 @@ class RecommendationEngine:
         if len(scores) <= 1:
             return 0.0
         
-        score_std = np.std(scores)
+        if NUMPY_AVAILABLE:
+            score_std = np.std(scores)
+        else:
+            # Fallback calculation of standard deviation
+            mean_score = sum(scores) / len(scores)
+            variance = sum((score - mean_score) ** 2 for score in scores) / len(scores)
+            score_std = math.sqrt(variance)
+        
         return min(1.0, score_std * 2)  # Normalize to 0-1 range
