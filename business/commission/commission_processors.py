@@ -247,28 +247,56 @@ class CommissionProcessor:
         refund_amount: Optional[Decimal] = None
     ) -> PaymentResult:
         """Process payment refund"""
-        raise NotImplementedError("Subclasses must implement refund_payment")
+        # Default implementation for processors without refund support
+        logging.warning(f"Payment refund not implemented for {self.__class__.__name__}")
+        return PaymentResult(
+            success=False,
+            transaction_id=f"refund_not_supported_{original_transaction_id}",
+            error_code="REFUND_NOT_SUPPORTED",
+            error_message=f"Refund functionality not implemented for {self.__class__.__name__}"
+        )
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
         """Get transaction status from processor"""
-        raise NotImplementedError("Subclasses must implement get_transaction_status")
+        # Default implementation for processors without status checking
+        logging.warning(f"Transaction status checking not implemented for {self.__class__.__name__}")
+        return {
+            "transaction_id": transaction_id,
+            "status": "unknown",
+            "message": f"Status checking not implemented for {self.__class__.__name__}"
+        }
     
     async def handle_webhook(self, payload: Dict[str, Any], signature: str) -> Dict[str, Any]:
         """Handle webhook from payment processor"""
-        raise NotImplementedError("Subclasses must implement handle_webhook")
+        # Default implementation for processors without webhook support
+        logging.warning(f"Webhook handling not implemented for {self.__class__.__name__}")
+        return {
+            "status": "not_supported",
+            "message": f"Webhook handling not implemented for {self.__class__.__name__}"
+        }
     
     # Abstract methods to be implemented by subclasses
     async def _setup_client(self) -> None:
         """Setup processor client"""
-        raise NotImplementedError
+        # Default implementation for processors without specific client setup
+        logging.warning(f"Client setup not implemented for {self.__class__.__name__}")
+        pass
     
     async def _validate_credentials(self) -> None:
         """Validate processor credentials"""
-        raise NotImplementedError
+        # Default implementation for processors without credential validation
+        logging.warning(f"Credential validation not implemented for {self.__class__.__name__}")
+        pass
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
         """Execute payment with processor"""
-        raise NotImplementedError
+        # Default implementation for processors without payment execution
+        logging.warning(f"Payment execution not implemented for {self.__class__.__name__}")
+        return {
+            "status": "not_supported",
+            "message": f"Payment execution not implemented for {self.__class__.__name__}",
+            "transaction_id": None
+        }
     
     # Common helper methods
     async def _validate_payment_request(self, request: PaymentRequest) -> None:

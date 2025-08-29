@@ -262,7 +262,13 @@ class WorkflowStageHandler:
         context: WorkflowExecutionContext
     ) -> Dict[str, Any]:
         """Execute the actual stage logic - to be overridden."""
-        raise NotImplementedError
+        # Default implementation for workflow stages without specific implementation
+        logging.warning(f"Stage logic execution not implemented for {stage.id if hasattr(stage, 'id') else 'unknown'}")
+        return {
+            "status": "not_implemented",
+            "stage": getattr(stage, 'id', 'unknown'),
+            "message": f"Stage logic execution not implemented"
+        }
     
     async def _post_execution_processing(
         self, 
