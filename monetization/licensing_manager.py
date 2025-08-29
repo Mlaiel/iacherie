@@ -109,7 +109,11 @@ class LicenseUsage:
 
 class LicensingError(Exception):
     """Exception for licensing-related errors"""
-    pass
+    def __init__(self, message: str, error_code: str = None, details: dict = None):
+        self.message = message
+        self.error_code = error_code or "LICENSING_ERROR"
+        self.details = details or {}
+        super().__init__(self.message)
 
 
 class LicensingManager:

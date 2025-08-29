@@ -334,43 +334,86 @@ class StorageException(Exception):
 
 class ConnectionException(StorageException):
     """Exception for connection-related errors."""
-    pass
+    def __init__(self, message: str, host: str = None, port: int = None, details: dict = None):
+        self.host = host
+        self.port = port
+        self.details = details or {}
+        super().__init__(message, "CONNECTION_ERROR", self.details)
 
 class ValidationException(StorageException):
     """Exception for data validation errors."""
-    pass
+    def __init__(self, message: str, field: str = None, value: Any = None, details: dict = None):
+        self.field = field
+        self.value = value
+        self.details = details or {}
+        super().__init__(message, "VALIDATION_ERROR", self.details)
 
 class TimeoutException(StorageException):
     """Exception for timeout errors."""
-    pass
+    def __init__(self, message: str, timeout_duration: float = None, operation: str = None, details: dict = None):
+        self.timeout_duration = timeout_duration
+        self.operation = operation
+        self.details = details or {}
+        super().__init__(message, "TIMEOUT_ERROR", self.details)
 
 class CapacityException(StorageException):
     """Exception for storage capacity errors."""
-    pass
+    def __init__(self, message: str, current_capacity: int = None, max_capacity: int = None, details: dict = None):
+        self.current_capacity = current_capacity
+        self.max_capacity = max_capacity
+        self.details = details or {}
+        super().__init__(message, "CAPACITY_ERROR", self.details)
 
 class AuthenticationException(StorageException):
     """Exception for authentication errors."""
-    pass
+    def __init__(self, message: str, user_id: str = None, auth_method: str = None, details: dict = None):
+        self.user_id = user_id
+        self.auth_method = auth_method
+        self.details = details or {}
+        super().__init__(message, "AUTH_ERROR", self.details)
 
 class PermissionException(StorageException):
     """Exception for permission errors."""
-    pass
+    def __init__(self, message: str, user_id: str = None, resource: str = None, action: str = None, details: dict = None):
+        self.user_id = user_id
+        self.resource = resource
+        self.action = action
+        self.details = details or {}
+        super().__init__(message, "PERMISSION_ERROR", self.details)
 
 class DuplicateRecordException(StorageException):
     """Exception for duplicate record errors."""
-    pass
+    def __init__(self, message: str, record_id: str = None, unique_field: str = None, details: dict = None):
+        self.record_id = record_id
+        self.unique_field = unique_field
+        self.details = details or {}
+        super().__init__(message, "DUPLICATE_ERROR", self.details)
 
 class RecordNotFoundException(StorageException):
     """Exception for record not found errors."""
-    pass
+    def __init__(self, message: str, record_id: str = None, search_criteria: dict = None, details: dict = None):
+        self.record_id = record_id
+        self.search_criteria = search_criteria or {}
+        self.details = details or {}
+        super().__init__(message, "RECORD_NOT_FOUND", self.details)
 
 class CorruptedDataException(StorageException):
     """Exception for corrupted data errors."""
-    pass
+    def __init__(self, message: str, data_path: str = None, checksum_expected: str = None, 
+                 checksum_actual: str = None, details: dict = None):
+        self.data_path = data_path
+        self.checksum_expected = checksum_expected
+        self.checksum_actual = checksum_actual
+        self.details = details or {}
+        super().__init__(message, "DATA_CORRUPTION", self.details)
 
 class UnsupportedOperationException(StorageException):
     """Exception for unsupported operations."""
-    pass
+    def __init__(self, message: str, operation: str = None, provider: str = None, details: dict = None):
+        self.operation = operation
+        self.provider = provider
+        self.details = details or {}
+        super().__init__(message, "UNSUPPORTED_OPERATION", self.details)
 
 @dataclass
 class QueryFilter:
