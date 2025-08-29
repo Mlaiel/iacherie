@@ -136,11 +136,13 @@ class ImageProcessor(ABC):
     
     @abstractmethod
     async def process(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        pass
+        """Process image file and generate fingerprint"""
+        raise NotImplementedError("Subclasses must implement process method")
     
     @abstractmethod
     def get_name(self) -> str:
-        pass
+        """Get processor name"""
+        raise NotImplementedError("Subclasses must implement get_name method")
 
 class CLIPProcessor(ImageProcessor):
     """Processeur CLIP pour l'analyse sémantique des images"""

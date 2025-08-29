@@ -107,7 +107,7 @@ class BaseRepository(ABC):
     @abstractmethod
     async def create(self, record: Any) -> str:
         """Create a new record"""
-        pass
+        raise NotImplementedError("Subclasses must implement create method")
     
     @abstractmethod
     async def get_by_id(self, record_id: str) -> Optional[Any]:

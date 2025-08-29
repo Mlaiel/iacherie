@@ -150,8 +150,8 @@ class BaseTextProcessor(ABC):
         
     @abstractmethod
     async def process(self, text: str) -> Dict[str, Any]:
-        """Traite le texte et extrait les caractéristiques"""
-        pass
+        """Process text and extract features"""
+        raise NotImplementedError("Subclasses must implement process method")
     
     def _clean_text(self, text: str) -> str:
         """Nettoie et normalise le texte"""

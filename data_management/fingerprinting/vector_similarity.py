@@ -133,13 +133,13 @@ class SimilarityMetric(ABC):
     
     @abstractmethod
     def compute(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calcule la similarité entre deux vecteurs"""
-        pass
+        """Compute similarity between two vectors"""
+        raise NotImplementedError("Subclasses must implement compute method")
     
     @abstractmethod
     def batch_compute(self, vectors1: np.ndarray, vectors2: np.ndarray) -> np.ndarray:
-        """Calcule la similarité par lots"""
-        pass
+        """Compute similarity in batches"""
+        raise NotImplementedError("Subclasses must implement batch_compute method")
 
 class CosineSimilarity(SimilarityMetric):
     """Métrique de similarité cosinus"""

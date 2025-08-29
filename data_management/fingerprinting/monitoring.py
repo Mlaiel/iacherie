@@ -243,13 +243,13 @@ class BaseMonitor(ABC):
     
     @abstractmethod
     async def start_monitoring(self, job: MonitoringJob) -> List[ViolationAlert]:
-        """Démarre le monitoring pour un job donné"""
-        pass
+        """Start monitoring for a given job"""
+        raise NotImplementedError("Subclasses must implement start_monitoring method")
     
     @abstractmethod
     async def stop_monitoring(self):
-        """Arrête le monitoring"""
-        pass
+        """Stop monitoring"""
+        raise NotImplementedError("Subclasses must implement stop_monitoring method")
     
     def get_metrics(self) -> Dict[str, Any]:
         """Retourne les métriques du monitor"""
