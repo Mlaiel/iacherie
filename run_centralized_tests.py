@@ -27,16 +27,16 @@ def run_tests():
         "tests/unit/test_ai_agents_core.py",
         
         # New comprehensive module tests
-        "tests/unit/test_business_modules.py",
+        "tests/unit/test_business_logic_modules.py",  # Fixed name
         "tests/unit/test_api_modules.py", 
         "tests/unit/test_database_modules.py",
         "tests/unit/test_security_modules.py",
         "tests/unit/test_analytics_modules.py",
         "tests/unit/test_data_management_modules.py",
+        "tests/unit/test_monetization_modules.py",
+        "tests/unit/test_infrastructure_modules.py"
         
-        # Additional working tests (excluding problematic ones)
-        # "tests/test_todo_implementations.py",  # Has import issues
-        "tests/unit/test_core_api_authentication.py"
+        # Additional working tests can be added here as they are implemented
     ]
     
     # Test categories and their coverage
@@ -48,6 +48,8 @@ def run_tests():
         "Analytics": ["Performance", "User behavior", "Revenue analytics", "Real-time monitoring"],
         "Data Management": ["Validation", "Governance", "Storage", "Transformation"],
         "AI Agents": ["Fingerprinting", "Monetization", "Collaboration agents"],
+        "Monetization": ["Revenue calculation", "Payment processing", "Royalty distribution", "Contract generation"],
+        "Infrastructure": ["Workflow orchestration", "Health monitoring", "Performance optimization", "Event handling"],
         "Core Infrastructure": ["Implementation validation", "API authentication"]
     }
     
