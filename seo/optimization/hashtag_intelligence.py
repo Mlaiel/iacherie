@@ -358,7 +358,7 @@ class HashtagIntelligence:
                 "fitness": ["#fitnesscommunity", "#workout", "#healthy", "#wellness"],
                 "food": ["#foodie", "#cooking", "#recipe", "#chef"],
                 "travel": ["#wanderlust", "#travel", "#explore", "#adventure"],
-                "fashion": "#fashion", "#style", "#ootd", "#fashionista"],
+                "fashion": ["#fashion", "#style", "#ootd", "#fashionista"],
                 "art": ["#artist", "#creative", "#art", "#design"]
             }
             
