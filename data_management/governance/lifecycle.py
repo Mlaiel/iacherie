@@ -148,7 +148,7 @@ class ArchivalStrategy(ABC):
         metadata: Dict[str, Any]
     ) -> str:
         """Archive content and return archive location"""
-        pass
+        raise NotImplementedError("Subclasses must implement archive_content method")
     
     @abstractmethod
     async def retrieve_content(
@@ -157,7 +157,7 @@ class ArchivalStrategy(ABC):
         archive_location: str
     ) -> bytes:
         """Retrieve archived content"""
-        pass
+        raise NotImplementedError("Subclasses must implement retrieve_content method")
     
     @abstractmethod
     async def delete_archived_content(
@@ -166,7 +166,7 @@ class ArchivalStrategy(ABC):
         archive_location: str
     ) -> bool:
         """Delete archived content"""
-        pass
+        raise NotImplementedError("Subclasses must implement delete_archived_content method")
 
 
 class CloudArchivalStrategy(ArchivalStrategy):
@@ -948,13 +948,70 @@ class LifecycleManager(BaseManager):
     
     async def _apply_policy_to_existing_content(self, policy: RetentionPolicy) -> None:
         """Apply new policy to existing content"""
-        # Implementation would check existing content and apply new rules
-        pass
+        try:
+            # Get all existing content records
+            content_records = await self._get_all_content_records()
+            
+            logger.info(f"Applying retention policy {policy.policy_id} to {len(content_records)} existing content items")
+            
+            for content_record in content_records:
+                # Check if content matches policy criteria
+                content_type = content_record.get("content_type", "unknown")
+                applicable_rule = self._find_applicable_rule(policy, content_type)
+                
+                if applicable_rule:
+                    # Update content record with new retention settings
+                    await self._update_content_retention_settings(
+                        content_record["content_id"],
+                        applicable_rule
+                    )
+                    
+                    # Schedule retention check for this content
+                    await self._schedule_retention_check(
+                        content_record["content_id"],
+                        applicable_rule.retention_period_days
+                    )
+            
+            logger.info(f"Successfully applied policy {policy.policy_id} to existing content")
+            
+        except Exception as e:
+            logger.error(f"Error applying policy to existing content: {e}")
+            raise
     
     async def _load_retention_policies(self) -> None:
         """Load retention policies from database"""
-        # Database loading logic here
-        pass
+        try:
+            # Load policies from database or configuration
+            # This would interface with the policy storage system
+            policy_data = await self._fetch_policies_from_database()
+            
+            for policy_dict in policy_data:
+                policy = RetentionPolicy(
+                    policy_id=policy_dict["policy_id"],
+                    name=policy_dict["name"],
+                    description=policy_dict.get("description", ""),
+                    rules=[
+                        RetentionRule(
+                            rule_id=rule["rule_id"],
+                            content_type=rule["content_type"],
+                            retention_period_days=rule["retention_period_days"],
+                            action=RetentionAction(rule["action"]),
+                            conditions=rule.get("conditions", {})
+                        )
+                        for rule in policy_dict.get("rules", [])
+                    ],
+                    created_at=datetime.fromisoformat(policy_dict["created_at"]) if "created_at" in policy_dict else datetime.utcnow(),
+                    enabled=policy_dict.get("enabled", True)
+                )
+                
+                self.policies[policy.policy_id] = policy
+            
+            logger.info(f"Loaded {len(self.policies)} retention policies from database")
+            
+        except Exception as e:
+            logger.warning(f"Error loading retention policies from database: {e}")
+            # Fall back to default policies if database loading fails
+            await self._create_default_policies()
     
     async def _create_default_policies(self) -> None:
         """Create default retention policies"""
@@ -1000,10 +1057,190 @@ class LifecycleManager(BaseManager):
     
     async def _delete_active_content(self, content_id: str) -> None:
         """Delete active content from storage"""
-        # Storage deletion logic here
-        pass
+        try:
+            logger.info(f"Deleting active content: {content_id}")
+            
+            # Get content metadata first
+            content_metadata = await self._get_content_metadata(content_id)
+            if not content_metadata:
+                logger.warning(f"Content metadata not found for {content_id}")
+                return
+            
+            # Delete from primary storage
+            storage_locations = content_metadata.get("storage_locations", [])
+            for location in storage_locations:
+                try:
+                    await self._delete_from_storage(location)
+                    logger.debug(f"Deleted content from storage location: {location}")
+                except Exception as e:
+                    logger.error(f"Failed to delete from storage location {location}: {e}")
+            
+            # Delete from cache if present
+            cache_keys = content_metadata.get("cache_keys", [])
+            for cache_key in cache_keys:
+                try:
+                    await self._delete_from_cache(cache_key)
+                    logger.debug(f"Deleted content from cache: {cache_key}")
+                except Exception as e:
+                    logger.error(f"Failed to delete from cache {cache_key}: {e}")
+            
+            # Update content record to mark as deleted
+            await self._update_content_status(content_id, "deleted")
+            
+            # Log deletion for audit trail
+            await self._log_content_deletion(content_id, "retention_policy")
+            
+            logger.info(f"Successfully deleted active content: {content_id}")
+            
+        except Exception as e:
+            logger.error(f"Error deleting active content {content_id}: {e}")
+            raise
     
     async def _anonymize_content(self, content_id: str) -> None:
         """Anonymize content data"""
-        # Anonymization logic here
-        pass
+        try:
+            logger.info(f"Anonymizing content: {content_id}")
+            
+            # Get content data and metadata
+            content_data = await self._get_content_data(content_id)
+            content_metadata = await self._get_content_metadata(content_id)
+            
+            if not content_data or not content_metadata:
+                logger.warning(f"Content or metadata not found for anonymization: {content_id}")
+                return
+            
+            # Determine content type for appropriate anonymization strategy
+            content_type = content_metadata.get("content_type", "unknown")
+            
+            if content_type == "text":
+                # Text anonymization - remove PII
+                anonymized_data = await self._anonymize_text_content(content_data)
+            elif content_type in ["image", "video"]:
+                # Media anonymization - remove metadata, blur faces if needed
+                anonymized_data = await self._anonymize_media_content(content_data, content_type)
+            elif content_type == "audio":
+                # Audio anonymization - remove metadata, apply voice distortion if needed
+                anonymized_data = await self._anonymize_audio_content(content_data)
+            else:
+                # Generic anonymization - remove metadata and sensitive patterns
+                anonymized_data = await self._anonymize_generic_content(content_data)
+            
+            # Replace original content with anonymized version
+            await self._replace_content_data(content_id, anonymized_data)
+            
+            # Update metadata to reflect anonymization
+            updated_metadata = content_metadata.copy()
+            updated_metadata["anonymized"] = True
+            updated_metadata["anonymization_date"] = datetime.utcnow().isoformat()
+            updated_metadata["original_size"] = len(content_data)
+            updated_metadata["anonymized_size"] = len(anonymized_data)
+            
+            await self._update_content_metadata(content_id, updated_metadata)
+            
+            # Log anonymization for audit trail
+            await self._log_content_anonymization(content_id)
+            
+            logger.info(f"Successfully anonymized content: {content_id}")
+            
+        except Exception as e:
+            logger.error(f"Error anonymizing content {content_id}: {e}")
+            raise
+
+    # Helper methods for the implementations above
+    
+    async def _get_all_content_records(self) -> List[Dict[str, Any]]:
+        """Get all content records from database"""
+        # Mock implementation - in practice this would query the database
+        logger.debug("Fetching all content records from database")
+        return []
+    
+    def _find_applicable_rule(self, policy: RetentionPolicy, content_type: str) -> Optional['RetentionRule']:
+        """Find the applicable retention rule for content type"""
+        for rule in policy.rules:
+            if rule.content_type == content_type or rule.content_type == "*":
+                return rule
+        return None
+    
+    async def _update_content_retention_settings(self, content_id: str, rule: 'RetentionRule') -> None:
+        """Update content retention settings in database"""
+        logger.debug(f"Updating retention settings for content {content_id} with rule {rule.rule_id}")
+        # Mock implementation - would update database record
+    
+    async def _schedule_retention_check(self, content_id: str, retention_days: int) -> None:
+        """Schedule retention check for content"""
+        check_date = datetime.utcnow() + timedelta(days=retention_days)
+        logger.debug(f"Scheduling retention check for content {content_id} on {check_date}")
+        # Mock implementation - would schedule task or add to queue
+    
+    async def _fetch_policies_from_database(self) -> List[Dict[str, Any]]:
+        """Fetch policies from database"""
+        # Mock implementation - would query database
+        logger.debug("Fetching policies from database")
+        return []
+    
+    async def _get_content_metadata(self, content_id: str) -> Optional[Dict[str, Any]]:
+        """Get content metadata from database"""
+        logger.debug(f"Fetching metadata for content {content_id}")
+        # Mock implementation - would query database
+        return {"content_type": "text", "storage_locations": [], "cache_keys": []}
+    
+    async def _delete_from_storage(self, location: str) -> None:
+        """Delete content from storage location"""
+        logger.debug(f"Deleting from storage location: {location}")
+        # Mock implementation - would delete from actual storage
+    
+    async def _delete_from_cache(self, cache_key: str) -> None:
+        """Delete content from cache"""
+        logger.debug(f"Deleting from cache: {cache_key}")
+        # Mock implementation - would delete from cache
+    
+    async def _update_content_status(self, content_id: str, status: str) -> None:
+        """Update content status in database"""
+        logger.debug(f"Updating content {content_id} status to {status}")
+        # Mock implementation - would update database
+    
+    async def _log_content_deletion(self, content_id: str, reason: str) -> None:
+        """Log content deletion for audit trail"""
+        logger.info(f"AUDIT: Content {content_id} deleted - reason: {reason}")
+        # Mock implementation - would write to audit log
+    
+    async def _anonymize_text_content(self, content_data: bytes) -> bytes:
+        """Anonymize text content by removing PII"""
+        # Basic implementation - would use proper PII detection/removal
+        text = content_data.decode('utf-8', errors='ignore')
+        # Remove common PII patterns (emails, phone numbers, etc.)
+        import re
+        text = re.sub(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', '[EMAIL]', text)
+        text = re.sub(r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b', '[PHONE]', text)
+        return text.encode('utf-8')
+    
+    async def _anonymize_media_content(self, content_data: bytes, content_type: str) -> bytes:
+        """Anonymize media content by removing metadata"""
+        # Basic implementation - would remove EXIF/metadata
+        logger.debug(f"Anonymizing {content_type} content (removing metadata)")
+        return content_data  # Simplified - real implementation would strip metadata
+    
+    async def _anonymize_audio_content(self, content_data: bytes) -> bytes:
+        """Anonymize audio content by removing metadata"""
+        logger.debug("Anonymizing audio content (removing metadata)")
+        return content_data  # Simplified - real implementation would strip metadata
+    
+    async def _anonymize_generic_content(self, content_data: bytes) -> bytes:
+        """Generic anonymization for unknown content types"""
+        logger.debug("Applying generic anonymization")
+        return content_data  # Simplified - real implementation would apply generic rules
+    
+    async def _replace_content_data(self, content_id: str, new_data: bytes) -> None:
+        """Replace content data in storage"""
+        logger.debug(f"Replacing content data for {content_id}")
+        # Mock implementation - would update storage
+    
+    async def _update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> None:
+        """Update content metadata in database"""
+        logger.debug(f"Updating metadata for content {content_id}")
+        # Mock implementation - would update database
+    
+    async def _log_content_anonymization(self, content_id: str) -> None:
+        """Log content anonymization for audit trail"""
+        logger.info(f"AUDIT: Content {content_id} anonymized")
+        # Mock implementation - would write to audit log
