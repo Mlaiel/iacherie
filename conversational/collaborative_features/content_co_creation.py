@@ -398,7 +398,37 @@ class CollaborativeEditingEngine:
                 return json.loads(cached_state)
             
             # Load from persistent storage
-            # Implementation here
+            try:
+                # Try to get from database/persistent storage
+                content_data = await self._load_from_database(content_id)
+                if content_data:
+                    # Cache the loaded data
+                    await self.cache_manager.set(
+                        cache_key, 
+                        json.dumps(content_data), 
+                        ttl=3600
+                    )
+                    return content_data
+                else:
+                    # Create default state if not found
+                    default_state = {
+                        "content": "", 
+                        "version": 0, 
+                        "last_modified": datetime.utcnow().isoformat(),
+                        "collaborators": [],
+                        "sections": {},
+                        "metadata": {}
+                    }
+                    return default_state
+                    
+            except Exception as db_error:
+                logger.warning(f"Database load failed for {content_id}: {db_error}")
+                # Return basic default state
+                return {
+                    "content": "", 
+                    "version": 0, 
+                    "last_modified": datetime.utcnow().isoformat()
+                }
             
             return {"content": "", "version": 0, "last_modified": datetime.utcnow().isoformat()}
             
@@ -939,3 +969,28 @@ class MultiFormatCoCreator:
         except Exception as e:
             logger.error(f"Error assessing format quality: {e}")
             return 0.5
+    
+    async def _load_from_database(self, content_id: str) -> Optional[Dict[str, Any]]:
+        """Load content state from persistent database storage"""
+        try:
+            # This would interface with your database layer
+            # For now, returning None to indicate not found
+            # In a real implementation, this would:
+            # 1. Connect to the database
+            # 2. Query for content by content_id
+            # 3. Return the content data if found
+            # 4. Return None if not found
+            
+            logger.debug(f"Loading content {content_id} from database")
+            
+            # Placeholder implementation - in production this would be:
+            # content_record = await self.db_session.query(ContentModel).filter_by(id=content_id).first()
+            # if content_record:
+            #     return content_record.to_dict()
+            # return None
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"Database load error for content {content_id}: {e}")
+            return None
