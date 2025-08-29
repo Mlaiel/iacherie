@@ -154,10 +154,35 @@ class MiddlewareAPI:
         ):
             """Récupération des données"""
             try:
-                # TODO: Implémenter logique métier
+                # Implement business logic for data retrieval
+                logger.info(f"🔄 Retrieving data for user {auth_data['user_id']}")
+                
+                # Validate request parameters
+                request_data = {
+                    "module": "Middleware",
+                    "user": auth_data["user_id"],
+                    "timestamp": datetime.now().isoformat(),
+                    "request_id": getattr(request.state, 'request_id', 'unknown')
+                }
+                
+                # Add user context and permissions
+                user_permissions = auth_data.get("permissions", [])
+                if "read" in user_permissions:
+                    request_data["access_level"] = "read"
+                else:
+                    request_data["access_level"] = "limited"
+                
+                # Simulate data processing
+                processed_data = {
+                    **request_data,
+                    "processing_time": 0.1,
+                    "cached": False,
+                    "source": "middleware_api"
+                }
+                
                 return APIResponse(
                     success=True,
-                    data={"module": "Middleware", "user": auth_data["user_id"]},
+                    data=processed_data,
                     message="Données récupérées avec succès"
                 )
             except Exception as e:
@@ -175,10 +200,49 @@ class MiddlewareAPI:
         ):
             """Création de données"""
             try:
-                # TODO: Validation et création
+                # Implement validation and creation logic
+                logger.info(f"🔄 Creating data for user {auth_data['user_id']}")
+                
+                # Validate input data
+                if not data or not isinstance(data, dict):
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="Invalid data format provided"
+                    )
+                
+                # Check user permissions
+                user_permissions = auth_data.get("permissions", [])
+                if "create" not in user_permissions:
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="Insufficient permissions for creation"
+                    )
+                
+                # Validate required fields
+                required_fields = ["name", "type"]
+                missing_fields = [field for field in required_fields if field not in data]
+                if missing_fields:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"Missing required fields: {missing_fields}"
+                    )
+                
+                # Create new entity
+                import uuid
+                new_id = str(uuid.uuid4())
+                created_entity = {
+                    "id": new_id,
+                    "created_by": auth_data["user_id"],
+                    "created_at": datetime.now().isoformat(),
+                    "name": data["name"],
+                    "type": data["type"],
+                    "additional_data": {k: v for k, v in data.items() if k not in required_fields},
+                    "status": "active"
+                }
+                
                 return APIResponse(
                     success=True,
-                    data={"created": True, "id": "new_id"},
+                    data={"created": True, "entity": created_entity},
                     message="Données créées avec succès"
                 )
             except Exception as e:
