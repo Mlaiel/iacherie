@@ -1543,13 +1543,143 @@ class ProjectTimelineManager:
     
     async def _get_project_tasks(self, project_id: str) -> List[Dict[str, Any]]:
         """Get all tasks for project"""
-        # Implementation would fetch all project tasks
-        return []
+        try:
+            # Get cached project tasks
+            project_tasks = await self.cache.get(f"project_tasks:{project_id}")
+            if project_tasks:
+                return project_tasks
+            
+            # If not in cache, get project data and extract task information
+            project_data = await self.cache.get(f"project:{project_id}")
+            if not project_data:
+                return []
+            
+            # Get all task IDs associated with this project
+            task_ids = project_data.get("task_ids", [])
+            tasks = []
+            
+            for task_id in task_ids:
+                task_data = await self.cache.get(f"task:{task_id}")
+                if task_data:
+                    tasks.append(task_data)
+            
+            # Cache the results
+            await self.cache.set(f"project_tasks:{project_id}", tasks, ttl=3600)
+            return tasks
+            
+        except Exception as e:
+            logger.error(f"Error getting project tasks for {project_id}: {e}")
+            return []
     
     async def _calculate_critical_path(self, tasks: List[Dict[str, Any]]) -> List[str]:
-        """Calculate critical path for project tasks"""
-        # Implementation would use critical path method (CPM) algorithm
-        return []
+        """Calculate critical path for project tasks using CPM algorithm"""
+        try:
+            if not tasks:
+                return []
+            
+            # Create task network graph
+            task_graph = {}
+            task_durations = {}
+            
+            # Build graph representation
+            for task in tasks:
+                task_id = task.get("task_id")
+                if not task_id:
+                    continue
+                    
+                task_graph[task_id] = {
+                    "dependencies": task.get("dependencies", []),
+                    "dependents": [],
+                    "duration": task.get("estimated_hours", 8) / 8,  # Convert to days
+                    "early_start": 0,
+                    "early_finish": 0,
+                    "late_start": 0,
+                    "late_finish": 0,
+                    "slack": 0
+                }
+                task_durations[task_id] = task_graph[task_id]["duration"]
+            
+            # Calculate dependents (reverse dependencies)
+            for task_id, task_info in task_graph.items():
+                for dep_id in task_info["dependencies"]:
+                    if dep_id in task_graph:
+                        task_graph[dep_id]["dependents"].append(task_id)
+            
+            # Forward pass - calculate early start and finish times
+            def calculate_early_times(task_id: str, visited: set = None):
+                if visited is None:
+                    visited = set()
+                
+                if task_id in visited or task_id not in task_graph:
+                    return 0
+                
+                visited.add(task_id)
+                task = task_graph[task_id]
+                
+                # Calculate based on dependencies
+                max_early_finish = 0
+                for dep_id in task["dependencies"]:
+                    if dep_id in task_graph:
+                        dep_early_finish = calculate_early_times(dep_id, visited.copy())
+                        max_early_finish = max(max_early_finish, dep_early_finish)
+                
+                task["early_start"] = max_early_finish
+                task["early_finish"] = task["early_start"] + task["duration"]
+                return task["early_finish"]
+            
+            # Calculate early times for all tasks
+            project_duration = 0
+            for task_id in task_graph:
+                early_finish = calculate_early_times(task_id)
+                project_duration = max(project_duration, early_finish)
+            
+            # Backward pass - calculate late start and finish times
+            def calculate_late_times(task_id: str, visited: set = None):
+                if visited is None:
+                    visited = set()
+                
+                if task_id in visited or task_id not in task_graph:
+                    return project_duration
+                
+                visited.add(task_id)
+                task = task_graph[task_id]
+                
+                # If no dependents, late finish = project duration
+                if not task["dependents"]:
+                    task["late_finish"] = project_duration
+                else:
+                    # Calculate based on dependents
+                    min_late_start = float('inf')
+                    for dep_id in task["dependents"]:
+                        if dep_id in task_graph:
+                            dep_late_start = calculate_late_times(dep_id, visited.copy())
+                            min_late_start = min(min_late_start, dep_late_start)
+                    
+                    task["late_finish"] = min_late_start if min_late_start != float('inf') else project_duration
+                
+                task["late_start"] = task["late_finish"] - task["duration"]
+                task["slack"] = task["late_start"] - task["early_start"]
+                return task["late_start"]
+            
+            # Calculate late times for all tasks
+            for task_id in task_graph:
+                calculate_late_times(task_id)
+            
+            # Find critical path (tasks with zero slack)
+            critical_tasks = []
+            for task_id, task_info in task_graph.items():
+                if abs(task_info["slack"]) < 0.001:  # Float comparison tolerance
+                    critical_tasks.append(task_id)
+            
+            # Sort critical tasks by early start time for logical order
+            critical_tasks.sort(key=lambda tid: task_graph[tid]["early_start"])
+            
+            logger.info(f"Critical path calculated: {len(critical_tasks)} tasks, {project_duration:.1f} days")
+            return critical_tasks
+            
+        except Exception as e:
+            logger.error(f"Error calculating critical path: {e}")
+            return []
     
     async def _optimize_timeline(
         self,
@@ -1559,12 +1689,252 @@ class ProjectTimelineManager:
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
         """Optimize project timeline based on goals and constraints"""
-        # Implementation would use optimization algorithms
-        return {
-            "completion_date": (datetime.utcnow() + timedelta(days=30)).isoformat(),
-            "improvements": [
-                "Parallel execution of independent tasks",
-                "Resource reallocation to critical path",
-                "Buffer time optimization"
-            ]
-        }
+        try:
+            if not tasks:
+                return {
+                    "completion_date": datetime.utcnow().isoformat(),
+                    "improvements": [],
+                    "optimization_results": {}
+                }
+            
+            original_duration = sum(task.get("estimated_hours", 8) / 8 for task in tasks)
+            improvements = []
+            optimization_results = {}
+            
+            # Track optimization metrics
+            time_saved = 0
+            resource_efficiency = 1.0
+            cost_impact = 0.0
+            
+            # Optimization 1: Parallelize independent tasks
+            if "minimize_duration" in optimization_goals:
+                parallel_savings = await self._optimize_parallel_execution(tasks, critical_path)
+                time_saved += parallel_savings
+                if parallel_savings > 0:
+                    improvements.append(f"Parallel execution saves {parallel_savings:.1f} days")
+            
+            # Optimization 2: Resource reallocation to critical path
+            if "optimize_resources" in optimization_goals:
+                resource_savings = await self._optimize_resource_allocation(tasks, critical_path, constraints)
+                time_saved += resource_savings["time_saved"]
+                resource_efficiency = resource_savings["efficiency_gain"]
+                if resource_savings["time_saved"] > 0:
+                    improvements.append(f"Resource reallocation saves {resource_savings['time_saved']:.1f} days")
+            
+            # Optimization 3: Buffer time optimization
+            if "optimize_buffers" in optimization_goals:
+                buffer_optimization = await self._optimize_buffer_times(tasks, constraints)
+                time_saved += buffer_optimization["time_saved"]
+                improvements.append(f"Buffer optimization: {buffer_optimization['description']}")
+            
+            # Optimization 4: Task dependency optimization
+            if "optimize_dependencies" in optimization_goals:
+                dependency_savings = await self._optimize_task_dependencies(tasks)
+                time_saved += dependency_savings
+                if dependency_savings > 0:
+                    improvements.append(f"Dependency optimization saves {dependency_savings:.1f} days")
+            
+            # Calculate new completion date
+            optimized_duration = max(1, original_duration - time_saved)
+            completion_date = datetime.utcnow() + timedelta(days=optimized_duration)
+            
+            # Calculate optimization impact
+            time_savings_percentage = (time_saved / original_duration * 100) if original_duration > 0 else 0
+            cost_savings = time_saved * constraints.get("daily_cost", 1000)  # Estimated daily project cost
+            
+            optimization_results = {
+                "original_duration_days": original_duration,
+                "optimized_duration_days": optimized_duration,
+                "time_saved_days": time_saved,
+                "time_savings_percentage": time_savings_percentage,
+                "resource_efficiency_gain": (resource_efficiency - 1.0) * 100,
+                "estimated_cost_savings": cost_savings,
+                "critical_path_length": len(critical_path),
+                "total_tasks": len(tasks),
+                "optimization_goals_achieved": len(optimization_goals)
+            }
+            
+            if not improvements:
+                improvements.append("No significant optimizations identified with current constraints")
+            
+            logger.info(f"Timeline optimization completed: {time_saved:.1f} days saved ({time_savings_percentage:.1f}%)")
+            
+            return {
+                "completion_date": completion_date.isoformat(),
+                "improvements": improvements,
+                "optimization_results": optimization_results,
+                "critical_path_tasks": critical_path,
+                "optimization_timestamp": datetime.utcnow().isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Error optimizing timeline: {e}")
+            return {
+                "completion_date": (datetime.utcnow() + timedelta(days=30)).isoformat(),
+                "improvements": ["Optimization failed - using default timeline"],
+                "optimization_results": {"error": str(e)}
+            }
+    
+    async def _optimize_parallel_execution(self, tasks: List[Dict[str, Any]], critical_path: List[str]) -> float:
+        """Optimize parallel execution of independent tasks"""
+        try:
+            # Identify tasks that can be parallelized (no dependencies between them)
+            independent_groups = []
+            processed_tasks = set()
+            
+            for task in tasks:
+                task_id = task.get("task_id")
+                if task_id in processed_tasks or task_id in critical_path:
+                    continue
+                
+                # Find tasks that can run in parallel with this one
+                parallel_group = [task_id]
+                task_dependencies = set(task.get("dependencies", []))
+                
+                for other_task in tasks:
+                    other_id = other_task.get("task_id")
+                    if (other_id != task_id and 
+                        other_id not in processed_tasks and 
+                        other_id not in critical_path):
+                        
+                        other_dependencies = set(other_task.get("dependencies", []))
+                        
+                        # Check if tasks can run in parallel (no dependency overlap)
+                        if not task_dependencies.intersection(other_dependencies):
+                            parallel_group.append(other_id)
+                
+                if len(parallel_group) > 1:
+                    independent_groups.append(parallel_group)
+                    processed_tasks.update(parallel_group)
+            
+            # Calculate time savings from parallelization
+            time_saved = 0
+            for group in independent_groups:
+                group_durations = []
+                for task_id in group:
+                    task = next((t for t in tasks if t.get("task_id") == task_id), None)
+                    if task:
+                        group_durations.append(task.get("estimated_hours", 8) / 8)
+                
+                if len(group_durations) > 1:
+                    # Time saved = sum of all durations - max duration (parallel execution)
+                    sequential_time = sum(group_durations)
+                    parallel_time = max(group_durations)
+                    time_saved += sequential_time - parallel_time
+            
+            return time_saved
+            
+        except Exception as e:
+            logger.warning(f"Parallel execution optimization failed: {e}")
+            return 0.0
+    
+    async def _optimize_resource_allocation(self, tasks: List[Dict[str, Any]], critical_path: List[str], constraints: Dict[str, Any]) -> Dict[str, float]:
+        """Optimize resource allocation to critical path"""
+        try:
+            # Identify available resources and current allocation
+            total_resources = constraints.get("max_team_members", 5)
+            critical_path_tasks = [t for t in tasks if t.get("task_id") in critical_path]
+            non_critical_tasks = [t for t in tasks if t.get("task_id") not in critical_path]
+            
+            # Calculate current resource distribution
+            critical_resources = sum(1 for task in critical_path_tasks if task.get("assignee_id"))
+            total_assigned = sum(1 for task in tasks if task.get("assignee_id"))
+            
+            # Optimization: Prioritize critical path tasks
+            time_saved = 0
+            efficiency_gain = 1.0
+            
+            if critical_resources < len(critical_path_tasks) and total_assigned < total_resources:
+                # We can allocate more resources to critical path
+                additional_resources = min(
+                    total_resources - total_assigned,
+                    len(critical_path_tasks) - critical_resources
+                )
+                
+                # Estimate time savings (assuming 20% improvement per additional resource)
+                time_saved = additional_resources * 0.2 * len(critical_path_tasks)
+                efficiency_gain = 1.0 + (additional_resources * 0.15)
+            
+            return {
+                "time_saved": time_saved,
+                "efficiency_gain": efficiency_gain,
+                "additional_resources_needed": max(0, len(critical_path_tasks) - critical_resources)
+            }
+            
+        except Exception as e:
+            logger.warning(f"Resource allocation optimization failed: {e}")
+            return {"time_saved": 0.0, "efficiency_gain": 1.0}
+    
+    async def _optimize_buffer_times(self, tasks: List[Dict[str, Any]], constraints: Dict[str, Any]) -> Dict[str, Any]:
+        """Optimize buffer times in project schedule"""
+        try:
+            total_duration = sum(task.get("estimated_hours", 8) / 8 for task in tasks)
+            current_buffer_ratio = constraints.get("buffer_ratio", 0.2)  # 20% default buffer
+            
+            # Calculate optimal buffer based on task complexity and risk
+            high_risk_tasks = sum(1 for task in tasks if task.get("priority") == "critical")
+            risk_factor = high_risk_tasks / len(tasks) if tasks else 0
+            
+            # Optimal buffer: 10-30% based on risk
+            optimal_buffer_ratio = 0.1 + (risk_factor * 0.2)
+            
+            buffer_adjustment = current_buffer_ratio - optimal_buffer_ratio
+            time_saved = total_duration * buffer_adjustment
+            
+            if buffer_adjustment > 0:
+                description = f"Reduced buffer from {current_buffer_ratio*100:.1f}% to {optimal_buffer_ratio*100:.1f}%"
+            else:
+                description = f"Maintained buffer at {current_buffer_ratio*100:.1f}% (appropriate for project risk)"
+                time_saved = 0  # No time saved if buffer is already optimal or needs increase
+            
+            return {
+                "time_saved": max(0, time_saved),
+                "description": description,
+                "optimal_buffer_ratio": optimal_buffer_ratio
+            }
+            
+        except Exception as e:
+            logger.warning(f"Buffer optimization failed: {e}")
+            return {"time_saved": 0.0, "description": "Buffer optimization failed"}
+    
+    async def _optimize_task_dependencies(self, tasks: List[Dict[str, Any]]) -> float:
+        """Optimize task dependencies to reduce blocking"""
+        try:
+            # Identify unnecessary dependencies that could be removed
+            time_saved = 0
+            dependency_graph = {}
+            
+            # Build dependency graph
+            for task in tasks:
+                task_id = task.get("task_id")
+                dependencies = task.get("dependencies", [])
+                dependency_graph[task_id] = dependencies
+            
+            # Look for transitive dependencies that can be optimized
+            for task_id, dependencies in dependency_graph.items():
+                if len(dependencies) > 1:
+                    # Check if some dependencies are transitive
+                    direct_dependencies = []
+                    for dep in dependencies:
+                        # Check if this dependency is already covered by another dependency
+                        is_transitive = False
+                        for other_dep in dependencies:
+                            if other_dep != dep and dep in dependency_graph.get(other_dep, []):
+                                is_transitive = True
+                                break
+                        
+                        if not is_transitive:
+                            direct_dependencies.append(dep)
+                    
+                    # If we can reduce dependencies, estimate time savings
+                    if len(direct_dependencies) < len(dependencies):
+                        reduced_blocking = len(dependencies) - len(direct_dependencies)
+                        task_duration = next((t.get("estimated_hours", 8) / 8 for t in tasks 
+                                            if t.get("task_id") == task_id), 0)
+                        time_saved += reduced_blocking * 0.1 * task_duration  # 10% improvement per reduced dependency
+            
+            return time_saved
+            
+        except Exception as e:
+            logger.warning(f"Dependency optimization failed: {e}")
+            return 0.0

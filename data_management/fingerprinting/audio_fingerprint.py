@@ -59,6 +59,14 @@ except ImportError:
     ESSENTIA_AVAILABLE = False
     logging.warning("Essentia not available - install essentia-tensorflow")
 
+# Check librosa availability (should always be available)
+try:
+    import librosa
+    LIBROSA_AVAILABLE = True
+except ImportError:
+    LIBROSA_AVAILABLE = False
+    logging.error("librosa not available - this is required for audio processing")
+
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
