@@ -202,7 +202,17 @@ class PerformanceMetricCollector(MetricCollector):
     """Collector for performance metrics"""
     
     def __init__(self):
-        pass
+        """Initialize performance metric collector with monitoring capabilities"""
+        self.logger = logging.getLogger(f"{__name__}.PerformanceMetricCollector")
+        self.collection_interval = 30  # seconds
+        self.metric_history = deque(maxlen=1000)
+        self.performance_thresholds = {
+            'response_time': 2.0,  # seconds
+            'cpu_usage': 80.0,     # percentage
+            'memory_usage': 85.0,  # percentage
+            'error_rate': 5.0      # percentage
+        }
+        self.logger.info("PerformanceMetricCollector initialized successfully")
     
     async def collect_metrics(self) -> List[MetricSnapshot]:
         """Collect performance metrics"""

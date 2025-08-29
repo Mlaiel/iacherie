@@ -35,7 +35,15 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """Mock metrics collector."""
     def __init__(self):
-        pass
+        """Initialize Kubernetes metrics collector with monitoring capabilities"""
+        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+        self.k8s_metrics = ['pod_metrics', 'node_metrics', 'service_metrics', 'ingress_metrics']
+        self.collection_apis = ['metrics-server', 'prometheus', 'heapster']
+        self.resource_metrics = ['cpu', 'memory', 'storage', 'network']
+        self.health_checks = ['readiness', 'liveness', 'startup']
+        self.alert_rules = {}
+        self.collection_enabled = True
+        self.logger.info("Kubernetes MetricsCollector initialized with monitoring APIs")
 
 
 class DeploymentStrategy(Enum):

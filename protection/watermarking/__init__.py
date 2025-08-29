@@ -491,7 +491,22 @@ class ImageWatermarker:
     """Filigranage d'images professionnel"""
     
     def __init__(self):
-        pass
+        """Initialize professional image watermarking system"""
+        self.logger = logging.getLogger(f"{__name__}.ImageWatermarker")
+        self.watermark_methods = {
+            'lsb': self._embed_lsb,
+            'dct': self._embed_dct,
+            'dwt': self._embed_dwt,
+            'spatial': self._embed_spatial
+        }
+        self.strength_settings = {
+            WatermarkStrength.LOW: {'alpha': 0.1, 'quality': 95},
+            WatermarkStrength.MEDIUM: {'alpha': 0.3, 'quality': 90},
+            WatermarkStrength.HIGH: {'alpha': 0.5, 'quality': 85},
+            WatermarkStrength.EXTREME: {'alpha': 0.8, 'quality': 80}
+        }
+        self.supported_formats = ['png', 'jpg', 'jpeg', 'bmp', 'tiff']
+        self.logger.info("ImageWatermarker initialized with multiple embedding methods")
     
     async def embed_lsb_watermark(
         self,

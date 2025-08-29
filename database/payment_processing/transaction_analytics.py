@@ -620,7 +620,21 @@ class VisualizationGenerator:
     """
     
     def __init__(self):
-        pass
+        """Initialize visualization generator with chart libraries and templates"""
+        self.logger = logging.getLogger(f"{__name__}.VisualizationGenerator")
+        self.chart_templates = {
+            'line': 'revenue_trend_template',
+            'bar': 'comparison_template',
+            'pie': 'distribution_template',
+            'heatmap': 'geographic_template'
+        }
+        self.color_schemes = {
+            'revenue': ['#2E8B57', '#32CD32', '#228B22'],
+            'transactions': ['#4169E1', '#6495ED', '#87CEEB'],
+            'users': ['#FF6347', '#FF7F50', '#FFA07A']
+        }
+        self.export_formats = ['png', 'svg', 'pdf', 'html']
+        self.logger.info("VisualizationGenerator initialized with templates and color schemes")
     
     async def generate_dashboard_charts(self, data: Dict[str, Any]) -> Dict[str, str]:
         """Generate dashboard charts"""

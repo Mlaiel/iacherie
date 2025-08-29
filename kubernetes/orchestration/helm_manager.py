@@ -33,7 +33,15 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """Mock metrics collector."""
     def __init__(self):
-        pass
+        """Initialize Helm metrics collector with chart monitoring capabilities"""
+        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+        self.helm_metrics = ['chart_deployments', 'release_status', 'upgrade_success_rate']
+        self.chart_repositories = ['stable', 'bitnami', 'prometheus-community']
+        self.monitoring_hooks = ['pre-install', 'post-install', 'pre-upgrade', 'post-upgrade']
+        self.release_metrics = {}
+        self.chart_versions = {}
+        self.rollback_history = []
+        self.logger.info("Helm MetricsCollector initialized with chart monitoring")
 
 
 class ReleaseStatus(Enum):
