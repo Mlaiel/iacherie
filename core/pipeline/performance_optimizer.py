@@ -1397,3 +1397,800 @@ class PerformanceOptimizer:
         self.profiler.stop_monitoring()
         
         self.logger.info("Performance optimizer shutdown complete")
+
+
+class AdvancedPerformanceAnalyzer:
+    """Advanced AI-powered performance analyzer with machine learning capabilities"""
+    
+    def __init__(self, config: Dict[str, Any]):
+        self.config = config
+        self.logger = logging.getLogger(f"{__name__}.AdvancedPerformanceAnalyzer")
+        
+        # Machine learning models for prediction
+        self.prediction_models: Dict[str, Any] = {}
+        
+        # Performance patterns database
+        self.performance_patterns: Dict[str, List[Dict[str, Any]]] = {}
+        
+        # Historical performance data
+        self.historical_data: deque = deque(maxlen=100000)
+        
+        # Real-time analytics
+        self.real_time_analytics = {}
+        
+        # Initialize ML models
+        self._initialize_ml_models()
+        
+    def _initialize_ml_models(self):
+        """Initialize machine learning models for performance prediction"""
+        try:
+            import numpy as np
+            
+            # Simple linear regression for performance prediction
+            self.prediction_models = {
+                "execution_time_predictor": {
+                    "type": "linear_regression",
+                    "features": ["cpu_usage", "memory_usage", "disk_io", "network_io"],
+                    "target": "execution_time",
+                    "model": None,
+                    "trained": False
+                },
+                "bottleneck_detector": {
+                    "type": "anomaly_detection", 
+                    "features": ["cpu_usage", "memory_usage", "throughput", "latency"],
+                    "model": None,
+                    "trained": False
+                },
+                "optimization_recommender": {
+                    "type": "classification",
+                    "features": ["performance_metrics", "resource_usage", "workload_type"],
+                    "target": "optimization_strategy",
+                    "model": None,
+                    "trained": False
+                }
+            }
+            
+            self.logger.info("ML models initialized for performance analysis")
+            
+        except ImportError:
+            self.logger.warning("ML dependencies not available, using rule-based analysis")
+    
+    def analyze_performance_trends(self, profile: PerformanceProfile) -> Dict[str, Any]:
+        """Analyze performance trends using AI/ML"""
+        analysis_results = {
+            "trend_analysis": {},
+            "anomaly_detection": {},
+            "performance_prediction": {},
+            "optimization_opportunities": [],
+            "risk_assessment": {}
+        }
+        
+        if not profile.measurements:
+            return analysis_results
+        
+        try:
+            # Extract time series data
+            metrics_data = self._extract_metrics_timeseries(profile.measurements)
+            
+            # Trend analysis
+            analysis_results["trend_analysis"] = self._analyze_trends(metrics_data)
+            
+            # Anomaly detection
+            analysis_results["anomaly_detection"] = self._detect_anomalies(metrics_data)
+            
+            # Performance prediction
+            analysis_results["performance_prediction"] = self._predict_performance(metrics_data)
+            
+            # Optimization opportunities
+            analysis_results["optimization_opportunities"] = self._identify_optimization_opportunities(metrics_data)
+            
+            # Risk assessment
+            analysis_results["risk_assessment"] = self._assess_performance_risks(metrics_data)
+            
+        except Exception as e:
+            self.logger.error(f"Performance analysis error: {e}")
+            
+        return analysis_results
+    
+    def _extract_metrics_timeseries(self, measurements: List[PerformanceMeasurement]) -> Dict[str, List[float]]:
+        """Extract time series data from measurements"""
+        metrics_data = defaultdict(list)
+        
+        for measurement in measurements:
+            metrics_data[measurement.metric.value].append(measurement.value)
+            metrics_data["timestamp"].append(measurement.timestamp.timestamp())
+        
+        return dict(metrics_data)
+    
+    def _analyze_trends(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Any]:
+        """Analyze performance trends"""
+        trends = {}
+        
+        for metric, values in metrics_data.items():
+            if metric == "timestamp" or len(values) < 2:
+                continue
+                
+            try:
+                # Calculate trend direction and strength
+                x = list(range(len(values)))
+                
+                # Simple linear trend calculation
+                if len(values) >= 3:
+                    trend_slope = (values[-1] - values[0]) / len(values)
+                    trend_direction = "increasing" if trend_slope > 0 else "decreasing" if trend_slope < 0 else "stable"
+                    
+                    # Calculate trend strength (coefficient of determination)
+                    mean_value = sum(values) / len(values)
+                    ss_tot = sum((v - mean_value) ** 2 for v in values)
+                    trend_strength = abs(trend_slope) / (mean_value + 1e-6)  # Avoid division by zero
+                    
+                    trends[metric] = {
+                        "direction": trend_direction,
+                        "slope": trend_slope,
+                        "strength": min(trend_strength, 1.0),  # Cap at 1.0
+                        "stability": self._calculate_stability(values),
+                        "volatility": self._calculate_volatility(values)
+                    }
+                    
+            except Exception as e:
+                self.logger.warning(f"Trend analysis error for {metric}: {e}")
+                
+        return trends
+    
+    def _calculate_stability(self, values: List[float]) -> float:
+        """Calculate stability metric (inverse of coefficient of variation)"""
+        if len(values) < 2:
+            return 1.0
+            
+        mean_val = sum(values) / len(values)
+        if mean_val == 0:
+            return 1.0
+            
+        variance = sum((v - mean_val) ** 2 for v in values) / len(values)
+        std_dev = variance ** 0.5
+        cv = std_dev / mean_val  # Coefficient of variation
+        
+        return max(0.0, 1.0 - cv)  # Higher stability = lower CV
+    
+    def _calculate_volatility(self, values: List[float]) -> float:
+        """Calculate volatility metric"""
+        if len(values) < 2:
+            return 0.0
+            
+        changes = [abs(values[i] - values[i-1]) for i in range(1, len(values))]
+        mean_change = sum(changes) / len(changes) if changes else 0.0
+        mean_value = sum(values) / len(values)
+        
+        return mean_change / (mean_value + 1e-6)  # Normalized volatility
+    
+    def _detect_anomalies(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Any]:
+        """Detect performance anomalies"""
+        anomalies = {
+            "detected_anomalies": [],
+            "anomaly_score": 0.0,
+            "severity": "low"
+        }
+        
+        for metric, values in metrics_data.items():
+            if metric == "timestamp" or len(values) < 5:
+                continue
+                
+            try:
+                # Statistical anomaly detection using IQR method
+                sorted_values = sorted(values)
+                n = len(sorted_values)
+                q1_idx = n // 4
+                q3_idx = 3 * n // 4
+                
+                q1 = sorted_values[q1_idx]
+                q3 = sorted_values[q3_idx]
+                iqr = q3 - q1
+                
+                lower_bound = q1 - 1.5 * iqr
+                upper_bound = q3 + 1.5 * iqr
+                
+                # Find anomalies
+                metric_anomalies = []
+                for i, value in enumerate(values):
+                    if value < lower_bound or value > upper_bound:
+                        anomaly_score = abs(value - (q1 + q3) / 2) / (iqr + 1e-6)
+                        metric_anomalies.append({
+                            "index": i,
+                            "value": value,
+                            "expected_range": [lower_bound, upper_bound],
+                            "anomaly_score": anomaly_score
+                        })
+                
+                if metric_anomalies:
+                    anomalies["detected_anomalies"].append({
+                        "metric": metric,
+                        "anomalies": metric_anomalies,
+                        "anomaly_rate": len(metric_anomalies) / len(values)
+                    })
+                    
+            except Exception as e:
+                self.logger.warning(f"Anomaly detection error for {metric}: {e}")
+        
+        # Calculate overall anomaly score
+        if anomalies["detected_anomalies"]:
+            total_anomalies = sum(len(ma["anomalies"]) for ma in anomalies["detected_anomalies"])
+            total_measurements = sum(len(values) for metric, values in metrics_data.items() if metric != "timestamp")
+            anomalies["anomaly_score"] = total_anomalies / max(total_measurements, 1)
+            
+            # Determine severity
+            if anomalies["anomaly_score"] > 0.2:
+                anomalies["severity"] = "high"
+            elif anomalies["anomaly_score"] > 0.1:
+                anomalies["severity"] = "medium"
+            else:
+                anomalies["severity"] = "low"
+        
+        return anomalies
+    
+    def _predict_performance(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Any]:
+        """Predict future performance based on trends"""
+        predictions = {
+            "short_term": {},  # Next 5 measurements
+            "medium_term": {},  # Next 20 measurements
+            "confidence_level": 0.0,
+            "prediction_accuracy": "unknown"
+        }
+        
+        for metric, values in metrics_data.items():
+            if metric == "timestamp" or len(values) < 3:
+                continue
+                
+            try:
+                # Simple linear extrapolation for prediction
+                recent_values = values[-min(10, len(values)):]  # Use last 10 values
+                
+                if len(recent_values) >= 3:
+                    # Calculate trend
+                    x = list(range(len(recent_values)))
+                    n = len(recent_values)
+                    
+                    # Linear regression coefficients
+                    sum_x = sum(x)
+                    sum_y = sum(recent_values)
+                    sum_xy = sum(x[i] * recent_values[i] for i in range(n))
+                    sum_x2 = sum(xi * xi for xi in x)
+                    
+                    # Calculate slope and intercept
+                    slope = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x * sum_x + 1e-6)
+                    intercept = (sum_y - slope * sum_x) / n
+                    
+                    # Make predictions
+                    next_x = len(recent_values)
+                    short_term_pred = slope * (next_x + 4) + intercept  # 5 steps ahead
+                    medium_term_pred = slope * (next_x + 19) + intercept  # 20 steps ahead
+                    
+                    predictions["short_term"][metric] = max(0, short_term_pred)  # Ensure non-negative
+                    predictions["medium_term"][metric] = max(0, medium_term_pred)
+                    
+            except Exception as e:
+                self.logger.warning(f"Prediction error for {metric}: {e}")
+        
+        # Calculate confidence level based on trend stability
+        if predictions["short_term"]:
+            stability_scores = []
+            for metric, values in metrics_data.items():
+                if metric != "timestamp" and len(values) >= 3:
+                    stability = self._calculate_stability(values[-10:])  # Recent stability
+                    stability_scores.append(stability)
+            
+            predictions["confidence_level"] = sum(stability_scores) / len(stability_scores) if stability_scores else 0.0
+        
+        return predictions
+    
+    def _identify_optimization_opportunities(self, metrics_data: Dict[str, List[float]]) -> List[Dict[str, Any]]:
+        """Identify optimization opportunities based on performance patterns"""
+        opportunities = []
+        
+        try:
+            # Analyze CPU usage patterns
+            if "cpu_usage" in metrics_data and metrics_data["cpu_usage"]:
+                cpu_values = metrics_data["cpu_usage"]
+                avg_cpu = sum(cpu_values) / len(cpu_values)
+                max_cpu = max(cpu_values)
+                
+                if avg_cpu > 80:
+                    opportunities.append({
+                        "type": "cpu_optimization",
+                        "priority": "high",
+                        "description": f"High average CPU usage ({avg_cpu:.1f}%). Consider CPU optimization strategies.",
+                        "recommendations": [
+                            "Implement parallel processing for CPU-intensive tasks",
+                            "Optimize algorithms for better CPU efficiency",
+                            "Consider load balancing across multiple cores"
+                        ],
+                        "expected_impact": "20-40% CPU usage reduction"
+                    })
+                elif max_cpu > 95:
+                    opportunities.append({
+                        "type": "cpu_spike_optimization",
+                        "priority": "medium",
+                        "description": f"CPU spikes detected (max: {max_cpu:.1f}%). Consider spike prevention.",
+                        "recommendations": [
+                            "Implement request throttling",
+                            "Add CPU usage monitoring and alerts",
+                            "Optimize resource-intensive operations"
+                        ],
+                        "expected_impact": "Reduced CPU spikes and better stability"
+                    })
+            
+            # Analyze memory usage patterns
+            if "memory_usage" in metrics_data and metrics_data["memory_usage"]:
+                memory_values = metrics_data["memory_usage"]
+                avg_memory = sum(memory_values) / len(memory_values)
+                max_memory = max(memory_values)
+                memory_trend = self._analyze_trends({"memory_usage": memory_values})
+                
+                if avg_memory > 85:
+                    opportunities.append({
+                        "type": "memory_optimization",
+                        "priority": "high",
+                        "description": f"High memory usage ({avg_memory:.1f}%). Memory optimization needed.",
+                        "recommendations": [
+                            "Implement memory pooling and reuse strategies",
+                            "Optimize data structures for memory efficiency",
+                            "Add memory leak detection and prevention"
+                        ],
+                        "expected_impact": "15-30% memory usage reduction"
+                    })
+                
+                if memory_trend.get("memory_usage", {}).get("direction") == "increasing":
+                    opportunities.append({
+                        "type": "memory_leak_prevention",
+                        "priority": "medium",
+                        "description": "Increasing memory usage trend detected. Potential memory leak.",
+                        "recommendations": [
+                            "Investigate memory leak sources",
+                            "Implement automatic memory cleanup",
+                            "Add memory profiling and monitoring"
+                        ],
+                        "expected_impact": "Prevent memory leaks and improve stability"
+                    })
+            
+            # Analyze execution time patterns  
+            if "execution_time" in metrics_data and metrics_data["execution_time"]:
+                exec_values = metrics_data["execution_time"]
+                avg_exec = sum(exec_values) / len(exec_values)
+                max_exec = max(exec_values)
+                
+                if avg_exec > 5.0:  # More than 5 seconds average
+                    opportunities.append({
+                        "type": "execution_time_optimization",
+                        "priority": "high",
+                        "description": f"High execution time ({avg_exec:.2f}s avg). Performance optimization needed.",
+                        "recommendations": [
+                            "Implement result caching for expensive operations",
+                            "Optimize database queries and indexing",
+                            "Consider asynchronous processing for long-running tasks"
+                        ],
+                        "expected_impact": "30-60% execution time reduction"
+                    })
+                
+                exec_volatility = self._calculate_volatility(exec_values)
+                if exec_volatility > 0.5:  # High variability
+                    opportunities.append({
+                        "type": "performance_consistency",
+                        "priority": "medium", 
+                        "description": f"High execution time variability detected. Inconsistent performance.",
+                        "recommendations": [
+                            "Implement performance consistency measures",
+                            "Add request queuing and load balancing",
+                            "Optimize resource allocation strategies"
+                        ],
+                        "expected_impact": "More consistent and predictable performance"
+                    })
+            
+            # Analyze throughput patterns
+            if "throughput" in metrics_data and metrics_data["throughput"]:
+                throughput_values = metrics_data["throughput"]
+                avg_throughput = sum(throughput_values) / len(throughput_values)
+                min_throughput = min(throughput_values)
+                
+                throughput_stability = self._calculate_stability(throughput_values)
+                if throughput_stability < 0.7:  # Low stability
+                    opportunities.append({
+                        "type": "throughput_optimization",
+                        "priority": "medium",
+                        "description": f"Unstable throughput detected (stability: {throughput_stability:.2f}).",
+                        "recommendations": [
+                            "Implement throughput optimization strategies",
+                            "Add request batching and processing optimization",
+                            "Consider horizontal scaling for increased throughput"
+                        ],
+                        "expected_impact": "20-50% throughput improvement and stability"
+                    })
+        
+        except Exception as e:
+            self.logger.error(f"Optimization opportunity analysis error: {e}")
+        
+        return opportunities
+    
+    def _assess_performance_risks(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Any]:
+        """Assess performance-related risks"""
+        risks = {
+            "overall_risk_level": "low",
+            "risk_factors": [],
+            "critical_thresholds": {},
+            "mitigation_strategies": []
+        }
+        
+        try:
+            risk_score = 0.0
+            
+            # CPU risk assessment
+            if "cpu_usage" in metrics_data and metrics_data["cpu_usage"]:
+                cpu_values = metrics_data["cpu_usage"]
+                max_cpu = max(cpu_values)
+                avg_cpu = sum(cpu_values) / len(cpu_values)
+                
+                if max_cpu > 95:
+                    risk_score += 0.3
+                    risks["risk_factors"].append({
+                        "factor": "cpu_overload",
+                        "severity": "high",
+                        "description": f"CPU usage reaching critical levels ({max_cpu:.1f}%)",
+                        "potential_impact": "System slowdown or failure"
+                    })
+                elif avg_cpu > 80:
+                    risk_score += 0.2
+                    risks["risk_factors"].append({
+                        "factor": "high_cpu_usage",
+                        "severity": "medium", 
+                        "description": f"Sustained high CPU usage ({avg_cpu:.1f}%)",
+                        "potential_impact": "Reduced responsiveness and scalability"
+                    })
+            
+            # Memory risk assessment
+            if "memory_usage" in metrics_data and metrics_data["memory_usage"]:
+                memory_values = metrics_data["memory_usage"]
+                max_memory = max(memory_values)
+                avg_memory = sum(memory_values) / len(memory_values)
+                
+                if max_memory > 95:
+                    risk_score += 0.4
+                    risks["risk_factors"].append({
+                        "factor": "memory_exhaustion",
+                        "severity": "critical",
+                        "description": f"Memory usage near exhaustion ({max_memory:.1f}%)",
+                        "potential_impact": "Out of memory errors and system crashes"
+                    })
+                elif avg_memory > 85:
+                    risk_score += 0.25
+                    risks["risk_factors"].append({
+                        "factor": "high_memory_pressure",
+                        "severity": "high",
+                        "description": f"High memory pressure ({avg_memory:.1f}%)",
+                        "potential_impact": "Increased garbage collection and performance degradation"
+                    })
+            
+            # Performance consistency risk
+            for metric in ["execution_time", "throughput", "latency"]:
+                if metric in metrics_data and metrics_data[metric]:
+                    values = metrics_data[metric]
+                    volatility = self._calculate_volatility(values)
+                    
+                    if volatility > 0.8:  # Very high volatility
+                        risk_score += 0.15
+                        risks["risk_factors"].append({
+                            "factor": f"{metric}_volatility",
+                            "severity": "medium",
+                            "description": f"High {metric} volatility ({volatility:.2f})",
+                            "potential_impact": "Unpredictable user experience and SLA violations"
+                        })
+            
+            # Determine overall risk level
+            if risk_score >= 0.7:
+                risks["overall_risk_level"] = "critical"
+            elif risk_score >= 0.4:
+                risks["overall_risk_level"] = "high"
+            elif risk_score >= 0.2:
+                risks["overall_risk_level"] = "medium"
+            else:
+                risks["overall_risk_level"] = "low"
+            
+            # Set critical thresholds
+            risks["critical_thresholds"] = {
+                "cpu_usage": 95.0,
+                "memory_usage": 90.0,
+                "execution_time": 10.0,
+                "error_rate": 5.0
+            }
+            
+            # Suggest mitigation strategies based on risk level
+            if risks["overall_risk_level"] in ["critical", "high"]:
+                risks["mitigation_strategies"] = [
+                    "Implement immediate performance monitoring and alerting",
+                    "Set up automatic scaling mechanisms",
+                    "Create performance degradation response procedures",
+                    "Establish resource usage limits and circuit breakers"
+                ]
+            elif risks["overall_risk_level"] == "medium":
+                risks["mitigation_strategies"] = [
+                    "Enhance performance monitoring coverage",
+                    "Implement proactive optimization measures",
+                    "Set up early warning systems for resource usage"
+                ]
+            else:
+                risks["mitigation_strategies"] = [
+                    "Continue regular performance monitoring",
+                    "Maintain performance optimization best practices"
+                ]
+                
+        except Exception as e:
+            self.logger.error(f"Risk assessment error: {e}")
+        
+        return risks
+
+
+class RealTimePerformanceMonitor:
+    """Real-time performance monitoring with streaming analytics"""
+    
+    def __init__(self, config: Dict[str, Any]):
+        self.config = config
+        self.logger = logging.getLogger(f"{__name__}.RealTimePerformanceMonitor")
+        
+        # Streaming data
+        self.metric_streams: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
+        self.alert_thresholds: Dict[str, Dict[str, float]] = {}
+        self.active_alerts: Dict[str, Dict[str, Any]] = {}
+        
+        # Monitoring state
+        self.monitoring_active = False
+        self.monitor_task: Optional[asyncio.Task] = None
+        
+        # Performance analytics
+        self.analytics_engine = AdvancedPerformanceAnalyzer(config)
+        
+        # Initialize monitoring
+        self._initialize_thresholds()
+    
+    def _initialize_thresholds(self):
+        """Initialize performance alert thresholds"""
+        self.alert_thresholds = {
+            "cpu_usage": {"warning": 70.0, "critical": 90.0},
+            "memory_usage": {"warning": 75.0, "critical": 90.0},
+            "execution_time": {"warning": 3.0, "critical": 10.0},
+            "throughput": {"warning": 10.0, "critical": 5.0},  # Lower is worse for throughput
+            "error_rate": {"warning": 1.0, "critical": 5.0},
+            "latency": {"warning": 1.0, "critical": 5.0}
+        }
+    
+    async def start_monitoring(self):
+        """Start real-time performance monitoring"""
+        if self.monitoring_active:
+            return
+            
+        self.monitoring_active = True
+        self.monitor_task = asyncio.create_task(self._monitor_loop())
+        self.logger.info("Real-time performance monitoring started")
+    
+    async def stop_monitoring(self):
+        """Stop real-time performance monitoring"""
+        self.monitoring_active = False
+        if self.monitor_task:
+            self.monitor_task.cancel()
+            try:
+                await self.monitor_task
+            except asyncio.CancelledError:
+                pass
+        self.logger.info("Real-time performance monitoring stopped")
+    
+    async def _monitor_loop(self):
+        """Main monitoring loop"""
+        while self.monitoring_active:
+            try:
+                # Collect real-time metrics
+                metrics = await self._collect_realtime_metrics()
+                
+                # Update metric streams
+                self._update_metric_streams(metrics)
+                
+                # Check for alerts
+                await self._check_alerts(metrics)
+                
+                # Perform real-time analysis
+                analysis = await self._perform_realtime_analysis()
+                
+                # Update analytics
+                self._update_analytics(analysis)
+                
+                await asyncio.sleep(1.0)  # Monitor every second
+                
+            except Exception as e:
+                self.logger.error(f"Monitoring loop error: {e}")
+                await asyncio.sleep(5.0)
+    
+    async def _collect_realtime_metrics(self) -> Dict[str, float]:
+        """Collect real-time performance metrics"""
+        try:
+            # System metrics
+            cpu_percent = psutil.cpu_percent()
+            memory = psutil.virtual_memory()
+            disk = psutil.disk_usage('/')
+            
+            # Network metrics if available
+            try:
+                network = psutil.net_io_counters()
+                network_bytes = network.bytes_sent + network.bytes_recv
+            except:
+                network_bytes = 0
+            
+            metrics = {
+                "cpu_usage": cpu_percent,
+                "memory_usage": memory.percent,
+                "disk_usage": (disk.used / disk.total) * 100,
+                "memory_available_gb": memory.available / (1024**3),
+                "disk_free_gb": disk.free / (1024**3),
+                "network_bytes_total": network_bytes,
+                "timestamp": time.time()
+            }
+            
+            return metrics
+            
+        except Exception as e:
+            self.logger.error(f"Metrics collection error: {e}")
+            return {}
+    
+    def _update_metric_streams(self, metrics: Dict[str, float]):
+        """Update metric streams with new data"""
+        for metric_name, value in metrics.items():
+            if metric_name != "timestamp":
+                self.metric_streams[metric_name].append({
+                    "value": value,
+                    "timestamp": metrics.get("timestamp", time.time())
+                })
+    
+    async def _check_alerts(self, metrics: Dict[str, float]):
+        """Check for performance alerts"""
+        current_time = time.time()
+        
+        for metric_name, value in metrics.items():
+            if metric_name in self.alert_thresholds and metric_name != "timestamp":
+                thresholds = self.alert_thresholds[metric_name]
+                
+                alert_level = None
+                if value >= thresholds.get("critical", float('inf')):
+                    alert_level = "critical"
+                elif value >= thresholds.get("warning", float('inf')):
+                    alert_level = "warning"
+                
+                # Special handling for throughput (lower is worse)
+                if metric_name == "throughput":
+                    if value <= thresholds.get("critical", 0):
+                        alert_level = "critical"
+                    elif value <= thresholds.get("warning", 0):
+                        alert_level = "warning"
+                
+                # Manage alerts
+                alert_key = f"{metric_name}_{alert_level}" if alert_level else None
+                
+                if alert_level:
+                    if alert_key not in self.active_alerts:
+                        # New alert
+                        self.active_alerts[alert_key] = {
+                            "metric": metric_name,
+                            "level": alert_level,
+                            "value": value,
+                            "threshold": thresholds.get(alert_level),
+                            "started_at": current_time,
+                            "count": 1
+                        }
+                        await self._trigger_alert(self.active_alerts[alert_key])
+                    else:
+                        # Update existing alert
+                        self.active_alerts[alert_key]["count"] += 1
+                        self.active_alerts[alert_key]["value"] = value
+                else:
+                    # Clear alerts for this metric if they exist
+                    keys_to_remove = [k for k in self.active_alerts.keys() if k.startswith(f"{metric_name}_")]
+                    for key in keys_to_remove:
+                        await self._clear_alert(self.active_alerts[key])
+                        del self.active_alerts[key]
+    
+    async def _trigger_alert(self, alert: Dict[str, Any]):
+        """Trigger a performance alert"""
+        self.logger.warning(
+            f"PERFORMANCE ALERT - {alert['level'].upper()}: "
+            f"{alert['metric']} = {alert['value']:.2f} "
+            f"(threshold: {alert['threshold']:.2f})"
+        )
+        
+        # Here you could integrate with external alerting systems
+        # like Slack, email, PagerDuty, etc.
+    
+    async def _clear_alert(self, alert: Dict[str, Any]):
+        """Clear a performance alert"""
+        duration = time.time() - alert["started_at"]
+        self.logger.info(
+            f"PERFORMANCE ALERT CLEARED: {alert['metric']} "
+            f"(duration: {duration:.1f}s, count: {alert['count']})"
+        )
+    
+    async def _perform_realtime_analysis(self) -> Dict[str, Any]:
+        """Perform real-time performance analysis"""
+        analysis = {
+            "current_metrics": {},
+            "trends": {},
+            "alerts": len(self.active_alerts),
+            "health_score": 100.0
+        }
+        
+        try:
+            # Calculate current metric summaries
+            for metric_name, stream in self.metric_streams.items():
+                if stream:
+                    recent_values = [item["value"] for item in list(stream)[-10:]]  # Last 10 values
+                    analysis["current_metrics"][metric_name] = {
+                        "current": recent_values[-1] if recent_values else 0,
+                        "average": sum(recent_values) / len(recent_values),
+                        "min": min(recent_values),
+                        "max": max(recent_values)
+                    }
+            
+            # Calculate simple trends
+            for metric_name, stream in self.metric_streams.items():
+                if len(stream) >= 5:
+                    recent_values = [item["value"] for item in list(stream)[-5:]]
+                    trend = "stable"
+                    if recent_values[-1] > recent_values[0] * 1.1:
+                        trend = "increasing"
+                    elif recent_values[-1] < recent_values[0] * 0.9:
+                        trend = "decreasing"
+                    
+                    analysis["trends"][metric_name] = trend
+            
+            # Calculate health score
+            health_score = 100.0
+            
+            # Penalize for active alerts
+            health_score -= len(self.active_alerts) * 10
+            
+            # Penalize for high resource usage
+            current_metrics = analysis["current_metrics"]
+            if "cpu_usage" in current_metrics:
+                cpu_usage = current_metrics["cpu_usage"]["current"]
+                if cpu_usage > 80:
+                    health_score -= (cpu_usage - 80) * 0.5
+            
+            if "memory_usage" in current_metrics:
+                memory_usage = current_metrics["memory_usage"]["current"]
+                if memory_usage > 80:
+                    health_score -= (memory_usage - 80) * 0.3
+            
+            analysis["health_score"] = max(0.0, health_score)
+            
+        except Exception as e:
+            self.logger.error(f"Real-time analysis error: {e}")
+        
+        return analysis
+    
+    def _update_analytics(self, analysis: Dict[str, Any]):
+        """Update analytics with real-time data"""
+        # Store analysis results for historical tracking
+        if hasattr(self.analytics_engine, 'real_time_analytics'):
+            self.analytics_engine.real_time_analytics = analysis
+    
+    def get_current_status(self) -> Dict[str, Any]:
+        """Get current performance status"""
+        return {
+            "monitoring_active": self.monitoring_active,
+            "active_alerts": len(self.active_alerts),
+            "alert_details": list(self.active_alerts.values()),
+            "metric_streams_count": {name: len(stream) for name, stream in self.metric_streams.items()},
+            "health_score": getattr(self.analytics_engine, 'real_time_analytics', {}).get('health_score', 100.0)
+        }
+    
+    def get_metric_history(self, metric_name: str, duration_minutes: int = 10) -> List[Dict[str, Any]]:
+        """Get metric history for specified duration"""
+        if metric_name not in self.metric_streams:
+            return []
+        
+        cutoff_time = time.time() - (duration_minutes * 60)
+        return [
+            item for item in self.metric_streams[metric_name]
+            if item["timestamp"] >= cutoff_time
+        ]
