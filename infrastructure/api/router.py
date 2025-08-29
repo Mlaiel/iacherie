@@ -13582,10 +13582,23 @@ class ComponentRegistry:
         elif lifecycle == LifecycleType.TRANSIENT:
             return self._create_instance(name, **kwargs)
         
-        # Scoped: instance par requête (TODO: implémenter avec context)
+        # Scoped: instance par requête (avec contexte de requête)
         elif lifecycle == LifecycleType.SCOPED:
-            # Pour l'instant, comportement transient
-            return self._create_instance(name, **kwargs)
+            # Implémentation avec gestion de contexte de requête
+            request_context = self._get_current_request_context()
+            if request_context:
+                # Vérifier si instance existe déjà dans le contexte
+                context_key = f"scoped_{name}"
+                if context_key in request_context:
+                    return request_context[context_key]
+                else:
+                    # Créer nouvelle instance et la stocker dans le contexte
+                    instance = self._create_instance(name, **kwargs)
+                    request_context[context_key] = instance
+                    return instance
+            else:
+                # Pas de contexte de requête, comportement transient
+                return self._create_instance(name, **kwargs)
         
         # Prototype: nouvelle instance configurée
         else:
@@ -13639,7 +13652,31 @@ class ComponentFactory(ABC):
     @abstractmethod
     def register_defaults(self):
         """Enregistre les composants par défaut"""
-        pass
+        # Enregistrer les composants de base du système
+        
+        # Logger par défaut
+        import logging
+        self.registry.register(
+            "logger",
+            lambda name="default": logging.getLogger(name),
+            LifecycleType.SINGLETON
+        )
+        
+        # Configuration par défaut
+        from config import settings
+        self.registry.register(
+            "settings",
+            lambda: settings,
+            LifecycleType.SINGLETON
+        )
+        
+        # Utilitaires de base
+        from datetime import datetime
+        self.registry.register(
+            "datetime_provider",
+            lambda: datetime,
+            LifecycleType.SINGLETON
+        )
 
 
 class MiddlewareFactory(ComponentFactory):
@@ -13686,8 +13723,96 @@ class ServiceFactory(ComponentFactory):
     
     def register_defaults(self):
         """Enregistre les services par défaut"""
-        # TODO: Ajouter les services quand ils seront disponibles
-        pass
+        # Enregistrer les services métier disponibles
+        
+        # Service de business logic core
+        try:
+            from business_logic_core import business_logic_core
+            self.registry.register(
+                "business_logic_core",
+                lambda: business_logic_core,
+                LifecycleType.SINGLETON
+            )
+        except ImportError:
+            pass
+        
+        # Service de validation
+        self.registry.register(
+            "validation_service",
+            lambda: self._create_validation_service(),
+            LifecycleType.SINGLETON
+        )
+        
+        # Service de logging
+        import logging
+        self.registry.register(
+            "logging_service",
+            lambda: logging.getLogger("services"),
+            LifecycleType.SINGLETON
+        )
+        
+        # Service de monitoring basique
+        self.registry.register(
+            "monitoring_service",
+            lambda: self._create_monitoring_service(),
+            LifecycleType.SINGLETON
+        )
+    
+    def _create_validation_service(self):
+        """Crée un service de validation basique"""
+        class ValidationService:
+            def validate_input(self, data, schema=None):
+                """Valide les données d'entrée"""
+                if not data:
+                    return False, "Empty data"
+                if schema and 'required_fields' in schema:
+                    for field in schema['required_fields']:
+                        if field not in data:
+                            return False, f"Missing required field: {field}"
+                return True, "Valid"
+            
+            def validate_email(self, email):
+                """Valide un email"""
+                import re
+                pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+                return bool(re.match(pattern, email))
+        
+        return ValidationService()
+    
+    def _create_monitoring_service(self):
+        """Crée un service de monitoring basique"""
+        class MonitoringService:
+            def __init__(self):
+                self.metrics = {}
+            
+            def record_metric(self, name, value):
+                """Enregistre une métrique"""
+                if name not in self.metrics:
+                    self.metrics[name] = []
+                self.metrics[name].append({
+                    'value': value,
+                    'timestamp': __import__('datetime').datetime.utcnow().isoformat()
+                })
+            
+            def get_metrics(self):
+                """Récupère toutes les métriques"""
+                return self.metrics
+        
+        return MonitoringService()
+    
+    def _get_current_request_context(self):
+        """Récupère le contexte de la requête courante"""
+        # Implémentation basique - dans un vrai système, cela viendrait du framework web
+        import threading
+        
+        # Utiliser le stockage local des threads pour le contexte
+        if not hasattr(self, '_thread_local'):
+            self._thread_local = threading.local()
+        
+        if not hasattr(self._thread_local, 'request_context'):
+            self._thread_local.request_context = {}
+        
+        return self._thread_local.request_context
 
 
 class DatabaseFactory(ComponentFactory):
