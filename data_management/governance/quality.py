@@ -109,12 +109,12 @@ class BaseQualityChecker(ABC):
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
         """Check quality for specific content type"""
-        pass
+        raise NotImplementedError("Subclasses must implement check_quality method")
     
     @abstractmethod
     def get_quality_rules(self) -> List[QualityRule]:
         """Get quality rules for this content type"""
-        pass
+        raise NotImplementedError("Subclasses must implement get_quality_rules method")
 
 
 class AudioQualityChecker(BaseQualityChecker):

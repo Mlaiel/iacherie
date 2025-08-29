@@ -798,5 +798,71 @@ class LineageTracker(BaseManager):
     
     async def _load_lineage_data(self) -> None:
         """Load lineage data from database"""
-        # Database loading logic here
-        pass
+        try:
+            logger.info("Loading lineage data from database")
+            
+            # Load lineage entries from database
+            lineage_records = await self._fetch_lineage_records_from_database()
+            
+            for record in lineage_records:
+                entry = LineageEntry(
+                    entry_id=record["entry_id"],
+                    content_id=record["content_id"],
+                    parent_content_ids=record.get("parent_content_ids", []),
+                    child_content_ids=record.get("child_content_ids", []),
+                    transformation_type=TransformationType(record.get("transformation_type", "unknown")),
+                    transformation_details=record.get("transformation_details", {}),
+                    created_at=datetime.fromisoformat(record["created_at"]) if "created_at" in record else datetime.utcnow(),
+                    metadata=record.get("metadata", {})
+                )
+                
+                self.lineage_entries[entry.content_id] = entry
+            
+            # Build the lineage graph from loaded entries
+            await self._build_lineage_graph()
+            
+            logger.info(f"Loaded {len(self.lineage_entries)} lineage entries from database")
+            
+        except Exception as e:
+            logger.error(f"Error loading lineage data from database: {e}")
+            # Initialize empty data structures if loading fails
+            self.lineage_entries = {}
+            self.lineage_graph = nx.DiGraph()
+
+    async def _fetch_lineage_records_from_database(self) -> List[Dict[str, Any]]:
+        """Fetch lineage records from database"""
+        # Mock implementation - would query actual database
+        logger.debug("Fetching lineage records from database")
+        return []
+    
+    async def _build_lineage_graph(self) -> None:
+        """Build networkx graph from lineage entries"""
+        try:
+            # Clear existing graph
+            self.lineage_graph.clear()
+            
+            # Add nodes and edges from lineage entries
+            for content_id, entry in self.lineage_entries.items():
+                # Add the content node
+                self.lineage_graph.add_node(content_id, **{
+                    "transformation_type": entry.transformation_type.value,
+                    "created_at": entry.created_at.isoformat(),
+                    "metadata": entry.metadata
+                })
+                
+                # Add edges to parent content
+                for parent_id in entry.parent_content_ids:
+                    self.lineage_graph.add_edge(parent_id, content_id, **{
+                        "transformation_type": entry.transformation_type.value,
+                        "transformation_details": entry.transformation_details
+                    })
+                
+                # Add edges to child content
+                for child_id in entry.child_content_ids:
+                    self.lineage_graph.add_edge(content_id, child_id)
+            
+            logger.debug(f"Built lineage graph with {self.lineage_graph.number_of_nodes()} nodes and {self.lineage_graph.number_of_edges()} edges")
+            
+        except Exception as e:
+            logger.error(f"Error building lineage graph: {e}")
+            self.lineage_graph = nx.DiGraph()

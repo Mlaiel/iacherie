@@ -264,17 +264,17 @@ class BaseAnonymizer(ABC):
     @abstractmethod
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
         """Anonymize the data"""
-        pass
+        raise NotImplementedError("Subclasses must implement anonymize method")
     
     @abstractmethod
     async def deanonymize(self, data: str, key: str) -> str:
         """Reverse anonymization if possible"""
-        pass
+        raise NotImplementedError("Subclasses must implement deanonymize method")
     
     @abstractmethod
     def is_reversible(self) -> bool:
         """Check if technique is reversible"""
-        pass
+        raise NotImplementedError("Subclasses must implement is_reversible method")
 
 
 class MaskingAnonymizer(BaseAnonymizer):
