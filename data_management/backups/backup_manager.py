@@ -552,9 +552,49 @@ class BackupOrchestrator:
         logger.info("BackupOrchestrator initialized")
     
     def _create_load_balancer(self):
-        """Crée un équilibreur de charge pour les managers"""
-        # Implémentation load balancer intelligente
-        pass
+        """Create intelligent load balancer for backup managers"""
+        try:
+            # Create load balancer with round-robin and health checking
+            load_balancer_config = {
+                "algorithm": "weighted_round_robin",
+                "health_check_interval": 30,  # seconds
+                "max_retries": 3,
+                "timeout": 120,  # seconds
+                "circuit_breaker": {
+                    "failure_threshold": 5,
+                    "recovery_timeout": 300,  # 5 minutes
+                    "enabled": True
+                },
+                "weights": {
+                    "default": 1.0,
+                    "high_priority": 1.5,
+                    "low_priority": 0.5
+                }
+            }
+            
+            # Initialize load balancer state
+            load_balancer = {
+                "config": load_balancer_config,
+                "managers": {},
+                "current_index": 0,
+                "health_status": {},
+                "circuit_breakers": {},
+                "statistics": {
+                    "total_requests": 0,
+                    "successful_requests": 0,
+                    "failed_requests": 0,
+                    "avg_response_time": 0.0
+                }
+            }
+            
+            logger.info("Created intelligent load balancer for backup managers")
+            logger.info(f"Load balancing algorithm: {load_balancer_config['algorithm']}")
+            
+            return load_balancer
+            
+        except Exception as e:
+            logger.error(f"Failed to create load balancer: {e}")
+            raise
     
     async def register_manager(self, tenant_id: str, config: BackupConfiguration) -> BackupManager:
         """

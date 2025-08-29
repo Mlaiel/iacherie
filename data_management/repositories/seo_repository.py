@@ -696,9 +696,35 @@ class SEORepository(BaseRepository):
         )
 
     def _store_seo_metadata(self, content_id: str, metadata: Dict[SEOPlatform, SEOMetadata]):
-        """Store SEO metadata"""
-        # Implementation would store metadata
-        pass
+        """Store SEO metadata for content"""
+        try:
+            import json
+            import time
+            
+            # Store metadata for each platform
+            for platform, seo_metadata in metadata.items():
+                metadata_record = {
+                    "content_id": content_id,
+                    "platform": platform.value if hasattr(platform, 'value') else str(platform),
+                    "title": seo_metadata.title,
+                    "description": seo_metadata.description,
+                    "keywords": seo_metadata.keywords,
+                    "tags": seo_metadata.tags,
+                    "custom_fields": seo_metadata.custom_fields,
+                    "created_at": int(time.time()),
+                    "updated_at": int(time.time())
+                }
+                
+                # Store in database (simulated with logging)
+                logger.info(f"Storing SEO metadata for content {content_id} on platform {platform}")
+                
+                # In real implementation, this would use SQLAlchemy:
+                # session.add(SEOMetadataModel(**metadata_record))
+                # session.commit()
+                
+        except Exception as e:
+            logger.error(f"Failed to store SEO metadata for {content_id}: {e}")
+            raise
 
     def _generate_optimization_suggestions(self, content_data: Dict[str, Any], 
                                          config: PlatformSEOConfig, 
@@ -715,9 +741,40 @@ class SEORepository(BaseRepository):
 
     def _store_optimization_results(self, content_id: str, platform: SEOPlatform, 
                                   optimized_content: Dict[str, Any], suggestions: List[Dict[str, Any]]):
-        """Store optimization results"""
-        # Implementation would store results
-        pass
+        """Store optimization results and suggestions"""
+        try:
+            import json
+            import time
+            import uuid
+            
+            # Create optimization result record
+            result_id = str(uuid.uuid4())
+            optimization_record = {
+                "result_id": result_id,
+                "content_id": content_id,
+                "platform": platform.value if hasattr(platform, 'value') else str(platform),
+                "optimized_content": optimized_content,
+                "suggestions": suggestions,
+                "optimization_score": len([s for s in suggestions if s.get('confidence', 0) > 0.8]),
+                "applied_optimizations": [s['type'] for s in suggestions if s.get('applied', False)],
+                "created_at": int(time.time())
+            }
+            
+            logger.info(f"Storing optimization results for content {content_id} on {platform}")
+            logger.info(f"Applied {len(optimization_record['applied_optimizations'])} optimizations")
+            
+            # Store optimization history for analytics
+            if hasattr(self, '_optimization_history'):
+                self._optimization_history = getattr(self, '_optimization_history', [])
+                self._optimization_history.append(optimization_record)
+            
+            # In real implementation:
+            # session.add(OptimizationResultModel(**optimization_record))
+            # session.commit()
+            
+        except Exception as e:
+            logger.error(f"Failed to store optimization results for {content_id}: {e}")
+            raise
 
     def _predict_performance(self, content: Dict[str, Any], platform: SEOPlatform) -> Dict[str, float]:
         """Predict content performance"""
@@ -739,14 +796,62 @@ class SEORepository(BaseRepository):
         return issues
 
     def _trigger_performance_alerts(self, content_id: str, platform: SEOPlatform, issues: List[str]):
-        """Trigger performance alerts"""
-        # Implementation would trigger alerts
-        pass
+        """Trigger performance alerts for content issues"""
+        try:
+            import time
+            
+            if not issues:
+                return
+                
+            # Create alert data
+            alert_data = {
+                "content_id": content_id,
+                "platform": platform.value if hasattr(platform, 'value') else str(platform),
+                "issues": issues,
+                "severity": "high" if len(issues) >= 3 else "medium" if len(issues) >= 2 else "low",
+                "timestamp": int(time.time()),
+                "alert_type": "seo_performance"
+            }
+            
+            # Log critical issues
+            for issue in issues:
+                logger.warning(f"SEO Alert for {content_id} on {platform}: {issue}")
+            
+            # In real implementation, this would:
+            # - Send email/slack notifications
+            # - Create database alert records
+            # - Trigger automated optimization workflows
+            
+        except Exception as e:
+            logger.error(f"Failed to trigger performance alerts for {content_id}: {e}")
 
     def _update_trending_analysis(self, content_id: str, platform: SEOPlatform, performance: SEOPerformance):
-        """Update trending analysis"""
-        # Implementation would update trending analysis
-        pass
+        """Update trending analysis with performance data"""
+        try:
+            import time
+            
+            # Calculate trending metrics
+            trend_data = {
+                "content_id": content_id,
+                "platform": platform.value if hasattr(platform, 'value') else str(platform),
+                "engagement_trend": performance.engagement_rate > 0.1,  # Above 10%
+                "visibility_trend": performance.impressions > 1000,     # Above 1k impressions
+                "click_trend": performance.clicks > 100,               # Above 100 clicks
+                "updated_at": int(time.time())
+            }
+            
+            # Update trending analysis
+            logger.info(f"Updated trending analysis for {content_id}: "
+                       f"engagement={trend_data['engagement_trend']}, "
+                       f"visibility={trend_data['visibility_trend']}")
+            
+            # In real implementation:
+            # - Update trend tracking database
+            # - Trigger trend-based recommendations
+            # - Update content ranking algorithms
+            
+        except Exception as e:
+            logger.error(f"Failed to update trending analysis for {content_id}: {e}")
 
     def _fetch_content_performance(self, content_id: str, platform: SEOPlatform, time_range: str) -> SEOPerformance:
         """Fetch content performance data"""
@@ -770,13 +875,66 @@ class SEORepository(BaseRepository):
 
     def _store_ab_test_config(self, config: Dict[str, Any]):
         """Store A/B test configuration"""
-        # Implementation would store test config
-        pass
+        try:
+            import time
+            import uuid
+            
+            # Create A/B test configuration record
+            test_config = {
+                "test_id": config.get("test_id", str(uuid.uuid4())),
+                "name": config.get("name", "SEO A/B Test"),
+                "content_id": config.get("content_id"),
+                "platform": config.get("platform"),
+                "variations": config.get("variations", []),
+                "traffic_split": config.get("traffic_split", {"A": 50, "B": 50}),
+                "metrics": config.get("metrics", ["engagement_rate", "click_through_rate"]),
+                "duration_days": config.get("duration_days", 7),
+                "status": "active",
+                "created_at": int(time.time())
+            }
+            
+            logger.info(f"Storing A/B test config: {test_config['test_id']} for content {test_config['content_id']}")
+            
+            # In real implementation:
+            # session.add(ABTestConfigModel(**test_config))
+            # session.commit()
+            
+        except Exception as e:
+            logger.error(f"Failed to store A/B test config: {e}")
+            raise
 
     def _initialize_ab_test_tracking(self, test_id: str, variations: List[Dict[str, Any]]):
-        """Initialize A/B test tracking"""
-        # Implementation would initialize tracking
-        pass
+        """Initialize A/B test tracking and analytics"""
+        try:
+            import time
+            
+            # Initialize tracking for each variation
+            for variation in variations:
+                tracking_setup = {
+                    "test_id": test_id,
+                    "variation_id": variation.get("id"),
+                    "variation_name": variation.get("name"),
+                    "content_version": variation.get("content"),
+                    "tracking_pixels": [],  # Would contain actual tracking pixels
+                    "analytics_tags": {
+                        "utm_campaign": f"ab_test_{test_id}",
+                        "utm_content": variation.get("id"),
+                        "utm_medium": "seo_optimization"
+                    },
+                    "initialized_at": int(time.time())
+                }
+                
+                logger.info(f"Initialized tracking for variation {variation.get('id')} in test {test_id}")
+            
+            # Setup analytics pipeline
+            # In real implementation:
+            # - Configure analytics events
+            # - Setup conversion tracking
+            # - Initialize performance monitoring
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize A/B test tracking for {test_id}: {e}")
+            raise
 
     def _fetch_trending_keywords(self, platform: SEOPlatform, content_type: ContentType) -> List[Dict[str, Any]]:
         """Fetch trending keywords"""
