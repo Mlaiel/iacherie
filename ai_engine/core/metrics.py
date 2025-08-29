@@ -23,8 +23,13 @@ import statistics
 import json
 import logging
 from functools import wraps
-import psutil
 import gc
+
+# Mock psutil if not available
+try:
+    import psutil
+except ImportError:
+    psutil = None
 
 def utc_now():
     """Get current UTC datetime in a timezone-aware manner"""
@@ -111,6 +116,15 @@ class PerformanceSnapshot:
     @classmethod
     def capture(cls) -> 'PerformanceSnapshot':
         """Capture current system performance"""
+        if psutil is None:
+            # Return mock values when psutil is not available
+            return cls(
+                cpu_percent=0.0,
+                memory_percent=0.0,
+                disk_usage_percent=0.0,
+                network_io={"bytes_sent": 0, "bytes_recv": 0}
+            )
+        
         return cls(
             cpu_percent=psutil.cpu_percent(interval=1),
             memory_percent=psutil.virtual_memory().percent,
