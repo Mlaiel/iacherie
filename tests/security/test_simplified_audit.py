@@ -19,6 +19,9 @@ from unittest.mock import Mock, patch
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 
+import pytest
+
+@pytest.mark.asyncio
 async def test_security_audit_trail():
     """Test the security audit trail functionality"""
     
@@ -99,6 +102,7 @@ async def test_security_audit_trail():
         print("✓ Audit integrity verification works correctly")
 
 
+@pytest.mark.asyncio 
 async def test_security_monitoring():
     """Test security monitoring dashboard functionality"""
     
@@ -154,6 +158,7 @@ async def test_security_monitoring():
         print("✓ Incident report generation works correctly")
 
 
+@pytest.mark.asyncio
 async def test_security_policies():
     """Test security policies and procedures"""
     
@@ -206,6 +211,7 @@ async def test_security_policies():
         print("✓ Incident response procedures work correctly")
 
 
+@pytest.mark.asyncio
 async def test_vulnerability_scanner():
     """Test vulnerability scanner functionality"""
     
@@ -240,6 +246,7 @@ async def test_vulnerability_scanner():
     print("✓ Vulnerability reporting works correctly")
 
 
+@pytest.mark.asyncio
 async def test_integration():
     """Test integration between all security components"""
     
