@@ -20,7 +20,7 @@ interface MonitoringDashboardProps {
   userId?: string;
 }
 
-const MonitoringDashboard: React.FC<MonitoringDashboardProps> = ({ userId }) => {
+const MonitoringDashboard: React.FC<MonitoringDashboardProps> = ({ userId: _userId }) => {
   const [violations, setViolations] = useState<ViolationAlert[]>([]);
   const [isScanning, setIsScanning] = useState(false);
   const [stats, setStats] = useState({
@@ -39,7 +39,7 @@ const MonitoringDashboard: React.FC<MonitoringDashboardProps> = ({ userId }) => 
           id: Math.random().toString(36).substr(2, 9),
           platform: ['YouTube', 'Instagram', 'TikTok', 'Facebook', 'Twitter'][Math.floor(Math.random() * 5)],
           contentTitle: `Content ${Math.floor(Math.random() * 1000)}`,
-          violationType: ['copyright', 'trademark', 'unauthorized_use'][Math.floor(Math.random() * 3)] as any,
+          violationType: ['copyright', 'trademark', 'unauthorized_use'][Math.floor(Math.random() * 3)] as 'copyright' | 'trademark' | 'unauthorized_use',
           confidence: 80 + Math.random() * 20,
           detectedAt: new Date(),
           url: `https://platform.com/content/${Math.random().toString(36).substr(2, 9)}`,
@@ -111,7 +111,7 @@ const MonitoringDashboard: React.FC<MonitoringDashboardProps> = ({ userId }) => 
           id: Math.random().toString(36).substr(2, 9),
           platform: ['YouTube', 'Instagram', 'TikTok', 'Facebook', 'Twitter'][Math.floor(Math.random() * 5)],
           contentTitle: `Scanned Content ${Math.floor(Math.random() * 1000)}`,
-          violationType: ['copyright', 'trademark', 'unauthorized_use'][Math.floor(Math.random() * 3)] as any,
+          violationType: ['copyright', 'trademark', 'unauthorized_use'][Math.floor(Math.random() * 3)] as 'copyright' | 'trademark' | 'unauthorized_use',
           confidence: 75 + Math.random() * 25,
           detectedAt: new Date(),
           url: `https://platform.com/scanned/${Math.random().toString(36).substr(2, 9)}`,

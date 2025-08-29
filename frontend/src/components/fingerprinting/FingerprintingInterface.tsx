@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
+// import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+// import { Button } from '@/components/ui/button';
+// import { Badge } from '@/components/ui/badge';
 import { Upload, Music, Video, Image, FileText, Check, AlertTriangle } from 'lucide-react';
 
 interface FingerprintResult {
@@ -24,7 +23,7 @@ const FingerprintingInterface: React.FC<FingerprintingInterfaceProps> = ({
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [results, setResults] = useState<FingerprintResult[]>([]);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [_isProcessing, setIsProcessing] = useState(false);
 
   const getFileIcon = (type: string) => {
     switch (type) {

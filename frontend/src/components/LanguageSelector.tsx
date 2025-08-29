@@ -3,7 +3,7 @@
 import { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon, CheckIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
-import { useLanguage, Language } from '../hooks/useLanguage';
+import { useLanguage } from '../hooks/useLanguage';
 import { clsx } from 'clsx';
 
 export function LanguageSelector() {

@@ -239,7 +239,7 @@ const FingerprintStatus: React.FC = () => {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setFilter(tab.id as any)}
+                onClick={() => setFilter(tab.id as 'all' | 'audio' | 'video' | 'image')}
                 className={`pb-4 border-b-2 font-medium text-sm transition-colors ${
                   filter === tab.id
                     ? 'border-blue-500 text-blue-600'

@@ -2,7 +2,6 @@
 
 import { 
   ResponsiveContainer, 
-  LineChart, 
   Line, 
   XAxis, 
   YAxis, 

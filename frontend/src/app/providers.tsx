@@ -173,7 +173,7 @@ export function Providers({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   // Mock API functions (in real app, these would call actual APIs)
-  const login = useCallback(async (email: string, password: string): Promise<boolean> => {
+  const login = useCallback(async (email: string, _password: string): Promise<boolean> => {
     dispatch({ type: 'SET_LOADING', payload: true });
     
     try {
@@ -193,7 +193,7 @@ export function Providers({ children }: { children: ReactNode }) {
       dispatch({ type: 'ADD_NOTIFICATION', payload: { type: 'success', message: 'Login successful' } });
       
       return true;
-    } catch (error) {
+    } catch (_error) {
       dispatch({ type: 'ADD_NOTIFICATION', payload: { type: 'error', message: 'Login failed' } });
       return false;
     } finally {
@@ -256,7 +256,7 @@ export function Providers({ children }: { children: ReactNode }) {
       // Refresh metrics after upload
       await refreshMetrics();
       
-    } catch (error) {
+    } catch (_error) {
       dispatch({ type: 'ADD_NOTIFICATION', payload: { type: 'error', message: 'Upload failed' } });
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false });
@@ -274,7 +274,7 @@ export function Providers({ children }: { children: ReactNode }) {
       // Refresh metrics after deletion
       await refreshMetrics();
       
-    } catch (error) {
+    } catch (_error) {
       dispatch({ type: 'ADD_NOTIFICATION', payload: { type: 'error', message: 'Failed to delete content' } });
     }
   }, []);
@@ -295,7 +295,7 @@ export function Providers({ children }: { children: ReactNode }) {
       
       dispatch({ type: 'SET_METRICS', payload: mockMetrics });
       
-    } catch (error) {
+    } catch (_error) {
       dispatch({ type: 'ADD_NOTIFICATION', payload: { type: 'error', message: 'Failed to refresh metrics' } });
     }
   }, [state.content]);

@@ -8,8 +8,8 @@
 import React from 'react';
 import { 
   CurrencyDollarIcon, 
-  TrendingUpIcon,
-  TrendingDownIcon,
+  ArrowTrendingUpIcon,
+  ArrowTrendingDownIcon,
   CalendarDaysIcon,
   ArrowPathIcon,
   DocumentChartBarIcon,
@@ -118,7 +118,7 @@ const RevenueCharts: React.FC = () => {
           <div className="flex space-x-3">
             <select
               value={timeframe}
-              onChange={(e) => setTimeframe(e.target.value as any)}
+              onChange={(e) => setTimeframe(e.target.value as '6m' | '1y' | '2y')}
               className="border border-gray-300 rounded-md px-3 py-2"
             >
               <option value="6m">Last 6 Months</option>
@@ -142,9 +142,9 @@ const RevenueCharts: React.FC = () => {
               <p className="text-2xl font-bold text-gray-900">${totalRevenue.toLocaleString()}</p>
               <div className="flex items-center mt-1">
                 {monthlyGrowth >= 0 ? (
-                  <TrendingUpIcon className="h-4 w-4 text-green-500" />
+                  <ArrowTrendingUpIcon className="h-4 w-4 text-green-500" />
                 ) : (
-                  <TrendingDownIcon className="h-4 w-4 text-red-500" />
+                  <ArrowTrendingDownIcon className="h-4 w-4 text-red-500" />
                 )}
                 <span className={`text-sm ml-1 ${monthlyGrowth >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {monthlyGrowth >= 0 ? '+' : ''}{monthlyGrowth.toFixed(1)}%
@@ -173,7 +173,7 @@ const RevenueCharts: React.FC = () => {
               <p className="text-sm font-medium text-gray-600">Avg Monthly Growth</p>
               <p className="text-2xl font-bold text-gray-900">+8.2%</p>
             </div>
-            <TrendingUpIcon className="h-10 w-10 text-purple-500" />
+            <ArrowTrendingUpIcon className="h-10 w-10 text-purple-500" />
           </div>
         </div>
 
@@ -262,9 +262,9 @@ const RevenueCharts: React.FC = () => {
                       platform.growth >= 0 ? 'text-green-600' : 'text-red-600'
                     }`}>
                       {platform.growth >= 0 ? (
-                        <TrendingUpIcon className="h-3 w-3 mr-1" />
+                        <ArrowTrendingUpIcon className="h-3 w-3 mr-1" />
                       ) : (
-                        <TrendingDownIcon className="h-3 w-3 mr-1" />
+                        <ArrowTrendingDownIcon className="h-3 w-3 mr-1" />
                       )}
                       {platform.growth >= 0 ? '+' : ''}{platform.growth}%
                     </div>
@@ -296,7 +296,7 @@ const RevenueCharts: React.FC = () => {
             <h4 className="font-medium text-gray-900 mb-3">Growth Summary</h4>
             <div className="bg-green-50 border border-green-200 rounded-lg p-3">
               <div className="flex items-center">
-                <TrendingUpIcon className="h-5 w-5 text-green-600 mr-2" />
+                <ArrowTrendingUpIcon className="h-5 w-5 text-green-600 mr-2" />
                 <div>
                   <p className="text-sm font-medium text-green-800">
                     Strong growth across all platforms

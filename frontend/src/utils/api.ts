@@ -57,7 +57,7 @@ export const api = {
 
   // Upload APIs
   upload: {
-    uploadFile: (file: File, config?: any) => {
+    uploadFile: (file: File, config?: Record<string, unknown>) => {
       const formData = new FormData();
       formData.append('file', file);
       return apiClient.post('/upload', formData, {
@@ -70,19 +70,19 @@ export const api = {
 
   // Content APIs
   content: {
-    getLibrary: (params?: any) => apiClient.get('/content/library', { params }),
+    getLibrary: (params?: Record<string, unknown>) => apiClient.get('/content/library', { params }),
     getContent: (id: string) => apiClient.get(`/content/${id}`),
-    updateContent: (id: string, data: any) => apiClient.put(`/content/${id}`, data),
+    updateContent: (id: string, data: Record<string, unknown>) => apiClient.put(`/content/${id}`, data),
     deleteContent: (id: string) => apiClient.delete(`/content/${id}`),
-    searchContent: (query: string, filters?: any) => 
+    searchContent: (query: string, filters?: Record<string, unknown>) => 
       apiClient.get('/content/search', { params: { q: query, ...filters } }),
   },
 
   // Protection APIs
   protection: {
     getFingerprints: () => apiClient.get('/protection/fingerprints'),
-    getViolations: (params?: any) => apiClient.get('/protection/violations', { params }),
-    reportViolation: (data: any) => apiClient.post('/protection/violations', data),
+    getViolations: (params?: Record<string, unknown>) => apiClient.get('/protection/violations', { params }),
+    reportViolation: (data: Record<string, unknown>) => apiClient.post('/protection/violations', data),
     sendDMCA: (violationId: string) => apiClient.post(`/protection/dmca/${violationId}`),
   },
 
@@ -97,16 +97,16 @@ export const api = {
   // User APIs
   user: {
     getProfile: () => apiClient.get('/user/profile'),
-    updateProfile: (data: any) => apiClient.put('/user/profile', data),
+    updateProfile: (data: Record<string, unknown>) => apiClient.put('/user/profile', data),
     getSettings: () => apiClient.get('/user/settings'),
-    updateSettings: (data: any) => apiClient.put('/user/settings', data),
+    updateSettings: (data: Record<string, unknown>) => apiClient.put('/user/settings', data),
   },
 
   // Auth APIs
   auth: {
     login: (credentials: { email: string; password: string }) => 
       apiClient.post('/auth/login', credentials),
-    register: (userData: any) => apiClient.post('/auth/register', userData),
+    register: (userData: Record<string, unknown>) => apiClient.post('/auth/register', userData),
     logout: () => apiClient.post('/auth/logout'),
     refreshToken: () => apiClient.post('/auth/refresh'),
   },
@@ -152,7 +152,7 @@ export const formatDateTime = (date: string | Date): string => {
   }).format(new Date(date));
 };
 
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void => {

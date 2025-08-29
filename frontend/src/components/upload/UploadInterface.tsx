@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Image from 'next/image';
 import { 
   CloudArrowUpIcon,
   MusicalNoteIcon,
@@ -75,7 +76,7 @@ export function UploadInterface() {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFiles(e.dataTransfer.files);
     }
-  }, []);
+  }, [handleFiles]);
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleFiles(e.target.files);
@@ -183,9 +184,11 @@ export function UploadInterface() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       {uploadedFile.preview ? (
-                        <img
+                        <Image
                           src={uploadedFile.preview}
                           alt={uploadedFile.file.name}
+                          width={48}
+                          height={48}
                           className="w-12 h-12 object-cover rounded-lg"
                         />
                       ) : (
