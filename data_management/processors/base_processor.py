@@ -36,13 +36,13 @@ class BaseProcessor(ABC):
     
     @abstractmethod
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite les données d'entrée"""
-        pass
+        """Process input data"""
+        raise NotImplementedError("Subclasses must implement process method")
     
     @abstractmethod
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée"""
-        pass
+        """Validate input data"""
+        raise NotImplementedError("Subclasses must implement validate_input method")
     
     def process_with_stats(self, input_data: Any) -> Dict[str, Any]:
         """Traite avec collection de statistiques"""
@@ -126,13 +126,13 @@ class AsyncBaseProcessor(ABC):
     
     @abstractmethod
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite les données d'entrée de manière asynchrone"""
-        pass
+        """Process input data asynchronously"""
+        raise NotImplementedError("Subclasses must implement process method")
     
     @abstractmethod
     async def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée de manière asynchrone"""
-        pass
+        """Validate input data asynchronously"""
+        raise NotImplementedError("Subclasses must implement validate_input method")
     
     async def process_with_stats(self, input_data: Any) -> Dict[str, Any]:
         """Traite avec collection de statistiques de manière asynchrone"""

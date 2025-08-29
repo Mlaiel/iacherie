@@ -129,13 +129,13 @@ class PipelineStageBase(ABC):
     
     @abstractmethod
     async def execute(self, input_data: Any, context: Dict[str, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Exécute l'étape de transformation"""
-        pass
+        """Execute transformation stage"""
+        raise NotImplementedError("Subclasses must implement execute method")
     
     @abstractmethod
     def validate_config(self) -> List[str]:
-        """Valide la configuration de l'étape"""
-        pass
+        """Validate stage configuration"""
+        raise NotImplementedError("Subclasses must implement validate_config method")
     
     def get_stage_type(self) -> PipelineStageType:
         """Retourne le type d'étape"""

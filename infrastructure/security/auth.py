@@ -1070,7 +1070,7 @@ def get_security_summary(scan_result: SecurityScanResult) -> Dict[str, Any]:
         'recommendations_count': len(scan_result.recommendations),
         'required_actions_count': len(scan_result.required_actions)
     }
-\n\n
+
 # ==========================================================================================
 # MODULE 2/140: security_config.py
 # SOURCE: /app/business/creators/creator_workflow/handlers/collaboration/config/security/security_config.py

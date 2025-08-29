@@ -115,11 +115,13 @@ class AudioProcessor(ABC):
     
     @abstractmethod
     async def process(self, audio_path: str, config: AudioFingerprintConfig) -> Dict[str, Any]:
-        pass
+        """Process audio file and generate fingerprint"""
+        raise NotImplementedError("Subclasses must implement process method")
     
     @abstractmethod
     def get_name(self) -> str:
-        pass
+        """Get processor name"""
+        raise NotImplementedError("Subclasses must implement get_name method")
 
 class ChromaprintProcessor(AudioProcessor):
     """Processeur Chromaprint pour empreintes acoustiques"""

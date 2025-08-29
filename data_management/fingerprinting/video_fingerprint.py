@@ -118,11 +118,13 @@ class VideoProcessor(ABC):
     
     @abstractmethod
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
-        pass
+        """Process video file and generate fingerprint"""
+        raise NotImplementedError("Subclasses must implement process method")
     
     @abstractmethod
     def get_name(self) -> str:
-        pass
+        """Get processor name"""
+        raise NotImplementedError("Subclasses must implement get_name method")
 
 class OpenCVProcessor(VideoProcessor):
     """Processeur OpenCV pour l'analyse vidéo de base"""

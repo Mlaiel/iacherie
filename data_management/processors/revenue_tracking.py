@@ -529,14 +529,66 @@ class RevenueTrackingProcessor:
         return Decimal('1.0')
 
     async def _get_cached_exchange_rate(self, cache_key: str) -> Optional[Decimal]:
-        """Get cached exchange rate"""
-        # Implement Redis cache lookup
-        return None
+        """Get cached exchange rate if available and not expired"""
+        try:
+            import json
+            
+            # Try Redis first if available
+            if hasattr(self, 'redis_client') and self.redis_client:
+                cached_data = await self.redis_client.get(cache_key)
+                if cached_data:
+                    data = json.loads(cached_data)
+                    return Decimal(data["rate"])
+            
+            # Fallback to in-memory cache
+            if hasattr(self, '_rate_cache') and cache_key in self._rate_cache:
+                cache_entry = self._rate_cache[cache_key]
+                if time.time() < cache_entry.get("expires_at", 0):
+                    return Decimal(cache_entry["rate"])
+                else:
+                    # Remove expired entry
+                    del self._rate_cache[cache_key]
+            
+            return None
+            
+        except Exception as e:
+            logger.warning(f"Failed to get cached exchange rate: {e}")
+            return None
 
     async def _cache_exchange_rate(self, cache_key: str, rate: Decimal) -> None:
-        """Cache exchange rate"""
-        # Implement Redis cache storage
-        pass
+        """Cache exchange rate with expiration"""
+        try:
+            import redis.asyncio as redis
+            import json
+            
+            # Cache for 1 hour (3600 seconds)
+            cache_data = {
+                "rate": str(rate),
+                "timestamp": time.time(),
+                "source": "exchange_api"
+            }
+            
+            # Use Redis if available, otherwise use in-memory cache
+            if hasattr(self, 'redis_client') and self.redis_client:
+                await self.redis_client.setex(
+                    cache_key,
+                    3600,  # 1 hour expiration
+                    json.dumps(cache_data)
+                )
+            else:
+                # Fallback to in-memory cache
+                if not hasattr(self, '_rate_cache'):
+                    self._rate_cache = {}
+                self._rate_cache[cache_key] = {
+                    **cache_data,
+                    "expires_at": time.time() + 3600
+                }
+                
+            logger.debug(f"Cached exchange rate {rate} for key {cache_key}")
+            
+        except Exception as e:
+            logger.warning(f"Failed to cache exchange rate: {e}")
+            # Cache failure shouldn't break the main flow
 
     async def _calculate_platform_fee(self, amount: Decimal, platform: str) -> Decimal:
         """Calculate platform commission fee"""
