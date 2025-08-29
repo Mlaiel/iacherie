@@ -1,0 +1,541 @@
+name: ⚡ Performance Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run performance tests nightly at 3 AM UTC
+    - cron: '0 3 * * *'
+
+env:
+  PYTHON_VERSION: '3.12'
+  
+jobs:
+  # API Performance Tests
+  api-performance:
+    name: 🌐 API Performance
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ainflue_perf_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install locust pytest httpx
+        pip install -r requirements.txt
+
+    - name: Start application
+      run: |
+        uvicorn main:app --host 0.0.0.0 --port 8000 &
+        sleep 15
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ainflue_perf_test
+        REDIS_URL: redis://localhost:6379
+        PERFORMANCE_TESTING: true
+
+    - name: Wait for application startup
+      run: |
+        for i in {1..30}; do
+          if curl -f http://localhost:8000/health; then
+            echo "Application is ready"
+            break
+          fi
+          echo "Waiting for application... ($i/30)"
+          sleep 2
+        done
+
+    - name: Run API load tests
+      run: |
+        cd tests/performance
+        locust --headless \
+          --users 50 \
+          --spawn-rate 5 \
+          --run-time 3m \
+          --host http://localhost:8000 \
+          --html api-performance-report.html \
+          --csv api-performance
+
+    - name: Run API stress tests
+      run: |
+        cd tests/performance
+        locust --headless \
+          --users 200 \
+          --spawn-rate 10 \
+          --run-time 2m \
+          --host http://localhost:8000 \
+          --html api-stress-report.html \
+          --csv api-stress
+
+    - name: Upload performance reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: api-performance-reports
+        path: |
+          tests/performance/api-performance-report.html
+          tests/performance/api-stress-report.html
+          tests/performance/api-performance*.csv
+          tests/performance/api-stress*.csv
+
+  # Database Performance Tests
+  database-performance:
+    name: 🗄️ Database Performance
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ainflue_db_perf_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install asyncpg sqlalchemy pytest-benchmark
+        pip install -r requirements.txt
+
+    - name: Create test data
+      run: |
+        python -c "
+        import asyncio
+        import asyncpg
+        import random
+        from datetime import datetime, timedelta
+        
+        async def create_test_data():
+            conn = await asyncpg.connect(
+                'postgresql://postgres:postgres@localhost:5432/ainflue_db_perf_test'
+            )
+            
+            # Create tables
+            await conn.execute('''
+                CREATE TABLE IF NOT EXISTS users (
+                    id SERIAL PRIMARY KEY,
+                    email VARCHAR(255) UNIQUE,
+                    created_at TIMESTAMP DEFAULT NOW()
+                )
+            ''')
+            
+            await conn.execute('''
+                CREATE TABLE IF NOT EXISTS content (
+                    id SERIAL PRIMARY KEY,
+                    user_id INTEGER REFERENCES users(id),
+                    title VARCHAR(255),
+                    content_data TEXT,
+                    created_at TIMESTAMP DEFAULT NOW()
+                )
+            ''')
+            
+            # Insert test users
+            for i in range(10000):
+                await conn.execute(
+                    'INSERT INTO users (email) VALUES (\$1)',
+                    f'user{i}@test.com'
+                )
+            
+            # Insert test content
+            for i in range(50000):
+                user_id = random.randint(1, 10000)
+                await conn.execute(
+                    'INSERT INTO content (user_id, title, content_data) VALUES (\$1, \$2, \$3)',
+                    user_id, f'Content {i}', f'Content data for item {i}' * 10
+                )
+            
+            await conn.close()
+            print('Test data created successfully')
+        
+        asyncio.run(create_test_data())
+        "
+
+    - name: Run database performance tests
+      run: |
+        python -c "
+        import asyncio
+        import asyncpg
+        import time
+        import statistics
+        
+        async def run_db_performance_tests():
+            conn = await asyncpg.connect(
+                'postgresql://postgres:postgres@localhost:5432/ainflue_db_perf_test'
+            )
+            
+            # Test 1: Simple SELECT
+            times = []
+            for _ in range(100):
+                start = time.time()
+                await conn.fetch('SELECT * FROM users LIMIT 100')
+                times.append(time.time() - start)
+            
+            print(f'Simple SELECT - Avg: {statistics.mean(times):.4f}s, P95: {statistics.quantiles(times, n=20)[18]:.4f}s')
+            
+            # Test 2: JOIN query
+            times = []
+            for _ in range(50):
+                start = time.time()
+                await conn.fetch('''
+                    SELECT u.email, COUNT(c.id) as content_count
+                    FROM users u
+                    LEFT JOIN content c ON u.id = c.user_id
+                    GROUP BY u.id, u.email
+                    LIMIT 100
+                ''')
+                times.append(time.time() - start)
+            
+            print(f'JOIN Query - Avg: {statistics.mean(times):.4f}s, P95: {statistics.quantiles(times, n=20)[18]:.4f}s')
+            
+            # Test 3: Complex aggregation
+            times = []
+            for _ in range(20):
+                start = time.time()
+                await conn.fetch('''
+                    SELECT 
+                        DATE_TRUNC('day', created_at) as day,
+                        COUNT(*) as content_count,
+                        COUNT(DISTINCT user_id) as unique_users
+                    FROM content
+                    WHERE created_at >= NOW() - INTERVAL '30 days'
+                    GROUP BY DATE_TRUNC('day', created_at)
+                    ORDER BY day DESC
+                ''')
+                times.append(time.time() - start)
+            
+            print(f'Complex Aggregation - Avg: {statistics.mean(times):.4f}s, P95: {statistics.quantiles(times, n=20)[18]:.4f}s')
+            
+            await conn.close()
+        
+        asyncio.run(run_db_performance_tests())
+        "
+
+  # Memory and CPU Profiling
+  profiling:
+    name: 🔬 Performance Profiling
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install memory-profiler py-spy cProfile
+        pip install -r requirements.txt
+
+    - name: CPU Profiling
+      run: |
+        python -m cProfile -o cpu_profile.prof -c "
+        import sys
+        sys.path.append('.')
+        
+        # Simulate application workload
+        from business_logic_core import BusinessLogicCore
+        
+        core = BusinessLogicCore()
+        
+        # Run CPU-intensive operations
+        for i in range(1000):
+            core.simulate_heavy_computation()
+        "
+
+    - name: Memory Profiling
+      run: |
+        python -m memory_profiler -c "
+        import sys
+        sys.path.append('.')
+        
+        @profile
+        def memory_test():
+            # Simulate memory-intensive operations
+            data = []
+            for i in range(10000):
+                data.append({'id': i, 'data': 'x' * 1000})
+            return len(data)
+        
+        memory_test()
+        " > memory_profile.txt
+
+    - name: Generate profiling reports
+      run: |
+        # Convert cProfile to human-readable format
+        python -c "
+        import pstats
+        stats = pstats.Stats('cpu_profile.prof')
+        stats.sort_stats('cumulative')
+        with open('cpu_profile_report.txt', 'w') as f:
+            stats.print_stats(50, file=f)
+        print('CPU profiling report generated')
+        "
+
+    - name: Upload profiling reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: profiling-reports
+        path: |
+          cpu_profile.prof
+          cpu_profile_report.txt
+          memory_profile.txt
+
+  # Frontend Performance Tests
+  frontend-performance:
+    name: 🖥️ Frontend Performance
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Lighthouse
+      run: npm install -g @lhci/cli lighthouse
+
+    - name: Set up Python and start backend
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Start backend server
+      run: |
+        python -m pip install --upgrade pip
+        pip install fastapi uvicorn
+        pip install -r requirements.txt
+        uvicorn main:app --host 0.0.0.0 --port 8000 &
+        sleep 10
+      env:
+        PERFORMANCE_TESTING: true
+
+    - name: Run Lighthouse performance audit
+      run: |
+        # Test main pages
+        lighthouse http://localhost:8000/docs --output=json --output-path=lighthouse-docs.json
+        lighthouse http://localhost:8000/health --output=json --output-path=lighthouse-health.json
+
+    - name: Upload Lighthouse reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: lighthouse-reports
+        path: |
+          lighthouse-*.json
+
+  # Performance Regression Detection
+  performance-regression:
+    name: 📊 Regression Detection
+    runs-on: ubuntu-latest
+    needs: [api-performance, database-performance]
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Download performance reports
+      uses: actions/download-artifact@v3
+      with:
+        name: api-performance-reports
+
+    - name: Analyze performance regression
+      run: |
+        python -c "
+        import csv
+        import json
+        from pathlib import Path
+        
+        # Read current performance data
+        current_stats = {}
+        if Path('api-performance_stats.csv').exists():
+            with open('api-performance_stats.csv', 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    current_stats = row
+                    break
+        
+        # Compare with baseline (would normally load from previous runs)
+        baseline_response_time = 200  # ms
+        baseline_throughput = 100     # requests/sec
+        
+        current_response_time = float(current_stats.get('Average Response Time', 0))
+        current_throughput = float(current_stats.get('Requests/s', 0))
+        
+        # Calculate regression
+        response_time_regression = (current_response_time - baseline_response_time) / baseline_response_time * 100
+        throughput_regression = (baseline_throughput - current_throughput) / baseline_throughput * 100
+        
+        # Generate report
+        report = {
+            'response_time': {
+                'current': current_response_time,
+                'baseline': baseline_response_time,
+                'regression_percent': response_time_regression
+            },
+            'throughput': {
+                'current': current_throughput,
+                'baseline': baseline_throughput,
+                'regression_percent': throughput_regression
+            },
+            'status': 'pass'
+        }
+        
+        # Determine if regression is significant
+        if response_time_regression > 20 or throughput_regression > 15:
+            report['status'] = 'fail'
+            print(f'Performance regression detected!')
+            print(f'Response time regression: {response_time_regression:.1f}%')
+            print(f'Throughput regression: {throughput_regression:.1f}%')
+        else:
+            print('No significant performance regression detected')
+        
+        with open('performance-regression-report.json', 'w') as f:
+            json.dump(report, f, indent=2)
+        "
+
+    - name: Comment PR with performance results
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          if (fs.existsSync('performance-regression-report.json')) {
+            const report = JSON.parse(fs.readFileSync('performance-regression-report.json', 'utf8'));
+            
+            const statusEmoji = report.status === 'pass' ? '✅' : '❌';
+            
+            const comment = `## ${statusEmoji} Performance Test Results
+            
+            ### Response Time
+            - **Current**: ${report.response_time.current.toFixed(1)}ms
+            - **Baseline**: ${report.response_time.baseline}ms  
+            - **Change**: ${report.response_time.regression_percent > 0 ? '+' : ''}${report.response_time.regression_percent.toFixed(1)}%
+            
+            ### Throughput
+            - **Current**: ${report.throughput.current.toFixed(1)} req/s
+            - **Baseline**: ${report.throughput.baseline} req/s
+            - **Change**: ${report.throughput.regression_percent > 0 ? '+' : ''}${report.throughput.regression_percent.toFixed(1)}%
+            
+            ${report.status === 'fail' ? '⚠️ **Performance regression detected!** Please review and optimize before merging.' : '✅ Performance within acceptable limits.'}
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+          }
+
+    - name: Fail on performance regression
+      run: |
+        if [ -f performance-regression-report.json ]; then
+          STATUS=$(python -c "import json; print(json.load(open('performance-regression-report.json'))['status'])")
+          if [ "$STATUS" = "fail" ]; then
+            echo "❌ Performance regression detected - failing build"
+            exit 1
+          fi
+        fi
+
+  # Performance Dashboard Update
+  performance-dashboard:
+    name: 📈 Performance Dashboard
+    runs-on: ubuntu-latest
+    needs: [api-performance, database-performance, profiling]
+    if: always() && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Download all performance reports
+      uses: actions/download-artifact@v3
+
+    - name: Generate performance dashboard
+      run: |
+        python -c "
+        import json
+        import csv
+        from datetime import datetime
+        from pathlib import Path
+        
+        dashboard_data = {
+            'timestamp': datetime.utcnow().isoformat(),
+            'commit': '${{ github.sha }}',
+            'api_performance': {},
+            'database_performance': {},
+            'profiling_data': {}
+        }
+        
+        # Process API performance data
+        if Path('api-performance-reports/api-performance_stats.csv').exists():
+            with open('api-performance-reports/api-performance_stats.csv', 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    dashboard_data['api_performance'] = dict(row)
+                    break
+        
+        # Save dashboard data
+        with open('performance-dashboard.json', 'w') as f:
+            json.dump(dashboard_data, f, indent=2)
+            
+        print('Performance dashboard updated')
+        "
+
+    - name: Upload performance dashboard
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-dashboard
+        path: performance-dashboard.json
