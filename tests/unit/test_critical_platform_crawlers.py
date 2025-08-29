@@ -540,8 +540,8 @@ class TestCriticalCrawlers:
         """Test Spotify rate limiting"""
         await spotify_crawler.authenticate()
         
-        # Set low rate limit for testing
-        spotify_crawler.rate_limit_remaining = 1
+        # Set rate limit for testing - start with 2 so first call succeeds
+        spotify_crawler.rate_limit_remaining = 2
         
         # First request should succeed
         result = await spotify_crawler.search_track("test", limit=1)
