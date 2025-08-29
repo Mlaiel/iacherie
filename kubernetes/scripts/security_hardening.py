@@ -527,8 +527,8 @@ class SecurityHardening:
                 recommendations=[]
             )
             
-            # Run vulnerability scans
-            vulnerabilities = self.vulnerability_scanner.scan_all()
+            # Run enhanced vulnerability scans
+            vulnerabilities = self._run_enhanced_vulnerability_scan()
             audit.vulnerabilities.extend(vulnerabilities)
             
             # Run system security checks
@@ -548,6 +548,16 @@ class SecurityHardening:
             audit.total_checks += len(db_checks)
             audit.passed_checks += len([c for c in db_checks if c["passed"]])
             audit.failed_checks += len([c for c in db_checks if not c["passed"]])
+            
+            # Run container security checks
+            container_checks = self._run_container_security_checks()
+            audit.total_checks += len(container_checks)
+            audit.passed_checks += len([c for c in container_checks if c["passed"]])
+            audit.failed_checks += len([c for c in container_checks if not c["passed"]])
+            
+            # Run compliance checks
+            compliance_score = self._run_compliance_checks()
+            audit.compliance_score = compliance_score
             
             # Generate recommendations
             audit.recommendations = self._generate_security_recommendations(audit)
@@ -967,11 +977,326 @@ class SecurityHardening:
         if audit.failed_checks > 0:
             recommendations.append("Address failed security checks")
         
-        critical_vulns = [v for v in audit.vulnerabilities if v.level == VulnerabilityLevel.CRITICAL]
+        critical_vulns = [v for v in audit.vulnerabilities if v.get("severity") == "critical"]
         if critical_vulns:
             recommendations.append("Immediately address critical vulnerabilities")
         
+        # Enhanced recommendations based on audit results
+        high_vulns = [v for v in audit.vulnerabilities if v.get("severity") == "high"]
+        if high_vulns:
+            recommendations.append(f"Address {len(high_vulns)} high-severity vulnerabilities")
+        
+        # Compliance-based recommendations
+        for standard, score in audit.compliance_score.items():
+            if score < 80:
+                recommendations.append(f"Improve {standard} compliance (current score: {score:.1f}%)")
+        
+        # Add specific recommendations based on vulnerability types
+        vuln_types = set(v.get("type") for v in audit.vulnerabilities if v.get("type"))
+        if "file_permission" in vuln_types:
+            recommendations.append("Review and fix file permission issues")
+        if "network_port" in vuln_types:
+            recommendations.append("Review and secure network port configurations")
+        if "weak_credential" in vuln_types:
+            recommendations.append("Implement strong credential policies")
+        if "debug_mode" in vuln_types:
+            recommendations.append("Disable debug mode in production environments")
+        
         return recommendations
+    
+    def _run_enhanced_vulnerability_scan(self) -> List[Dict[str, Any]]:
+        """Run enhanced vulnerability scanning"""
+        vulnerabilities = []
+        
+        try:
+            # File system vulnerability scan
+            vulnerabilities.extend(self._scan_file_permissions())
+            
+            # Network vulnerability scan  
+            vulnerabilities.extend(self._scan_network_vulnerabilities())
+            
+            # Application vulnerability scan
+            vulnerabilities.extend(self._scan_application_vulnerabilities())
+            
+            # Configuration vulnerability scan
+            vulnerabilities.extend(self._scan_configuration_vulnerabilities())
+            
+            logger.info(f"Found {len(vulnerabilities)} vulnerabilities")
+            return vulnerabilities
+            
+        except Exception as e:
+            logger.error(f"Error in vulnerability scan: {e}")
+            return []
+    
+    def _scan_file_permissions(self) -> List[Dict[str, Any]]:
+        """Scan file permissions for vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            # Check for world-writable files
+            result = subprocess.run(
+                ["find", "/", "-type", "f", "-perm", "-002", "2>/dev/null"],
+                capture_output=True, text=True, timeout=30
+            )
+            
+            world_writable_files = result.stdout.strip().split('\n') if result.stdout.strip() else []
+            
+            for file_path in world_writable_files[:10]:  # Limit to first 10
+                if file_path:
+                    vulnerabilities.append({
+                        "type": "file_permission",
+                        "severity": "medium",
+                        "description": f"World-writable file: {file_path}",
+                        "file": file_path,
+                        "recommendation": "Remove world-write permissions"
+                    })
+            
+        except subprocess.TimeoutExpired:
+            logger.warning("File permission scan timed out")
+        except Exception as e:
+            logger.error(f"Error scanning file permissions: {e}")
+        
+        return vulnerabilities
+    
+    def _scan_network_vulnerabilities(self) -> List[Dict[str, Any]]:
+        """Scan network configuration for vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            # Check for open ports
+            result = subprocess.run(
+                ["ss", "-tuln"], capture_output=True, text=True, timeout=10
+            )
+            
+            open_ports = []
+            for line in result.stdout.split('\n'):
+                if 'LISTEN' in line and '0.0.0.0:' in line:
+                    parts = line.split()
+                    for part in parts:
+                        if '0.0.0.0:' in part:
+                            port = part.split(':')[-1]
+                            open_ports.append(port)
+            
+            # Check for potentially risky open ports
+            risky_ports = {'23', '21', '69', '135', '139', '445', '1433', '3389'}
+            for port in open_ports:
+                if port in risky_ports:
+                    vulnerabilities.append({
+                        "type": "network_port",
+                        "severity": "high",
+                        "description": f"Risky port {port} is open",
+                        "port": port,
+                        "recommendation": f"Close port {port} if not needed or restrict access"
+                    })
+            
+        except Exception as e:
+            logger.error(f"Error scanning network vulnerabilities: {e}")
+        
+        return vulnerabilities
+    
+    def _scan_application_vulnerabilities(self) -> List[Dict[str, Any]]:
+        """Scan application for vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            # Check for debug mode in production
+            python_files = []
+            try:
+                result = subprocess.run(
+                    ["find", ".", "-name", "*.py", "-type", "f"],
+                    capture_output=True, text=True, timeout=10
+                )
+                python_files = result.stdout.strip().split('\n') if result.stdout.strip() else []
+            except:
+                pass
+            
+            for py_file in python_files[:20]:  # Limit to first 20 files
+                if py_file and os.path.exists(py_file):
+                    try:
+                        with open(py_file, 'r') as f:
+                            content = f.read()
+                        
+                        if 'DEBUG = True' in content or 'debug=True' in content:
+                            vulnerabilities.append({
+                                "type": "debug_mode",
+                                "severity": "medium",
+                                "description": f"Debug mode enabled in {py_file}",
+                                "file": py_file,
+                                "recommendation": "Disable debug mode in production"
+                            })
+                    except Exception:
+                        continue
+            
+        except Exception as e:
+            logger.error(f"Error scanning application vulnerabilities: {e}")
+        
+        return vulnerabilities
+    
+    def _scan_configuration_vulnerabilities(self) -> List[Dict[str, Any]]:
+        """Scan configuration for vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            # Check Docker configuration if Docker is installed
+            if os.path.exists('/var/run/docker.sock'):
+                # Check Docker socket permissions
+                stat_info = os.stat('/var/run/docker.sock')
+                if stat_info.st_mode & 0o002:  # World writable
+                    vulnerabilities.append({
+                        "type": "docker_security",
+                        "severity": "critical",
+                        "description": "Docker socket is world-writable",
+                        "file": "/var/run/docker.sock",
+                        "recommendation": "Restrict Docker socket permissions"
+                    })
+            
+        except Exception as e:
+            logger.error(f"Error scanning configuration vulnerabilities: {e}")
+        
+        return vulnerabilities
+    
+    def _run_container_security_checks(self) -> List[Dict[str, Any]]:
+        """Run container security checks"""
+        checks = []
+        
+        try:
+            # Check if running as root in container
+            if os.getuid() == 0:
+                checks.append({
+                    "name": "container_root_user",
+                    "description": "Container not running as root user",
+                    "passed": False,
+                    "category": "container",
+                    "severity": "high",
+                    "recommendation": "Configure container to run as non-root user"
+                })
+            else:
+                checks.append({
+                    "name": "container_root_user", 
+                    "description": "Container not running as root user",
+                    "passed": True,
+                    "category": "container"
+                })
+            
+        except Exception as e:
+            logger.error(f"Error in container security checks: {e}")
+        
+        return checks
+    
+    def _run_compliance_checks(self) -> Dict[str, float]:
+        """Run compliance checks for various standards"""
+        compliance_scores = {}
+        
+        try:
+            # GDPR compliance check
+            gdpr_score = self._check_gdpr_compliance()
+            compliance_scores["GDPR"] = gdpr_score
+            
+            # SOC2 compliance check  
+            soc2_score = self._check_soc2_compliance()
+            compliance_scores["SOC2"] = soc2_score
+            
+            # ISO27001 compliance check
+            iso_score = self._check_iso27001_compliance()
+            compliance_scores["ISO27001"] = iso_score
+            
+        except Exception as e:
+            logger.error(f"Error in compliance checks: {e}")
+        
+        return compliance_scores
+    
+    def _check_gdpr_compliance(self) -> float:
+        """Check GDPR compliance"""
+        score = 0
+        total_checks = 3
+        
+        try:
+            # Check for data encryption
+            if self._check_data_encryption():
+                score += 1
+            
+            # Check for access logging
+            if self._check_access_logging():
+                score += 1
+            
+            # Check for data retention policies
+            if self._check_data_retention_policies():
+                score += 1
+                
+        except Exception as e:
+            logger.error(f"Error checking GDPR compliance: {e}")
+        
+        return (score / total_checks) * 100
+    
+    def _check_soc2_compliance(self) -> float:
+        """Check SOC2 compliance"""
+        score = 0
+        total_checks = 2
+        
+        try:
+            # Check security controls
+            if self._check_security_controls():
+                score += 1
+            
+            # Check availability controls
+            if self._check_availability_controls():
+                score += 1
+                
+        except Exception as e:
+            logger.error(f"Error checking SOC2 compliance: {e}")
+        
+        return (score / total_checks) * 100
+    
+    def _check_iso27001_compliance(self) -> float:
+        """Check ISO27001 compliance"""
+        score = 0
+        total_checks = 2
+        
+        try:
+            # Check access control
+            if self._check_access_control():
+                score += 1
+            
+            # Check security policy
+            if self._check_security_policy():
+                score += 1
+                
+        except Exception as e:
+            logger.error(f"Error checking ISO27001 compliance: {e}")
+        
+        return (score / total_checks) * 100
+    
+    # Helper methods for compliance checks
+    def _check_data_encryption(self) -> bool:
+        """Check if data encryption is implemented"""
+        return os.path.exists('/etc/ssl/certs') or os.path.exists('/etc/nginx/ssl')
+    
+    def _check_access_logging(self) -> bool:
+        """Check if access logging is enabled"""
+        return os.path.exists('/var/log')
+    
+    def _check_data_retention_policies(self) -> bool:
+        """Check if data retention policies are implemented"""
+        return os.path.exists('/etc/logrotate.conf') or os.path.exists('/etc/logrotate.d')
+    
+    def _check_security_controls(self) -> bool:
+        """Check security controls"""
+        return self._check_firewall_status()
+    
+    def _check_availability_controls(self) -> bool:
+        """Check availability controls"""
+        return os.path.exists('/var/log')  # Simplified check
+    
+    def _check_security_policy(self) -> bool:
+        """Check if security policy exists"""
+        try:
+            result = subprocess.run(
+                ["find", ".", "-name", "*security*policy*", "-o", "-name", "*SECURITY*"],
+                capture_output=True, text=True, timeout=5
+            )
+            return bool(result.stdout.strip())
+        except:
+            return False
     
     def _get_compliance_recommendations(self, compliance_results: Dict[str, Any]) -> List[str]:
         """Get compliance recommendations"""

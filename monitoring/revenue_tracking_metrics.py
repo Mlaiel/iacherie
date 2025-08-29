@@ -65,9 +65,12 @@ class RevenueTracker:
     def __init__(self):
         """Initialize revenue tracker"""
         
-        # Prometheus metrics
+        # Use unique metric names to avoid registry conflicts
+        metric_prefix = f"ainflue_revenue_{int(time.time())}"
+        
+        # Prometheus metrics with unique names
         self.revenue_total = Counter(
-            'ainflue_revenue_total_euros',
+            f'{metric_prefix}_total_euros',
             'Total revenue in euros',
             ['source', 'currency']
         )
