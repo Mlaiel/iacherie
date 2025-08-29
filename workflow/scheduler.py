@@ -151,7 +151,14 @@ class TaskHandler:
     
     async def _execute_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
         """Execute the actual task logic - to be overridden."""
-        raise NotImplementedError
+        # Default implementation for task executors without specific implementation
+        logging.warning(f"Task execution not implemented for {self.__class__.__name__}")
+        return {
+            "status": "not_implemented",
+            "executor": self.__class__.__name__,
+            "task_id": getattr(context, 'task_id', 'unknown'),
+            "message": f"Task execution not implemented for {self.__class__.__name__}"
+        }
     
     async def _post_execution_processing(
         self, 

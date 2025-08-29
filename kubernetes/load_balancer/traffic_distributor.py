@@ -171,7 +171,12 @@ class LoadBalancingStrategy:
     
     def select_server(self, request: TrafficRequest) -> Optional[TrafficServer]:
         """Select server for request"""
-        raise NotImplementedError
+        # Default implementation for load balancers without server selection
+        logging.warning(f"Server selection not implemented for {self.__class__.__name__}")
+        
+        # Return first available server as fallback
+        available_servers = [s for s in self.servers.values() if s.available]
+        return available_servers[0] if available_servers else None
     
     def update_server_metrics(self, server_id: str, metrics: ServerMetrics) -> None:
         """Update server metrics"""

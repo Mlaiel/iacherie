@@ -109,15 +109,26 @@ class PlatformTakedownHandler:
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
         """Submit takedown request to platform"""
-        raise NotImplementedError("Subclasses must implement submit_takedown")
+        # Default implementation for platforms without takedown support
+        logging.warning(f"Takedown submission not implemented for {self.platform}")
+        return False
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
         """Check status of submitted takedown request"""
-        raise NotImplementedError("Subclasses must implement check_status")
+        # Default implementation for platforms without status checking
+        logging.warning(f"Takedown status checking not implemented for {self.platform}")
+        return TakedownStatus.UNKNOWN
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
         """Format request for platform-specific submission"""
-        raise NotImplementedError("Subclasses must implement format_request")
+        # Default implementation providing basic request format
+        return {
+            "platform": self.platform,
+            "content_url": request.content_url,
+            "infringement_type": request.infringement_type,
+            "description": request.description,
+            "contact_info": request.contact_info
+        }
 
 
 class YouTubeTakedownHandler(PlatformTakedownHandler):

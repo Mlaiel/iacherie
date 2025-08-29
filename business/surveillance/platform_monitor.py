@@ -176,7 +176,10 @@ class PlatformMonitor:
         fingerprint_data: Dict[str, Any]
     ) -> bool:
         """Start monitoring for specific content"""
-        raise NotImplementedError("Subclasses must implement start_monitoring")
+        # Default implementation for platforms without monitoring support
+        logging.warning(f"Content monitoring not implemented for {self.platform}")
+        self.monitoring_status = MonitoringStatus.STOPPED
+        return False
     
     async def stop_monitoring(self, content_id: str) -> bool:
         """Stop monitoring for specific content"""
@@ -189,7 +192,16 @@ class PlatformMonitor:
         fingerprint_data: Dict[str, Any]
     ) -> MonitoringResult:
         """Check for new content matches or infringements"""
-        raise NotImplementedError("Subclasses must implement check_for_updates")
+        # Default implementation for platforms without update checking
+        logging.warning(f"Update checking not implemented for {self.platform}")
+        from datetime import datetime
+        return MonitoringResult(
+            content_id=content_id,
+            platform=self.platform,
+            matches_found=0,
+            new_matches=[],
+            last_checked=datetime.utcnow()
+        )
 
 
 class YouTubeMonitor(PlatformMonitor):

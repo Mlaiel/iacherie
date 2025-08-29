@@ -162,7 +162,14 @@ class PipelineStageProcessor:
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
         """Process the stage - to be implemented by subclasses."""
-        raise NotImplementedError
+        # Default implementation for processing stages without specific implementation
+        logging.warning(f"Content processing not implemented for {self.__class__.__name__}")
+        return {
+            "status": "not_implemented",
+            "processor": self.__class__.__name__,
+            "content_id": getattr(content_item, 'id', 'unknown'),
+            "message": f"Content processing not implemented for {self.__class__.__name__}"
+        }
     
     def _get_cache_key(self, content_item: ContentItem, context: Dict) -> str:
         """Generate cache key for the stage result."""

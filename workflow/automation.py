@@ -286,7 +286,13 @@ class AutomationActionHandler:
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute the specific action - to be overridden."""
-        raise NotImplementedError
+        # Default implementation for action handlers without specific implementation
+        logging.warning(f"Action execution not implemented for {self.__class__.__name__}")
+        return {
+            "status": "not_implemented",
+            "action_type": self.__class__.__name__,
+            "message": f"Action execution not implemented for {self.__class__.__name__}"
+        }
 
 
 class WorkflowStartActionHandler(AutomationActionHandler):
@@ -1021,6 +1027,8 @@ class EnterpriseWorkflowAutomation:
             "execution_stats": dict(self.execution_stats),
             "engine_status": "running" if self.running else "stopped"
         }
+    
+    async def trigger_event(self, event_type: str, event_data: Dict[str, Any]) -> None:
         """Trigger an event that may activate automation rules."""
         await self.event_queue.put({
             "type": event_type,

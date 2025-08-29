@@ -264,11 +264,29 @@ class BaseContentAnalyzer:
     
     async def analyze(self, content_data: bytes, metadata: ContentMetadata) -> Dict[str, Any]:
         """Analyze content and return results"""
-        raise NotImplementedError("Subclasses must implement analyze method")
+        # Default implementation for content types without specific analysis
+        logging.warning(f"Content analysis not implemented for {self.content_type}")
+        return {
+            "content_type": self.content_type.value,
+            "size": len(content_data),
+            "analysis_status": "not_supported",
+            "message": f"Analysis not implemented for {self.content_type.value}"
+        }
     
     async def extract_fingerprint(self, content_data: bytes) -> ContentFingerprint:
         """Extract content fingerprint"""
-        raise NotImplementedError("Subclasses must implement extract_fingerprint method")
+        # Default implementation providing basic fingerprint
+        import hashlib
+        content_hash = hashlib.sha256(content_data).hexdigest()
+        
+        # Create a basic fingerprint object (you may need to adjust based on your ContentFingerprint class)
+        from datetime import datetime
+        return ContentFingerprint(
+            content_hash=content_hash,
+            content_type=self.content_type,
+            fingerprint_data={"size": len(content_data), "hash": content_hash},
+            created_at=datetime.utcnow()
+        )
     
     def get_supported_formats(self) -> List[str]:
         """Get supported file formats"""

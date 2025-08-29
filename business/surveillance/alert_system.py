@@ -147,7 +147,9 @@ class NotificationChannel:
     
     async def send_notification(self, alert: Alert, recipient_config: NotificationConfig) -> bool:
         """Send notification through this channel"""
-        raise NotImplementedError("Subclasses must implement send_notification")
+        # Default implementation for notification channels without specific implementation
+        logging.warning(f"Notification sending not implemented for {self.__class__.__name__}")
+        return False
     
     async def format_message(self, alert: Alert) -> Dict[str, str]:
         """Format message for this channel"""

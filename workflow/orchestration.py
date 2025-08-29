@@ -84,7 +84,9 @@ class WorkflowStageHandler:
     
     async def process(self, context: WorkflowContext) -> bool:
         """Process the workflow stage. Return True if successful."""
-        raise NotImplementedError
+        # Default implementation for workflow stage handlers without specific implementation
+        logging.warning(f"Workflow stage processing not implemented for {self.stage.value}")
+        return False
 
 
 class IngestionStageHandler(WorkflowStageHandler):

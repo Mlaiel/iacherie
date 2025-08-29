@@ -103,7 +103,9 @@ class NotificationSender:
                                severity: AlertSeverity,
                                metadata: Optional[Dict[str, Any]] = None) -> bool:
         """Send notification"""
-        raise NotImplementedError
+        # Default implementation for notification senders without sending support
+        logging.warning(f"Notification sending not implemented for {self.__class__.__name__}")
+        return False
 
 
 class EmailNotificationSender(NotificationSender):

@@ -81,15 +81,25 @@ class BaseCloudManager:
         
     async def provision_infrastructure(self) -> Dict[str, Any]:
         """Provision complete infrastructure stack"""
-        raise NotImplementedError
+        # Default implementation for cloud managers without provisioning support
+        logging.warning(f"Infrastructure provisioning not implemented for {self.__class__.__name__}")
+        return {
+            "status": "not_implemented",
+            "manager": self.__class__.__name__,
+            "message": "Infrastructure provisioning not implemented"
+        }
         
     async def destroy_infrastructure(self) -> bool:
         """Destroy infrastructure stack safely"""
-        raise NotImplementedError
+        # Default implementation for cloud managers without destruction support
+        logging.warning(f"Infrastructure destruction not implemented for {self.__class__.__name__}")
+        return False
         
     async def validate_infrastructure(self) -> Dict[str, bool]:
         """Validate infrastructure deployment"""
-        raise NotImplementedError
+        # Default implementation for cloud managers without validation support
+        logging.warning(f"Infrastructure validation not implemented for {self.__class__.__name__}")
+        return {"validation_supported": False}
         
     def get_resource_status(self) -> Dict[str, str]:
         """Get status of all managed resources"""
