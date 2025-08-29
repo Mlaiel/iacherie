@@ -112,17 +112,17 @@ class BaseRepository(ABC):
     @abstractmethod
     async def get_by_id(self, record_id: str) -> Optional[Any]:
         """Get record by ID"""
-        pass
+        raise NotImplementedError("Subclasses must implement get_by_id method")
     
     @abstractmethod
     async def update(self, record_id: str, updates: Dict[str, Any]) -> bool:
         """Update existing record"""
-        pass
+        raise NotImplementedError("Subclasses must implement update method")
     
     @abstractmethod
     async def delete(self, record_id: str) -> bool:
         """Delete record"""
-        pass
+        raise NotImplementedError("Subclasses must implement delete method")
     
     async def _cache_get(self, key: str) -> Optional[str]:
         """Get value from Redis cache"""

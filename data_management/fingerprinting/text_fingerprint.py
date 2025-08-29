@@ -153,6 +153,11 @@ class BaseTextProcessor(ABC):
         """Process text and extract features"""
         raise NotImplementedError("Subclasses must implement process method")
     
+    @abstractmethod
+    def get_name(self) -> str:
+        """Get processor name"""
+        raise NotImplementedError("Subclasses must implement get_name method")
+    
     def _clean_text(self, text: str) -> str:
         """Nettoie et normalise le texte"""
         # Suppression des caractères spéciaux et normalisation
@@ -249,6 +254,10 @@ class BERTProcessor(BaseTextProcessor):
                 chunks.append(chunk)
         
         return chunks if chunks else [text]
+    
+    def get_name(self) -> str:
+        """Get processor name"""
+        return "bert"
 
 class RoBERTaProcessor(BaseTextProcessor):
     """Processeur RoBERTa pour l'analyse robuste"""
@@ -320,6 +329,10 @@ class RoBERTaProcessor(BaseTextProcessor):
                 chunks.append(chunk)
         
         return chunks if chunks else [text]
+    
+    def get_name(self) -> str:
+        """Get processor name"""
+        return "roberta"
 
 class TFIDFProcessor(BaseTextProcessor):
     """Processeur TF-IDF pour l'analyse statistique"""
@@ -376,6 +389,10 @@ class TFIDFProcessor(BaseTextProcessor):
         except Exception as e:
             logger.error(f"TF-IDF processing failed: {e}")
             return {"error": str(e)}
+    
+    def get_name(self) -> str:
+        """Get processor name"""
+        return "tfidf"
 
 class Word2VecProcessor(BaseTextProcessor):
     """Processeur Word2Vec pour les embeddings de mots"""
@@ -443,6 +460,10 @@ class Word2VecProcessor(BaseTextProcessor):
             return np.mean(word_vectors, axis=0)
         else:
             return np.zeros(model.vector_size)
+    
+    def get_name(self) -> str:
+        """Get processor name"""
+        return "word2vec"
 
 class NGramProcessor(BaseTextProcessor):
     """Processeur N-gram pour l'analyse structurelle"""
@@ -501,6 +522,10 @@ class NGramProcessor(BaseTextProcessor):
         """Génère un hash des n-grams"""
         combined = "".join(sorted(ngrams))
         return hashlib.sha256(combined.encode()).hexdigest()
+    
+    def get_name(self) -> str:
+        """Get processor name"""
+        return "ngram"
 
 class TextFingerprintEngine:
     """
