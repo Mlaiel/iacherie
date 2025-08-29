@@ -1768,24 +1768,171 @@ class AnalyticsTracker:
         return f"dashboard_{datetime.utcnow().timestamp()}"
         
     async def _cache_dashboard(self, dashboard_id: str, config: Dict[str, Any]) -> None:
-        pass
-        
-    # Export methods (placeholders)
-    async def _export_as_csv(self, report: AnalyticsReport) -> bytes:
-        return b"csv_data"
-        
-    async def _export_as_json(self, report: AnalyticsReport) -> bytes:
-        return json.dumps(report.data).encode()
-        
-    async def _export_as_excel(self, report: AnalyticsReport) -> bytes:
-        return b"excel_data"
-        
+        """Cache dashboard configuration for fast access"""
+        try:
+            if hasattr(self, 'cache_manager') and self.cache_manager:
+                cache_key = f"dashboard:{dashboard_id}"
+                
+                # Prepare dashboard cache data
+                cache_data = {
+                    "dashboard_id": dashboard_id,
+                    "config": config,
+                    "widgets": config.get('widgets', []),
+                    "filters": config.get('filters', {}),
+                    "refresh_rate": config.get('refresh_rate', 300),  # 5 minutes default
+                    "user_id": config.get('user_id'),
+                    "cached_at": datetime.utcnow().isoformat(),
+                    "ttl": config.get('cache_ttl', 3600)  # 1 hour default
+                }
+                
+                # Cache with appropriate TTL
+                ttl = cache_data["ttl"]
+                await self.cache_manager.set(
+                    cache_key,
+                    json.dumps(cache_data),
+                    expire_seconds=ttl
+                )
+                
+                # Also cache user's dashboard list
+                if config.get('user_id'):
+                    user_dashboards_key = f"user_dashboards:{config['user_id']}"
+                    await self.cache_manager.sadd(user_dashboards_key, dashboard_id)
+                    await self.cache_manager.expire(user_dashboards_key, 7200)  # 2 hours
+                
+                logger.debug(f"📊 Cached dashboard: {dashboard_id}")
+                
+        except Exception as e:
+            logger.error(f"❌ Failed to cache dashboard {dashboard_id}: {e}")
+
     # Storage methods (placeholders)
     async def _batch_store_events(self, events: List[AnalyticsEvent]) -> None:
-        pass
-        
+        """Batch store analytics events to database for persistence"""
+        try:
+            if not events:
+                return
+                
+            if hasattr(self, 'db_manager') and self.db_manager:
+                # Prepare batch insert data
+                event_data = []
+                for event in events:
+                    event_data.append((
+                        getattr(event, 'event_id', str(uuid.uuid4())),
+                        getattr(event, 'event_type', 'unknown'),
+                        getattr(event, 'user_id', None),
+                        getattr(event, 'session_id', None),
+                        getattr(event, 'timestamp', datetime.utcnow()).isoformat(),
+                        json.dumps(getattr(event, 'data', {})),
+                        json.dumps(getattr(event, 'metadata', {})),
+                        getattr(event, 'source', 'collaboration_tracker')
+                    ))
+                
+                # Batch insert query
+                insert_query = """
+                INSERT INTO analytics_events 
+                (event_id, event_type, user_id, session_id, timestamp, 
+                 event_data, metadata, source)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                """
+                
+                # Execute batch insert
+                await self.db_manager.execute_many(insert_query, event_data)
+                
+                logger.info(f"📊 Batch stored {len(events)} analytics events")
+                
+        except Exception as e:
+            logger.error(f"❌ Failed to batch store events: {e}")
+    
     async def _batch_index_events(self, events: List[AnalyticsEvent]) -> None:
-        pass
-        
+        """Batch index analytics events in Elasticsearch for search and analytics"""
+        try:
+            if not events or not hasattr(self, 'elasticsearch'):
+                return
+                
+            # Prepare documents for indexing
+            documents = []
+            for event in events:
+                doc = {
+                    "_index": f"analytics-events-{datetime.utcnow().strftime('%Y-%m')}",
+                    "_id": getattr(event, 'event_id', str(uuid.uuid4())),
+                    "_source": {
+                        "event_type": getattr(event, 'event_type', 'unknown'),
+                        "user_id": getattr(event, 'user_id', None),
+                        "session_id": getattr(event, 'session_id', None),
+                        "timestamp": getattr(event, 'timestamp', datetime.utcnow()).isoformat(),
+                        "data": getattr(event, 'data', {}),
+                        "metadata": getattr(event, 'metadata', {}),
+                        "source": getattr(event, 'source', 'collaboration_tracker'),
+                        "indexed_at": datetime.utcnow().isoformat()
+                    }
+                }
+                documents.append(doc)
+            
+            # Bulk index to Elasticsearch
+            if hasattr(self.elasticsearch, 'bulk'):
+                await self.elasticsearch.bulk(body=documents)
+                logger.info(f"🔍 Batch indexed {len(events)} events in Elasticsearch")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to batch index events: {e}")
+    
     async def _update_realtime_metrics(self, events: List[AnalyticsEvent]) -> None:
-        pass
+        """Update real-time metrics in cache for dashboard display"""
+        try:
+            if not events or not hasattr(self, 'cache_manager'):
+                return
+                
+            current_hour = datetime.utcnow().strftime("%Y-%m-%d-%H")
+            current_day = datetime.utcnow().strftime("%Y-%m-%d")
+            
+            # Process each event for real-time metrics
+            for event in events:
+                event_type = getattr(event, 'event_type', 'unknown')
+                user_id = getattr(event, 'user_id', None)
+                
+                # Update hourly counters
+                hourly_key = f"metrics:hourly:{current_hour}:{event_type}"
+                await self.cache_manager.incr(hourly_key)
+                await self.cache_manager.expire(hourly_key, 7 * 24 * 3600)  # 7 days TTL
+                
+                # Update daily counters
+                daily_key = f"metrics:daily:{current_day}:{event_type}"
+                await self.cache_manager.incr(daily_key)
+                await self.cache_manager.expire(daily_key, 30 * 24 * 3600)  # 30 days TTL
+                
+                # Update user-specific metrics
+                if user_id:
+                    user_key = f"metrics:user:{user_id}:{event_type}"
+                    await self.cache_manager.incr(user_key)
+                    await self.cache_manager.expire(user_key, 30 * 24 * 3600)  # 30 days TTL
+                    
+                    # Update user activity timestamp
+                    user_activity_key = f"metrics:user_activity:{user_id}"
+                    await self.cache_manager.set(
+                        user_activity_key,
+                        datetime.utcnow().isoformat(),
+                        expire_seconds=7 * 24 * 3600  # 7 days TTL
+                    )
+                
+                # Update global metrics
+                global_key = f"metrics:global:{event_type}"
+                await self.cache_manager.incr(global_key)
+                
+                # Update event type distribution
+                event_distribution_key = "metrics:event_distribution"
+                await self.cache_manager.hincrby(event_distribution_key, event_type, 1)
+                await self.cache_manager.expire(event_distribution_key, 24 * 3600)  # 1 day TTL
+            
+            # Update real-time dashboard metrics
+            realtime_summary_key = "metrics:realtime_summary"
+            summary_data = {
+                "last_updated": datetime.utcnow().isoformat(),
+                "events_processed": len(events),
+                "active_hour": current_hour
+            }
+            await self.cache_manager.hset(realtime_summary_key, summary_data)
+            await self.cache_manager.expire(realtime_summary_key, 3600)  # 1 hour TTL
+            
+            logger.debug(f"📊 Updated real-time metrics for {len(events)} events")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to update real-time metrics: {e}")

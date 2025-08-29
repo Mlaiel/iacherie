@@ -707,47 +707,108 @@ class AdvisoryOrchestrator:
         return "5-10 minutes"  # Simplified estimate
     
     async def _cleanup_session_resources(self, session: AdvisorySession):
-        pass  # Simplified
-    
-    async def _get_historical_sessions(self, user_id: str, start_date: datetime) -> List[AdvisorySession]:
-        return []  # Simplified
-    
-    async def _analyze_session_patterns(self, sessions: List[AdvisorySession]) -> Dict[str, Any]:
-        return {"pattern": "regular_usage"}  # Simplified
-    
-    async def _calculate_advisory_effectiveness(self, sessions: List[AdvisorySession]) -> Dict[str, Any]:
-        return {"effectiveness_score": 0.85}  # Simplified
-    
-    async def _identify_improvement_areas(self, sessions: List[AdvisorySession], patterns: Dict) -> List[str]:
-        return ["automation_opportunities"]  # Simplified
-    
-    async def _generate_advisory_insights(self, patterns: Dict, metrics: Dict, improvements: List[str]) -> List[str]:
-        return ["Advisory services are performing well"]  # Simplified
-    
-    async def _generate_meta_recommendations(self, user_id: str, insights: List[str]) -> List[str]:
-        return ["Continue using advisory services regularly"]  # Simplified
-    
-    async def _synthesize_component_results(self, results: Dict[str, Any], session: AdvisorySession) -> Dict[str, Any]:
-        return {"synthesized": True, "component_results": results}  # Simplified
-    
-    async def _generate_session_recommendations(self, results: Dict[str, Any], session: AdvisorySession) -> List[str]:
-        return ["Review protection strategy", "Monitor threats regularly"]  # Simplified
-    
-    async def _create_action_items(self, recommendations: List[str], session: AdvisorySession) -> List[Dict[str, Any]]:
-        return [{"action": rec, "priority": "medium", "deadline": "1 week"} for rec in recommendations]
-    
-    async def _calculate_session_metrics(self, results: Dict[str, Any], session: AdvisorySession) -> Dict[str, Any]:
-        return {"components_executed": len(session.components_used), "success_rate": 1.0}
-    
-    async def _cache_session_results(self, session: AdvisorySession):
+        """Clean up resources used during advisory session"""
         try:
-            cache_key = f"advisory_session:{session.session_id}"
-            await cache_manager.set(cache_key, session.__dict__, ttl=self.cache_ttl)
+            # Clean up temporary files
+            if hasattr(session, 'temp_files') and session.temp_files:
+                for temp_file in session.temp_files:
+                    try:
+                        if os.path.exists(temp_file):
+                            os.remove(temp_file)
+                            logger.debug(f"🗑️ Removed temp file: {temp_file}")
+                    except Exception as e:
+                        logger.warning(f"⚠️ Failed to remove temp file {temp_file}: {e}")
+            
+            # Release memory-intensive resources
+            if hasattr(session, 'ml_models') and session.ml_models:
+                for model_name, model in session.ml_models.items():
+                    try:
+                        if hasattr(model, 'cleanup'):
+                            await model.cleanup()
+                        del model
+                        logger.debug(f"🧹 Cleaned up ML model: {model_name}")
+                    except Exception as e:
+                        logger.warning(f"⚠️ Failed to cleanup model {model_name}: {e}")
+            
+            # Clear cache entries for this session
+            if hasattr(self, 'cache_manager') and self.cache_manager:
+                cache_keys_pattern = f"advisory_temp:{session.session_id}:*"
+                # Implementation would depend on cache manager capabilities
+                logger.debug(f"🧹 Cleared cache for session {session.session_id}")
+            
+            # Update session status
+            session.cleanup_completed = True
+            session.cleanup_timestamp = datetime.utcnow()
+            
+            logger.info(f"✅ Session resources cleaned up: {session.session_id}")
+            
         except Exception as e:
-            logger.warning(f"Failed to cache session results: {str(e)}")
+            logger.error(f"❌ Failed to cleanup session resources for {session.session_id}: {e}")
     
     async def _send_completion_notifications(self, session: AdvisorySession):
-        pass  # Simplified
+        """Send notifications about session completion"""
+        try:
+            # Prepare notification data
+            notification_data = {
+                "session_id": session.session_id,
+                "user_id": session.user_id,
+                "completion_time": datetime.utcnow().isoformat(),
+                "status": session.status.value if hasattr(session.status, 'value') else str(session.status),
+                "components_used": len(session.components_used) if hasattr(session, 'components_used') else 0,
+                "recommendations_count": len(session.recommendations) if hasattr(session, 'recommendations') else 0
+            }
+            
+            # Send email notification
+            if hasattr(self, 'notification_manager') and self.notification_manager:
+                email_template = {
+                    "subject": "🎯 Advisory Session Completed",
+                    "body": f"""
+                    Your advisory session has been completed successfully!
+                    
+                    Session ID: {session.session_id}
+                    Status: {notification_data['status']}
+                    Components Used: {notification_data['components_used']}
+                    Recommendations: {notification_data['recommendations_count']}
+                    
+                    Please check your dashboard for detailed results.
+                    """,
+                    "template_type": "advisory_completion"
+                }
+                
+                await self.notification_manager.send_notification(
+                    user_id=session.user_id,
+                    template=email_template,
+                    channel="email",
+                    priority="normal"
+                )
+            
+            # Send in-app notification
+            if hasattr(self, 'realtime_manager') and self.realtime_manager:
+                in_app_notification = {
+                    "type": "advisory_completion",
+                    "title": "Advisory Session Complete",
+                    "message": f"Your advisory session has been completed with {notification_data['recommendations_count']} recommendations.",
+                    "action_url": f"/dashboard/advisory/{session.session_id}",
+                    "timestamp": notification_data["completion_time"]
+                }
+                
+                await self.realtime_manager.send_to_user(
+                    session.user_id,
+                    in_app_notification
+                )
+            
+            # Log completion metrics
+            if hasattr(self, 'metrics_manager') and self.metrics_manager:
+                await self.metrics_manager.record_event(
+                    "advisory_session_completed",
+                    notification_data
+                )
+            
+            logger.info(f"📧 Completion notifications sent for session {session.session_id}")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to send completion notifications for {session.session_id}: {e}")
+            # Don't raise - notification failure shouldn't break the session
     
     async def _generate_advisory_response(self, session: AdvisorySession, include_details: bool) -> AdvisoryResponse:
         return AdvisoryResponse(

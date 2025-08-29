@@ -504,12 +504,58 @@ class ContentProtectionConnections:
                 self.elasticsearch = handlers.get("elasticsearch")
             
             async def commit(self):
-                # Implement transaction commit logic
-                pass
+                """Commit transaction across all database connections"""
+                try:
+                    # PostgreSQL commit
+                    if hasattr(self.postgresql, 'commit'):
+                        await self.postgresql.commit()
+                    
+                    # MongoDB doesn't have traditional transactions in older versions
+                    # but we can use sessions for newer versions
+                    if hasattr(self.mongodb, 'commit_transaction'):
+                        await self.mongodb.commit_transaction()
+                    
+                    # Redis operations are atomic by default, no explicit commit needed
+                    # Vector store commit (if supported)
+                    if hasattr(self.vector_store, 'commit'):
+                        await self.vector_store.commit()
+                    
+                    # Elasticsearch commit/refresh
+                    if self.elasticsearch and hasattr(self.elasticsearch, 'indices'):
+                        await self.elasticsearch.indices.refresh(index='_all')
+                        
+                    logger.info("🔒 Content protection transaction committed successfully")
+                    
+                except Exception as e:
+                    logger.error(f"❌ Failed to commit content protection transaction: {e}")
+                    await self.rollback()
+                    raise
             
             async def rollback(self):
-                # Implement transaction rollback logic
-                pass
+                """Rollback transaction across all database connections"""
+                try:
+                    # PostgreSQL rollback
+                    if hasattr(self.postgresql, 'rollback'):
+                        await self.postgresql.rollback()
+                    
+                    # MongoDB rollback
+                    if hasattr(self.mongodb, 'abort_transaction'):
+                        await self.mongodb.abort_transaction()
+                    
+                    # Redis operations are harder to rollback - we'd need to implement
+                    # compensating transactions or save states
+                    if hasattr(self.redis, 'discard'):
+                        await self.redis.discard()
+                    
+                    # Vector store rollback (if supported)
+                    if hasattr(self.vector_store, 'rollback'):
+                        await self.vector_store.rollback()
+                    
+                    logger.warning("↩️ Content protection transaction rolled back")
+                    
+                except Exception as e:
+                    logger.error(f"❌ Failed to rollback content protection transaction: {e}")
+                    # Log the error but don't raise to avoid masking original error
         
         tx = TransactionContext({
             "postgresql": self.postgresql,
