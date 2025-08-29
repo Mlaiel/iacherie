@@ -1430,13 +1430,195 @@ class SchemaDefinitionManager:
                 'timestamp': datetime.utcnow().isoformat()
             }
     
+    async def _perform_persistent_backup(self) -> None:
+        """
+        Effectue une sauvegarde persistante des définitions de schémas
+        """
+        try:
+            self.logger.info("🔄 Starting persistent schema backup...")
+            
+            # Créer le dossier de sauvegarde s'il n'existe pas
+            backup_dir = os.environ.get('SCHEMA_BACKUP_DIR', '/backup/schemas')
+            os.makedirs(backup_dir, exist_ok=True)
+            
+            # Timestamp pour le nom de fichier de sauvegarde
+            timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+            backup_filename = f"schema_backup_{timestamp}.json"
+            backup_path = os.path.join(backup_dir, backup_filename)
+            
+            # Préparer les données de sauvegarde
+            backup_data = {
+                'backup_metadata': {
+                    'created_at': datetime.utcnow().isoformat(),
+                    'version': '1.0',
+                    'system': 'ainflue_schema_manager',
+                    'total_schemas': len(self.schema_definitions)
+                },
+                'schema_definitions': {},
+                'schema_registry': self.schema_registry.copy(),
+                'migration_history': getattr(self, 'migration_history', []),
+                'validation_rules': getattr(self, 'validation_rules', {})
+            }
+            
+            # Exporter toutes les définitions de schémas
+            for schema_name, schema_def in self.schema_definitions.items():
+                try:
+                    # Convertir le schéma en format sérialisable
+                    if hasattr(schema_def, 'to_dict'):
+                        schema_data = schema_def.to_dict()
+                    elif hasattr(schema_def, '__dict__'):
+                        schema_data = {
+                            key: value for key, value in schema_def.__dict__.items()
+                            if not key.startswith('_') and not callable(value)
+                        }
+                    else:
+                        schema_data = str(schema_def)
+                    
+                    backup_data['schema_definitions'][schema_name] = {
+                        'definition': schema_data,
+                        'created_at': getattr(schema_def, 'created_at', datetime.utcnow().isoformat()),
+                        'version': getattr(schema_def, 'version', '1.0'),
+                        'status': getattr(schema_def, 'status', 'active')
+                    }
+                    
+                except Exception as e:
+                    self.logger.warning(f"Failed to serialize schema {schema_name}: {e}")
+                    backup_data['schema_definitions'][schema_name] = {
+                        'definition': f"ERROR: {str(e)}",
+                        'backup_error': True
+                    }
+            
+            # Sauvegarder dans un fichier JSON
+            import json
+            with open(backup_path, 'w', encoding='utf-8') as backup_file:
+                json.dump(backup_data, backup_file, indent=2, default=str, ensure_ascii=False)
+            
+            # Compresser la sauvegarde pour économiser l'espace
+            await self._compress_backup(backup_path)
+            
+            # Nettoyer les anciennes sauvegardes
+            await self._cleanup_old_backups(backup_dir)
+            
+            # Envoyer la sauvegarde vers un stockage distant si configuré
+            await self._upload_backup_to_remote(backup_path)
+            
+            self.logger.info(f"✅ Schema backup completed: {backup_filename}")
+            
+        except Exception as e:
+            self.logger.error(f"❌ Schema backup failed: {e}")
+    
+    async def _compress_backup(self, backup_path: str) -> None:
+        """Compresse le fichier de sauvegarde"""
+        try:
+            import gzip
+            import shutil
+            
+            compressed_path = f"{backup_path}.gz"
+            
+            with open(backup_path, 'rb') as f_in:
+                with gzip.open(compressed_path, 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+            
+            # Supprimer le fichier non compressé
+            os.remove(backup_path)
+            
+            self.logger.info(f"📦 Backup compressed: {os.path.basename(compressed_path)}")
+            
+        except Exception as e:
+            self.logger.warning(f"Failed to compress backup: {e}")
+    
+    async def _cleanup_old_backups(self, backup_dir: str) -> None:
+        """Nettoie les anciennes sauvegardes"""
+        try:
+            # Garder seulement les 10 dernières sauvegardes
+            max_backups = int(os.environ.get('SCHEMA_BACKUP_RETENTION', '10'))
+            
+            backup_files = []
+            for filename in os.listdir(backup_dir):
+                if filename.startswith('schema_backup_') and filename.endswith('.gz'):
+                    file_path = os.path.join(backup_dir, filename)
+                    file_stat = os.stat(file_path)
+                    backup_files.append((file_path, file_stat.st_mtime))
+            
+            # Trier par date de modification (plus récent en premier)
+            backup_files.sort(key=lambda x: x[1], reverse=True)
+            
+            # Supprimer les fichiers excédentaires
+            for file_path, _ in backup_files[max_backups:]:
+                os.remove(file_path)
+                self.logger.info(f"🗑️ Deleted old backup: {os.path.basename(file_path)}")
+            
+        except Exception as e:
+            self.logger.warning(f"Failed to cleanup old backups: {e}")
+    
+    async def _upload_backup_to_remote(self, backup_path: str) -> None:
+        """Upload de la sauvegarde vers un stockage distant"""
+        try:
+            # Configuration du stockage distant
+            remote_storage = os.environ.get('SCHEMA_BACKUP_REMOTE_STORAGE')
+            
+            if not remote_storage:
+                return
+            
+            if remote_storage.startswith('s3://'):
+                await self._upload_to_s3(backup_path, remote_storage)
+            elif remote_storage.startswith('ftp://'):
+                await self._upload_to_ftp(backup_path, remote_storage)
+            elif remote_storage.startswith('sftp://'):
+                await self._upload_to_sftp(backup_path, remote_storage)
+            else:
+                self.logger.warning(f"Unsupported remote storage type: {remote_storage}")
+            
+        except Exception as e:
+            self.logger.warning(f"Failed to upload backup to remote storage: {e}")
+    
+    async def _upload_to_s3(self, backup_path: str, s3_url: str) -> None:
+        """Upload vers Amazon S3"""
+        try:
+            # Simulation d'upload S3 (en production, utiliser boto3)
+            self.logger.info(f"📤 Would upload backup to S3: {s3_url}")
+            
+            # import boto3
+            # s3_client = boto3.client('s3')
+            # bucket_name = s3_url.replace('s3://', '').split('/')[0]
+            # key = f"schema_backups/{os.path.basename(backup_path)}"
+            # s3_client.upload_file(backup_path, bucket_name, key)
+            
+        except Exception as e:
+            self.logger.error(f"S3 upload failed: {e}")
+    
+    async def _upload_to_ftp(self, backup_path: str, ftp_url: str) -> None:
+        """Upload vers serveur FTP"""
+        try:
+            # Simulation d'upload FTP
+            self.logger.info(f"📤 Would upload backup to FTP: {ftp_url}")
+            
+            # import ftplib
+            # # Parse FTP URL and credentials
+            # # Connect and upload file
+            
+        except Exception as e:
+            self.logger.error(f"FTP upload failed: {e}")
+    
+    async def _upload_to_sftp(self, backup_path: str, sftp_url: str) -> None:
+        """Upload vers serveur SFTP"""
+        try:
+            # Simulation d'upload SFTP
+            self.logger.info(f"📤 Would upload backup to SFTP: {sftp_url}")
+            
+            # import paramiko
+            # # Setup SFTP connection and upload
+            
+        except Exception as e:
+            self.logger.error(f"SFTP upload failed: {e}")
+    
     async def shutdown(self):
         """Arrêt propre du gestionnaire de schémas"""
         try:
             self.logger.info("🔒 Shutting down schema definition manager...")
             
             # Sauvegarde des définitions si nécessaire
-            # TODO: Implémenter sauvegarde persistante
+            await self._perform_persistent_backup()
             
             self.logger.info("✅ Schema definition manager shutdown completed")
             

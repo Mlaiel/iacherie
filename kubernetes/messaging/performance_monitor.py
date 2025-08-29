@@ -581,7 +581,8 @@ class MessagingPerformanceMonitor:
             await self.redis_client.lpush("alerts:active", str(alert_data))
             await self.redis_client.ltrim("alerts:active", 0, 100)  # Keep last 100 alerts
             
-            # TODO: Send notifications (email, SMS, etc.)
+            # Send notifications (email, SMS, Slack, webhook)
+            await self._send_performance_alert_notifications(rule, metric_value, alert_data)
             
         except Exception as e:
             logger.error(f"Error firing alert: {e}")
@@ -770,6 +771,251 @@ class MessagingPerformanceMonitor:
         except Exception as e:
             logger.error(f"Error getting performance summary: {e}")
             return {"status": "error", "error": str(e)}
+
+    async def _send_performance_alert_notifications(
+        self, 
+        rule, 
+        metric_value: float, 
+        alert_data: Dict[str, Any]
+    ) -> None:
+        """
+        Send notifications for performance alerts
+        
+        Args:
+            rule: Alert rule that triggered
+            metric_value: Current metric value
+            alert_data: Alert data dictionary
+        """
+        try:
+            notification_payload = {
+                "alert_type": "performance_threshold_exceeded",
+                "severity": rule.severity,
+                "metric_name": rule.metric,
+                "current_value": metric_value,
+                "threshold": rule.threshold,
+                "rule_name": rule.name,
+                "timestamp": alert_data["fired_at"],
+                "system": "ainflue_performance_monitor",
+                "message": f"Performance alert: {rule.name} - {rule.metric} is {metric_value:.2f} (threshold: {rule.threshold})",
+                "metadata": {
+                    "rule_description": getattr(rule, 'description', ''),
+                    "comparison": rule.comparison,
+                    "alert_data": alert_data
+                }
+            }
+            
+            # Send notifications based on severity
+            if rule.severity in ["critical", "high"]:
+                # Send all notification types for critical/high severity
+                await self._send_email_alert(notification_payload)
+                await self._send_slack_alert(notification_payload)
+                await self._send_webhook_alert(notification_payload)
+                
+                if rule.severity == "critical":
+                    await self._send_sms_alert(notification_payload)
+            
+            elif rule.severity == "medium":
+                # Send email and Slack for medium severity
+                await self._send_email_alert(notification_payload)
+                await self._send_slack_alert(notification_payload)
+            
+            else:  # low severity
+                # Send only Slack for low severity
+                await self._send_slack_alert(notification_payload)
+            
+            logger.info(f"Performance alert notifications sent for rule: {rule.name}")
+            
+        except Exception as e:
+            logger.error(f"Failed to send performance alert notifications: {e}")
+    
+    async def _send_email_alert(self, notification_payload: Dict[str, Any]) -> None:
+        """Send email alert notification"""
+        try:
+            import smtplib
+            from email.mime.text import MIMEText
+            from email.mime.multipart import MIMEMultipart
+            import os
+            
+            # Email configuration
+            smtp_server = os.environ.get('PERF_SMTP_SERVER', 'localhost')
+            smtp_port = int(os.environ.get('PERF_SMTP_PORT', '587'))
+            smtp_user = os.environ.get('PERF_SMTP_USER')
+            smtp_password = os.environ.get('PERF_SMTP_PASSWORD')
+            recipients = os.environ.get('PERF_EMAIL_RECIPIENTS', '').split(',')
+            
+            if not smtp_user or not recipients[0]:
+                return
+            
+            # Create message
+            msg = MIMEMultipart()
+            msg['From'] = smtp_user
+            msg['To'] = ', '.join(recipients)
+            msg['Subject'] = f"[AINFLUE PERF] {notification_payload['severity'].upper()}: {notification_payload['rule_name']}"
+            
+            # Email body
+            body = f"""
+            AINFLUE PERFORMANCE ALERT
+            ========================
+            
+            Rule: {notification_payload['rule_name']}
+            Metric: {notification_payload['metric_name']}
+            Current Value: {notification_payload['current_value']:.2f}
+            Threshold: {notification_payload['threshold']}
+            Severity: {notification_payload['severity']}
+            Timestamp: {notification_payload['timestamp']}
+            
+            Message: {notification_payload['message']}
+            
+            Please investigate and take appropriate action.
+            
+            System: {notification_payload['system']}
+            """
+            
+            msg.attach(MIMEText(body, 'plain'))
+            
+            # Send email
+            with smtplib.SMTP(smtp_server, smtp_port) as server:
+                server.starttls()
+                if smtp_password:
+                    server.login(smtp_user, smtp_password)
+                server.send_message(msg)
+            
+            logger.info("Performance alert email sent successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to send performance alert email: {e}")
+    
+    async def _send_slack_alert(self, notification_payload: Dict[str, Any]) -> None:
+        """Send Slack alert notification"""
+        try:
+            import aiohttp
+            import os
+            
+            webhook_url = os.environ.get('PERF_SLACK_WEBHOOK_URL')
+            if not webhook_url:
+                return
+            
+            # Create Slack payload
+            severity_colors = {
+                "critical": "#FF0000",
+                "high": "#FF6600",
+                "medium": "#FFAA00",
+                "low": "#00FF00"
+            }
+            
+            severity_emojis = {
+                "critical": "🚨",
+                "high": "⚠️",
+                "medium": "💛",
+                "low": "ℹ️"
+            }
+            
+            emoji = severity_emojis.get(notification_payload['severity'], "📊")
+            color = severity_colors.get(notification_payload['severity'], "#808080")
+            
+            slack_payload = {
+                "text": f"{emoji} Ainflue Performance Alert: {notification_payload['rule_name']}",
+                "attachments": [
+                    {
+                        "color": color,
+                        "fields": [
+                            {
+                                "title": "Metric",
+                                "value": notification_payload['metric_name'],
+                                "short": True
+                            },
+                            {
+                                "title": "Current Value",
+                                "value": f"{notification_payload['current_value']:.2f}",
+                                "short": True
+                            },
+                            {
+                                "title": "Threshold",
+                                "value": str(notification_payload['threshold']),
+                                "short": True
+                            },
+                            {
+                                "title": "Severity",
+                                "value": notification_payload['severity'].upper(),
+                                "short": True
+                            },
+                            {
+                                "title": "Message",
+                                "value": notification_payload['message'],
+                                "short": False
+                            }
+                        ],
+                        "footer": "Ainflue Performance Monitor",
+                        "ts": int(datetime.utcnow().timestamp())
+                    }
+                ]
+            }
+            
+            # Send to Slack
+            async with aiohttp.ClientSession() as session:
+                async with session.post(webhook_url, json=slack_payload) as response:
+                    if response.status == 200:
+                        logger.info("Performance alert Slack notification sent successfully")
+                    else:
+                        logger.error(f"Slack notification failed: {response.status}")
+            
+        except Exception as e:
+            logger.error(f"Failed to send performance alert Slack notification: {e}")
+    
+    async def _send_webhook_alert(self, notification_payload: Dict[str, Any]) -> None:
+        """Send webhook alert notification"""
+        try:
+            import aiohttp
+            import os
+            
+            webhook_url = os.environ.get('PERF_WEBHOOK_URL')
+            if not webhook_url:
+                return
+            
+            # Send full payload via webhook
+            async with aiohttp.ClientSession() as session:
+                async with session.post(webhook_url, json=notification_payload) as response:
+                    if response.status in [200, 201, 202]:
+                        logger.info("Performance alert webhook notification sent successfully")
+                    else:
+                        logger.error(f"Webhook notification failed: {response.status}")
+            
+        except Exception as e:
+            logger.error(f"Failed to send performance alert webhook notification: {e}")
+    
+    async def _send_sms_alert(self, notification_payload: Dict[str, Any]) -> None:
+        """Send SMS alert notification for critical alerts"""
+        try:
+            import os
+            
+            # SMS configuration
+            account_sid = os.environ.get('PERF_TWILIO_ACCOUNT_SID')
+            auth_token = os.environ.get('PERF_TWILIO_AUTH_TOKEN')
+            from_number = os.environ.get('PERF_TWILIO_FROM_NUMBER')
+            to_numbers = os.environ.get('PERF_SMS_RECIPIENTS', '').split(',')
+            
+            if not all([account_sid, auth_token, from_number]) or not to_numbers[0]:
+                return
+            
+            # Create short SMS message
+            sms_message = f"CRITICAL: Ainflue {notification_payload['metric_name']} alert: {notification_payload['current_value']:.1f} exceeds {notification_payload['threshold']}. Check system immediately."
+            
+            # Log SMS (in production, use real SMS API)
+            logger.info(f"SMS alert would be sent to {len(to_numbers)} recipients")
+            logger.info(f"SMS message: {sms_message}")
+            
+            # In production environment:
+            # from twilio.rest import Client
+            # client = Client(account_sid, auth_token)
+            # for to_number in to_numbers:
+            #     message = client.messages.create(
+            #         body=sms_message,
+            #         from_=from_number,
+            #         to=to_number.strip()
+            #     )
+            
+        except Exception as e:
+            logger.error(f"Failed to send performance alert SMS: {e}")
 
     async def add_alert_rule(self, rule: AlertRule) -> bool:
         """Add a new alert rule"""
