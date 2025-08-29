@@ -14,8 +14,13 @@ import asyncio
 from unittest.mock import Mock, patch, AsyncMock, MagicMock
 from datetime import datetime, timedelta
 import json
-import aiohttp
 from typing import Dict, List, Any
+
+# Mock aiohttp if not available
+try:
+    import aiohttp
+except ImportError:
+    aiohttp = MagicMock()
 
 # Import modules under test
 try:

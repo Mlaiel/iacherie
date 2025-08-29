@@ -7,12 +7,18 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 import asyncio
-import numpy as np
-import librosa
 import hashlib
 from typing import Dict, Any, List, Optional, Tuple
 from dataclasses import dataclass
 from datetime import datetime
+
+# Mock heavy dependencies if not available
+try:
+    import numpy as np
+    import librosa
+except ImportError:
+    np = None
+    librosa = None
 import json
 
 # Audio processing imports
