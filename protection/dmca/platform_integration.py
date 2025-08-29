@@ -20,6 +20,7 @@ import asyncio
 import logging
 import aiohttp
 import secrets
+import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -145,11 +146,24 @@ class PlatformAdapter:
     
     async def submit_dmca_notice(self, notice_data: Dict[str, Any]) -> SubmissionResult:
         """Submit DMCA notice to platform"""
-        raise NotImplementedError("Must be implemented by platform-specific adapter")
+        # Default implementation for platforms without specific DMCA support
+        logger.warning(f"DMCA submission not implemented for {self.platform.value}")
+        
+        return SubmissionResult(
+            submission_id=f"unsupported_{uuid.uuid4().hex[:8]}",
+            platform=self.platform,
+            status=SubmissionStatus.FAILED,
+            message=f"DMCA submission not supported for {self.platform.value}",
+            submitted_at=datetime.now(timezone.utc),
+            reference_number=None,
+            tracking_url=None
+        )
     
     async def check_submission_status(self, submission_id: str) -> SubmissionStatus:
         """Check status of submitted DMCA notice"""
-        raise NotImplementedError("Must be implemented by platform-specific adapter")
+        # Default implementation for platforms without status checking
+        logger.warning(f"DMCA status checking not implemented for {self.platform.value}")
+        return SubmissionStatus.UNKNOWN
     
     async def _authenticate(self) -> bool:
         """Authenticate with platform"""

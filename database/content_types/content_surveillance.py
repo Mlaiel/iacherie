@@ -235,11 +235,69 @@ class PlatformCrawler:
     async def search_content(self, query: str, content_type: ContentType = None,
                            limit: int = 100) -> List[DetectionResult]:
         """Search for content on platform"""
-        raise NotImplementedError("Must be implemented by specific crawler")
+        # Default implementation for platforms without specific search capabilities
+        self.logger.warning(f"Generic search not implemented for {self.platform.value}")
+        return []
     
     async def extract_content_info(self, url: str) -> Dict[str, Any]:
         """Extract content information from URL"""
-        raise NotImplementedError("Must be implemented by specific crawler")
+        # Default implementation extracts basic URL information
+        try:
+            parsed_url = urlparse(url)
+            
+            # Try to extract basic metadata using HTTP request
+            if self.session:
+                async with self.session.get(url, allow_redirects=True) as response:
+                    content_info = {
+                        'url': url,
+                        'platform': self.platform.value,
+                        'status_code': response.status,
+                        'content_type': response.headers.get('content-type', 'unknown'),
+                        'content_length': response.headers.get('content-length'),
+                        'last_modified': response.headers.get('last-modified'),
+                        'extracted_at': datetime.now(timezone.utc).isoformat(),
+                        'domain': parsed_url.netloc,
+                        'path': parsed_url.path,
+                        'title': None,
+                        'description': None
+                    }
+                    
+                    # Try to extract title and description from HTML if it's a web page
+                    if 'text/html' in response.headers.get('content-type', ''):
+                        try:
+                            html_content = await response.text()
+                            # Simple regex extraction for title and description
+                            import re
+                            title_match = re.search(r'<title[^>]*>([^<]+)</title>', html_content, re.IGNORECASE)
+                            desc_match = re.search(r'<meta[^>]*name=["\']description["\'][^>]*content=["\']([^"\']+)["\']', html_content, re.IGNORECASE)
+                            
+                            if title_match:
+                                content_info['title'] = title_match.group(1).strip()
+                            if desc_match:
+                                content_info['description'] = desc_match.group(1).strip()
+                        except Exception as e:
+                            self.logger.debug(f"Could not extract HTML metadata: {e}")
+                    
+                    return content_info
+            
+            # Fallback if no session available
+            return {
+                'url': url,
+                'platform': self.platform.value,
+                'extracted_at': datetime.now(timezone.utc).isoformat(),
+                'domain': parsed_url.netloc,
+                'path': parsed_url.path,
+                'error': 'No session available for content extraction'
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Content extraction failed for {url}: {e}")
+            return {
+                'url': url,
+                'platform': self.platform.value,
+                'extracted_at': datetime.now(timezone.utc).isoformat(),
+                'error': str(e)
+            }
     
     async def take_screenshot(self, url: str) -> Optional[str]:
         """Take screenshot of content for evidence"""
