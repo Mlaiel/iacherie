@@ -243,6 +243,119 @@ EMAIL_HTML_TEMPLATES = {
     </div>
 </body>
 </html>
+""",
+
+    "dashboard_weekly_report": """
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Dashboard Report - IA Influencer Agent</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+        .content { padding: 30px; }
+        .metric-card { background: #f8f9ff; border-radius: 8px; padding: 20px; margin: 15px 0; border-left: 4px solid #667eea; }
+        .metric-value { font-size: 2em; font-weight: bold; color: #667eea; }
+        .metric-label { color: #666; font-size: 0.9em; }
+        .cta-button { background: #667eea; color: white; padding: 15px 30px; text-decoration: none; border-radius: 6px; display: inline-block; margin: 20px 0; }
+        .footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Weekly Dashboard Report</h1>
+            <p>Your content protection summary for {{ week_period }}</p>
+        </div>
+        <div class="content">
+            <p>Hi {{ creator_name }},</p>
+            
+            <p>Here's your weekly content protection and analytics summary:</p>
+            
+            <div class="metric-card">
+                <div class="metric-value">{{ total_protected_content }}</div>
+                <div class="metric-label">Content pieces protected</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value">{{ violations_detected }}</div>
+                <div class="metric-label">Violations detected & handled</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value">${{ revenue_generated }}</div>
+                <div class="metric-label">Revenue generated</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value">{{ engagement_rate }}%</div>
+                <div class="metric-label">Average engagement rate</div>
+            </div>
+            
+            <a href="{{ dashboard_url }}" class="cta-button">View Full Dashboard</a>
+            
+            <p>Keep up the great work! Your content protection is working 24/7.</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2025 IA Influencer Agent by Fahed Mlaiel | Weekly Analytics</p>
+        </div>
+    </div>
+</body>
+</html>
+""",
+
+    "content_upload_success": """
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Successfully Protected - IA Influencer Agent</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white; padding: 30px; text-align: center; }
+        .content { padding: 30px; }
+        .success-icon { font-size: 3em; margin-bottom: 20px; }
+        .content-info { background: #f0fff4; border-radius: 8px; padding: 20px; margin: 15px 0; border-left: 4px solid #48bb78; }
+        .cta-button { background: #48bb78; color: white; padding: 15px 30px; text-decoration: none; border-radius: 6px; display: inline-block; margin: 20px 0; }
+        .footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="success-icon">✅</div>
+            <h1>Content Successfully Protected!</h1>
+        </div>
+        <div class="content">
+            <p>Hi {{ creator_name }},</p>
+            
+            <p>Great news! Your content has been successfully uploaded and protected.</p>
+            
+            <div class="content-info">
+                <h3>{{ content_title }}</h3>
+                <p><strong>Type:</strong> {{ content_type }}</p>
+                <p><strong>Protection Status:</strong> Active</p>
+                <p><strong>Fingerprint ID:</strong> {{ fingerprint_id }}</p>
+                <p><strong>Upload Time:</strong> {{ upload_time }}</p>
+            </div>
+            
+            <p>Your content is now being monitored across all major platforms for unauthorized use. Our AI system will automatically detect and handle any violations.</p>
+            
+            <a href="{{ content_dashboard_url }}" class="cta-button">View Content Analytics</a>
+            
+            <p>Thank you for trusting IA Influencer Agent with your content protection!</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2025 IA Influencer Agent by Fahed Mlaiel | Content Protection</p>
+        </div>
+    </div>
+</body>
+</html>
 """
 }
 
@@ -257,6 +370,10 @@ SMS_TEMPLATES = {
     "content_violation": "🚨 {{ creator_name }}, unauthorized use of your content detected on {{ platform }}. Our AI is taking action. Details: {{ violation_url }}",
     
     "monetization_opportunity": "💰 {{ creator_name }}, new monetization opportunity available! Estimated earning: ${{ estimated_earning }}. Act now: {{ opportunity_url }}",
+    
+    "dashboard_weekly_report": "📊 Weekly report: {{ total_protected_content }} content protected, ${{ revenue_generated }} earned, {{ violations_detected }} violations handled. Dashboard: {{ short_url }}",
+    
+    "content_upload_success": "✅ {{ creator_name }}, '{{ content_title }}' uploaded & protected! Fingerprint: {{ fingerprint_id }}. View analytics: {{ short_url }}",
     
     "engagement_milestone": "🎯 Congrats {{ creator_name }}! Your content reached {{ milestone_value }} {{ milestone_type }}. Keep creating: {{ dashboard_url }}"
 }
