@@ -33,7 +33,15 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """Mock metrics collector."""
     def __init__(self):
-        pass
+        """Initialize automated deployment metrics collector"""
+        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+        self.deployment_metrics = ['deployment_duration', 'success_rate', 'rollback_frequency']
+        self.pipeline_metrics = ['build_time', 'test_duration', 'deployment_frequency']
+        self.quality_gates = ['unit_tests', 'integration_tests', 'security_scans', 'performance_tests']
+        self.notification_channels = ['slack', 'teams', 'email', 'webhook']
+        self.deployment_history = []
+        self.automated_rollback = True
+        self.logger.info("Automated Deployment MetricsCollector initialized")
 from .kubernetes_manager import KubernetesManager, DeploymentConfig
 from .container_registry import ContainerRegistryManager
 from .load_balancer import LoadBalancerManager

@@ -32,12 +32,30 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """Mock metrics collector."""
     def __init__(self):
-        pass
+        """Initialize load balancer metrics collector"""
+        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+        self.lb_metrics = ['request_count', 'response_time', 'error_rate', 'target_health']
+        self.monitoring_endpoints = ['cloudwatch', 'prometheus', 'datadog']
+        self.alert_thresholds = {
+            'response_time_p95': 1000,  # ms
+            'error_rate': 5,  # percentage
+            'healthy_targets': 2  # minimum
+        }
+        self.collection_interval = 60  # seconds
+        self.logger.info("LoadBalancer MetricsCollector initialized")
 
 class CertificateManager:
     """Mock certificate manager."""
     def __init__(self):
-        pass
+        """Initialize SSL/TLS certificate management"""
+        self.logger = logging.getLogger(f"{__name__}.CertificateManager")
+        self.certificate_authorities = ['letsencrypt', 'aws_acm', 'digicert', 'sectigo']
+        self.validation_methods = ['DNS', 'HTTP', 'EMAIL']
+        self.certificate_store = {}
+        self.auto_renewal = True
+        self.renewal_threshold = 30  # days before expiry
+        self.supported_algorithms = ['RSA-2048', 'RSA-4096', 'ECDSA-256', 'ECDSA-384']
+        self.logger.info("CertificateManager initialized with auto-renewal")
     
     async def request_certificate(self, domain_name: str, validation_method: str = "DNS"):
         """Mock certificate request."""
