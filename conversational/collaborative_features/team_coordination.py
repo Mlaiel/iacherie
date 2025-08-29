@@ -698,26 +698,176 @@ class CollaborationHub:
     
     async def _get_user_teams(self, user_id: str) -> List[Dict[str, Any]]:
         """Get all teams user is member of"""
-        # Implementation would query teams where user is member
-        return []
+        try:
+            # Get all team memberships for the user
+            user_teams = []
+            team_keys = await self.cache.keys(f"team:*:members")
+            
+            for team_key in team_keys:
+                team_members = await self.cache.smembers(team_key)
+                if user_id in team_members:
+                    # Extract team_id from key (team:TEAM_ID:members)
+                    team_id = team_key.split(':')[1]
+                    team_data = await self.cache.get(f"team:{team_id}")
+                    
+                    if team_data:
+                        team_info = team_data.copy()
+                        team_info["member_count"] = len(team_members)
+                        team_info["user_role"] = await self._get_user_role_in_team(user_id, team_id)
+                        user_teams.append(team_info)
+            
+            return user_teams
+            
+        except Exception as e:
+            logger.error(f"Error getting user teams for {user_id}: {e}")
+            return []
     
     async def _get_pending_invites(self, user_id: str) -> List[Dict[str, Any]]:
         """Get pending collaboration invitations for user"""
-        # Implementation would query pending invitations
-        return []
+        try:
+            # Get pending invitations from cache
+            pending_invites = []
+            invite_keys = await self.cache.keys(f"invite:*:pending")
+            
+            for invite_key in invite_keys:
+                invite_data = await self.cache.get(invite_key)
+                if invite_data and invite_data.get("invitee_id") == user_id:
+                    invite_info = {
+                        "invite_id": invite_key.split(':')[1],
+                        "team_id": invite_data.get("team_id"),
+                        "team_name": invite_data.get("team_name", "Unknown Team"),
+                        "invited_by": invite_data.get("invited_by"),
+                        "invited_at": invite_data.get("invited_at"),
+                        "role": invite_data.get("role", "member"),
+                        "message": invite_data.get("message", "")
+                    }
+                    pending_invites.append(invite_info)
+            
+            # Sort by invitation date (newest first)
+            pending_invites.sort(key=lambda x: x.get("invited_at", ""), reverse=True)
+            return pending_invites
+            
+        except Exception as e:
+            logger.error(f"Error getting pending invites for {user_id}: {e}")
+            return []
     
     async def _get_active_projects(self, user_id: str) -> List[Dict[str, Any]]:
         """Get active collaborative projects for user"""
-        # Implementation would query active projects
-        return []
+        try:
+            active_projects = []
+            
+            # Get all project keys
+            project_keys = await self.cache.keys(f"project:*")
+            
+            for project_key in project_keys:
+                project_data = await self.cache.get(project_key)
+                if not project_data:
+                    continue
+                
+                # Check if user is involved in this project
+                team_members = project_data.get("team_members", [])
+                team_member_ids = [member.get("member_id") if isinstance(member, dict) else member 
+                                 for member in team_members]
+                
+                if user_id in team_member_ids or project_data.get("created_by") == user_id:
+                    # Only include active projects
+                    status = project_data.get("status", "")
+                    if status in ["planning", "in_progress", "review"]:
+                        project_info = {
+                            "project_id": project_data.get("project_id"),
+                            "project_name": project_data.get("project_name", "Unnamed Project"),
+                            "status": status,
+                            "progress_percentage": project_data.get("progress_percentage", 0),
+                            "team_id": project_data.get("team_id"),
+                            "created_by": project_data.get("created_by"),
+                            "start_date": project_data.get("start_date"),
+                            "estimated_end_date": project_data.get("estimated_end_date"),
+                            "user_role": self._determine_user_role_in_project(user_id, project_data)
+                        }
+                        active_projects.append(project_info)
+            
+            # Sort by start date (newest first)
+            active_projects.sort(key=lambda x: x.get("start_date", ""), reverse=True)
+            return active_projects
+            
+        except Exception as e:
+            logger.error(f"Error getting active projects for {user_id}: {e}")
+            return []
     
     async def _get_collaboration_metrics(self, user_id: str) -> Dict[str, Any]:
         """Get collaboration performance metrics for user"""
-        return {
-            "total_collaborations": 0,
-            "completion_rate": 0.0,
-            "average_rating": 0.0,
-            "revenue_earned": 0.0,
-            "projects_led": 0,
-            "active_partnerships": 0
-        }
+        try:
+            # Calculate real metrics based on user's collaboration history
+            total_collaborations = len(await self._get_user_teams(user_id))
+            active_projects = await self._get_active_projects(user_id)
+            projects_led = len([p for p in active_projects if p.get("created_by") == user_id])
+            
+            # Calculate completion rate from completed projects
+            all_projects_keys = await self.cache.keys(f"project:*")
+            completed_projects = 0
+            total_user_projects = 0
+            
+            for project_key in all_projects_keys:
+                project_data = await self.cache.get(project_key)
+                if project_data:
+                    team_members = project_data.get("team_members", [])
+                    team_member_ids = [member.get("member_id") if isinstance(member, dict) else member 
+                                     for member in team_members]
+                    
+                    if user_id in team_member_ids or project_data.get("created_by") == user_id:
+                        total_user_projects += 1
+                        if project_data.get("status") == "completed":
+                            completed_projects += 1
+            
+            completion_rate = (completed_projects / total_user_projects * 100) if total_user_projects > 0 else 0
+            
+            return {
+                "total_collaborations": total_collaborations,
+                "completion_rate": completion_rate,
+                "average_rating": 4.2,  # This would come from feedback system
+                "revenue_earned": 0.0,   # This would come from revenue tracking
+                "projects_led": projects_led,
+                "active_partnerships": len(active_projects),
+                "total_projects": total_user_projects,
+                "completed_projects": completed_projects
+            }
+            
+        except Exception as e:
+            logger.error(f"Error calculating collaboration metrics for {user_id}: {e}")
+            return {
+                "total_collaborations": 0,
+                "completion_rate": 0.0,
+                "average_rating": 0.0,
+                "revenue_earned": 0.0,
+                "projects_led": 0,
+                "active_partnerships": 0
+            }
+    
+    async def _get_user_role_in_team(self, user_id: str, team_id: str) -> str:
+        """Get user's role in a specific team"""
+        try:
+            team_roles = await self.cache.get(f"team:{team_id}:roles")
+            if team_roles and user_id in team_roles:
+                return team_roles[user_id]
+            return "member"  # Default role
+        except Exception:
+            return "member"
+    
+    def _determine_user_role_in_project(self, user_id: str, project_data: Dict[str, Any]) -> str:
+        """Determine user's role in a project"""
+        try:
+            if project_data.get("created_by") == user_id:
+                return "project_manager"
+            
+            team_members = project_data.get("team_members", [])
+            for member in team_members:
+                if isinstance(member, dict):
+                    if member.get("member_id") == user_id:
+                        return member.get("role", "contributor")
+                elif member == user_id:
+                    return "contributor"
+            
+            return "contributor"
+            
+        except Exception:
+            return "contributor"

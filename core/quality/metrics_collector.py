@@ -13,6 +13,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 """
 
 import asyncio
+import csv
+import io
 import logging
 import time
 from datetime import datetime, timezone, timedelta
@@ -449,9 +451,125 @@ class QualityMetricsCollector:
         
         if format_type.lower() == 'json':
             return json.dumps(export_data, indent=2)
+        elif format_type.lower() == 'csv':
+            return self._export_to_csv(export_data)
         else:
-            # CSV export implementation would go here
-            raise NotImplementedError("CSV export not yet implemented")
+            raise ValueError(f"Unsupported export format: {format_type}")
+    
+    def _export_to_csv(self, export_data: Dict[str, Any]) -> str:
+        """Export metrics data to CSV format"""
+        try:
+            output = io.StringIO()
+            writer = csv.writer(output)
+            
+            # Write header
+            writer.writerow([
+                'timestamp', 'metric_name', 'metric_type', 'value', 
+                'tags', 'dimensions', 'metadata'
+            ])
+            
+            # Export summary metrics
+            for metric_name, metric_data in export_data.get('summary', {}).items():
+                if isinstance(metric_data, dict):
+                    for sub_metric, value in metric_data.items():
+                        writer.writerow([
+                            export_data.get('timestamp', ''),
+                            f"{metric_name}_{sub_metric}",
+                            'summary',
+                            value,
+                            '',  # tags
+                            '',  # dimensions
+                            ''   # metadata
+                        ])
+                else:
+                    writer.writerow([
+                        export_data.get('timestamp', ''),
+                        metric_name,
+                        'summary',
+                        metric_data,
+                        '',  # tags
+                        '',  # dimensions
+                        ''   # metadata
+                    ])
+            
+            # Export detailed metrics
+            for metric_name, metric_info in export_data.get('metrics', {}).items():
+                if isinstance(metric_info, dict):
+                    metric_type = metric_info.get('type', 'unknown')
+                    
+                    # Export values based on metric type
+                    if metric_type == 'counter':
+                        writer.writerow([
+                            export_data.get('timestamp', ''),
+                            metric_name,
+                            metric_type,
+                            metric_info.get('value', 0),
+                            json.dumps(metric_info.get('tags', {})),
+                            '',
+                            json.dumps(metric_info.get('metadata', {}))
+                        ])
+                    
+                    elif metric_type == 'gauge':
+                        current_value = metric_info.get('current_value', 0)
+                        writer.writerow([
+                            export_data.get('timestamp', ''),
+                            metric_name,
+                            metric_type,
+                            current_value,
+                            json.dumps(metric_info.get('tags', {})),
+                            '',
+                            json.dumps(metric_info.get('metadata', {}))
+                        ])
+                    
+                    elif metric_type == 'histogram':
+                        # Export histogram statistics
+                        stats = metric_info.get('statistics', {})
+                        for stat_name, stat_value in stats.items():
+                            writer.writerow([
+                                export_data.get('timestamp', ''),
+                                f"{metric_name}_{stat_name}",
+                                f"{metric_type}_stat",
+                                stat_value,
+                                json.dumps(metric_info.get('tags', {})),
+                                '',
+                                json.dumps(metric_info.get('metadata', {}))
+                            ])
+                        
+                        # Export bucket data if available
+                        buckets = metric_info.get('buckets', {})
+                        for bucket_range, count in buckets.items():
+                            writer.writerow([
+                                export_data.get('timestamp', ''),
+                                f"{metric_name}_bucket_{bucket_range}",
+                                f"{metric_type}_bucket",
+                                count,
+                                json.dumps(metric_info.get('tags', {})),
+                                bucket_range,
+                                json.dumps(metric_info.get('metadata', {}))
+                            ])
+            
+            # Export time series data if available
+            for metric_name, time_series in export_data.get('time_series', {}).items():
+                if isinstance(time_series, list):
+                    for data_point in time_series:
+                        if isinstance(data_point, dict):
+                            writer.writerow([
+                                data_point.get('timestamp', ''),
+                                metric_name,
+                                'time_series',
+                                data_point.get('value', 0),
+                                json.dumps(data_point.get('tags', {})),
+                                '',
+                                json.dumps(data_point.get('metadata', {}))
+                            ])
+            
+            return output.getvalue()
+            
+        except Exception as e:
+            logger.error(f"CSV export failed: {e}")
+            raise ValueError(f"CSV export failed: {e}")
+        finally:
+            output.close()
     
     async def collect_metric_async(self, metric_name: str, value: Union[float, int],
                                   tags: Optional[Dict[str, str]] = None,
