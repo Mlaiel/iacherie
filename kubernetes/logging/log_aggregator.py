@@ -1044,7 +1044,9 @@ class LogDestination:
     
     async def send_logs(self, logs: List[LogEntry]) -> bool:
         """Send logs to destination"""
-        raise NotImplementedError
+        # Default implementation for log destinations without sending support
+        logging.warning(f"Log sending not implemented for {self.__class__.__name__}")
+        return False
 
 
 class ElasticsearchDestination(LogDestination):

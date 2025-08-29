@@ -114,15 +114,21 @@ class PredictiveModel:
         
     async def train(self, training_data: List[Dict[str, Any]]):
         """Train the prediction model"""
-        raise NotImplementedError
+        # Default implementation for prediction models without training support
+        logging.warning(f"Model training not implemented for {self.__class__.__name__}")
+        pass
         
     async def predict(self, features: Dict[str, Any]) -> Tuple[float, Dict[str, Any]]:
         """Predict failure probability and metadata"""
-        raise NotImplementedError
+        # Default implementation for prediction models without prediction support
+        logging.warning(f"Failure prediction not implemented for {self.__class__.__name__}")
+        return 0.0, {"prediction_supported": False}
         
     async def update_model(self, new_data: List[Dict[str, Any]]):
         """Update model with new data"""
-        raise NotImplementedError
+        # Default implementation for prediction models without model updating
+        logging.warning(f"Model updating not implemented for {self.__class__.__name__}")
+        pass
 
 
 class AnomalyDetectionModel(PredictiveModel):

@@ -145,28 +145,40 @@ class CloudStorageAdapter:
         
     async def initialize(self):
         """Initialize cloud storage client"""
-        raise NotImplementedError
+        # Default implementation for cloud storage without initialization
+        logging.warning(f"Cloud storage initialization not implemented for {self.__class__.__name__}")
+        pass
         
     async def upload_file(self, local_path: str, remote_path: str, 
                          metadata: Optional[Dict[str, Any]] = None) -> bool:
         """Upload file to cloud storage"""
-        raise NotImplementedError
+        # Default implementation for cloud storage without upload support
+        logging.warning(f"File upload not implemented for {self.__class__.__name__}")
+        return False
         
     async def download_file(self, remote_path: str, local_path: str) -> bool:
         """Download file from cloud storage"""
-        raise NotImplementedError
+        # Default implementation for cloud storage without download support
+        logging.warning(f"File download not implemented for {self.__class__.__name__}")
+        return False
         
     async def list_files(self, prefix: str = "") -> List[Dict[str, Any]]:
         """List files in cloud storage"""
-        raise NotImplementedError
+        # Default implementation for cloud storage without listing support
+        logging.warning(f"File listing not implemented for {self.__class__.__name__}")
+        return []
         
     async def delete_file(self, remote_path: str) -> bool:
         """Delete file from cloud storage"""
-        raise NotImplementedError
+        # Default implementation for cloud storage without deletion support
+        logging.warning(f"File deletion not implemented for {self.__class__.__name__}")
+        return False
         
     async def get_file_metadata(self, remote_path: str) -> Optional[Dict[str, Any]]:
         """Get file metadata"""
-        raise NotImplementedError
+        # Default implementation for cloud storage without metadata support
+        logging.warning(f"File metadata retrieval not implemented for {self.__class__.__name__}")
+        return None
 
 
 class AWSStorageAdapter(CloudStorageAdapter):

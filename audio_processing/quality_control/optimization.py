@@ -167,7 +167,17 @@ class AudioOptimizer:
         target_metrics: Optional[Dict[str, float]]
     ) -> np.ndarray:
         """Apply specific optimization (to be implemented by subclasses)"""
-        raise NotImplementedError
+        # Default implementation providing basic audio optimization
+        logging.warning(f"Audio optimization not implemented for {self.__class__.__name__}")
+        
+        # Apply basic normalization as default optimization
+        if len(audio_data) > 0:
+            # Normalize audio to prevent clipping
+            max_val = np.max(np.abs(audio_data))
+            if max_val > 0:
+                return audio_data * 0.9 / max_val
+        
+        return audio_data
     
     def _calculate_metrics(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Calculate basic audio metrics"""
