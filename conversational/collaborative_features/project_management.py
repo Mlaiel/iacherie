@@ -530,8 +530,48 @@ class ProjectCoordinator:
         project_data: Dict[str, Any]
     ):
         """Trigger revenue distribution for completed project"""
-        # Implementation would integrate with revenue sharing module
-        pass
+        try:
+            logger.info(f"🔄 Triggering revenue distribution for project {project_id}")
+            
+            # Calculate revenue shares based on contribution
+            total_revenue = project_data.get("total_revenue", 0)
+            team_members = project_data.get("team_members", [])
+            
+            if total_revenue > 0 and team_members:
+                # Basic equal distribution (can be enhanced with contribution weights)
+                revenue_per_member = total_revenue / len(team_members)
+                
+                distribution_record = {
+                    "project_id": project_id,
+                    "total_revenue": total_revenue,
+                    "distribution_date": datetime.now().isoformat(),
+                    "distributions": []
+                }
+                
+                for member in team_members:
+                    member_id = member.get("member_id", member.get("id"))
+                    contribution_weight = member.get("contribution_score", 1.0)
+                    member_share = revenue_per_member * contribution_weight
+                    
+                    distribution_record["distributions"].append({
+                        "member_id": member_id,
+                        "revenue_share": member_share,
+                        "contribution_weight": contribution_weight
+                    })
+                
+                # Store distribution record
+                await self.cache.set(
+                    f"revenue_distribution:{project_id}", 
+                    distribution_record, 
+                    ttl=86400 * 30  # Keep for 30 days
+                )
+                
+                logger.info(f"✅ Revenue distribution completed for project {project_id}")
+            else:
+                logger.warning(f"⚠️  No revenue or team members found for project {project_id}")
+                
+        except Exception as e:
+            logger.error(f"❌ Error triggering revenue distribution for project {project_id}: {e}")
     
     async def _update_team_contribution_scores(
         self,
@@ -539,8 +579,56 @@ class ProjectCoordinator:
         project_data: Dict[str, Any]
     ):
         """Update team member contribution scores based on project completion"""
-        # Implementation would update individual contribution metrics
-        pass
+        try:
+            logger.info(f"🔄 Updating contribution scores for project {project_id}")
+            
+            team_members = project_data.get("team_members", [])
+            project_duration = project_data.get("duration_days", 1)
+            project_complexity = project_data.get("complexity_score", 1.0)
+            
+            for member in team_members:
+                member_id = member.get("member_id", member.get("id"))
+                if not member_id:
+                    continue
+                
+                # Calculate contribution based on tasks completed
+                completed_tasks = member.get("completed_tasks", 0)
+                total_hours = member.get("total_hours_worked", 0)
+                quality_score = member.get("quality_score", 0.8)
+                
+                # Calculate contribution score
+                base_contribution = (completed_tasks * total_hours) / max(project_duration, 1)
+                weighted_contribution = base_contribution * quality_score * project_complexity
+                
+                # Get existing scores
+                existing_scores = await self.cache.get(f"contribution_scores:{member_id}")
+                if not existing_scores:
+                    existing_scores = {
+                        "member_id": member_id,
+                        "total_projects": 0,
+                        "average_contribution": 0.0,
+                        "project_history": []
+                    }
+                
+                # Update scores
+                existing_scores["total_projects"] += 1
+                existing_scores["project_history"].append({
+                    "project_id": project_id,
+                    "contribution_score": weighted_contribution,
+                    "completion_date": datetime.now().isoformat()
+                })
+                
+                # Calculate new average
+                total_contribution = sum(p["contribution_score"] for p in existing_scores["project_history"])
+                existing_scores["average_contribution"] = total_contribution / existing_scores["total_projects"]
+                
+                # Store updated scores
+                await self.cache.set(f"contribution_scores:{member_id}", existing_scores, ttl=86400 * 365)
+                
+                logger.debug(f"✅ Updated contribution scores for member {member_id}")
+                
+        except Exception as e:
+            logger.error(f"❌ Error updating contribution scores for project {project_id}: {e}")
     
     async def _archive_project_data(
         self,
@@ -941,8 +1029,60 @@ class TaskDistributionEngine:
     
     async def _update_project_progress(self, project_id: str):
         """Update overall project progress based on task completion"""
-        # Implementation would calculate project progress from all tasks
-        pass
+        try:
+            logger.debug(f"🔄 Updating progress for project {project_id}")
+            
+            # Get project data
+            project_data = await self.cache.get(f"project:{project_id}")
+            if not project_data:
+                logger.warning(f"⚠️  Project {project_id} not found")
+                return
+            
+            # Get all tasks for the project
+            all_tasks = await self.cache.get(f"project_tasks:{project_id}") or []
+            
+            if not all_tasks:
+                logger.debug(f"📝 No tasks found for project {project_id}")
+                return
+            
+            # Calculate progress metrics
+            total_tasks = len(all_tasks)
+            completed_tasks = len([task for task in all_tasks if task.get("status") == TaskStatus.COMPLETED.value])
+            in_progress_tasks = len([task for task in all_tasks if task.get("status") == TaskStatus.IN_PROGRESS.value])
+            
+            # Calculate progress percentage
+            progress_percentage = (completed_tasks / total_tasks * 100) if total_tasks > 0 else 0
+            
+            # Calculate estimated completion date based on current velocity
+            if in_progress_tasks > 0 and completed_tasks > 0:
+                # Simple velocity calculation
+                project_start = datetime.fromisoformat(project_data.get("start_date", datetime.now().isoformat()))
+                days_elapsed = (datetime.now() - project_start).days
+                velocity = completed_tasks / max(days_elapsed, 1)  # Tasks per day
+                
+                remaining_tasks = total_tasks - completed_tasks
+                estimated_days_remaining = remaining_tasks / max(velocity, 0.1)
+                estimated_completion = datetime.now() + timedelta(days=estimated_days_remaining)
+            else:
+                estimated_completion = None
+            
+            # Update project data
+            project_data.update({
+                "total_tasks": total_tasks,
+                "completed_tasks": completed_tasks,
+                "in_progress_tasks": in_progress_tasks,
+                "progress_percentage": progress_percentage,
+                "last_progress_update": datetime.now().isoformat(),
+                "estimated_completion": estimated_completion.isoformat() if estimated_completion else None
+            })
+            
+            # Store updated project data
+            await self.cache.set(f"project:{project_id}", project_data, ttl=86400)
+            
+            logger.debug(f"✅ Progress updated for project {project_id}: {progress_percentage:.1f}%")
+            
+        except Exception as e:
+            logger.error(f"❌ Error updating progress for project {project_id}: {e}")
     
     async def _handle_task_completion(self, task_id: str, task_data: Dict[str, Any]):
         """Handle task completion procedures"""
@@ -986,8 +1126,63 @@ class TaskDistributionEngine:
     
     async def _check_dependent_tasks(self, completed_task_id: str, project_id: str):
         """Check and unblock dependent tasks"""
-        # Implementation would find and unblock tasks dependent on completed task
-        pass
+        try:
+            logger.debug(f"🔄 Checking dependent tasks for completed task {completed_task_id}")
+            
+            # Get all tasks for the project
+            all_tasks = await self.cache.get(f"project_tasks:{project_id}") or []
+            
+            tasks_updated = 0
+            for task in all_tasks:
+                task_dependencies = task.get("dependencies", [])
+                
+                # Check if this task depends on the completed task
+                if completed_task_id in task_dependencies:
+                    # Remove the completed dependency
+                    task_dependencies.remove(completed_task_id)
+                    task["dependencies"] = task_dependencies
+                    
+                    # If no more dependencies, mark task as ready
+                    if not task_dependencies and task.get("status") == TaskStatus.BLOCKED.value:
+                        task["status"] = TaskStatus.TODO.value
+                        task["unblocked_at"] = datetime.now().isoformat()
+                        task["unblocked_by_task"] = completed_task_id
+                        
+                        logger.info(f"✅ Task {task['task_id']} unblocked by completion of {completed_task_id}")
+                        tasks_updated += 1
+                        
+                        # Notify assignee if available
+                        if task.get("assignee_id"):
+                            await self._notify_task_unblocked(task["assignee_id"], task["task_id"])
+            
+            # Save updated tasks
+            if tasks_updated > 0:
+                await self.cache.set(f"project_tasks:{project_id}", all_tasks, ttl=86400)
+                logger.info(f"📝 Updated {tasks_updated} dependent tasks for project {project_id}")
+            
+        except Exception as e:
+            logger.error(f"❌ Error checking dependent tasks for {completed_task_id}: {e}")
+    
+    async def _notify_task_unblocked(self, assignee_id: str, task_id: str):
+        """Notify assignee that their task has been unblocked"""
+        try:
+            notification = {
+                "type": "task_unblocked",
+                "assignee_id": assignee_id,
+                "task_id": task_id,
+                "message": f"Your task {task_id} is now unblocked and ready to start",
+                "timestamp": datetime.now().isoformat()
+            }
+            
+            # Store notification for the assignee
+            notifications = await self.cache.get(f"notifications:{assignee_id}") or []
+            notifications.append(notification)
+            await self.cache.set(f"notifications:{assignee_id}", notifications, ttl=86400 * 7)
+            
+            logger.debug(f"📬 Notified {assignee_id} about unblocked task {task_id}")
+            
+        except Exception as e:
+            logger.error(f"❌ Error notifying assignee {assignee_id} about unblocked task {task_id}: {e}")
     
     async def _get_team_member_info(self, member_id: str) -> Dict[str, Any]:
         """Get team member information"""
