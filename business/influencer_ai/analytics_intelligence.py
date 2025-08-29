@@ -14,6 +14,7 @@ from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
+from datetime import datetime
 import asyncio
 import logging
 
@@ -136,8 +137,162 @@ class AnalyticsIntelligenceService(IAnalyticsIntelligenceService):
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Exécution de la logique métier spécifique"""
-        # TODO: Implémenter la logique métier consolidée
-        return {"processed": True, "module": "Analytics Intelligence"}
+        try:
+            # Intelligence analytique pour influenceurs IA
+            result = {
+                "processed": True,
+                "module": "Analytics Intelligence",
+                "timestamp": datetime.now().isoformat()
+            }
+            
+            # 1. Analyse des performances de contenu
+            if "content_data" in data:
+                content_analytics = await self._analyze_content_performance(data["content_data"])
+                result["content_analytics"] = content_analytics
+            
+            # 2. Intelligence d'audience
+            if "audience_data" in data:
+                audience_insights = await self._generate_audience_intelligence(data["audience_data"])
+                result["audience_insights"] = audience_insights
+            
+            # 3. Recommandations stratégiques
+            if "strategy_request" in data:
+                strategy_recommendations = await self._generate_strategy_recommendations(data)
+                result["strategy_recommendations"] = strategy_recommendations
+            
+            # 4. Analyse prédictive des tendances
+            if "trend_analysis" in data:
+                trend_predictions = await self._predict_content_trends(data["trend_analysis"])
+                result["trend_predictions"] = trend_predictions
+            
+            # 5. Optimisation ROI
+            if "roi_data" in data:
+                roi_optimization = await self._optimize_content_roi(data["roi_data"])
+                result["roi_optimization"] = roi_optimization
+            
+            # 6. Intelligence compétitive
+            if "competitor_data" in data:
+                competitive_analysis = await self._analyze_competitive_landscape(data["competitor_data"])
+                result["competitive_analysis"] = competitive_analysis
+            
+            logger.info(f"Analytics Intelligence executed successfully for {len(data)} data points")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Business logic execution failed: {e}")
+            return {
+                "processed": False,
+                "error": str(e),
+                "module": "Analytics Intelligence",
+                "timestamp": datetime.now().isoformat()
+            }
+
+    async def _analyze_content_performance(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Analyse des performances de contenu"""
+        try:
+            # Métriques de performance clés
+            metrics = {
+                "engagement_rate": self._calculate_engagement_rate(content_data),
+                "reach_efficiency": self._calculate_reach_efficiency(content_data),
+                "conversion_score": self._calculate_conversion_score(content_data),
+                "virality_potential": self._calculate_virality_potential(content_data)
+            }
+            
+            # Score global de performance
+            performance_score = sum(metrics.values()) / len(metrics)
+            
+            return {
+                "metrics": metrics,
+                "performance_score": round(performance_score, 2),
+                "recommendations": self._generate_performance_recommendations(metrics)
+            }
+            
+        except Exception as e:
+            logger.error(f"Content performance analysis failed: {e}")
+            return {"error": str(e)}
+
+    async def _generate_audience_intelligence(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Intelligence d'audience avancée"""
+        try:
+            # Segmentation d'audience
+            segments = self._segment_audience(audience_data)
+            
+            # Profils d'engagement
+            engagement_profiles = self._analyze_engagement_patterns(audience_data)
+            
+            # Heures optimales de publication
+            optimal_timing = self._calculate_optimal_posting_times(audience_data)
+            
+            # Préférences de contenu
+            content_preferences = self._analyze_content_preferences(audience_data)
+            
+            return {
+                "audience_segments": segments,
+                "engagement_profiles": engagement_profiles,
+                "optimal_timing": optimal_timing,
+                "content_preferences": content_preferences,
+                "growth_opportunities": self._identify_growth_opportunities(segments)
+            }
+            
+        except Exception as e:
+            logger.error(f"Audience intelligence failed: {e}")
+            return {"error": str(e)}
+
+    async def _generate_strategy_recommendations(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Recommandations stratégiques basées sur l'IA"""
+        try:
+            strategy_type = data.get("strategy_request", {}).get("type", "general")
+            
+            if strategy_type == "content":
+                return await self._content_strategy_recommendations(data)
+            elif strategy_type == "growth":
+                return await self._growth_strategy_recommendations(data)
+            elif strategy_type == "monetization":
+                return await self._monetization_strategy_recommendations(data)
+            else:
+                return await self._general_strategy_recommendations(data)
+                
+        except Exception as e:
+            logger.error(f"Strategy recommendation failed: {e}")
+            return {"error": str(e)}
+
+    def _calculate_engagement_rate(self, content_data: Dict[str, Any]) -> float:
+        """Calcul du taux d'engagement"""
+        try:
+            interactions = content_data.get("likes", 0) + content_data.get("comments", 0) + content_data.get("shares", 0)
+            reach = content_data.get("reach", 1)
+            return round((interactions / reach) * 100, 2)
+        except:
+            return 0.0
+
+    def _calculate_reach_efficiency(self, content_data: Dict[str, Any]) -> float:
+        """Calcul de l'efficacité de portée"""
+        try:
+            reach = content_data.get("reach", 0)
+            followers = content_data.get("followers", 1)
+            return round((reach / followers) * 100, 2)
+        except:
+            return 0.0
+
+    def _calculate_conversion_score(self, content_data: Dict[str, Any]) -> float:
+        """Score de conversion"""
+        try:
+            conversions = content_data.get("conversions", 0)
+            clicks = content_data.get("clicks", 1)
+            return round((conversions / clicks) * 100, 2)
+        except:
+            return 0.0
+
+    def _calculate_virality_potential(self, content_data: Dict[str, Any]) -> float:
+        """Potentiel de viralité"""
+        try:
+            shares = content_data.get("shares", 0)
+            comments = content_data.get("comments", 0)
+            reach = content_data.get("reach", 1)
+            virality_score = ((shares * 2) + comments) / reach * 100
+            return round(min(virality_score, 100), 2)
+        except:
+            return 0.0
 
 # =============== FONCTIONS UTILITAIRES ===============
 

@@ -409,7 +409,77 @@ class BaseAgent(ABC):
     
     async def _validate_request_data(self, data: Dict[str, Any]):
         """Validate request data structure and content"""
-        # Implement data validation logic based on agent requirements
+        try:
+            # Basic data structure validation
+            if not isinstance(data, dict):
+                raise ValidationError("Request data must be a dictionary")
+            
+            # Check for required fields based on agent type
+            required_fields = self.get_required_config_keys()
+            missing_fields = [field for field in required_fields if field not in data]
+            if missing_fields:
+                raise ValidationError(f"Missing required fields: {', '.join(missing_fields)}")
+            
+            # Validate data types and formats
+            await self._validate_field_types(data)
+            
+            # Validate data content and constraints
+            await self._validate_field_constraints(data)
+            
+            # Agent-specific validation
+            await self._custom_data_validation(data)
+            
+        except Exception as e:
+            self.logger.error(f"Request data validation failed: {e}")
+            raise ValidationError(f"Invalid request data: {str(e)}")
+
+    async def _validate_field_types(self, data: Dict[str, Any]):
+        """Validate field types according to agent schema"""
+        # Define expected types for common fields
+        field_types = {
+            'content_id': (str, int),
+            'user_id': (str, int),
+            'tenant_id': str,
+            'priority': int,
+            'metadata': dict,
+            'options': dict,
+            'timestamp': (str, int, float),
+            'content_type': str,
+            'platform': str
+        }
+        
+        for field, expected_type in field_types.items():
+            if field in data:
+                if not isinstance(data[field], expected_type):
+                    raise ValidationError(f"Field '{field}' must be of type {expected_type}, got {type(data[field])}")
+
+    async def _validate_field_constraints(self, data: Dict[str, Any]):
+        """Validate field constraints and business rules"""
+        # Priority validation
+        if 'priority' in data:
+            priority = data['priority']
+            if not 1 <= priority <= 10:
+                raise ValidationError("Priority must be between 1 and 10")
+        
+        # Content ID validation
+        if 'content_id' in data:
+            content_id = str(data['content_id'])
+            if len(content_id) < 3 or len(content_id) > 100:
+                raise ValidationError("Content ID must be between 3 and 100 characters")
+        
+        # User/Tenant ID validation
+        for id_field in ['user_id', 'tenant_id']:
+            if id_field in data:
+                id_value = str(data[id_field])
+                if not id_value.strip():
+                    raise ValidationError(f"{id_field} cannot be empty")
+                if len(id_value) > 255:
+                    raise ValidationError(f"{id_field} cannot exceed 255 characters")
+
+    async def _custom_data_validation(self, data: Dict[str, Any]):
+        """Agent-specific custom validation - to be overridden by subclasses"""
+        # Default implementation does nothing
+        # Subclasses can override this for specific validation logic
         pass
     
     def _validate_tenant_access(self, tenant_id: str) -> bool:
