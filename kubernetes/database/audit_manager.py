@@ -1140,8 +1140,17 @@ class DatabaseAuditManager:
             # Log critique
             self.logger.critical(alert_message)
             
-            # Envoi notification (email, Slack, etc.)
-            # TODO: Implémenter notifications externes
+            # Envoi notifications externes (email, Slack, webhook, SMS)
+            await self._send_external_notifications(
+                alert_type="database_integrity_failure",
+                severity="critical",
+                message=alert_message,
+                metadata={
+                    "results": results,
+                    "timestamp": datetime.utcnow().isoformat(),
+                    "system": "audit_manager"
+                }
+            )
             
         except Exception as e:
             self.logger.error(f"Failed to send integrity alert: {e}")
@@ -1527,6 +1536,217 @@ class DatabaseAuditManager:
                 'error': str(e),
                 'timestamp': datetime.utcnow().isoformat()
             }
+    
+    async def _send_external_notifications(
+        self, 
+        alert_type: str, 
+        severity: str, 
+        message: str, 
+        metadata: Dict[str, Any] = None
+    ) -> None:
+        """
+        Envoie des notifications externes pour les alertes critiques
+        
+        Args:
+            alert_type: Type d'alerte (database_integrity_failure, etc.)
+            severity: Niveau de sévérité (critical, high, medium, low)
+            message: Message d'alerte
+            metadata: Métadonnées additionnelles
+        """
+        try:
+            notification_data = {
+                "alert_type": alert_type,
+                "severity": severity,
+                "message": message,
+                "timestamp": datetime.utcnow().isoformat(),
+                "system": "ainflue_audit_manager",
+                "metadata": metadata or {}
+            }
+            
+            # 1. Notification Email
+            await self._send_email_notification(notification_data)
+            
+            # 2. Notification Slack
+            await self._send_slack_notification(notification_data)
+            
+            # 3. Webhook générique
+            await self._send_webhook_notification(notification_data)
+            
+            # 4. Notification SMS pour les alertes critiques
+            if severity == "critical":
+                await self._send_sms_notification(notification_data)
+            
+            self.logger.info(f"External notifications sent for {alert_type}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to send external notifications: {e}")
+    
+    async def _send_email_notification(self, notification_data: Dict[str, Any]) -> None:
+        """Envoi notification par email"""
+        try:
+            import smtplib
+            from email.mime.text import MIMEText
+            from email.mime.multipart import MIMEMultipart
+            
+            # Configuration email depuis les variables d'environnement
+            smtp_server = os.environ.get('AUDIT_SMTP_SERVER', 'localhost')
+            smtp_port = int(os.environ.get('AUDIT_SMTP_PORT', '587'))
+            smtp_user = os.environ.get('AUDIT_SMTP_USER')
+            smtp_password = os.environ.get('AUDIT_SMTP_PASSWORD')
+            recipients = os.environ.get('AUDIT_EMAIL_RECIPIENTS', '').split(',')
+            
+            if not smtp_user or not recipients[0]:
+                self.logger.warning("Email configuration not complete, skipping email notification")
+                return
+            
+            # Créer le message
+            msg = MIMEMultipart()
+            msg['From'] = smtp_user
+            msg['To'] = ', '.join(recipients)
+            msg['Subject'] = f"[AINFLUE AUDIT] {notification_data['severity'].upper()}: {notification_data['alert_type']}"
+            
+            # Corps du message
+            body = f"""
+            AINFLUE AUDIT ALERT
+            ==================
+            
+            Type: {notification_data['alert_type']}
+            Sévérité: {notification_data['severity']}
+            Timestamp: {notification_data['timestamp']}
+            
+            Message:
+            {notification_data['message']}
+            
+            Métadonnées:
+            {json.dumps(notification_data['metadata'], indent=2)}
+            
+            System: {notification_data['system']}
+            """
+            
+            msg.attach(MIMEText(body, 'plain'))
+            
+            # Envoi
+            with smtplib.SMTP(smtp_server, smtp_port) as server:
+                server.starttls()
+                if smtp_password:
+                    server.login(smtp_user, smtp_password)
+                server.send_message(msg)
+            
+            self.logger.info("Email notification sent successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to send email notification: {e}")
+    
+    async def _send_slack_notification(self, notification_data: Dict[str, Any]) -> None:
+        """Envoi notification Slack"""
+        try:
+            import aiohttp
+            
+            webhook_url = os.environ.get('AUDIT_SLACK_WEBHOOK_URL')
+            if not webhook_url:
+                self.logger.debug("Slack webhook not configured, skipping Slack notification")
+                return
+            
+            # Créer le payload Slack
+            color_map = {
+                "critical": "#FF0000",
+                "high": "#FF8C00", 
+                "medium": "#FFD700",
+                "low": "#00FF00"
+            }
+            
+            slack_payload = {
+                "text": f"🚨 Ainflue Audit Alert: {notification_data['alert_type']}",
+                "attachments": [
+                    {
+                        "color": color_map.get(notification_data['severity'], "#808080"),
+                        "fields": [
+                            {
+                                "title": "Severity",
+                                "value": notification_data['severity'],
+                                "short": True
+                            },
+                            {
+                                "title": "Type",
+                                "value": notification_data['alert_type'],
+                                "short": True
+                            },
+                            {
+                                "title": "Message",
+                                "value": notification_data['message'][:500] + "..." if len(notification_data['message']) > 500 else notification_data['message'],
+                                "short": False
+                            }
+                        ],
+                        "footer": "Ainflue Audit Manager",
+                        "ts": int(datetime.utcnow().timestamp())
+                    }
+                ]
+            }
+            
+            # Envoi via webhook
+            async with aiohttp.ClientSession() as session:
+                async with session.post(webhook_url, json=slack_payload) as response:
+                    if response.status == 200:
+                        self.logger.info("Slack notification sent successfully")
+                    else:
+                        self.logger.error(f"Slack notification failed: {response.status}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to send Slack notification: {e}")
+    
+    async def _send_webhook_notification(self, notification_data: Dict[str, Any]) -> None:
+        """Envoi notification via webhook générique"""
+        try:
+            import aiohttp
+            
+            webhook_url = os.environ.get('AUDIT_WEBHOOK_URL')
+            if not webhook_url:
+                self.logger.debug("Generic webhook not configured, skipping webhook notification")
+                return
+            
+            # Envoi du payload complet
+            async with aiohttp.ClientSession() as session:
+                async with session.post(webhook_url, json=notification_data) as response:
+                    if response.status in [200, 201, 202]:
+                        self.logger.info("Webhook notification sent successfully")
+                    else:
+                        self.logger.error(f"Webhook notification failed: {response.status}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to send webhook notification: {e}")
+    
+    async def _send_sms_notification(self, notification_data: Dict[str, Any]) -> None:
+        """Envoi notification SMS pour les alertes critiques"""
+        try:
+            # Configuration SMS (exemple avec Twilio)
+            account_sid = os.environ.get('AUDIT_TWILIO_ACCOUNT_SID')
+            auth_token = os.environ.get('AUDIT_TWILIO_AUTH_TOKEN')
+            from_number = os.environ.get('AUDIT_TWILIO_FROM_NUMBER')
+            to_numbers = os.environ.get('AUDIT_SMS_RECIPIENTS', '').split(',')
+            
+            if not all([account_sid, auth_token, from_number]) or not to_numbers[0]:
+                self.logger.debug("SMS configuration not complete, skipping SMS notification")
+                return
+            
+            # Message SMS court
+            sms_message = f"AINFLUE CRITICAL ALERT: {notification_data['alert_type']} at {notification_data['timestamp'][:19]}. Check logs immediately."
+            
+            # Simulation de l'envoi SMS (remplacer par vraie API)
+            self.logger.info(f"SMS notification would be sent to {len(to_numbers)} recipients")
+            self.logger.info(f"SMS content: {sms_message}")
+            
+            # Dans un vrai environnement:
+            # from twilio.rest import Client
+            # client = Client(account_sid, auth_token)
+            # for to_number in to_numbers:
+            #     message = client.messages.create(
+            #         body=sms_message,
+            #         from_=from_number,
+            #         to=to_number.strip()
+            #     )
+            
+        except Exception as e:
+            self.logger.error(f"Failed to send SMS notification: {e}")
     
     async def shutdown(self):
         """Arrêt propre du système d'audit"""

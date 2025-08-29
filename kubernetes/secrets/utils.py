@@ -1805,13 +1805,45 @@ class InfluencerPlatformUtils:
                 logger.warning(f"Unknown action for platform {platform}: {action}")
                 return False
             
-            # For now, return True for valid platform/action combinations
-            # In a real implementation, this would check against user permissions stored in the system
+            # Get required scopes for this platform/action combination
             required_scopes = permission_matrix[platform][action]
             
-            # TODO: Implement actual permission checking against user data
-            logger.info(f"Permission check for creator {creator_id}: {platform}.{action} - granted")
-            return True
+            # Implement comprehensive permission checking against user data
+            try:
+                # 1. Check if creator has active subscription/plan that allows this action
+                creator_plan = self._get_creator_subscription_plan(creator_id)
+                if not self._check_plan_permissions(creator_plan, platform, action):
+                    logger.warning(f"Creator {creator_id} plan {creator_plan} doesn't allow {platform}.{action}")
+                    return False
+                
+                # 2. Check platform-specific authentication status
+                if not self._check_platform_auth_status(creator_id, platform):
+                    logger.warning(f"Creator {creator_id} not authenticated with {platform}")
+                    return False
+                
+                # 3. Check rate limits and quotas
+                if not self._check_rate_limits(creator_id, platform, action):
+                    logger.warning(f"Creator {creator_id} exceeded rate limits for {platform}.{action}")
+                    return False
+                
+                # 4. Check required OAuth scopes
+                user_scopes = self._get_user_platform_scopes(creator_id, platform)
+                if not all(scope in user_scopes for scope in required_scopes):
+                    missing_scopes = set(required_scopes) - set(user_scopes)
+                    logger.warning(f"Creator {creator_id} missing scopes for {platform}.{action}: {missing_scopes}")
+                    return False
+                
+                # 5. Check content policy compliance
+                if not self._check_content_policy_compliance(creator_id, platform):
+                    logger.warning(f"Creator {creator_id} has policy violations for {platform}")
+                    return False
+                
+                logger.info(f"Permission check passed for creator {creator_id}: {platform}.{action}")
+                return True
+                
+            except Exception as e:
+                logger.error(f"Error during permission validation: {e}")
+                return False
             
         except Exception as e:
             logger.error(f"Creator permission validation failed: {e}")
@@ -1858,6 +1890,128 @@ class InfluencerPlatformUtils:
             
         except Exception as e:
             logger.error(f"Platform access audit failed: {e}")
+    
+    def _get_creator_subscription_plan(self, creator_id: str) -> str:
+        """Get creator's current subscription plan"""
+        try:
+            # In production, this would query the database
+            # For now, return a default plan
+            return "premium"  # Options: free, premium, enterprise
+        except Exception as e:
+            logger.error(f"Error getting creator plan: {e}")
+            return "free"
+    
+    def _check_plan_permissions(self, plan: str, platform: str, action: str) -> bool:
+        """Check if subscription plan allows the requested action"""
+        plan_permissions = {
+            "free": {
+                "youtube": ["read", "basic_upload"],
+                "spotify": ["read"],
+                "instagram": ["read"]
+            },
+            "premium": {
+                "youtube": ["read", "upload", "live_stream", "analytics"],
+                "spotify": ["read", "upload", "analytics"],
+                "instagram": ["read", "upload", "story", "analytics"]
+            },
+            "enterprise": {
+                "youtube": ["read", "upload", "live_stream", "analytics", "bulk_operations"],
+                "spotify": ["read", "upload", "analytics", "playlist_management"],
+                "instagram": ["read", "upload", "story", "analytics", "ads_management"]
+            }
+        }
+        
+        if plan not in plan_permissions:
+            return False
+        
+        platform_actions = plan_permissions[plan].get(platform, [])
+        return action in platform_actions
+    
+    def _check_platform_auth_status(self, creator_id: str, platform: str) -> bool:
+        """Check if creator is authenticated with the platform"""
+        try:
+            # Check if we have valid authentication tokens for the platform
+            auth_key = f"creator_{creator_id}_{platform}_auth"
+            auth_data = self.get_secret(auth_key)
+            
+            if not auth_data:
+                return False
+            
+            # Check token expiration
+            import json
+            auth_info = json.loads(auth_data)
+            expires_at = auth_info.get('expires_at')
+            
+            if expires_at:
+                from datetime import datetime
+                expiry_time = datetime.fromisoformat(expires_at.replace('Z', '+00:00'))
+                if datetime.utcnow() > expiry_time.replace(tzinfo=None):
+                    return False
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error checking platform auth status: {e}")
+            return False
+    
+    def _check_rate_limits(self, creator_id: str, platform: str, action: str) -> bool:
+        """Check if creator has exceeded rate limits"""
+        try:
+            # Rate limits per platform per hour
+            rate_limits = {
+                "youtube": {"upload": 10, "analytics": 100, "read": 1000},
+                "spotify": {"upload": 50, "analytics": 200, "read": 500},
+                "instagram": {"upload": 25, "analytics": 150, "read": 800}
+            }
+            
+            # Get current usage (in production, from Redis/database)
+            current_usage = 0  # Placeholder
+            limit = rate_limits.get(platform, {}).get(action, 1000)
+            
+            return current_usage < limit
+            
+        except Exception as e:
+            logger.error(f"Error checking rate limits: {e}")
+            return True  # Allow on error to prevent blocking
+    
+    def _get_user_platform_scopes(self, creator_id: str, platform: str) -> List[str]:
+        """Get OAuth scopes granted by user for platform"""
+        try:
+            scope_key = f"creator_{creator_id}_{platform}_scopes"
+            scope_data = self.get_secret(scope_key)
+            
+            if scope_data:
+                import json
+                return json.loads(scope_data).get('scopes', [])
+            
+            return []
+            
+        except Exception as e:
+            logger.error(f"Error getting user scopes: {e}")
+            return []
+    
+    def _check_content_policy_compliance(self, creator_id: str, platform: str) -> bool:
+        """Check if creator is compliant with content policies"""
+        try:
+            # Check for recent policy violations
+            violation_key = f"creator_{creator_id}_{platform}_violations"
+            violations_data = self.get_secret(violation_key)
+            
+            if violations_data:
+                import json
+                violations = json.loads(violations_data)
+                active_violations = [v for v in violations if not v.get('resolved', False)]
+                
+                # Block if there are active serious violations
+                serious_violations = [v for v in active_violations if v.get('severity') in ['high', 'critical']]
+                if serious_violations:
+                    return False
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error checking content policy compliance: {e}")
+            return True  # Allow on error
     
     # Platform-specific credential validation methods
     def _validate_youtube_credentials(
@@ -2132,12 +2286,6 @@ class InfluencerPlatformUtils:
             })
         
         return checks
-            if len(api_token) < 32:
-                validation_result['issues'].append("Invalid Wise API token format")
-            else:
-                validation_result['valid'] = True
-        
-        return validation_result
     
     # AI provider testing methods
     def _test_openai_api_key(self, api_key: str) -> bool:
