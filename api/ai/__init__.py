@@ -13,66 +13,141 @@ in legal action.
 © 2025 Fahed Mlaiel. All rights reserved.
 """
 
-# Import main AI modules
-from .nlp import TextAnalyzer
-from .vision import VisionProcessor
-from .recommendation import RecommendationEngine
+# Optional imports to handle missing dependencies gracefully
+try:
+    from .nlp import TextAnalyzer
+except ImportError:
+    class TextAnalyzer:
+        """Placeholder for missing TextAnalyzer"""
+        def __init__(self, *args, **kwargs):
+            raise ImportError("NLP dependencies not available. Install with: pip install spacy")
 
-# Import advanced AI processing modules
-from .content_analysis import (
-    ContentType,
-    ContentMetadata,
-    ContentAnalysisEngine,
-    ContentProcessor
-)
+try:
+    from .vision import VisionProcessor
+except ImportError:
+    class VisionProcessor:
+        """Placeholder for missing VisionProcessor"""
+        def __init__(self, *args, **kwargs):
+            raise ImportError("Vision processing dependencies not available")
 
-from .rights_protection import (
-    ProtectionLevel,
-    ViolationType,
-    DigitalFingerprint,
-    ProtectionResult,
-    ViolationAlert,
-    AdvancedFingerprintGenerator,
-    ViolationDetector,
-    RightsProtectionEngine
-)
+try:
+    from .recommendation import RecommendationEngine
+except ImportError:
+    class RecommendationEngine:
+        """Placeholder for missing RecommendationEngine"""
+        def __init__(self, *args, **kwargs):
+            raise ImportError("Recommendation engine dependencies not available")
 
-from .seo_optimization import (
-    SEOPlatform,
-    ContentFormat as SEOContentFormat,
-    SEOKeyword,
-    SEOMetadata,
-    SEOAnalytics,
-    KeywordAnalyzer,
-    ContentOptimizer as SEOContentOptimizer,
-    PerformanceAnalyzer
-)
+# Import advanced AI processing modules with error handling
+try:
+    from .content_analysis import (
+        ContentType,
+        ContentMetadata,
+        ContentAnalysisEngine,
+        ContentProcessor
+    )
+except ImportError:
+    # Provide placeholder classes
+    ContentType = str
+    ContentMetadata = dict
+    ContentAnalysisEngine = object
+    ContentProcessor = object
 
-from .collaboration_matching import (
-    CreatorType,
-    CollaborationType,
-    CompatibilityFactor,
-    CreatorProfile,
-    CollaborationOpportunity,
-    MatchResult,
-    CreatorAnalyzer,
-    CompatibilityCalculator,
-    CollaborationMatcher
-)
+try:
+    from .rights_protection import (
+        ProtectionLevel,
+        ViolationType,
+        DigitalFingerprint,
+        ProtectionResult,
+        ViolationAlert,
+        AdvancedFingerprintGenerator,
+        ViolationDetector,
+        RightsProtectionEngine
+    )
+except ImportError:
+    # Provide placeholder classes
+    ProtectionLevel = str
+    ViolationType = str
+    DigitalFingerprint = dict
+    ProtectionResult = dict
+    ViolationAlert = dict
+    AdvancedFingerprintGenerator = object
+    ViolationDetector = object
+    RightsProtectionEngine = object
 
-from .distribution_intelligence import (
-    Platform,
-    ContentFormat as DistributionContentFormat,
-    DistributionStrategy,
-    PlatformRequirements,
-    ContentVariant,
-    DistributionPlan,
-    DistributionResult,
-    PlatformAnalyzer,
-    ContentOptimizer as DistributionContentOptimizer,
-    DistributionScheduler,
-    DistributionEngine
-)
+try:
+    from .seo_optimization import (
+        SEOPlatform,
+        ContentFormat as SEOContentFormat,
+        SEOKeyword,
+        SEOMetadata,
+        SEOAnalytics,
+        KeywordAnalyzer,
+        ContentOptimizer as SEOContentOptimizer,
+        PerformanceAnalyzer
+    )
+except ImportError:
+    # Provide placeholder classes
+    SEOPlatform = str
+    SEOContentFormat = str
+    SEOKeyword = dict
+    SEOMetadata = dict
+    SEOAnalytics = dict
+    KeywordAnalyzer = object
+    SEOContentOptimizer = object
+    PerformanceAnalyzer = object
+
+try:
+    from .collaboration_matching import (
+        CreatorType,
+        CollaborationType,
+        CompatibilityFactor,
+        CreatorProfile,
+        CollaborationOpportunity,
+        MatchResult,
+        CreatorAnalyzer,
+        CompatibilityCalculator,
+        CollaborationMatcher
+    )
+except ImportError:
+    # Provide placeholder classes
+    CreatorType = str
+    CollaborationType = str
+    CompatibilityFactor = str
+    CreatorProfile = dict
+    CollaborationOpportunity = dict
+    MatchResult = dict
+    CreatorAnalyzer = object
+    CompatibilityCalculator = object
+    CollaborationMatcher = object
+
+try:
+    from .distribution_intelligence import (
+        Platform,
+        ContentFormat as DistributionContentFormat,
+        DistributionStrategy,
+        PlatformRequirements,
+        ContentVariant,
+        DistributionPlan,
+        DistributionResult,
+        PlatformAnalyzer,
+        ContentOptimizer as DistributionContentOptimizer,
+        DistributionScheduler,
+        DistributionEngine
+    )
+except ImportError:
+    # Provide placeholder classes
+    Platform = str
+    DistributionContentFormat = str
+    DistributionStrategy = dict
+    PlatformRequirements = dict
+    ContentVariant = dict
+    DistributionPlan = dict
+    DistributionResult = dict
+    PlatformAnalyzer = object
+    DistributionContentOptimizer = object
+    DistributionScheduler = object
+    DistributionEngine = object
 
 # Export main classes
 __all__ = [
