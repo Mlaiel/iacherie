@@ -1553,7 +1553,71 @@ class QualityScorer:
         return []
         
     async def _save_collaboration_quality(self, collaboration_id: str, quality_metrics: QualityMetrics) -> None:
-        pass
+        """Save collaboration quality metrics to database and cache"""
+        try:
+            # Prepare quality data for storage
+            quality_data = {
+                "collaboration_id": collaboration_id,
+                "overall_score": quality_metrics.overall_score,
+                "quality_level": quality_metrics.quality_level.value if hasattr(quality_metrics.quality_level, 'value') else str(quality_metrics.quality_level),
+                "dimension_scores": {k.value if hasattr(k, 'value') else str(k): v for k, v in quality_metrics.dimension_scores.items()},
+                "benchmarks": quality_metrics.benchmarks,
+                "improvement_suggestions": quality_metrics.improvement_suggestions,
+                "scored_at": datetime.utcnow().isoformat(),
+                "scorer_version": "1.0.0"
+            }
+            
+            # Save to database (PostgreSQL for structured data)
+            if hasattr(self, 'db_manager') and self.db_manager:
+                insert_query = """
+                INSERT INTO collaboration_quality_scores 
+                (collaboration_id, overall_score, quality_level, dimension_scores, 
+                 benchmarks, improvement_suggestions, scored_at, scorer_version)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                ON CONFLICT (collaboration_id) DO UPDATE SET
+                overall_score = EXCLUDED.overall_score,
+                quality_level = EXCLUDED.quality_level,
+                dimension_scores = EXCLUDED.dimension_scores,
+                benchmarks = EXCLUDED.benchmarks,
+                improvement_suggestions = EXCLUDED.improvement_suggestions,
+                scored_at = EXCLUDED.scored_at,
+                scorer_version = EXCLUDED.scorer_version
+                """
+                await self.db_manager.execute(
+                    insert_query,
+                    collaboration_id,
+                    quality_metrics.overall_score,
+                    quality_data["quality_level"],
+                    json.dumps(quality_data["dimension_scores"]),
+                    json.dumps(quality_metrics.benchmarks),
+                    json.dumps(quality_metrics.improvement_suggestions),
+                    quality_data["scored_at"],
+                    quality_data["scorer_version"]
+                )
+            
+            # Cache for fast retrieval (Redis)
+            if hasattr(self, 'cache_manager') and self.cache_manager:
+                cache_key = f"collaboration_quality:{collaboration_id}"
+                await self.cache_manager.set(
+                    cache_key, 
+                    json.dumps(quality_data),
+                    expire_seconds=3600  # 1 hour cache
+                )
+                
+                # Also update collaboration summary cache
+                summary_key = f"collaboration_summary:{collaboration_id}"
+                summary_data = {
+                    "last_quality_score": quality_metrics.overall_score,
+                    "quality_level": quality_data["quality_level"],
+                    "last_scored": quality_data["scored_at"]
+                }
+                await self.cache_manager.hset(summary_key, summary_data)
+            
+            logger.info(f"✅ Collaboration quality saved: {collaboration_id} -> {quality_metrics.overall_score:.2f}")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to save collaboration quality for {collaboration_id}: {e}")
+            # Don't raise - this is a background operation
         
     # Reliability scoring methods (placeholders)
     async def _get_creator_historical_data(self, creator_id: str, lookback_days: int) -> Dict[str, Any]:
@@ -1581,4 +1645,75 @@ class QualityScorer:
         return []
         
     async def _save_reliability_score(self, creator_id: str, quality_metrics: QualityMetrics) -> None:
-        pass
+        """Save creator reliability metrics to database and update reputation system"""
+        try:
+            # Prepare reliability data
+            reliability_data = {
+                "creator_id": creator_id,
+                "overall_score": quality_metrics.overall_score,
+                "reliability_level": quality_metrics.quality_level.value if hasattr(quality_metrics.quality_level, 'value') else str(quality_metrics.quality_level),
+                "dimension_scores": {k.value if hasattr(k, 'value') else str(k): v for k, v in quality_metrics.dimension_scores.items()},
+                "improvement_suggestions": quality_metrics.improvement_suggestions,
+                "assessed_at": datetime.utcnow().isoformat(),
+                "assessment_version": "1.0.0"
+            }
+            
+            # Save to database
+            if hasattr(self, 'db_manager') and self.db_manager:
+                # Insert reliability score
+                insert_query = """
+                INSERT INTO creator_reliability_scores 
+                (creator_id, overall_score, reliability_level, dimension_scores, 
+                 improvement_suggestions, assessed_at, assessment_version)
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                """
+                await self.db_manager.execute(
+                    insert_query,
+                    creator_id,
+                    quality_metrics.overall_score,
+                    reliability_data["reliability_level"],
+                    json.dumps(reliability_data["dimension_scores"]),
+                    json.dumps(quality_metrics.improvement_suggestions),
+                    reliability_data["assessed_at"],
+                    reliability_data["assessment_version"]
+                )
+                
+                # Update creator reputation summary
+                update_reputation_query = """
+                UPDATE creator_profiles 
+                SET reliability_score = $1, 
+                    reputation_level = $2,
+                    last_assessed = $3
+                WHERE creator_id = $4
+                """
+                await self.db_manager.execute(
+                    update_reputation_query,
+                    quality_metrics.overall_score,
+                    reliability_data["reliability_level"],
+                    reliability_data["assessed_at"],
+                    creator_id
+                )
+            
+            # Update cache with latest reliability data
+            if hasattr(self, 'cache_manager') and self.cache_manager:
+                cache_key = f"creator_reliability:{creator_id}"
+                await self.cache_manager.set(
+                    cache_key,
+                    json.dumps(reliability_data),
+                    expire_seconds=7200  # 2 hours cache
+                )
+                
+                # Update creator quick-lookup cache
+                creator_cache_key = f"creator_profile:{creator_id}"
+                profile_updates = {
+                    "reliability_score": quality_metrics.overall_score,
+                    "reliability_level": reliability_data["reliability_level"],
+                    "last_assessed": reliability_data["assessed_at"]
+                }
+                await self.cache_manager.hset(creator_cache_key, profile_updates)
+            
+            logger.info(f"✅ Reliability score saved: {creator_id} -> {quality_metrics.overall_score:.2f}")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to save reliability score for {creator_id}: {e}")
+            # Don't raise - this is a background operation

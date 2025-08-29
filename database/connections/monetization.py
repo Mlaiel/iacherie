@@ -566,12 +566,55 @@ class MonetizationConnections:
                 self.elasticsearch = handlers.get("elasticsearch")
             
             async def commit(self):
-                # Implement transaction commit logic
-                pass
+                """Commit monetization transaction across all database connections"""
+                try:
+                    # PostgreSQL commit for financial data
+                    if hasattr(self.postgresql, 'commit'):
+                        await self.postgresql.commit()
+                    
+                    # MongoDB commit for analytics and metadata
+                    if hasattr(self.mongodb, 'commit_transaction'):
+                        await self.mongodb.commit_transaction()
+                    
+                    # Redis commit for cache invalidation
+                    if hasattr(self.redis, 'execute'):
+                        # Execute pipeline if in multi mode
+                        await self.redis.execute()
+                    
+                    # Elasticsearch commit for search indexing
+                    if self.elasticsearch and hasattr(self.elasticsearch, 'indices'):
+                        await self.elasticsearch.indices.refresh(index='monetization*')
+                        
+                    logger.info("💰 Monetization transaction committed successfully")
+                    
+                except Exception as e:
+                    logger.error(f"❌ Failed to commit monetization transaction: {e}")
+                    await self.rollback()
+                    raise
             
             async def rollback(self):
-                # Implement transaction rollback logic
-                pass
+                """Rollback monetization transaction across all database connections"""
+                try:
+                    # PostgreSQL rollback - critical for financial integrity
+                    if hasattr(self.postgresql, 'rollback'):
+                        await self.postgresql.rollback()
+                    
+                    # MongoDB rollback for analytics
+                    if hasattr(self.mongodb, 'abort_transaction'):
+                        await self.mongodb.abort_transaction()
+                    
+                    # Redis rollback - discard pipeline operations
+                    if hasattr(self.redis, 'discard'):
+                        await self.redis.discard()
+                    
+                    # Elasticsearch rollback - more complex, may need compensating actions
+                    # For now, we log and let manual intervention handle it
+                    
+                    logger.warning("↩️ Monetization transaction rolled back")
+                    
+                except Exception as e:
+                    logger.error(f"❌ Failed to rollback monetization transaction: {e}")
+                    # Don't raise to avoid masking original error
         
         tx = TransactionContext({
             "postgresql": self.postgresql,
