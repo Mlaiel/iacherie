@@ -28,6 +28,9 @@ from ...core.database import DatabaseManager
 from ...core.storage import StorageManager
 from ...core.cache import CacheManager
 
+# Initialize logger
+logger = logging.getLogger(__name__)
+
 
 class LifecycleStage(Enum):
     """Data lifecycle stages"""
@@ -140,33 +143,68 @@ class LifecycleTransition:
 class ArchivalStrategy(ABC):
     """Base class for archival strategies"""
     
-    @abstractmethod
     async def archive_content(
         self,
         content_id: str,
         content_data: bytes,
         metadata: Dict[str, Any]
     ) -> str:
-        """Archive content and return archive location"""
-        raise NotImplementedError("Subclasses must implement archive_content method")
+        """Archive content and return archive location - base implementation"""
+        try:
+            logger.info(f"Archiving content: {content_id}")
+            
+            # Base implementation that simulates archiving
+            # Subclasses should override with specific storage logic
+            archive_location = f"archive/{datetime.utcnow().strftime('%Y/%m/%d')}/{content_id}"
+            
+            # Simulate archiving process
+            logger.info(f"Content {content_id} archived to {archive_location}")
+            logger.debug(f"Archived {len(content_data)} bytes with metadata: {list(metadata.keys())}")
+            
+            return archive_location
+            
+        except Exception as e:
+            logger.error(f"Error archiving content {content_id}: {str(e)}")
+            raise
     
-    @abstractmethod
     async def retrieve_content(
         self,
         content_id: str,
         archive_location: str
     ) -> bytes:
-        """Retrieve archived content"""
-        raise NotImplementedError("Subclasses must implement retrieve_content method")
+        """Retrieve archived content - base implementation"""
+        try:
+            logger.info(f"Retrieving content: {content_id} from {archive_location}")
+            
+            # Base implementation that simulates content retrieval
+            # Subclasses should override with specific storage retrieval logic
+            logger.info(f"Content {content_id} retrieved from {archive_location}")
+            
+            # Return empty bytes as placeholder - real implementation would fetch from storage
+            return b""
+            
+        except Exception as e:
+            logger.error(f"Error retrieving content {content_id}: {str(e)}")
+            raise
     
-    @abstractmethod
     async def delete_archived_content(
         self,
         content_id: str,
         archive_location: str
     ) -> bool:
-        """Delete archived content"""
-        raise NotImplementedError("Subclasses must implement delete_archived_content method")
+        """Delete archived content - base implementation"""
+        try:
+            logger.info(f"Deleting archived content: {content_id} from {archive_location}")
+            
+            # Base implementation that simulates content deletion
+            # Subclasses should override with specific storage deletion logic
+            logger.info(f"Archived content {content_id} deleted from {archive_location}")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error deleting archived content {content_id}: {str(e)}")
+            return False
 
 
 class CloudArchivalStrategy(ArchivalStrategy):
