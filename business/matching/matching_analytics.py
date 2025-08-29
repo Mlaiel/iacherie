@@ -704,7 +704,14 @@ class SuccessPredictor:
 class StatisticalAnalysisEngine:
     """Advanced statistical analysis engine"""
     
-    async def initialize(self): pass
+    def __init__(self):
+        self.analysis_cache = {}
+        self.models = {}
+    
+    async def initialize(self): 
+        """Initialize statistical analysis engine"""
+        logger.info("StatisticalAnalysisEngine initialized")
+        return True
     
     def correlation_analysis(self, data: pd.DataFrame) -> Dict[str, float]:
         """Perform correlation analysis on metrics"""
@@ -718,7 +725,14 @@ class StatisticalAnalysisEngine:
 class PredictiveAnalyticsEngine:
     """Predictive analytics using ML models"""
     
-    async def initialize(self): pass
+    def __init__(self):
+        self.models = {}
+        self.training_data = {}
+    
+    async def initialize(self): 
+        """Initialize predictive analytics engine"""
+        logger.info("PredictiveAnalyticsEngine initialized")
+        return True
     
     def forecast_metrics(self, historical_data: List[float], periods: int) -> List[float]:
         """Forecast future metric values"""
@@ -729,7 +743,14 @@ class PredictiveAnalyticsEngine:
 class VisualizationEngine:
     """Visualization generation for analytics"""
     
-    async def initialize(self): pass
+    def __init__(self):
+        self.chart_templates = {}
+        self.visualization_cache = {}
+    
+    async def initialize(self): 
+        """Initialize visualization engine"""
+        logger.info("VisualizationEngine initialized")
+        return True
     
     def generate_dashboard_charts(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate chart configurations for dashboard"""

@@ -445,6 +445,7 @@ class ProcessingPipeline:
     
     async def _preprocess_video(self, content_data: Any, params: Dict[str, Any]) -> Dict[str, Any]:
         """Preprocess video content."""
+        temp_path = None
         try:
             import cv2
             
@@ -452,7 +453,15 @@ class ProcessingPipeline:
                 cap = cv2.VideoCapture(content_data)
             else:
                 # Handle video bytes or array
-                raise NotImplementedError("Direct video bytes processing not yet implemented")
+                import tempfile
+                import os
+                
+                # Create temporary file for video bytes
+                with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
+                    temp_file.write(content_data)
+                    temp_path = temp_file.name
+                
+                cap = cv2.VideoCapture(temp_path)
             
             frames = []
             frame_rate = cap.get(cv2.CAP_PROP_FPS)
@@ -487,6 +496,13 @@ class ProcessingPipeline:
             
         except Exception as e:
             raise RuntimeError(f"Video preprocessing failed: {e}")
+        finally:
+            # Cleanup temporary file if created
+            if temp_path and os.path.exists(temp_path):
+                try:
+                    os.unlink(temp_path)
+                except Exception:
+                    pass  # Ignore cleanup errors
     
     async def _preprocess_image(self, content_data: Any, params: Dict[str, Any]) -> Dict[str, Any]:
         """Preprocess image content."""
