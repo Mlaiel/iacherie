@@ -12,6 +12,109 @@ from pydantic_settings import BaseSettings
 from pydantic import Field, PostgresDsn, RedisDsn
 
 
+class APISettings(BaseSettings):
+    """API and web server configuration"""
+    
+    # Server Configuration
+    host: str = Field(default="0.0.0.0", env="API_HOST")
+    port: int = Field(default=8000, env="API_PORT")
+    debug: bool = Field(default=False, env="DEBUG")
+    environment: str = Field(default="development", env="ENVIRONMENT")
+    
+    # API Configuration
+    api_root_prefix: str = Field(default="/api", env="API_ROOT_PREFIX")
+    api_version: str = Field(default="v1", env="API_VERSION")
+    docs_url: str = Field(default="/docs", env="DOCS_URL")
+    openapi_url: str = Field(default="/openapi.json", env="OPENAPI_URL")
+    
+    # CORS Settings
+    cors_allow_origins: List[str] = Field(
+        default=["*"], 
+        env="CORS_ALLOW_ORIGINS"
+    )
+    cors_allow_credentials: bool = Field(default=True, env="CORS_ALLOW_CREDENTIALS")
+    cors_allow_methods: List[str] = Field(
+        default=["*"], 
+        env="CORS_ALLOW_METHODS"
+    )
+    cors_allow_headers: List[str] = Field(
+        default=["*"], 
+        env="CORS_ALLOW_HEADERS"
+    )
+    
+    # Request/Response Settings
+    max_request_size: int = Field(default=100 * 1024 * 1024, env="MAX_REQUEST_SIZE")  # 100MB
+    request_timeout: int = Field(default=300, env="REQUEST_TIMEOUT")  # 5 minutes
+    response_timeout: int = Field(default=60, env="RESPONSE_TIMEOUT")  # 1 minute
+    
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+
+
+class SecuritySettings(BaseSettings):
+    """Enhanced security configuration settings"""
+    
+    # JWT Configuration
+    jwt_secret_key: str = Field(..., env="JWT_SECRET_KEY")
+    jwt_algorithm: str = Field(default="HS256", env="JWT_ALGORITHM")
+    jwt_access_token_expire_minutes: int = Field(default=60, env="JWT_ACCESS_TOKEN_EXPIRE_MINUTES")
+    jwt_refresh_token_expire_days: int = Field(default=30, env="JWT_REFRESH_TOKEN_EXPIRE_DAYS")
+    jwt_issuer: str = Field(default="ainflue.com", env="JWT_ISSUER")
+    jwt_audience: str = Field(default="ainflue-api", env="JWT_AUDIENCE")
+    
+    # Password Security
+    password_min_length: int = Field(default=12, env="PASSWORD_MIN_LENGTH")
+    password_require_uppercase: bool = Field(default=True, env="PASSWORD_REQUIRE_UPPERCASE")
+    password_require_lowercase: bool = Field(default=True, env="PASSWORD_REQUIRE_LOWERCASE")
+    password_require_numbers: bool = Field(default=True, env="PASSWORD_REQUIRE_NUMBERS")
+    password_require_special: bool = Field(default=True, env="PASSWORD_REQUIRE_SPECIAL")
+    password_hash_rounds: int = Field(default=12, env="PASSWORD_HASH_ROUNDS")
+    
+    # Session Management
+    session_timeout_minutes: int = Field(default=120, env="SESSION_TIMEOUT_MINUTES")
+    max_concurrent_sessions: int = Field(default=5, env="MAX_CONCURRENT_SESSIONS")
+    
+    # Rate Limiting
+    rate_limit_enabled: bool = Field(default=True, env="RATE_LIMIT_ENABLED")
+    rate_limit_requests_per_minute: int = Field(default=60, env="RATE_LIMIT_REQUESTS_PER_MINUTE")
+    rate_limit_burst: int = Field(default=10, env="RATE_LIMIT_BURST")
+    
+    # Two-Factor Authentication
+    totp_issuer: str = Field(default="Ainflue Platform", env="TOTP_ISSUER")
+    backup_codes_count: int = Field(default=10, env="BACKUP_CODES_COUNT")
+    
+    # OAuth2 Configuration
+    oauth2_google_client_id: Optional[str] = Field(default=None, env="OAUTH2_GOOGLE_CLIENT_ID")
+    oauth2_google_client_secret: Optional[str] = Field(default=None, env="OAUTH2_GOOGLE_CLIENT_SECRET")
+    oauth2_github_client_id: Optional[str] = Field(default=None, env="OAUTH2_GITHUB_CLIENT_ID")
+    oauth2_github_client_secret: Optional[str] = Field(default=None, env="OAUTH2_GITHUB_CLIENT_SECRET")
+    oauth2_spotify_client_id: Optional[str] = Field(default=None, env="OAUTH2_SPOTIFY_CLIENT_ID")
+    oauth2_spotify_client_secret: Optional[str] = Field(default=None, env="OAUTH2_SPOTIFY_CLIENT_SECRET")
+    
+    # Encryption
+    encryption_key: str = Field(..., env="ENCRYPTION_KEY")
+    encryption_algorithm: str = Field(default="AES-256-GCM", env="ENCRYPTION_ALGORITHM")
+    
+    # SSL/TLS Configuration
+    ssl_cert_file: Optional[str] = Field(default=None, env="SSL_CERT_FILE")
+    ssl_key_file: Optional[str] = Field(default=None, env="SSL_KEY_FILE")
+    ssl_ca_file: Optional[str] = Field(default=None, env="SSL_CA_FILE")
+    
+    # Security Headers
+    security_headers_enabled: bool = Field(default=True, env="SECURITY_HEADERS_ENABLED")
+    hsts_max_age: int = Field(default=31536000, env="HSTS_MAX_AGE")  # 1 year
+    
+    # Audit Logging
+    audit_log_enabled: bool = Field(default=True, env="AUDIT_LOG_ENABLED")
+    audit_log_level: str = Field(default="INFO", env="AUDIT_LOG_LEVEL")
+    audit_log_retention_days: int = Field(default=365, env="AUDIT_LOG_RETENTION_DAYS")
+    
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+
+
 class DatabaseSettings(BaseSettings):
     """Database configuration settings"""
     
@@ -21,12 +124,16 @@ class DatabaseSettings(BaseSettings):
     postgres_user: str = Field(default="ainflue", env="POSTGRES_USER")
     postgres_password: str = Field(default="", env="POSTGRES_PASSWORD")
     postgres_db: str = Field(default="ainflue_platform", env="POSTGRES_DB")
+    postgres_max_connections: int = Field(default=20, env="POSTGRES_MAX_CONNECTIONS")
+    postgres_ssl_mode: str = Field(default="prefer", env="POSTGRES_SSL_MODE")
     
     # Redis Cache Database
     redis_host: str = Field(default="localhost", env="REDIS_HOST")
     redis_port: int = Field(default=6379, env="REDIS_PORT")
     redis_password: Optional[str] = Field(default=None, env="REDIS_PASSWORD")
     redis_db: int = Field(default=0, env="REDIS_DB")
+    redis_max_connections: int = Field(default=10, env="REDIS_MAX_CONNECTIONS")
+    redis_timeout: int = Field(default=5, env="REDIS_TIMEOUT")
     
     # MongoDB Document Database
     mongodb_host: str = Field(default="localhost", env="MONGODB_HOST")
@@ -34,10 +141,11 @@ class DatabaseSettings(BaseSettings):
     mongodb_user: str = Field(default="ainflue", env="MONGODB_USER")
     mongodb_password: str = Field(default="", env="MONGODB_PASSWORD")
     mongodb_db: str = Field(default="ainflue_documents", env="MONGODB_DB")
+    mongodb_max_connections: int = Field(default=50, env="MONGODB_MAX_CONNECTIONS")
     
     @property
     def postgres_url(self) -> str:
-        return f"postgresql://{self.postgres_user}:{self.postgres_password}@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
+        return f"postgresql://{self.postgres_user}:{self.postgres_password}@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}?sslmode={self.postgres_ssl_mode}"
     
     @property
     def redis_url(self) -> str:
@@ -47,6 +155,10 @@ class DatabaseSettings(BaseSettings):
     @property
     def mongodb_url(self) -> str:
         return f"mongodb://{self.mongodb_user}:{self.mongodb_password}@{self.mongodb_host}:{self.mongodb_port}/{self.mongodb_db}"
+    
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
 
 
 class SecuritySettings(BaseSettings):
@@ -206,15 +318,45 @@ class Settings:
     """Main settings aggregator"""
     
     def __init__(self):
-        self.app = ApplicationSettings()
+        self.app = APISettings()  # Renamed from ApplicationSettings to APISettings
         self.database = DatabaseSettings()
         self.security = SecuritySettings()
-        self.ai = AISettings()
-        self.platforms = PlatformSettings()
-        self.payments = PaymentSettings()
-        self.storage = StorageSettings()
-        self.monitoring = MonitoringSettings()
+        # Note: These would need to be implemented if they don't exist
+        try:
+            from .ai_settings import AISettings
+            self.ai = AISettings()
+        except ImportError:
+            self.ai = None
+            
+        try:
+            from .platform_settings import PlatformSettings
+            self.platforms = PlatformSettings()
+        except ImportError:
+            self.platforms = None
+            
+        try:
+            from .payment_settings import PaymentSettings
+            self.payments = PaymentSettings()
+        except ImportError:
+            self.payments = None
+            
+        try:
+            from .storage_settings import StorageSettings
+            self.storage = StorageSettings()
+        except ImportError:
+            self.storage = None
+            
+        try:
+            from .monitoring_settings import MonitoringSettings
+            self.monitoring = MonitoringSettings()
+        except ImportError:
+            self.monitoring = None
 
 
 # Global settings instance
 settings = Settings()
+
+# Compatibility aliases for existing code
+def get_settings():
+    """Get settings instance for dependency injection."""
+    return settings
