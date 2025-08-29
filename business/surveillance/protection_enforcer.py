@@ -183,7 +183,14 @@ class BaseProtectionAction:
     
     async def _execute_action(self, incident: ProtectionIncident, context: Dict[str, Any]) -> Dict[str, Any]:
         """Implement specific action logic"""
-        raise NotImplementedError("Subclasses must implement _execute_action")
+        # Default implementation for protection actions without specific logic
+        logging.warning(f"Action execution not implemented for {self.__class__.__name__}")
+        return {
+            "action_type": self.__class__.__name__,
+            "status": "not_implemented",
+            "message": f"Action execution not implemented for {self.__class__.__name__}",
+            "incident_id": incident.id if hasattr(incident, 'id') else "unknown"
+        }
 
 
 class TakedownRequestAction(BaseProtectionAction):

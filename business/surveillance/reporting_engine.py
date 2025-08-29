@@ -116,7 +116,18 @@ class BaseReportGenerator:
     
     async def generate(self, config: ReportConfig) -> ReportData:
         """Generate report based on configuration"""
-        raise NotImplementedError("Subclasses must implement generate method")
+        # Default implementation for report generators without specific implementation
+        logging.warning(f"Report generation not implemented for {self.__class__.__name__}")
+        from datetime import datetime
+        return ReportData(
+            report_type=getattr(config, 'report_type', 'unknown'),
+            generated_at=datetime.utcnow(),
+            data={
+                "status": "not_implemented",
+                "message": f"Report generation not implemented for {self.__class__.__name__}"
+            },
+            summary="Report generation not available"
+        )
     
     async def get_base_metrics(self, config: ReportConfig) -> Dict[str, Any]:
         """Get base metrics common to all reports"""

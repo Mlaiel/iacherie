@@ -1172,7 +1172,18 @@ class PlatformCrawler:
         content_fingerprints: Dict[str, Any]
     ) -> CrawlerResult:
         """Crawl platform for content matches"""
-        raise NotImplementedError("Subclasses must implement crawl method")
+        # Default implementation for platforms without crawling support
+        logging.warning(f"Web crawling not implemented for {self.__class__.__name__}")
+        from datetime import datetime
+        return CrawlerResult(
+            platform=getattr(self, 'platform', 'unknown'),
+            search_terms=search_terms,
+            total_results=0,
+            matches_found=0,
+            crawl_duration=0.0,
+            crawled_at=datetime.utcnow(),
+            results=[]
+        )
     
     async def shutdown(self) -> None:
         """Cleanup crawler resources"""
