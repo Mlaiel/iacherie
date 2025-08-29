@@ -2286,12 +2286,6 @@ class InfluencerPlatformUtils:
             })
         
         return checks
-            if len(api_token) < 32:
-                validation_result['issues'].append("Invalid Wise API token format")
-            else:
-                validation_result['valid'] = True
-        
-        return validation_result
     
     # AI provider testing methods
     def _test_openai_api_key(self, api_key: str) -> bool:
