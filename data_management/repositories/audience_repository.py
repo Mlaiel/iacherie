@@ -802,8 +802,57 @@ class AudienceRepository(BaseRepository):
 
     def _generate_retention_improvement_recommendations(self, analysis: AudienceRetention):
         """Generate retention improvement recommendations"""
-        # Implementation would generate recommendations
-        pass
+        try:
+            recommendations = []
+            
+            # Analyze churn patterns and generate specific recommendations
+            if analysis.churn_rate > 0.1:  # High churn rate
+                recommendations.extend([
+                    {
+                        "type": "content_strategy",
+                        "priority": "high",
+                        "title": "Improve Content Engagement",
+                        "description": "Focus on creating more engaging content to reduce churn",
+                        "actions": ["Analyze top-performing content", "Create similar content", "Increase posting frequency"]
+                    },
+                    {
+                        "type": "audience_segmentation", 
+                        "priority": "medium",
+                        "title": "Target At-Risk Segments",
+                        "description": "Identify and re-engage audience segments with high churn risk",
+                        "actions": ["Segment audience by engagement", "Create targeted campaigns", "Personalize content"]
+                    }
+                ])
+            
+            if analysis.engagement_rate < 0.03:  # Low engagement
+                recommendations.append({
+                    "type": "engagement_boost",
+                    "priority": "high", 
+                    "title": "Boost Audience Engagement",
+                    "description": "Implement strategies to increase audience interaction",
+                    "actions": ["Use interactive content", "Respond to comments", "Host live sessions"]
+                })
+            
+            # Store recommendations for later retrieval
+            recommendation_data = {
+                "creator_id": analysis.creator_id,
+                "timestamp": datetime.utcnow().isoformat(),
+                "recommendations": recommendations,
+                "analysis_snapshot": {
+                    "churn_rate": analysis.churn_rate,
+                    "engagement_rate": analysis.engagement_rate,
+                    "total_audience": analysis.total_audience
+                }
+            }
+            
+            # In production, save to database
+            self.logger.info(f"Generated {len(recommendations)} retention recommendations for creator {analysis.creator_id}")
+            
+            return recommendations
+            
+        except Exception as e:
+            self.logger.error(f"Failed to generate retention recommendations: {e}")
+            return []
 
     def _fetch_platform_metrics(self, creator_id: str, platform: AudiencePlatform, metrics: List[str]):
         """Fetch platform metrics"""

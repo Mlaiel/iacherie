@@ -533,15 +533,97 @@ class InvoiceManager:
         
     async def _save_invoice(self, invoice: Invoice):
         """Sauvegarde une facture en base"""
-        # Implémentation de sauvegarde en base de données
-        # await self.database_client.invoices.save(invoice)
-        pass
+        try:
+            # Convert invoice to dict for storage
+            invoice_data = {
+                "invoice_id": invoice.invoice_id,
+                "invoice_number": invoice.invoice_number,
+                "customer_id": invoice.customer_id,
+                "customer_name": invoice.customer_name,
+                "customer_email": invoice.customer_email,
+                "customer_address": invoice.customer_address,
+                "items": [asdict(item) for item in invoice.items],
+                "subtotal": float(invoice.subtotal),
+                "tax_amount": float(invoice.tax_amount),
+                "total_amount": float(invoice.total_amount),
+                "currency": invoice.currency,
+                "status": invoice.status.value,
+                "payment_method": invoice.payment_method.value if invoice.payment_method else None,
+                "issued_at": invoice.issued_at.isoformat() if invoice.issued_at else None,
+                "due_at": invoice.due_at.isoformat() if invoice.due_at else None,
+                "paid_at": invoice.paid_at.isoformat() if invoice.paid_at else None,
+                "template_id": invoice.template_id,
+                "notes": invoice.notes,
+                "metadata": invoice.metadata,
+                "created_at": datetime.utcnow().isoformat(),
+                "updated_at": datetime.utcnow().isoformat()
+            }
+            
+            # In production environment with database client
+            if self.database_client:
+                # Save to database
+                await self.database_client.invoices.save(invoice_data)
+                logger.info(f"Invoice {invoice.invoice_number} saved to database")
+            else:
+                # For development/testing - store in memory cache or file
+                cache_key = f"invoice:{invoice.invoice_id}"
+                # Store invoice data in memory for retrieval
+                self._invoice_cache = getattr(self, '_invoice_cache', {})
+                self._invoice_cache[cache_key] = invoice_data
+                logger.info(f"Invoice {invoice.invoice_number} cached in memory")
+                
+        except Exception as e:
+            logger.error(f"Failed to save invoice {invoice.invoice_number}: {e}")
+            raise
         
     async def _load_invoice(self, invoice_id: str) -> Optional[Invoice]:
         """Charge une facture depuis la base"""
-        # Implémentation de chargement depuis base de données  
-        # return await self.database_client.invoices.find_by_id(invoice_id)
-        return None
+        try:
+            invoice_data = None
+            
+            # In production environment with database client
+            if self.database_client:
+                invoice_data = await self.database_client.invoices.find_by_id(invoice_id)
+            else:
+                # For development/testing - load from memory cache
+                cache_key = f"invoice:{invoice_id}"
+                self._invoice_cache = getattr(self, '_invoice_cache', {})
+                invoice_data = self._invoice_cache.get(cache_key)
+                
+            if not invoice_data:
+                return None
+                
+            # Convert back to Invoice object
+            items = [InvoiceItem(**item_data) for item_data in invoice_data.get('items', [])]
+            
+            invoice = Invoice(
+                invoice_id=invoice_data['invoice_id'],
+                invoice_number=invoice_data['invoice_number'],
+                customer_id=invoice_data['customer_id'],
+                customer_name=invoice_data['customer_name'],
+                customer_email=invoice_data['customer_email'],
+                customer_address=invoice_data.get('customer_address'),
+                items=items,
+                subtotal=Decimal(str(invoice_data['subtotal'])),
+                tax_amount=Decimal(str(invoice_data['tax_amount'])),
+                total_amount=Decimal(str(invoice_data['total_amount'])),
+                currency=invoice_data['currency'],
+                status=InvoiceStatus(invoice_data['status']),
+                payment_method=PaymentMethod(invoice_data['payment_method']) if invoice_data.get('payment_method') else None,
+                issued_at=datetime.fromisoformat(invoice_data['issued_at']) if invoice_data.get('issued_at') else None,
+                due_at=datetime.fromisoformat(invoice_data['due_at']) if invoice_data.get('due_at') else None,
+                paid_at=datetime.fromisoformat(invoice_data['paid_at']) if invoice_data.get('paid_at') else None,
+                template_id=invoice_data.get('template_id'),
+                notes=invoice_data.get('notes'),
+                metadata=invoice_data.get('metadata', {})
+            )
+            
+            logger.info(f"Invoice {invoice.invoice_number} loaded successfully")
+            return invoice
+            
+        except Exception as e:
+            logger.error(f"Failed to load invoice {invoice_id}: {e}")
+            return None
         
     def get_invoice_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques des factures"""
