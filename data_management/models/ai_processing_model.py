@@ -41,6 +41,53 @@ class AIProcessingJobModel:
     updated_at: datetime
     completed_at: Optional[datetime]
 
+# Alias for backward compatibility
+AIProcessingJob = AIProcessingJobModel
+ModelType = AIModelType
+
+@dataclass
+class ProcessingResult:
+    """Processing result model."""
+    result_id: str
+    job_id: str
+    status: ProcessingStatus
+    output_data: Dict[str, Any]
+    confidence_score: Optional[float]
+    processing_time_ms: int
+    created_at: datetime
+
+@dataclass
+class ModelMetrics:
+    """Model performance metrics."""
+    model_name: str
+    accuracy: float
+    precision: float
+    recall: float
+    f1_score: float
+    processing_time_avg_ms: float
+    memory_usage_mb: float
+    last_updated: datetime
+
+@dataclass
+class ProcessingPipeline:
+    """Processing pipeline configuration."""
+    pipeline_id: str
+    name: str
+    model_types: List[AIModelType]
+    configuration: Dict[str, Any]
+    is_active: bool
+    created_at: datetime
+
+@dataclass
+class QualityAssessment:
+    """Quality assessment for processed content."""
+    assessment_id: str
+    job_id: str
+    quality_score: float
+    quality_metrics: Dict[str, float]
+    recommendations: List[str]
+    created_at: datetime
+
 @dataclass
 class MLModelVersionModel:
     """ML model version tracking."""
