@@ -431,6 +431,79 @@ class BusinessLogicCore:
             'enabled_workflows': len([w for w in self.workflows.values() if w.get('enabled', False)]),
             'workflow_types': list(self.workflows.keys())
         }
+    
+    async def process_creator_workflow(self, content: ContentUpload) -> List[WorkflowResult]:
+        """
+        Process complete creator workflow through all business logic stages
+        This is the main orchestration method for creator content processing
+        """
+        if not self.initialized:
+            raise RuntimeError("Business Logic Core not initialized")
+        
+        logger.info(f"🚀 Starting creator workflow for {content.creator_type.value} content: {content.content_id}")
+        
+        workflow_results = []
+        
+        try:
+            # Stage 1: Content Upload and Initial Processing
+            upload_result = await self._process_content_upload(content)
+            workflow_results.append(upload_result)
+            
+            if not upload_result.success:
+                logger.error(f"❌ Content upload failed for {content.content_id}")
+                return workflow_results
+            
+            # Stage 2: Content Analysis and Fingerprinting
+            analysis_result = await self._process_content_analysis(content)
+            workflow_results.append(analysis_result)
+            
+            # Stage 3: Rights Protection and Copyright Check
+            protection_result = await self._process_rights_protection(content)
+            workflow_results.append(protection_result)
+            
+            # Stage 4: SEO Optimization
+            seo_result = await self._process_seo_optimization(content)
+            workflow_results.append(seo_result)
+            
+            # Stage 5: Collaboration Matching
+            collaboration_result = await self._process_collaboration_matching(content)
+            workflow_results.append(collaboration_result)
+            
+            # Stage 6: Multi-Platform Distribution
+            distribution_result = await self._process_distribution(content)
+            workflow_results.append(distribution_result)
+            
+            # Stage 7: Monetization and Revenue Optimization
+            monetization_result = await self._process_monetization(content)
+            workflow_results.append(monetization_result)
+            
+            # Stage 8: Analytics and Performance Tracking
+            analytics_result = await self._process_analytics(content, workflow_results)
+            workflow_results.append(analytics_result)
+            
+            # Log completion
+            successful_stages = len([r for r in workflow_results if r.success])
+            total_stages = len(workflow_results)
+            
+            logger.info(f"✅ Creator workflow completed for {content.content_id}: "
+                       f"{successful_stages}/{total_stages} stages successful")
+            
+            return workflow_results
+            
+        except Exception as e:
+            logger.error(f"❌ Critical error in creator workflow for {content.content_id}: {e}")
+            
+            # Add error result
+            error_result = WorkflowResult(
+                content_id=content.content_id,
+                stage=WorkflowStage.CONTENT_UPLOAD,
+                success=False,
+                data={},
+                errors=[str(e)]
+            )
+            workflow_results.append(error_result)
+            
+            return workflow_results
 
 
 # Global instance for singleton access
