@@ -107,23 +107,23 @@ from .harmonic_progression_ai import (
 # Vocal and Instrument Processing
 from .vocal_synthesis_ai import (
     VocalSynthesisAI,
+    VocalSynthesizer,
     VoiceGenerator,
-    VocalProcessor,
-    VocalHarmonizer
+    VocalProcessor
 )
 
 from .instrument_separator import (
     InstrumentSeparator,
-    StemSeparationEngine,
     AudioSourceSeparator,
-    InstrumentIsolator
+    InstrumentIsolator,
+    TrackSeparator
 )
 
 from .remix_quality_assessor import (
     RemixQualityAssessor,
-    QualityScoreCalculator,
-    RemixEvaluator,
-    QualityMetricsReporter
+    QualityAnalyzer,
+    AudioQualityAssessor,
+    QualityValidator
 )
 
 # Main export classes for external usage
