@@ -25,7 +25,7 @@ except ImportError as e:
 
 # Try to import config, fallback to simple config if needed
 try:
-    # Try to use simple_config.py directly
+    # First try simple_config.py which has comprehensive settings
     import simple_config
     settings = simple_config.settings
     print("✓ Successfully imported simple_config.py")
@@ -33,18 +33,28 @@ try:
     print(f"✓ Debug mode: {settings.app.debug}")
     print(f"✓ Host: {settings.app.host}")
     print(f"✓ Port: {settings.app.port}")
-except Exception as e:
-    print(f"❌ Failed to import config: {e}")
-    # Create minimal fallback settings
-    class MockSettings:
-        class App:
-            environment = "development"
-            debug = True
-            host = "127.0.0.1"
-            port = 8000
-        app = App()
-    settings = MockSettings()
-    print("⚠️  Using fallback settings")
+except ImportError as e:
+    try:
+        # Fallback to unified app_config module
+        import app_config
+        settings = app_config.settings
+        print("✓ Successfully imported app_config.py as fallback")
+        print(f"✓ Environment: {settings.app.environment}")
+        print(f"✓ Debug mode: {settings.app.debug}")
+        print(f"✓ Host: {settings.app.host}")
+        print(f"✓ Port: {settings.app.port}")
+    except Exception as e:
+        print(f"❌ Failed to import any config: {e}")
+        # Create minimal fallback settings
+        class MockSettings:
+            class App:
+                environment = "development"
+                debug = True
+                host = "127.0.0.1"
+                port = 8000
+            app = App()
+        settings = MockSettings()
+        print("⚠️  Using minimal fallback settings")
 
 # Create minimal FastAPI app if main app not available
 if not MAIN_APP_AVAILABLE:
