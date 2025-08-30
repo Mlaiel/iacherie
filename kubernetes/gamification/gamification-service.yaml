@@ -1,0 +1,91 @@
+# Ainflue Gamification Module - Service Manifest
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Production-ready service for gamification engine
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gamification-service
+  namespace: ainflue-gamification
+  labels:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: gamification-service
+    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/managed-by: kubectl
+    created-by: fahed-mlaiel
+  annotations:
+    description: "Service for gamification engine - points, achievements, leaderboards"
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9090"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8004
+    targetPort: http
+    protocol: TCP
+  - name: metrics
+    port: 9090
+    targetPort: metrics
+    protocol: TCP
+  - name: health
+    port: 8081
+    targetPort: health
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/instance: production
+  sessionAffinity: None
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gamification-headless-service
+  namespace: ainflue-gamification
+  labels:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/component: headless-service
+  annotations:
+    description: "Headless service for direct pod communication"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: http
+    port: 8004
+    targetPort: http
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/instance: production
+  publishNotReadyAddresses: true
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: gamification-monitoring
+  namespace: ainflue-gamification
+  labels:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/component: monitoring-endpoints
+subsets:
+- addresses:
+  - ip: 10.0.0.1
+    targetRef:
+      kind: Pod
+      name: gamification-pod
+      namespace: ainflue-gamification
+  ports:
+  - name: metrics
+    port: 9090
+    protocol: TCP

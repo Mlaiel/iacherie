@@ -1,0 +1,173 @@
+# Ainflue Mobile API Module - Horizontal Pod Autoscaler
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Production-ready HPA for mobile API scaling based on mobile traffic patterns
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mobile-api-hpa
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: autoscaling
+    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/managed-by: kubectl
+    created-by: fahed-mlaiel
+  annotations:
+    description: "Horizontal Pod Autoscaler for mobile API based on mobile traffic and engagement patterns"
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-mobile-api
+  minReplicas: 4
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 65
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 75
+  - type: Pods
+    pods:
+      metric:
+        name: mobile_active_sessions_per_pod
+      target:
+        type: AverageValue
+        averageValue: "200"
+  - type: Pods
+    pods:
+      metric:
+        name: mobile_requests_per_second_per_pod
+      target:
+        type: AverageValue
+        averageValue: "100"
+  - type: Pods
+    pods:
+      metric:
+        name: mobile_upload_queue_length_per_pod
+      target:
+        type: AverageValue
+        averageValue: "50"
+  - type: Pods
+    pods:
+      metric:
+        name: mobile_offline_sync_backlog_per_pod
+      target:
+        type: AverageValue
+        averageValue: "75"
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 90
+      policies:
+      - type: Percent
+        value: 75
+        periodSeconds: 45
+      - type: Pods
+        value: 3
+        periodSeconds: 45
+      selectPolicy: Max
+    scaleDown:
+      stabilizationWindowSeconds: 240
+      policies:
+      - type: Percent
+        value: 25
+        periodSeconds: 90
+      - type: Pods
+        value: 1
+        periodSeconds: 90
+      selectPolicy: Min
+
+---
+apiVersion: v2
+kind: VerticalPodAutoscaler
+metadata:
+  name: mobile-api-vpa
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/component: vertical-autoscaling
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-mobile-api
+  updatePolicy:
+    updateMode: "Auto"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: mobile-api-server
+      minAllowed:
+        cpu: 150m
+        memory: 256Mi
+      maxAllowed:
+        cpu: 2000m
+        memory: 4Gi
+      controlledResources:
+      - cpu
+      - memory
+      controlledValues: RequestsAndLimits
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: mobile-api-pdb
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/component: disruption-budget
+spec:
+  minAvailable: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mobile-api
+      app.kubernetes.io/instance: production
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mobile-traffic-patterns
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/component: traffic-patterns
+data:
+  traffic_patterns.yaml: |
+    mobile_traffic_patterns:
+      peak_hours:
+        morning: "07:00-09:00"
+        lunch: "12:00-14:00"
+        evening: "18:00-22:00"
+        timezone: "UTC"
+      geographic_distribution:
+        north_america: 40
+        europe: 25
+        asia_pacific: 20
+        south_america: 10
+        africa: 5
+      device_distribution:
+        ios: 55
+        android: 42
+        web_mobile: 3
+      usage_patterns:
+        content_upload: "peak_evening"
+        social_interaction: "peak_evening"
+        collaboration: "peak_evening"
+        content_consumption: "distributed"
+        offline_sync: "off_peak"
+      scaling_triggers:
+        high_traffic_threshold: 80
+        medium_traffic_threshold: 60
+        low_traffic_threshold: 30
+        emergency_scaling_threshold: 95
