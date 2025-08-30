@@ -938,7 +938,7 @@ class ResourceUsageMonitor:
         self.monitoring_thread = threading.Thread(target=self._monitor_resources, daemon=True)
         self.monitoring_thread.start()
     
-    def _monitor_resources(self):
+    async def _monitor_resources(self):
         """Monitor system resources continuously."""
         
         while True:
@@ -976,11 +976,11 @@ class ResourceUsageMonitor:
                 # Check thresholds and trigger alerts
                 await self._check_resource_thresholds(resource_data)
                 
-                time.sleep(self.config.resource_monitor_interval)
+                await asyncio.sleep(self.config.resource_monitor_interval)
                 
             except Exception as e:
                 self.logger.error(f"Resource monitoring error: {e}")
-                time.sleep(10)  # Wait before retrying
+                await asyncio.sleep(10)  # Wait before retrying
     
     def _store_resource_data(self, data: Dict[str, Any]):
         """Store resource usage data."""

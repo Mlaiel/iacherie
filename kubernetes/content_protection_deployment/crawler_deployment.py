@@ -1130,27 +1130,824 @@ class PlatformCrawlerManager:
     # Platform-specific implementation methods would go here
     async def _crawl_youtube_api(self, target: CrawlTarget) -> List[CrawlResult]:
         """YouTube API crawling implementation"""
-        return []
+        results = []
+        
+        try:
+            import aiohttp
+            import json
+            
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.YOUTUBE):
+                self.logger.warning("YouTube API rate limit exceeded")
+                return results
+            
+            # Get API key from config or environment
+            api_key = self.config.get("youtube_api_key") or "demo_api_key"
+            
+            # Build search query
+            if target.search_terms:
+                search_query = " ".join(target.search_terms)
+            elif target.creator_handles:
+                search_query = " ".join(target.creator_handles)
+            else:
+                search_query = "content"
+            
+            # YouTube Data API v3 search endpoint
+            base_url = "https://www.googleapis.com/youtube/v3/search"
+            params = {
+                "part": "snippet",
+                "q": search_query,
+                "type": "video",
+                "maxResults": min(target.metadata.get("max_results", 25), 50),
+                "order": "relevance",
+                "key": api_key
+            }
+            
+            # Apply content type filters
+            if "video" in target.content_types:
+                params["type"] = "video"
+            elif "channel" in target.content_types:
+                params["type"] = "channel"
+            elif "playlist" in target.content_types:
+                params["type"] = "playlist"
+            
+            # Make API request
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.get(base_url, params=params) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        # Process search results
+                        for item in data.get("items", []):
+                            snippet = item.get("snippet", {})
+                            video_id = item.get("id", {}).get("videoId", "")
+                            
+                            if video_id:
+                                # Get additional video details
+                                video_details = await self._get_youtube_video_details(video_id, api_key, session)
+                                
+                                # Create crawl result
+                                result = CrawlResult(
+                                    task_id=target.target_id,
+                                    platform=PlatformType.YOUTUBE,
+                                    content_url=f"https://www.youtube.com/watch?v={video_id}",
+                                    content_type="video",
+                                    title=snippet.get("title", ""),
+                                    description=snippet.get("description", ""),
+                                    creator_info={
+                                        "channel_id": snippet.get("channelId", ""),
+                                        "channel_title": snippet.get("channelTitle", ""),
+                                        "published_at": snippet.get("publishedAt", "")
+                                    },
+                                    engagement_metrics=video_details.get("engagement", {}),
+                                    content_metadata={
+                                        "video_id": video_id,
+                                        "thumbnail_url": snippet.get("thumbnails", {}).get("high", {}).get("url", ""),
+                                        "category_id": video_details.get("category_id", ""),
+                                        "duration": video_details.get("duration", ""),
+                                        "tags": video_details.get("tags", [])
+                                    },
+                                    discovered_at=datetime.now(),
+                                    fingerprint_required=True,
+                                    dmca_candidate=True  # YouTube content is potential DMCA candidate
+                                )
+                                results.append(result)
+                    
+                    elif response.status == 403:
+                        self.logger.error("YouTube API quota exceeded or invalid API key")
+                    else:
+                        self.logger.error(f"YouTube API error: {response.status}")
+            
+            # Update rate limiter
+            await self._record_api_request(PlatformType.YOUTUBE)
+            
+            self.logger.info(f"YouTube API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"YouTube API crawling failed: {str(e)}")
+        
+        return results
     
     async def _crawl_twitter_api(self, target: CrawlTarget) -> List[CrawlResult]:
         """Twitter API crawling implementation"""
-        return []
+        results = []
+        
+        try:
+            import aiohttp
+            import json
+            import base64
+            
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.TWITTER):
+                self.logger.warning("Twitter API rate limit exceeded")
+                return results
+            
+            # Get API credentials from config
+            bearer_token = self.config.get("twitter_bearer_token") or "demo_bearer_token"
+            
+            # Build search query
+            if target.search_terms:
+                query = " ".join(target.search_terms)
+            elif target.creator_handles:
+                # Search for tweets from specific users
+                handles = " OR ".join([f"from:{handle.lstrip('@')}" for handle in target.creator_handles])
+                query = handles
+            else:
+                query = "content"
+            
+            # Add content type filters
+            if "image" in target.content_types:
+                query += " has:images"
+            if "video" in target.content_types:
+                query += " has:videos"
+            if "audio" in target.content_types:
+                query += " has:media"
+            
+            # Remove retweets and replies for cleaner content
+            query += " -is:retweet -is:reply"
+            
+            # Twitter API v2 search endpoint
+            base_url = "https://api.twitter.com/2/tweets/search/recent"
+            params = {
+                "query": query,
+                "max_results": min(target.metadata.get("max_results", 25), 100),
+                "tweet.fields": "created_at,author_id,public_metrics,context_annotations,attachments,lang",
+                "user.fields": "username,name,verified,public_metrics",
+                "media.fields": "type,url,preview_image_url,duration_ms,width,height",
+                "expansions": "author_id,attachments.media_keys"
+            }
+            
+            headers = {
+                "Authorization": f"Bearer {bearer_token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Make API request
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.get(base_url, params=params, headers=headers) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        # Extract users and media for reference
+                        users_lookup = {}
+                        if "includes" in data and "users" in data["includes"]:
+                            for user in data["includes"]["users"]:
+                                users_lookup[user["id"]] = user
+                        
+                        media_lookup = {}
+                        if "includes" in data and "media" in data["includes"]:
+                            for media in data["includes"]["media"]:
+                                media_lookup[media["media_key"]] = media
+                        
+                        # Process tweets
+                        for tweet in data.get("data", []):
+                            tweet_id = tweet.get("id", "")
+                            author_id = tweet.get("author_id", "")
+                            author_info = users_lookup.get(author_id, {})
+                            
+                            # Determine content type
+                            content_type = "text"
+                            media_urls = []
+                            
+                            if "attachments" in tweet and "media_keys" in tweet["attachments"]:
+                                for media_key in tweet["attachments"]["media_keys"]:
+                                    media = media_lookup.get(media_key, {})
+                                    if media.get("type") == "photo":
+                                        content_type = "image"
+                                        media_urls.append(media.get("url", ""))
+                                    elif media.get("type") == "video":
+                                        content_type = "video" 
+                                        media_urls.append(media.get("preview_image_url", ""))
+                                    elif media.get("type") == "animated_gif":
+                                        content_type = "video"
+                                        media_urls.append(media.get("preview_image_url", ""))
+                            
+                            # Create crawl result
+                            result = CrawlResult(
+                                task_id=target.target_id,
+                                platform=PlatformType.TWITTER,
+                                content_url=f"https://twitter.com/user/status/{tweet_id}",
+                                content_type=content_type,
+                                title=f"Tweet by @{author_info.get('username', 'unknown')}",
+                                description=tweet.get("text", "")[:500],  # Truncate long tweets
+                                creator_info={
+                                    "user_id": author_id,
+                                    "username": author_info.get("username", ""),
+                                    "display_name": author_info.get("name", ""),
+                                    "verified": author_info.get("verified", False),
+                                    "followers_count": author_info.get("public_metrics", {}).get("followers_count", 0)
+                                },
+                                engagement_metrics={
+                                    "retweet_count": tweet.get("public_metrics", {}).get("retweet_count", 0),
+                                    "like_count": tweet.get("public_metrics", {}).get("like_count", 0),
+                                    "reply_count": tweet.get("public_metrics", {}).get("reply_count", 0),
+                                    "quote_count": tweet.get("public_metrics", {}).get("quote_count", 0)
+                                },
+                                content_metadata={
+                                    "tweet_id": tweet_id,
+                                    "created_at": tweet.get("created_at", ""),
+                                    "lang": tweet.get("lang", ""),
+                                    "media_urls": media_urls,
+                                    "context_annotations": tweet.get("context_annotations", [])
+                                },
+                                discovered_at=datetime.now(),
+                                fingerprint_required=content_type in ["image", "video"],
+                                dmca_candidate=content_type in ["image", "video", "audio"]
+                            )
+                            results.append(result)
+                    
+                    elif response.status == 429:
+                        self.logger.error("Twitter API rate limit exceeded")
+                    elif response.status == 401:
+                        self.logger.error("Twitter API authentication failed")
+                    else:
+                        self.logger.error(f"Twitter API error: {response.status}")
+            
+            # Update rate limiter
+            await self._record_api_request(PlatformType.TWITTER)
+            
+            self.logger.info(f"Twitter API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"Twitter API crawling failed: {str(e)}")
+        
+        return results
     
     async def _crawl_spotify_api(self, target: CrawlTarget) -> List[CrawlResult]:
         """Spotify API crawling implementation"""
-        return []
+        results = []
+        
+        try:
+            import aiohttp
+            import json
+            import base64
+            
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.SPOTIFY):
+                self.logger.warning("Spotify API rate limit exceeded")
+                return results
+            
+            # Get Spotify API credentials
+            client_id = self.config.get("spotify_client_id") or "demo_client_id"
+            client_secret = self.config.get("spotify_client_secret") or "demo_client_secret"
+            
+            # Get access token using Client Credentials Flow
+            access_token = await self._get_spotify_access_token(client_id, client_secret)
+            
+            if not access_token:
+                self.logger.error("Failed to get Spotify access token")
+                return results
+            
+            # Build search query
+            if target.search_terms:
+                query = " ".join(target.search_terms)
+            elif target.creator_handles:
+                # Search for artists
+                query = " ".join(target.creator_handles)
+            else:
+                query = "music"
+            
+            # Determine search type based on content types
+            search_types = []
+            if "audio" in target.content_types or not target.content_types:
+                search_types.extend(["track", "album"])
+            if "artist" in target.content_types:
+                search_types.append("artist")
+            if "playlist" in target.content_types:
+                search_types.append("playlist")
+            
+            if not search_types:
+                search_types = ["track"]  # Default to tracks
+            
+            # Spotify Web API search endpoint
+            base_url = "https://api.spotify.com/v1/search"
+            params = {
+                "q": query,
+                "type": ",".join(search_types),
+                "limit": min(target.metadata.get("max_results", 25), 50),
+                "market": "US"  # Default market
+            }
+            
+            headers = {
+                "Authorization": f"Bearer {access_token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Make API request
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.get(base_url, params=params, headers=headers) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        # Process tracks
+                        if "tracks" in data and "items" in data["tracks"]:
+                            for track in data["tracks"]["items"]:
+                                track_id = track.get("id", "")
+                                
+                                # Get audio features for additional metadata
+                                audio_features = await self._get_spotify_audio_features(track_id, access_token, session)
+                                
+                                result = CrawlResult(
+                                    task_id=target.target_id,
+                                    platform=PlatformType.SPOTIFY,
+                                    content_url=track.get("external_urls", {}).get("spotify", ""),
+                                    content_type="audio",
+                                    title=track.get("name", ""),
+                                    description=f"Track by {', '.join([artist['name'] for artist in track.get('artists', [])])}",
+                                    creator_info={
+                                        "artists": [
+                                            {
+                                                "id": artist.get("id", ""),
+                                                "name": artist.get("name", ""),
+                                                "url": artist.get("external_urls", {}).get("spotify", "")
+                                            }
+                                            for artist in track.get("artists", [])
+                                        ],
+                                        "album": {
+                                            "id": track.get("album", {}).get("id", ""),
+                                            "name": track.get("album", {}).get("name", ""),
+                                            "release_date": track.get("album", {}).get("release_date", "")
+                                        }
+                                    },
+                                    engagement_metrics={
+                                        "popularity": track.get("popularity", 0),
+                                        "explicit": track.get("explicit", False),
+                                        "duration_ms": track.get("duration_ms", 0)
+                                    },
+                                    content_metadata={
+                                        "track_id": track_id,
+                                        "isrc": track.get("external_ids", {}).get("isrc", ""),
+                                        "preview_url": track.get("preview_url", ""),
+                                        "track_number": track.get("track_number", 0),
+                                        "disc_number": track.get("disc_number", 0),
+                                        "available_markets": track.get("available_markets", []),
+                                        "audio_features": audio_features or {}
+                                    },
+                                    discovered_at=datetime.now(),
+                                    fingerprint_required=True,  # Audio content needs fingerprinting
+                                    dmca_candidate=True  # Music content is high DMCA risk
+                                )
+                                results.append(result)
+                        
+                        # Process albums
+                        if "albums" in data and "items" in data["albums"]:
+                            for album in data["albums"]["items"]:
+                                result = CrawlResult(
+                                    task_id=target.target_id,
+                                    platform=PlatformType.SPOTIFY,
+                                    content_url=album.get("external_urls", {}).get("spotify", ""),
+                                    content_type="album",
+                                    title=album.get("name", ""),
+                                    description=f"Album by {', '.join([artist['name'] for artist in album.get('artists', [])])}",
+                                    creator_info={
+                                        "artists": [
+                                            {
+                                                "id": artist.get("id", ""),
+                                                "name": artist.get("name", ""),
+                                                "url": artist.get("external_urls", {}).get("spotify", "")
+                                            }
+                                            for artist in album.get("artists", [])
+                                        ],
+                                        "release_date": album.get("release_date", ""),
+                                        "total_tracks": album.get("total_tracks", 0)
+                                    },
+                                    engagement_metrics={},
+                                    content_metadata={
+                                        "album_id": album.get("id", ""),
+                                        "album_type": album.get("album_type", ""),
+                                        "available_markets": album.get("available_markets", []),
+                                        "images": album.get("images", [])
+                                    },
+                                    discovered_at=datetime.now(),
+                                    fingerprint_required=True,
+                                    dmca_candidate=True
+                                )
+                                results.append(result)
+                        
+                        # Process artists
+                        if "artists" in data and "items" in data["artists"]:
+                            for artist in data["artists"]["items"]:
+                                result = CrawlResult(
+                                    task_id=target.target_id,
+                                    platform=PlatformType.SPOTIFY,
+                                    content_url=artist.get("external_urls", {}).get("spotify", ""),
+                                    content_type="artist",
+                                    title=artist.get("name", ""),
+                                    description=f"Artist - {', '.join(artist.get('genres', []))}",
+                                    creator_info={
+                                        "artist_id": artist.get("id", ""),
+                                        "genres": artist.get("genres", []),
+                                        "images": artist.get("images", [])
+                                    },
+                                    engagement_metrics={
+                                        "popularity": artist.get("popularity", 0),
+                                        "followers": artist.get("followers", {}).get("total", 0)
+                                    },
+                                    content_metadata={
+                                        "artist_id": artist.get("id", ""),
+                                        "genres": artist.get("genres", [])
+                                    },
+                                    discovered_at=datetime.now(),
+                                    fingerprint_required=False,  # Artist profiles don't need fingerprinting
+                                    dmca_candidate=False
+                                )
+                                results.append(result)
+                    
+                    elif response.status == 429:
+                        self.logger.error("Spotify API rate limit exceeded")
+                    elif response.status == 401:
+                        self.logger.error("Spotify API authentication failed")
+                    else:
+                        self.logger.error(f"Spotify API error: {response.status}")
+            
+            # Update rate limiter
+            await self._record_api_request(PlatformType.SPOTIFY)
+            
+            self.logger.info(f"Spotify API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"Spotify API crawling failed: {str(e)}")
+        
+        return results
     
     async def _crawl_tiktok_scraping(self, target: CrawlTarget) -> List[CrawlResult]:
         """TikTok web scraping implementation"""
-        return []
+        results = []
+        
+        try:
+            import aiohttp
+            from bs4 import BeautifulSoup
+            import re
+            import json
+            
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.TIKTOK):
+                self.logger.warning("TikTok scraping rate limit exceeded")
+                return results
+            
+            # Build search URLs based on target
+            urls_to_scrape = []
+            
+            if target.url:
+                urls_to_scrape.append(target.url)
+            elif target.creator_handles:
+                # Build profile URLs
+                for handle in target.creator_handles:
+                    clean_handle = handle.lstrip('@')
+                    urls_to_scrape.append(f"https://www.tiktok.com/@{clean_handle}")
+            elif target.search_terms:
+                # TikTok doesn't have a direct search URL we can scrape easily
+                # Use hashtag URLs instead
+                for term in target.search_terms:
+                    clean_term = term.replace(' ', '').replace('#', '')
+                    urls_to_scrape.append(f"https://www.tiktok.com/tag/{clean_term}")
+            
+            if not urls_to_scrape:
+                self.logger.warning("No valid TikTok URLs to scrape")
+                return results
+            
+            # Setup headers to mimic real browser
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1',
+            }
+            
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
+                for url in urls_to_scrape[:3]:  # Limit to 3 URLs to avoid overwhelming
+                    try:
+                        async with session.get(url) as response:
+                            if response.status == 200:
+                                html = await response.text()
+                                soup = BeautifulSoup(html, 'html.parser')
+                                
+                                # Extract video data from script tags (TikTok embeds data in JSON)
+                                script_tags = soup.find_all('script', {'id': '__UNIVERSAL_DATA_FOR_REHYDRATION__'})
+                                
+                                for script in script_tags:
+                                    try:
+                                        script_content = script.string
+                                        if script_content:
+                                            data = json.loads(script_content)
+                                            videos = self._extract_tiktok_videos_from_data(data, target.target_id)
+                                            results.extend(videos)
+                                    except (json.JSONDecodeError, KeyError) as e:
+                                        self.logger.debug(f"Error parsing TikTok JSON data: {e}")
+                                
+                                # Fallback: extract from HTML structure
+                                if not results:
+                                    video_elements = soup.find_all('div', {'data-e2e': 'video-feed-item'})
+                                    for element in video_elements[:5]:  # Limit to 5 videos per page
+                                        video_data = self._extract_tiktok_video_from_element(element, target.target_id)
+                                        if video_data:
+                                            results.append(video_data)
+                            
+                            elif response.status == 429:
+                                self.logger.warning("TikTok rate limiting detected")
+                                break
+                            else:
+                                self.logger.warning(f"TikTok scraping error for {url}: {response.status}")
+                    
+                    except Exception as e:
+                        self.logger.error(f"Error scraping TikTok URL {url}: {str(e)}")
+                        continue
+            
+            # Update rate limiter
+            await self._record_api_request(PlatformType.TIKTOK)
+            
+            self.logger.info(f"TikTok scraping completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"TikTok scraping failed: {str(e)}")
+        
+        return results
     
     async def _crawl_instagram_scraping(self, target: CrawlTarget) -> List[CrawlResult]:
         """Instagram web scraping implementation"""
-        return []
+        results = []
+        
+        try:
+            import aiohttp
+            from bs4 import BeautifulSoup
+            import re
+            import json
+            
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.INSTAGRAM):
+                self.logger.warning("Instagram scraping rate limit exceeded")
+                return results
+            
+            # Build URLs to scrape
+            urls_to_scrape = []
+            
+            if target.url:
+                urls_to_scrape.append(target.url)
+            elif target.creator_handles:
+                for handle in target.creator_handles:
+                    clean_handle = handle.lstrip('@')
+                    urls_to_scrape.append(f"https://www.instagram.com/{clean_handle}/")
+            elif target.search_terms:
+                # Use hashtag URLs for search terms
+                for term in target.search_terms:
+                    clean_term = term.replace(' ', '').replace('#', '')
+                    urls_to_scrape.append(f"https://www.instagram.com/explore/tags/{clean_term}/")
+            
+            if not urls_to_scrape:
+                self.logger.warning("No valid Instagram URLs to scrape")
+                return results
+            
+            # Setup headers
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+            
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
+                for url in urls_to_scrape[:3]:  # Limit to avoid overwhelming
+                    try:
+                        async with session.get(url) as response:
+                            if response.status == 200:
+                                html = await response.text()
+                                soup = BeautifulSoup(html, 'html.parser')
+                                
+                                # Extract data from Instagram's embedded JSON
+                                script_tags = soup.find_all('script', string=re.compile('window\\._sharedData'))
+                                
+                                for script in script_tags:
+                                    try:
+                                        script_content = script.string
+                                        if script_content:
+                                            # Extract JSON data
+                                            json_match = re.search(r'window\._sharedData = ({.*?});', script_content)
+                                            if json_match:
+                                                data = json.loads(json_match.group(1))
+                                                posts = self._extract_instagram_posts_from_data(data, target.target_id)
+                                                results.extend(posts)
+                                    except (json.JSONDecodeError, AttributeError) as e:
+                                        self.logger.debug(f"Error parsing Instagram JSON data: {e}")
+                                
+                                # Fallback: extract from meta tags and visible elements
+                                if not results:
+                                    meta_tags = soup.find_all('meta', {'property': 'og:image'})
+                                    for meta in meta_tags[:5]:  # Limit results
+                                        image_url = meta.get('content', '')
+                                        if image_url and 'instagram' in image_url:
+                                            result = CrawlResult(
+                                                task_id=target.target_id,
+                                                platform=PlatformType.INSTAGRAM,
+                                                content_url=url,
+                                                content_type="image",
+                                                title="Instagram Post",
+                                                description="",
+                                                creator_info={},
+                                                engagement_metrics={},
+                                                content_metadata={
+                                                    "image_url": image_url,
+                                                    "source_url": url
+                                                },
+                                                discovered_at=datetime.now(),
+                                                fingerprint_required=True,
+                                                dmca_candidate=True
+                                            )
+                                            results.append(result)
+                            
+                            elif response.status == 429:
+                                self.logger.warning("Instagram rate limiting detected")
+                                break
+                            else:
+                                self.logger.warning(f"Instagram scraping error for {url}: {response.status}")
+                    
+                    except Exception as e:
+                        self.logger.error(f"Error scraping Instagram URL {url}: {str(e)}")
+                        continue
+            
+            # Update rate limiter
+            await self._record_api_request(PlatformType.INSTAGRAM)
+            
+            self.logger.info(f"Instagram scraping completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"Instagram scraping failed: {str(e)}")
+        
+        return results
     
     async def _crawl_generic_scraping(self, target: CrawlTarget) -> List[CrawlResult]:
         """Generic web scraping implementation"""
-        return []
+        results = []
+        
+        try:
+            import aiohttp
+            from bs4 import BeautifulSoup
+            import re
+            from urllib.parse import urljoin, urlparse
+            
+            # Only process if we have specific URLs
+            if not target.url:
+                self.logger.warning("Generic scraping requires specific URL")
+                return results
+            
+            urls_to_scrape = [target.url] if isinstance(target.url, str) else target.url
+            
+            # Setup headers
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+            }
+            
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
+                for url in urls_to_scrape[:5]:  # Limit URLs
+                    try:
+                        parsed_url = urlparse(url)
+                        domain = parsed_url.netloc
+                        
+                        async with session.get(url) as response:
+                            if response.status == 200:
+                                html = await response.text()
+                                soup = BeautifulSoup(html, 'html.parser')
+                                
+                                # Extract page metadata
+                                title = ""
+                                description = ""
+                                
+                                # Get title
+                                title_tag = soup.find('title')
+                                if title_tag:
+                                    title = title_tag.get_text().strip()
+                                
+                                # Get description from meta tags
+                                meta_desc = soup.find('meta', {'name': 'description'}) or soup.find('meta', {'property': 'og:description'})
+                                if meta_desc:
+                                    description = meta_desc.get('content', '').strip()
+                                
+                                # Find media content
+                                media_elements = []
+                                
+                                # Find images
+                                images = soup.find_all('img', src=True)
+                                for img in images[:10]:  # Limit to 10 images
+                                    img_src = img.get('src', '')
+                                    if img_src:
+                                        img_url = urljoin(url, img_src)
+                                        media_elements.append({
+                                            'type': 'image',
+                                            'url': img_url,
+                                            'alt': img.get('alt', ''),
+                                            'title': img.get('title', '')
+                                        })
+                                
+                                # Find videos
+                                videos = soup.find_all('video', src=True)
+                                for video in videos[:5]:  # Limit to 5 videos
+                                    video_src = video.get('src', '')
+                                    if video_src:
+                                        video_url = urljoin(url, video_src)
+                                        media_elements.append({
+                                            'type': 'video',
+                                            'url': video_url,
+                                            'poster': video.get('poster', '')
+                                        })
+                                
+                                # Find audio
+                                audios = soup.find_all('audio', src=True)
+                                for audio in audios[:5]:  # Limit to 5 audio files
+                                    audio_src = audio.get('src', '')
+                                    if audio_src:
+                                        audio_url = urljoin(url, audio_src)
+                                        media_elements.append({
+                                            'type': 'audio',
+                                            'url': audio_url
+                                        })
+                                
+                                # Create results for each media element found
+                                if media_elements:
+                                    for media in media_elements:
+                                        content_type = media['type']
+                                        
+                                        # Determine if this content needs fingerprinting
+                                        fingerprint_required = content_type in ['image', 'video', 'audio']
+                                        
+                                        result = CrawlResult(
+                                            task_id=target.target_id,
+                                            platform=PlatformType.GENERIC_WEB,
+                                            content_url=media['url'],
+                                            content_type=content_type,
+                                            title=media.get('title') or media.get('alt') or title,
+                                            description=description,
+                                            creator_info={
+                                                'domain': domain,
+                                                'source_url': url
+                                            },
+                                            engagement_metrics={},
+                                            content_metadata={
+                                                'original_page_url': url,
+                                                'domain': domain,
+                                                'media_metadata': media,
+                                                'page_title': title,
+                                                'discovered_via': 'generic_scraping'
+                                            },
+                                            discovered_at=datetime.now(),
+                                            fingerprint_required=fingerprint_required,
+                                            dmca_candidate=fingerprint_required
+                                        )
+                                        results.append(result)
+                                else:
+                                    # No media found, create a text content result
+                                    text_content = soup.get_text()[:1000]  # First 1000 chars
+                                    
+                                    result = CrawlResult(
+                                        task_id=target.target_id,
+                                        platform=PlatformType.GENERIC_WEB,
+                                        content_url=url,
+                                        content_type="text",
+                                        title=title,
+                                        description=description,
+                                        creator_info={
+                                            'domain': domain
+                                        },
+                                        engagement_metrics={},
+                                        content_metadata={
+                                            'domain': domain,
+                                            'text_content_preview': text_content,
+                                            'discovered_via': 'generic_scraping'
+                                        },
+                                        discovered_at=datetime.now(),
+                                        fingerprint_required=False,
+                                        dmca_candidate=False
+                                    )
+                                    results.append(result)
+                            
+                            elif response.status == 429:
+                                self.logger.warning("Rate limiting detected for generic scraping")
+                                break
+                            else:
+                                self.logger.warning(f"Generic scraping error for {url}: {response.status}")
+                    
+                    except Exception as e:
+                        self.logger.error(f"Error scraping generic URL {url}: {str(e)}")
+                        continue
+            
+            self.logger.info(f"Generic scraping completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"Generic scraping failed: {str(e)}")
+        
+        return results
     
     async def _crawl_tiktok_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
         """TikTok Selenium crawling implementation"""
@@ -1163,6 +1960,417 @@ class PlatformCrawlerManager:
     async def _crawl_generic_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
         """Generic Selenium crawling implementation"""
         return []
+    
+    # Helper methods for API implementations
+    async def _get_youtube_video_details(self, video_id: str, api_key: str, session) -> Dict[str, Any]:
+        """Get detailed YouTube video information"""
+        try:
+            details_url = "https://www.googleapis.com/youtube/v3/videos"
+            params = {
+                "part": "statistics,contentDetails,snippet",
+                "id": video_id,
+                "key": api_key
+            }
+            
+            async with session.get(details_url, params=params) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    items = data.get("items", [])
+                    if items:
+                        video = items[0]
+                        return {
+                            "engagement": {
+                                "view_count": int(video.get("statistics", {}).get("viewCount", 0)),
+                                "like_count": int(video.get("statistics", {}).get("likeCount", 0)),
+                                "comment_count": int(video.get("statistics", {}).get("commentCount", 0))
+                            },
+                            "duration": video.get("contentDetails", {}).get("duration", ""),
+                            "category_id": video.get("snippet", {}).get("categoryId", ""),
+                            "tags": video.get("snippet", {}).get("tags", [])
+                        }
+        except Exception as e:
+            self.logger.error(f"Error getting YouTube video details: {str(e)}")
+        
+        return {}
+    
+    async def _get_spotify_access_token(self, client_id: str, client_secret: str) -> Optional[str]:
+        """Get Spotify access token using Client Credentials Flow"""
+        try:
+            import aiohttp
+            import base64
+            
+            # Encode credentials
+            credentials = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
+            
+            token_url = "https://accounts.spotify.com/api/token"
+            headers = {
+                "Authorization": f"Basic {credentials}",
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+            data = "grant_type=client_credentials"
+            
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.post(token_url, headers=headers, data=data) as response:
+                    if response.status == 200:
+                        token_data = await response.json()
+                        return token_data.get("access_token")
+                    else:
+                        self.logger.error(f"Spotify token request failed: {response.status}")
+        
+        except Exception as e:
+            self.logger.error(f"Error getting Spotify access token: {str(e)}")
+        
+        return None
+    
+    async def _get_spotify_audio_features(self, track_id: str, access_token: str, session) -> Optional[Dict[str, Any]]:
+        """Get Spotify audio features for a track"""
+        try:
+            features_url = f"https://api.spotify.com/v1/audio-features/{track_id}"
+            headers = {
+                "Authorization": f"Bearer {access_token}",
+                "Content-Type": "application/json"
+            }
+            
+            async with session.get(features_url, headers=headers) as response:
+                if response.status == 200:
+                    return await response.json()
+                elif response.status == 404:
+                    # Audio features not available for this track
+                    return None
+                else:
+                    self.logger.warning(f"Error getting audio features: {response.status}")
+        
+        except Exception as e:
+            self.logger.error(f"Error getting Spotify audio features: {str(e)}")
+        
+        return None
+    
+    async def _check_rate_limit(self, platform: PlatformType) -> bool:
+        """Check if platform API rate limit allows request"""
+        try:
+            current_time = datetime.now()
+            
+            # Initialize rate limiter for platform if not exists
+            if platform not in self.rate_limiters:
+                self.rate_limiters[platform] = {"requests": deque(), "last_reset": current_time}
+            
+            limiter = self.rate_limiters[platform]
+            
+            # Remove old requests (older than 1 hour)
+            hour_ago = current_time - timedelta(hours=1)
+            while limiter["requests"] and limiter["requests"][0] < hour_ago:
+                limiter["requests"].popleft()
+            
+            # Platform-specific rate limits (requests per hour)
+            rate_limits = {
+                PlatformType.YOUTUBE: 10000,  # YouTube Data API quota
+                PlatformType.TWITTER: 450,    # Twitter API v2 search limit
+                PlatformType.SPOTIFY: 1000,   # Spotify Web API limit
+                PlatformType.INSTAGRAM: 200,  # Instagram Basic Display API
+                PlatformType.TIKTOK: 100,     # TikTok API limit
+            }
+            
+            limit = rate_limits.get(platform, 100)  # Default limit
+            
+            # Check if we're under the limit
+            if len(limiter["requests"]) < limit:
+                return True
+            else:
+                self.logger.warning(f"Rate limit exceeded for {platform.value}: {len(limiter['requests'])}/{limit}")
+                return False
+        
+        except Exception as e:
+            self.logger.error(f"Error checking rate limit: {str(e)}")
+            return False  # Fail safe
+    
+    async def _record_api_request(self, platform: PlatformType):
+        """Record an API request for rate limiting"""
+        try:
+            current_time = datetime.now()
+            
+            if platform not in self.rate_limiters:
+                self.rate_limiters[platform] = {"requests": deque(), "last_reset": current_time}
+            
+            self.rate_limiters[platform]["requests"].append(current_time)
+            
+        except Exception as e:
+            self.logger.error(f"Error recording API request: {str(e)}")
+    
+    def _extract_tiktok_videos_from_data(self, data: Dict[str, Any], task_id: str) -> List[CrawlResult]:
+        """Extract TikTok video data from JSON structure"""
+        results = []
+        
+        try:
+            # Navigate through TikTok's data structure
+            default_scope = data.get('__DEFAULT_SCOPE__', {})
+            
+            # Look for video data in various possible locations
+            video_lists = []
+            
+            # Check for ItemList (common structure)
+            item_list = default_scope.get('webapp.video-detail', {}).get('itemInfo', {}).get('itemStruct')
+            if item_list:
+                video_lists.append([item_list])
+            
+            # Check for video feed
+            video_feed = default_scope.get('webapp.video-feed', {})
+            if video_feed and 'items' in video_feed:
+                video_lists.append(video_feed['items'])
+            
+            # Process found videos
+            for video_list in video_lists:
+                for video_data in video_list:
+                    if isinstance(video_data, dict) and 'id' in video_data:
+                        result = self._create_tiktok_result_from_data(video_data, task_id)
+                        if result:
+                            results.append(result)
+                            
+                    if len(results) >= 10:  # Limit results
+                        break
+                        
+                if len(results) >= 10:
+                    break
+        
+        except Exception as e:
+            self.logger.debug(f"Error extracting TikTok video data: {e}")
+        
+        return results
+    
+    def _create_tiktok_result_from_data(self, video_data: Dict[str, Any], task_id: str) -> Optional[CrawlResult]:
+        """Create CrawlResult from TikTok video data"""
+        try:
+            video_id = video_data.get('id', '')
+            if not video_id:
+                return None
+                
+            # Extract basic info
+            desc = video_data.get('desc', '')
+            author_info = video_data.get('author', {})
+            stats = video_data.get('stats', {})
+            video_info = video_data.get('video', {})
+            
+            result = CrawlResult(
+                task_id=task_id,
+                platform=PlatformType.TIKTOK,
+                content_url=f"https://www.tiktok.com/@{author_info.get('uniqueId', 'user')}/video/{video_id}",
+                content_type="video",
+                title=desc[:100] if desc else f"TikTok video by @{author_info.get('uniqueId', 'unknown')}",
+                description=desc,
+                creator_info={
+                    'user_id': author_info.get('id', ''),
+                    'username': author_info.get('uniqueId', ''),
+                    'display_name': author_info.get('nickname', ''),
+                    'follower_count': author_info.get('followerCount', 0),
+                    'verified': author_info.get('verified', False)
+                },
+                engagement_metrics={
+                    'view_count': stats.get('playCount', 0),
+                    'like_count': stats.get('diggCount', 0),
+                    'comment_count': stats.get('commentCount', 0),
+                    'share_count': stats.get('shareCount', 0)
+                },
+                content_metadata={
+                    'video_id': video_id,
+                    'duration': video_info.get('duration', 0),
+                    'create_time': video_data.get('createTime', 0),
+                    'cover_url': video_info.get('cover', ''),
+                    'play_url': video_info.get('playAddr', ''),
+                    'music_info': video_data.get('music', {})
+                },
+                discovered_at=datetime.now(),
+                fingerprint_required=True,
+                dmca_candidate=True
+            )
+            
+            return result
+            
+        except Exception as e:
+            self.logger.debug(f"Error creating TikTok result: {e}")
+            return None
+    
+    def _extract_tiktok_video_from_element(self, element, task_id: str) -> Optional[CrawlResult]:
+        """Extract TikTok video data from HTML element"""
+        try:
+            # This is a fallback method for when JSON parsing fails
+            # Extract what we can from HTML structure
+            
+            video_link = element.find('a')
+            video_url = ""
+            if video_link and video_link.get('href'):
+                video_url = video_link.get('href')
+                if not video_url.startswith('http'):
+                    video_url = f"https://www.tiktok.com{video_url}"
+            
+            if not video_url:
+                return None
+            
+            # Try to extract basic info from HTML
+            desc_element = element.find('[data-e2e="video-desc"]')
+            description = desc_element.get_text().strip() if desc_element else ""
+            
+            author_element = element.find('[data-e2e="video-author"]')
+            author = author_element.get_text().strip() if author_element else "unknown"
+            
+            result = CrawlResult(
+                task_id=task_id,
+                platform=PlatformType.TIKTOK,
+                content_url=video_url,
+                content_type="video",
+                title=description[:100] if description else f"TikTok video by {author}",
+                description=description,
+                creator_info={
+                    'username': author,
+                    'extracted_via': 'html_parsing'
+                },
+                engagement_metrics={},
+                content_metadata={
+                    'extracted_via': 'html_parsing',
+                    'source_element': 'video-feed-item'
+                },
+                discovered_at=datetime.now(),
+                fingerprint_required=True,
+                dmca_candidate=True
+            )
+            
+            return result
+            
+        except Exception as e:
+            self.logger.debug(f"Error extracting TikTok video from element: {e}")
+            return None
+    
+    def _extract_instagram_posts_from_data(self, data: Dict[str, Any], task_id: str) -> List[CrawlResult]:
+        """Extract Instagram post data from JSON structure"""
+        results = []
+        
+        try:
+            # Navigate Instagram's complex data structure
+            entry_data = data.get('entry_data', {})
+            
+            # Check different page types
+            page_types = ['ProfilePage', 'PostPage', 'TagPage']
+            
+            for page_type in page_types:
+                pages = entry_data.get(page_type, [])
+                
+                for page in pages:
+                    graphql = page.get('graphql', {})
+                    
+                    # Profile page
+                    if page_type == 'ProfilePage':
+                        user = graphql.get('user', {})
+                        edge_owner_to_timeline_media = user.get('edge_owner_to_timeline_media', {})
+                        edges = edge_owner_to_timeline_media.get('edges', [])
+                        
+                        for edge in edges[:10]:  # Limit results
+                            node = edge.get('node', {})
+                            result = self._create_instagram_result_from_node(node, task_id, user.get('username', ''))
+                            if result:
+                                results.append(result)
+                    
+                    # Post page
+                    elif page_type == 'PostPage':
+                        shortcode_media = graphql.get('shortcode_media', {})
+                        if shortcode_media:
+                            owner = shortcode_media.get('owner', {})
+                            result = self._create_instagram_result_from_node(shortcode_media, task_id, owner.get('username', ''))
+                            if result:
+                                results.append(result)
+                    
+                    # Tag page
+                    elif page_type == 'TagPage':
+                        hashtag = graphql.get('hashtag', {})
+                        edge_hashtag_to_media = hashtag.get('edge_hashtag_to_media', {})
+                        edges = edge_hashtag_to_media.get('edges', [])
+                        
+                        for edge in edges[:10]:  # Limit results
+                            node = edge.get('node', {})
+                            owner = node.get('owner', {})
+                            result = self._create_instagram_result_from_node(node, task_id, owner.get('username', ''))
+                            if result:
+                                results.append(result)
+                    
+                    if len(results) >= 10:  # Overall limit
+                        break
+                        
+                if len(results) >= 10:
+                    break
+        
+        except Exception as e:
+            self.logger.debug(f"Error extracting Instagram post data: {e}")
+        
+        return results
+    
+    def _create_instagram_result_from_node(self, node: Dict[str, Any], task_id: str, username: str) -> Optional[CrawlResult]:
+        """Create CrawlResult from Instagram node data"""
+        try:
+            shortcode = node.get('shortcode', '')
+            if not shortcode:
+                return None
+            
+            # Determine content type
+            content_type = "image"  # Default
+            if node.get('is_video', False):
+                content_type = "video"
+            elif node.get('__typename') == 'GraphSidecar':
+                content_type = "carousel"
+            
+            # Extract engagement metrics
+            edge_liked_by = node.get('edge_liked_by', {})
+            edge_media_to_comment = node.get('edge_media_to_comment', {})
+            
+            result = CrawlResult(
+                task_id=task_id,
+                platform=PlatformType.INSTAGRAM,
+                content_url=f"https://www.instagram.com/p/{shortcode}/",
+                content_type=content_type,
+                title=f"Instagram {content_type} by @{username}",
+                description=self._extract_instagram_caption(node),
+                creator_info={
+                    'username': username,
+                    'user_id': node.get('owner', {}).get('id', ''),
+                    'is_verified': node.get('owner', {}).get('is_verified', False)
+                },
+                engagement_metrics={
+                    'like_count': edge_liked_by.get('count', 0),
+                    'comment_count': edge_media_to_comment.get('count', 0),
+                    'view_count': node.get('video_view_count', 0) if content_type == 'video' else 0
+                },
+                content_metadata={
+                    'shortcode': shortcode,
+                    'id': node.get('id', ''),
+                    'taken_at_timestamp': node.get('taken_at_timestamp', 0),
+                    'display_url': node.get('display_url', ''),
+                    'is_video': node.get('is_video', False),
+                    'video_url': node.get('video_url', '') if content_type == 'video' else '',
+                    'dimensions': node.get('dimensions', {}),
+                    'location': node.get('location', {})
+                },
+                discovered_at=datetime.now(),
+                fingerprint_required=True,
+                dmca_candidate=True
+            )
+            
+            return result
+            
+        except Exception as e:
+            self.logger.debug(f"Error creating Instagram result: {e}")
+            return None
+    
+    def _extract_instagram_caption(self, node: Dict[str, Any]) -> str:
+        """Extract caption text from Instagram node"""
+        try:
+            edge_media_to_caption = node.get('edge_media_to_caption', {})
+            edges = edge_media_to_caption.get('edges', [])
+            
+            if edges:
+                caption_node = edges[0].get('node', {})
+                return caption_node.get('text', '')
+            
+        except Exception:
+            pass
+            
+        return ""
 
 
 # Utility functions
