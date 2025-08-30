@@ -1,5 +1,13 @@
 # Ainflue - Plateforme IA de Protection et Monétisation de Contenu
 
+**Auteur:** Fahed Mlaiel <mlaiel@live.de>  
+**Spécialités de l'équipe:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
+
+⚠️ **AVERTISSEMENT LÉGAL CRITIQUE**  
+Ce code et ce concept sont la propriété intellectuelle exclusive de **Fahed Mlaiel**. Toute utilisation, reproduction, distribution ou vol non autorisé de ce code, concept ou propriété intellectuelle sans permission écrite explicite de Fahed Mlaiel est **STRICTEMENT INTERDIT** et sera poursuivi dans **TOUTE LA MESURE DE LA LOI**. Cela inclut mais ne se limite pas à : copier le code, voler des concepts, distribution non autorisée, rétro-ingénierie, ou toute forme de violation de propriété intellectuelle.
+
+**Contact:** mlaiel@live.de pour les demandes de licence et les autorisations d'utilisation.
+
 ## 🎯 Aperçu du Projet
 
 **Ainflue** est une plateforme complète alimentée par l'IA conçue pour les créateurs de contenu (musiciens, blogueurs, photographes, influenceurs, comédiens, écrivains) offrant une protection avancée du contenu, une monétisation intelligente et des opportunités de collaboration sur plusieurs plateformes numériques.

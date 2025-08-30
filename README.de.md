@@ -1,5 +1,13 @@
 # Ainflue - KI-gestützte Content-Schutz & Monetarisierungsplattform
 
+**Autor:** Fahed Mlaiel <mlaiel@live.de>  
+**Team-Spezialisierungen:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
+
+⚠️ **KRITISCHE RECHTLICHE WARNUNG**  
+Dieser Code und dieses Konzept sind das exklusive geistige Eigentum von **Fahed Mlaiel**. Jede unbefugte Nutzung, Reproduktion, Verteilung oder Diebstahl dieses Codes, Konzepts oder geistigen Eigentums ohne ausdrückliche schriftliche Genehmigung von Fahed Mlaiel ist **STRENGSTENS VERBOTEN** und wird in **VOLLEM UMFANG DES GESETZES** verfolgt. Dies umfasst unter anderem: Code kopieren, Konzepte stehlen, unbefugte Verteilung, Reverse Engineering oder jede Form der Verletzung geistigen Eigentums.
+
+**Kontakt:** mlaiel@live.de für Lizenzanfragen und autorisierte Nutzungsberechtigungen.
+
 ## 🎯 Projektübersicht
 
 **Ainflue** ist eine umfassende KI-gestützte Plattform für Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Komiker, Autoren), die erweiterten Content-Schutz, intelligente Monetarisierung und Kooperationsmöglichkeiten über mehrere digitale Plattformen bietet.
