@@ -36,9 +36,7 @@ import {
   UserProgress,
   Achievement,
   Challenge,
-  Leaderboard,
   Reward,
-  Competition,
   
   // Styles
   gamificationStyles,
