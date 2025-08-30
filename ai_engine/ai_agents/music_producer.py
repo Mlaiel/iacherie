@@ -699,40 +699,7 @@ class MusicProducerAgent(BaseAIAgent):
     # - Quality analysis
     # - And many more...
 
-class MusicProducerAgent(BaseAIAgent):
-    """AI agent for music production and audio creation"""
-    
-    def __init__(self, config: AgentConfiguration):
-        super().__init__(config)
-        self.name = "MusicProducerAgent"
-        self.capabilities = [
-            AgentCapability.CONTENT_CREATION,
-            AgentCapability.MEDIA_PROCESSING,
-            AgentCapability.ANALYSIS
-        ]
-        
-        self.active_projects: Dict[str, MusicProject] = {}
-        logger.info("Music Producer Agent initialized successfully")
-    
-    async def create_music_project(self, title: str, genre: MusicGenre, duration: int) -> MusicProject:
-        """Create a new music project"""
-        try:
-            project = MusicProject(
-                project_id=f"music_{datetime.now().timestamp()}",
-                title=title,
-                genre=genre,
-                duration_seconds=duration
-            )
-            
-            self.active_projects[project.project_id] = project
-            logger.info(f"Created music project: {project.title}")
-            return project
-            
-        except Exception as e:
-            logger.error(f"Error creating music project: {str(e)}")
-            return None
-
 # Export the agent class
-__all__ = ["MusicProducerAgent", "MusicGenre", "MusicProject"]
+__all__ = ["MusicProducerAgent", "MusicGenre", "MusicProject", "SoundDesignAsset", "MusicAnalysis"]
 
 logger.info("Music Producer Agent module loaded successfully")
