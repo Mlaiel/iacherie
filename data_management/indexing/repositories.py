@@ -107,22 +107,26 @@ class BaseRepository(ABC):
     @abstractmethod
     async def create(self, record: Any) -> str:
         """Create a new record"""
-        raise NotImplementedError("Subclasses must implement create method")
+        self.logger.error(f"create method not implemented in {self.__class__.__name__}")
+        return ""
     
     @abstractmethod
     async def get_by_id(self, record_id: str) -> Optional[Any]:
         """Get record by ID"""
-        raise NotImplementedError("Subclasses must implement get_by_id method")
+        self.logger.error(f"get_by_id method not implemented in {self.__class__.__name__}")
+        return None
     
     @abstractmethod
     async def update(self, record_id: str, updates: Dict[str, Any]) -> bool:
         """Update existing record"""
-        raise NotImplementedError("Subclasses must implement update method")
+        self.logger.error(f"update method not implemented in {self.__class__.__name__}")
+        return False
     
     @abstractmethod
     async def delete(self, record_id: str) -> bool:
         """Delete record"""
-        raise NotImplementedError("Subclasses must implement delete method")
+        self.logger.error(f"delete method not implemented in {self.__class__.__name__}")
+        return False
     
     async def _cache_get(self, key: str) -> Optional[str]:
         """Get value from Redis cache"""
