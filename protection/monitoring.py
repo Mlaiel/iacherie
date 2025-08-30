@@ -97,11 +97,200 @@ class PlatformCrawler:
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
         """Search for content on platform - to be implemented by subclasses"""
-        pass
+        logger.info(f"Searching for {content_type} content with query: {query}")
+        
+        # Base implementation with generic web scraping approach
+        try:
+            results = []
+            
+            # Generic search implementation that subclasses can override
+            if hasattr(self, 'api_client') and self.api_client:
+                # API-based search if available
+                api_results = await self._api_search(query, content_type)
+                results.extend(api_results)
+            
+            # Fallback to web scraping search
+            web_results = await self._web_search(query, content_type)
+            results.extend(web_results)
+            
+            # Deduplicate results
+            seen_urls = set()
+            unique_results = []
+            for result in results:
+                url = result.get('url', '')
+                if url and url not in seen_urls:
+                    seen_urls.add(url)
+                    unique_results.append(result)
+            
+            logger.info(f"Found {len(unique_results)} unique results for query: {query}")
+            return unique_results
+            
+        except Exception as e:
+            logger.error(f"Error searching content: {str(e)}")
+            return []
+    
+    async def _api_search(self, query: str, content_type: str) -> List[Dict[str, Any]]:
+        """API-based search implementation"""
+        # To be overridden by platform-specific implementations
+        return []
+    
+    async def _web_search(self, query: str, content_type: str) -> List[Dict[str, Any]]:
+        """Web scraping search implementation"""
+        try:
+            if not self.driver:
+                return []
+            
+            # Generic web search approach
+            search_url = f"{self.base_url}/search?q={quote(query)}"
+            self.driver.get(search_url)
+            
+            # Wait for results to load
+            time.sleep(2)
+            
+            results = []
+            
+            # Generic content extraction (to be customized by subclasses)
+            content_elements = self.driver.find_elements(By.CSS_SELECTOR, 
+                                                       "a[href*='watch'], a[href*='video'], a[href*='post']")
+            
+            for element in content_elements[:20]:  # Limit to first 20 results
+                try:
+                    url = element.get_attribute('href')
+                    title = element.get_attribute('title') or element.text
+                    
+                    if url and title:
+                        results.append({
+                            'url': url,
+                            'title': title.strip(),
+                            'platform': self.platform_name,
+                            'content_type': content_type,
+                            'discovered_at': datetime.now().isoformat()
+                        })
+                except Exception:
+                    continue
+            
+            return results
+            
+        except Exception as e:
+            logger.warning(f"Web search failed: {str(e)}")
+            return []
     
     async def extract_content_data(self, url: str) -> Optional[Dict[str, Any]]:
         """Extract content data from URL - to be implemented by subclasses"""
-        pass
+        logger.info(f"Extracting content data from URL: {url}")
+        
+        try:
+            if not self.driver:
+                await self.init_selenium()
+            
+            # Navigate to the content URL
+            self.driver.get(url)
+            time.sleep(3)  # Wait for page to load
+            
+            # Extract basic metadata
+            content_data = {
+                'url': url,
+                'platform': self.platform_name,
+                'extracted_at': datetime.now().isoformat(),
+                'title': '',
+                'description': '',
+                'author': '',
+                'view_count': 0,
+                'like_count': 0,
+                'publish_date': '',
+                'duration': '',
+                'tags': [],
+                'thumbnail_url': ''
+            }
+            
+            # Extract title
+            try:
+                title_selectors = ['h1', 'title', '[data-title]', '.title']
+                for selector in title_selectors:
+                    title_element = self.driver.find_element(By.CSS_SELECTOR, selector)
+                    if title_element and title_element.text.strip():
+                        content_data['title'] = title_element.text.strip()
+                        break
+            except Exception:
+                content_data['title'] = self.driver.title
+            
+            # Extract description
+            try:
+                desc_selectors = ['[name="description"]', '.description', '[data-description]']
+                for selector in desc_selectors:
+                    if selector.startswith('[name'):
+                        desc_element = self.driver.find_element(By.CSS_SELECTOR, selector)
+                        content_data['description'] = desc_element.get_attribute('content') or ''
+                    else:
+                        desc_element = self.driver.find_element(By.CSS_SELECTOR, selector)
+                        content_data['description'] = desc_element.text.strip()
+                    if content_data['description']:
+                        break
+            except Exception:
+                pass
+            
+            # Extract author/creator info
+            try:
+                author_selectors = ['.author', '.creator', '.channel-name', '[data-author]']
+                for selector in author_selectors:
+                    author_element = self.driver.find_element(By.CSS_SELECTOR, selector)
+                    if author_element and author_element.text.strip():
+                        content_data['author'] = author_element.text.strip()
+                        break
+            except Exception:
+                pass
+            
+            # Extract view count
+            try:
+                view_selectors = ['.view-count', '[data-views]', '.views']
+                for selector in view_selectors:
+                    view_element = self.driver.find_element(By.CSS_SELECTOR, selector)
+                    if view_element:
+                        view_text = view_element.text or view_element.get_attribute('data-views') or ''
+                        # Extract numeric values from text like "1.2K views" or "1,234 views"
+                        import re
+                        view_match = re.search(r'([\d,.]+)([KMB]?)', view_text.replace(',', ''))
+                        if view_match:
+                            num = float(view_match.group(1))
+                            unit = view_match.group(2)
+                            if unit == 'K':
+                                num *= 1000
+                            elif unit == 'M':
+                                num *= 1000000
+                            elif unit == 'B':
+                                num *= 1000000000
+                            content_data['view_count'] = int(num)
+                        break
+            except Exception:
+                pass
+            
+            # Extract thumbnail
+            try:
+                thumb_selectors = ['meta[property="og:image"]', '.thumbnail img', 'video', 'img[src*="thumb"]']
+                for selector in thumb_selectors:
+                    thumb_element = self.driver.find_element(By.CSS_SELECTOR, selector)
+                    if thumb_element:
+                        thumb_url = thumb_element.get_attribute('content') or thumb_element.get_attribute('src')
+                        if thumb_url:
+                            content_data['thumbnail_url'] = thumb_url
+                            break
+            except Exception:
+                pass
+            
+            # Platform-specific extraction (can be overridden by subclasses)
+            platform_data = await self._extract_platform_specific_data(url)
+            content_data.update(platform_data)
+            
+            logger.info(f"Successfully extracted content data for: {content_data.get('title', 'Unknown')}")
+            return content_data
+            
+        except Exception as e:
+            logger.error(f"Error extracting content data from {url}: {str(e)}")
+            return None
+    
+    async def _extract_platform_specific_data(self, url: str) -> Dict[str, Any]:
+        """Extract platform-specific data - to be overridden by subclasses"""
+        return {}
 
 
 class YouTubeCrawler(PlatformCrawler):

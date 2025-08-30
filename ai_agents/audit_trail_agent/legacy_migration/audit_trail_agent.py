@@ -652,8 +652,156 @@ class AuditTrailAgent(BaseAgent):
     # Private helper methods
     async def _setup_audit_database(self) -> None:
         """Initialize audit database schema and indexes"""
-        # Implementation for database setup
-        pass
+        try:
+            logger.info("Setting up audit database schema and indexes")
+            
+            # Database schema definitions
+            audit_tables_schema = {
+                'audit_logs': """
+                    CREATE TABLE IF NOT EXISTS audit_logs (
+                        id SERIAL PRIMARY KEY,
+                        event_id VARCHAR(255) UNIQUE NOT NULL,
+                        event_type VARCHAR(100) NOT NULL,
+                        user_id VARCHAR(255),
+                        resource_type VARCHAR(100),
+                        resource_id VARCHAR(255),
+                        action VARCHAR(100) NOT NULL,
+                        result VARCHAR(50) NOT NULL,
+                        ip_address INET,
+                        user_agent TEXT,
+                        session_id VARCHAR(255),
+                        request_id VARCHAR(255),
+                        metadata JSONB,
+                        sensitive_data_hash VARCHAR(255),
+                        compliance_tags TEXT[],
+                        severity VARCHAR(20) DEFAULT 'INFO',
+                        timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                    )
+                """,
+                
+                'compliance_events': """
+                    CREATE TABLE IF NOT EXISTS compliance_events (
+                        id SERIAL PRIMARY KEY,
+                        event_id VARCHAR(255) UNIQUE NOT NULL,
+                        framework VARCHAR(50) NOT NULL,
+                        compliance_type VARCHAR(100) NOT NULL,
+                        status VARCHAR(50) NOT NULL,
+                        risk_level VARCHAR(20) DEFAULT 'LOW',
+                        details JSONB,
+                        remediation_actions TEXT[],
+                        acknowledged BOOLEAN DEFAULT FALSE,
+                        acknowledged_by VARCHAR(255),
+                        acknowledged_at TIMESTAMP WITH TIME ZONE,
+                        timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                    )
+                """,
+                
+                'audit_sessions': """
+                    CREATE TABLE IF NOT EXISTS audit_sessions (
+                        id SERIAL PRIMARY KEY,
+                        session_id VARCHAR(255) UNIQUE NOT NULL,
+                        user_id VARCHAR(255) NOT NULL,
+                        ip_address INET,
+                        user_agent TEXT,
+                        login_time TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                        logout_time TIMESTAMP WITH TIME ZONE,
+                        session_duration INTERVAL,
+                        actions_count INTEGER DEFAULT 0,
+                        last_activity TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                        status VARCHAR(20) DEFAULT 'ACTIVE'
+                    )
+                """
+            }
+            
+            # Performance indexes
+            performance_indexes = [
+                "CREATE INDEX IF NOT EXISTS idx_audit_logs_timestamp ON audit_logs(timestamp DESC)",
+                "CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON audit_logs(user_id)",
+                "CREATE INDEX IF NOT EXISTS idx_audit_logs_event_type ON audit_logs(event_type)",
+                "CREATE INDEX IF NOT EXISTS idx_audit_logs_resource ON audit_logs(resource_type, resource_id)",
+                "CREATE INDEX IF NOT EXISTS idx_audit_logs_severity ON audit_logs(severity)",
+                "CREATE INDEX IF NOT EXISTS idx_audit_logs_compliance_tags ON audit_logs USING gin(compliance_tags)",
+                "CREATE INDEX IF NOT EXISTS idx_compliance_events_framework ON compliance_events(framework)",
+                "CREATE INDEX IF NOT EXISTS idx_compliance_events_status ON compliance_events(status)",
+                "CREATE INDEX IF NOT EXISTS idx_compliance_events_risk_level ON compliance_events(risk_level)",
+                "CREATE INDEX IF NOT EXISTS idx_audit_sessions_user_id ON audit_sessions(user_id)",
+                "CREATE INDEX IF NOT EXISTS idx_audit_sessions_status ON audit_sessions(status)"
+            ]
+            
+            # Try to execute schema setup
+            if hasattr(self, 'database_connection') and self.database_connection:
+                async with self.database_connection.begin() as transaction:
+                    # Create tables
+                    for table_name, schema in audit_tables_schema.items():
+                        await self.database_connection.execute(schema)
+                        logger.debug(f"Created/verified table: {table_name}")
+                    
+                    # Create indexes
+                    for index_sql in performance_indexes:
+                        await self.database_connection.execute(index_sql)
+                    
+                    await transaction.commit()
+                    logger.info("Audit database schema setup completed successfully")
+            
+            else:
+                # Fallback: prepare file-based storage structure
+                logger.warning("Database connection not available, setting up file-based audit storage")
+                
+                audit_dirs = [
+                    'audit_data/logs',
+                    'audit_data/compliance',
+                    'audit_data/sessions', 
+                    'audit_data/backups',
+                    'audit_data/exports'
+                ]
+                
+                for dir_path in audit_dirs:
+                    os.makedirs(dir_path, exist_ok=True)
+                    logger.debug(f"Created audit directory: {dir_path}")
+                
+                # Create schema file for reference
+                schema_file = 'audit_data/schema.json'
+                with open(schema_file, 'w') as f:
+                    json.dump({
+                        'tables': audit_tables_schema,
+                        'indexes': performance_indexes,
+                        'created_at': datetime.now().isoformat(),
+                        'version': '1.0'
+                    }, f, indent=2)
+                
+                logger.info("File-based audit storage setup completed")
+            
+            # Initialize audit configuration
+            self.audit_config = {
+                'retention_policy': {
+                    'audit_logs_days': 2555,  # 7 years for compliance
+                    'compliance_events_days': 2555,
+                    'session_logs_days': 365
+                },
+                'sensitive_data_handling': {
+                    'hash_pii': True,
+                    'encrypt_sensitive_fields': True,
+                    'anonymize_after_days': 30
+                },
+                'real_time_monitoring': {
+                    'suspicious_activity_threshold': 10,
+                    'failed_login_threshold': 5,
+                    'privilege_escalation_detection': True
+                },
+                'compliance_frameworks': ['GDPR', 'SOX', 'HIPAA', 'PCI_DSS'],
+                'alert_thresholds': {
+                    'HIGH': 'immediate',
+                    'MEDIUM': '15_minutes',
+                    'LOW': '1_hour'
+                }
+            }
+            
+            logger.info("Audit database setup completed successfully")
+            
+        except Exception as e:
+            logger.error(f"Error setting up audit database: {str(e)}")
+            raise AuditError(f"Database setup failed: {str(e)}")
 
     async def _start_real_time_monitoring(self) -> None:
         """Start background real-time monitoring service"""

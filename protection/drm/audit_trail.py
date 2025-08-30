@@ -714,18 +714,258 @@ class AuditTrail:
     
     async def _update_security_metrics(self, event: AuditEvent) -> None:
         """Update security metrics."""
-        # This would integrate with metrics system
-        pass
+        try:
+            # Initialize security metrics if not exists
+            if not hasattr(self, 'security_metrics'):
+                self.security_metrics = {
+                    'access_attempts': {'total': 0, 'successful': 0, 'failed': 0},
+                    'privilege_escalations': 0,
+                    'suspicious_activities': 0,
+                    'data_access_events': 0,
+                    'authentication_events': {'logins': 0, 'logouts': 0, 'failed_logins': 0},
+                    'authorization_failures': 0,
+                    'security_violations': 0,
+                    'encryption_events': 0,
+                    'audit_integrity_checks': 0,
+                    'last_updated': datetime.now().isoformat()
+                }
+            
+            # Update metrics based on event type
+            event_type = event.event_type.value
+            
+            if event_type in ['USER_LOGIN', 'API_ACCESS', 'SYSTEM_ACCESS']:
+                self.security_metrics['access_attempts']['total'] += 1
+                if event.result == 'SUCCESS':
+                    self.security_metrics['access_attempts']['successful'] += 1
+                else:
+                    self.security_metrics['access_attempts']['failed'] += 1
+            
+            elif event_type == 'USER_LOGIN':
+                if event.result == 'SUCCESS':
+                    self.security_metrics['authentication_events']['logins'] += 1
+                else:
+                    self.security_metrics['authentication_events']['failed_logins'] += 1
+            
+            elif event_type == 'USER_LOGOUT':
+                self.security_metrics['authentication_events']['logouts'] += 1
+            
+            elif event_type == 'PRIVILEGE_ESCALATION':
+                self.security_metrics['privilege_escalations'] += 1
+            
+            elif event_type == 'SUSPICIOUS_ACTIVITY':
+                self.security_metrics['suspicious_activities'] += 1
+            
+            elif event_type in ['DATA_ACCESS', 'FILE_ACCESS', 'DATABASE_ACCESS']:
+                self.security_metrics['data_access_events'] += 1
+            
+            elif event_type == 'AUTHORIZATION_FAILURE':
+                self.security_metrics['authorization_failures'] += 1
+            
+            elif event_type == 'SECURITY_VIOLATION':
+                self.security_metrics['security_violations'] += 1
+            
+            elif event_type in ['ENCRYPT', 'DECRYPT', 'KEY_ROTATION']:
+                self.security_metrics['encryption_events'] += 1
+            
+            elif event_type == 'AUDIT_INTEGRITY_CHECK':
+                self.security_metrics['audit_integrity_checks'] += 1
+            
+            # Update timestamp
+            self.security_metrics['last_updated'] = datetime.now().isoformat()
+            
+            # Store metrics persistently if configured
+            await self._persist_security_metrics()
+            
+            logger.debug(f"Updated security metrics for event type: {event_type}")
+            
+        except Exception as e:
+            logger.error(f"Error updating security metrics: {str(e)}")
     
     async def _update_violation_metrics(self, event: AuditEvent) -> None:
         """Update violation metrics."""
-        # This would integrate with metrics system
-        pass
+        try:
+            # Initialize violation metrics if not exists
+            if not hasattr(self, 'violation_metrics'):
+                self.violation_metrics = {
+                    'copyright_violations': 0,
+                    'license_violations': 0,
+                    'access_violations': 0,
+                    'data_policy_violations': 0,
+                    'terms_violations': 0,
+                    'privacy_violations': 0,
+                    'security_violations': 0,
+                    'compliance_violations': 0,
+                    'severity_breakdown': {'low': 0, 'medium': 0, 'high': 0, 'critical': 0},
+                    'user_violations': {},  # user_id -> violation_count
+                    'violation_trends': [],  # Time series data
+                    'last_updated': datetime.now().isoformat()
+                }
+            
+            # Determine violation type from event data
+            violation_type = self._classify_violation(event)
+            
+            if violation_type in self.violation_metrics:
+                self.violation_metrics[violation_type] += 1
+            
+            # Update severity breakdown
+            severity = event.event_data.get('severity', 'medium')
+            if severity in self.violation_metrics['severity_breakdown']:
+                self.violation_metrics['severity_breakdown'][severity] += 1
+            
+            # Track per-user violations
+            user_id = event.user_id
+            if user_id:
+                if user_id not in self.violation_metrics['user_violations']:
+                    self.violation_metrics['user_violations'][user_id] = 0
+                self.violation_metrics['user_violations'][user_id] += 1
+            
+            # Add to trend data
+            trend_entry = {
+                'timestamp': event.timestamp.isoformat(),
+                'violation_type': violation_type,
+                'severity': severity,
+                'user_id': user_id
+            }
+            self.violation_metrics['violation_trends'].append(trend_entry)
+            
+            # Keep only last 1000 trend entries to prevent memory issues
+            if len(self.violation_metrics['violation_trends']) > 1000:
+                self.violation_metrics['violation_trends'] = self.violation_metrics['violation_trends'][-1000:]
+            
+            # Update timestamp
+            self.violation_metrics['last_updated'] = datetime.now().isoformat()
+            
+            # Store metrics persistently
+            await self._persist_violation_metrics()
+            
+            logger.info(f"Updated violation metrics: {violation_type} (severity: {severity})")
+            
+        except Exception as e:
+            logger.error(f"Error updating violation metrics: {str(e)}")
     
     async def _track_failed_access(self, user_id: str, event: AuditEvent) -> None:
         """Track failed access attempts for user."""
-        # This would integrate with security monitoring
-        pass
+        try:
+            # Initialize failed access tracking
+            if not hasattr(self, 'failed_access_tracking'):
+                self.failed_access_tracking = {}
+            
+            current_time = datetime.now()
+            
+            # Initialize user tracking if not exists
+            if user_id not in self.failed_access_tracking:
+                self.failed_access_tracking[user_id] = {
+                    'failed_attempts': 0,
+                    'first_failure': current_time.isoformat(),
+                    'last_failure': current_time.isoformat(),
+                    'failure_details': [],
+                    'blocked': False,
+                    'block_until': None
+                }
+            
+            user_tracking = self.failed_access_tracking[user_id]
+            
+            # Update failure count and details
+            user_tracking['failed_attempts'] += 1
+            user_tracking['last_failure'] = current_time.isoformat()
+            
+            failure_detail = {
+                'timestamp': current_time.isoformat(),
+                'event_type': event.event_type.value,
+                'ip_address': event.event_data.get('ip_address', 'unknown'),
+                'user_agent': event.event_data.get('user_agent', 'unknown'),
+                'reason': event.event_data.get('failure_reason', 'unknown')
+            }
+            user_tracking['failure_details'].append(failure_detail)
+            
+            # Keep only last 20 failure details
+            if len(user_tracking['failure_details']) > 20:
+                user_tracking['failure_details'] = user_tracking['failure_details'][-20:]
+            
+            # Check if user should be blocked (configurable thresholds)
+            block_threshold = 5  # 5 failed attempts
+            block_duration_minutes = 30
+            
+            if user_tracking['failed_attempts'] >= block_threshold and not user_tracking['blocked']:
+                user_tracking['blocked'] = True
+                block_until = current_time + timedelta(minutes=block_duration_minutes)
+                user_tracking['block_until'] = block_until.isoformat()
+                
+                # Log security alert
+                logger.warning(f"User {user_id} blocked due to {user_tracking['failed_attempts']} failed access attempts")
+                
+                # Create security alert
+                await self._create_security_alert(user_id, 'EXCESSIVE_FAILED_ACCESS', {
+                    'failed_attempts': user_tracking['failed_attempts'],
+                    'block_duration_minutes': block_duration_minutes,
+                    'first_failure': user_tracking['first_failure'],
+                    'last_failure': user_tracking['last_failure']
+                })
+            
+            # Clean up old tracking data (older than 24 hours)
+            cutoff_time = current_time - timedelta(hours=24)
+            for uid, tracking in list(self.failed_access_tracking.items()):
+                first_failure = datetime.fromisoformat(tracking['first_failure'])
+                if first_failure < cutoff_time and tracking['failed_attempts'] < block_threshold:
+                    del self.failed_access_tracking[uid]
+            
+            logger.debug(f"Tracked failed access for user {user_id}: {user_tracking['failed_attempts']} attempts")
+            
+        except Exception as e:
+            logger.error(f"Error tracking failed access for user {user_id}: {str(e)}")
+    
+    def _classify_violation(self, event: AuditEvent) -> str:
+        """Classify violation type based on event data"""
+        event_type = event.event_type.value
+        event_data = event.event_data
+        
+        # Map event types to violation categories
+        if 'copyright' in event_type.lower() or 'infringement' in event_type.lower():
+            return 'copyright_violations'
+        elif 'license' in event_type.lower():
+            return 'license_violations'
+        elif 'access' in event_type.lower() and event.result != 'SUCCESS':
+            return 'access_violations'
+        elif 'privacy' in event_type.lower() or 'gdpr' in event_type.lower():
+            return 'privacy_violations'
+        elif 'security' in event_type.lower():
+            return 'security_violations'
+        elif 'compliance' in event_type.lower():
+            return 'compliance_violations'
+        elif 'policy' in event_type.lower():
+            return 'data_policy_violations'
+        else:
+            return 'terms_violations'
+    
+    async def _persist_security_metrics(self):
+        """Persist security metrics to storage"""
+        try:
+            if hasattr(self, 'storage_client'):
+                await self.storage_client.store_metrics('security', self.security_metrics)
+        except Exception as e:
+            logger.debug(f"Failed to persist security metrics: {str(e)}")
+    
+    async def _persist_violation_metrics(self):
+        """Persist violation metrics to storage"""
+        try:
+            if hasattr(self, 'storage_client'):
+                await self.storage_client.store_metrics('violations', self.violation_metrics)
+        except Exception as e:
+            logger.debug(f"Failed to persist violation metrics: {str(e)}")
+    
+    async def _create_security_alert(self, user_id: str, alert_type: str, alert_data: dict):
+        """Create security alert for excessive failed access"""
+        try:
+            if hasattr(self, 'alert_client'):
+                await self.alert_client.create_alert({
+                    'type': alert_type,
+                    'severity': 'HIGH',
+                    'user_id': user_id,
+                    'data': alert_data,
+                    'timestamp': datetime.now().isoformat()
+                })
+        except Exception as e:
+            logger.debug(f"Failed to create security alert: {str(e)}")
     
     async def get_audit_statistics(self) -> Dict[str, Any]:
         """Get audit trail statistics."""

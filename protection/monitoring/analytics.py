@@ -595,9 +595,195 @@ class MonitoringAnalytics:
     
     async def _setup_realtime_collection(self) -> None:
         """Set up real-time metrics collection."""
-        # This would set up background tasks for real-time data collection
-        # Implementation depends on the specific message queue/streaming system
+        try:
+            logger.info("Setting up real-time metrics collection")
+            
+            # Initialize real-time collection components
+            self.realtime_collectors = {
+                'infringement_detector': None,
+                'performance_monitor': None,
+                'user_activity_tracker': None,
+                'system_health_monitor': None,
+                'security_event_collector': None
+            }
+            
+            # Set up infringement detection pipeline
+            self.realtime_collectors['infringement_detector'] = await self._setup_infringement_detector()
+            
+            # Set up performance monitoring
+            self.realtime_collectors['performance_monitor'] = await self._setup_performance_monitor()
+            
+            # Set up user activity tracking
+            self.realtime_collectors['user_activity_tracker'] = await self._setup_activity_tracker()
+            
+            # Set up system health monitoring
+            self.realtime_collectors['system_health_monitor'] = await self._setup_health_monitor()
+            
+            # Set up security event collection
+            self.realtime_collectors['security_event_collector'] = await self._setup_security_collector()
+            
+            # Start background collection tasks
+            self.collection_tasks = []
+            
+            for collector_name, collector in self.realtime_collectors.items():
+                if collector:
+                    task = asyncio.create_task(self._run_collector(collector_name, collector))
+                    self.collection_tasks.append(task)
+                    logger.debug(f"Started real-time collector: {collector_name}")
+            
+            # Set up data aggregation pipeline
+            self.aggregation_task = asyncio.create_task(self._run_data_aggregation())
+            self.collection_tasks.append(self.aggregation_task)
+            
+            # Set up alert processing
+            self.alert_task = asyncio.create_task(self._run_alert_processing())
+            self.collection_tasks.append(self.alert_task)
+            
+            logger.info(f"Real-time collection setup completed with {len(self.collection_tasks)} active tasks")
+            
+        except Exception as e:
+            logger.error(f"Failed to setup real-time collection: {str(e)}")
+            raise
+    
+    async def _setup_infringement_detector(self):
+        """Setup real-time infringement detection"""
+        return {
+            'type': 'infringement_detector',
+            'interval': 30,  # seconds
+            'enabled': True,
+            'sources': ['youtube', 'instagram', 'tiktok', 'spotify'],
+            'fingerprint_threshold': 0.85,
+            'alert_threshold': 0.95
+        }
+    
+    async def _setup_performance_monitor(self):
+        """Setup performance monitoring"""
+        return {
+            'type': 'performance_monitor',
+            'interval': 60,
+            'enabled': True,
+            'metrics': ['response_time', 'throughput', 'error_rate', 'cpu_usage', 'memory_usage'],
+            'thresholds': {
+                'response_time_ms': 1000,
+                'error_rate_percent': 5,
+                'cpu_percent': 80,
+                'memory_percent': 85
+            }
+        }
+    
+    async def _setup_activity_tracker(self):
+        """Setup user activity tracking"""
+        return {
+            'type': 'activity_tracker',
+            'interval': 10,
+            'enabled': True,
+            'events': ['login', 'logout', 'upload', 'download', 'share', 'report'],
+            'anomaly_detection': True,
+            'session_tracking': True
+        }
+    
+    async def _setup_health_monitor(self):
+        """Setup system health monitoring"""
+        return {
+            'type': 'health_monitor',
+            'interval': 30,
+            'enabled': True,
+            'components': ['database', 'cache', 'storage', 'apis', 'background_jobs'],
+            'auto_recovery': True,
+            'escalation_rules': {
+                'critical': 'immediate',
+                'high': '5_minutes',
+                'medium': '15_minutes'
+            }
+        }
+    
+    async def _setup_security_collector(self):
+        """Setup security event collection"""
+        return {
+            'type': 'security_collector',
+            'interval': 5,
+            'enabled': True,
+            'events': ['failed_login', 'privilege_escalation', 'suspicious_activity', 'data_breach'],
+            'threat_detection': True,
+            'auto_blocking': True,
+            'severity_levels': ['low', 'medium', 'high', 'critical']
+        }
+    
+    async def _run_collector(self, collector_name: str, collector_config: dict):
+        """Run individual collector in background"""
+        try:
+            while True:
+                if not collector_config.get('enabled', True):
+                    await asyncio.sleep(collector_config.get('interval', 60))
+                    continue
+                
+                # Collect metrics based on collector type
+                if collector_config['type'] == 'infringement_detector':
+                    await self._collect_infringement_metrics()
+                elif collector_config['type'] == 'performance_monitor':
+                    await self._collect_performance_metrics()
+                elif collector_config['type'] == 'activity_tracker':
+                    await self._collect_activity_metrics()
+                elif collector_config['type'] == 'health_monitor':
+                    await self._collect_health_metrics()
+                elif collector_config['type'] == 'security_collector':
+                    await self._collect_security_metrics()
+                
+                await asyncio.sleep(collector_config.get('interval', 60))
+                
+        except asyncio.CancelledError:
+            logger.info(f"Collector {collector_name} was cancelled")
+        except Exception as e:
+            logger.error(f"Error in collector {collector_name}: {str(e)}")
+    
+    async def _collect_infringement_metrics(self):
+        """Collect real-time infringement detection metrics"""
+        # Implementation for infringement detection
         pass
+    
+    async def _collect_performance_metrics(self):
+        """Collect real-time performance metrics"""
+        # Implementation for performance metrics
+        pass
+    
+    async def _collect_activity_metrics(self):
+        """Collect real-time user activity metrics"""
+        # Implementation for activity tracking
+        pass
+    
+    async def _collect_health_metrics(self):
+        """Collect real-time system health metrics"""
+        # Implementation for health monitoring
+        pass
+    
+    async def _collect_security_metrics(self):
+        """Collect real-time security metrics"""
+        # Implementation for security monitoring
+        pass
+    
+    async def _run_data_aggregation(self):
+        """Run data aggregation pipeline"""
+        try:
+            while True:
+                # Aggregate collected metrics every minute
+                await self._aggregate_realtime_data()
+                await asyncio.sleep(60)
+        except asyncio.CancelledError:
+            logger.info("Data aggregation task was cancelled")
+        except Exception as e:
+            logger.error(f"Error in data aggregation: {str(e)}")
+    
+    async def _run_alert_processing(self):
+        """Run alert processing pipeline"""
+        try:
+            while True:
+                # Process alerts every 10 seconds
+                await self._process_pending_alerts()
+                await asyncio.sleep(10)
+        except asyncio.CancelledError:
+            logger.info("Alert processing task was cancelled")
+        except Exception as e:
+            logger.error(f"Error in alert processing: {str(e)}")
     
     async def _calculate_realtime_metrics(self, user_id: Optional[int] = None) -> Dict[str, Any]:
         """Calculate real-time monitoring metrics."""

@@ -813,18 +813,234 @@ class SurveillanceEngine:
     
     async def _persist_target(self, target: SurveillanceTarget) -> None:
         """Persist target to database."""
-        # Implementation would save to database
-        pass
+        try:
+            logger.info(f"Persisting surveillance target: {target.target_id}")
+            
+            # Prepare target data for storage
+            target_data = {
+                'target_id': target.target_id,
+                'target_type': target.target_type.value,
+                'url': target.url,
+                'metadata': target.metadata,
+                'created_at': target.created_at.isoformat(),
+                'last_checked': target.last_checked.isoformat() if target.last_checked else None,
+                'status': target.status.value,
+                'check_frequency': target.check_frequency,
+                'is_active': target.is_active
+            }
+            
+            # Store in local cache first
+            self.target_cache[target.target_id] = target_data
+            
+            # Persist to database if available
+            try:
+                if hasattr(self, 'database_connection') and self.database_connection:
+                    # Use database connection
+                    async with self.database_connection.begin() as transaction:
+                        await self.database_connection.execute(
+                            """INSERT INTO surveillance_targets 
+                               (target_id, target_type, url, metadata, created_at, 
+                                last_checked, status, check_frequency, is_active)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                               ON CONFLICT (target_id) DO UPDATE SET
+                               target_type = excluded.target_type,
+                               url = excluded.url,
+                               metadata = excluded.metadata,
+                               last_checked = excluded.last_checked,
+                               status = excluded.status,
+                               check_frequency = excluded.check_frequency,
+                               is_active = excluded.is_active""",
+                            (target_data['target_id'], target_data['target_type'], 
+                             target_data['url'], json.dumps(target_data['metadata']),
+                             target_data['created_at'], target_data['last_checked'],
+                             target_data['status'], target_data['check_frequency'],
+                             target_data['is_active'])
+                        )
+                        await transaction.commit()
+                else:
+                    # Fallback to file storage
+                    storage_path = f"surveillance_data/targets/{target.target_id}.json"
+                    os.makedirs(os.path.dirname(storage_path), exist_ok=True)
+                    
+                    with open(storage_path, 'w') as f:
+                        json.dump(target_data, f, indent=2)
+                        
+            except Exception as storage_error:
+                logger.warning(f"Database storage failed, using file backup: {storage_error}")
+                # Backup to file system
+                backup_path = f"surveillance_backup/targets_{datetime.now().strftime('%Y%m%d')}.jsonl"
+                os.makedirs(os.path.dirname(backup_path), exist_ok=True)
+                
+                with open(backup_path, 'a') as f:
+                    f.write(json.dumps(target_data) + '\n')
+            
+            logger.debug(f"Successfully persisted target {target.target_id}")
+            
+        except Exception as e:
+            logger.error(f"Error persisting target {target.target_id}: {str(e)}")
+            raise
     
     async def _remove_target_from_db(self, target_id: str) -> None:
         """Remove target from database."""
-        # Implementation would remove from database
-        pass
+        try:
+            logger.info(f"Removing surveillance target: {target_id}")
+            
+            # Remove from local cache
+            if target_id in self.target_cache:
+                del self.target_cache[target_id]
+            
+            # Remove from database if available
+            try:
+                if hasattr(self, 'database_connection') and self.database_connection:
+                    async with self.database_connection.begin() as transaction:
+                        result = await self.database_connection.execute(
+                            "DELETE FROM surveillance_targets WHERE target_id = ?",
+                            (target_id,)
+                        )
+                        await transaction.commit()
+                        
+                        if result.rowcount > 0:
+                            logger.info(f"Removed target {target_id} from database")
+                        else:
+                            logger.warning(f"Target {target_id} not found in database")
+                else:
+                    # Fallback to file removal
+                    storage_path = f"surveillance_data/targets/{target_id}.json"
+                    if os.path.exists(storage_path):
+                        os.remove(storage_path)
+                        logger.info(f"Removed target file {storage_path}")
+                        
+            except Exception as storage_error:
+                logger.warning(f"Database removal failed: {storage_error}")
+                # Try file system cleanup
+                try:
+                    storage_path = f"surveillance_data/targets/{target_id}.json"
+                    if os.path.exists(storage_path):
+                        os.remove(storage_path)
+                        
+                    # Also mark as deleted in backup
+                    backup_path = f"surveillance_backup/deleted_{datetime.now().strftime('%Y%m%d')}.jsonl"
+                    os.makedirs(os.path.dirname(backup_path), exist_ok=True)
+                    
+                    deletion_record = {
+                        'target_id': target_id,
+                        'deleted_at': datetime.now().isoformat(),
+                        'reason': 'user_request'
+                    }
+                    
+                    with open(backup_path, 'a') as f:
+                        f.write(json.dumps(deletion_record) + '\n')
+                        
+                except Exception as file_error:
+                    logger.error(f"File cleanup also failed: {file_error}")
+            
+            # Remove from active surveillance
+            if hasattr(self, 'active_targets'):
+                self.active_targets.discard(target_id)
+            
+            logger.debug(f"Successfully removed target {target_id}")
+            
+        except Exception as e:
+            logger.error(f"Error removing target {target_id}: {str(e)}")
+            raise
     
     async def _store_alert(self, alert: SurveillanceAlert) -> None:
         """Store alert in database."""
-        # Implementation would save alert
-        pass
+        try:
+            logger.info(f"Storing surveillance alert: {alert.alert_id}")
+            
+            # Prepare alert data for storage
+            alert_data = {
+                'alert_id': alert.alert_id,
+                'alert_type': alert.alert_type.value,
+                'target_id': alert.target_id,
+                'severity': alert.severity.value,
+                'title': alert.title,
+                'message': alert.message,
+                'data': alert.data,
+                'timestamp': alert.timestamp.isoformat(),
+                'acknowledged': alert.acknowledged,
+                'actions_taken': alert.actions_taken
+            }
+            
+            # Store in local alert cache
+            if not hasattr(self, 'alert_cache'):
+                self.alert_cache = {}
+            self.alert_cache[alert.alert_id] = alert_data
+            
+            # Persist to database if available
+            try:
+                if hasattr(self, 'database_connection') and self.database_connection:
+                    async with self.database_connection.begin() as transaction:
+                        await self.database_connection.execute(
+                            """INSERT INTO surveillance_alerts 
+                               (alert_id, alert_type, target_id, severity, title, 
+                                message, data, timestamp, acknowledged, actions_taken)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                            (alert_data['alert_id'], alert_data['alert_type'],
+                             alert_data['target_id'], alert_data['severity'],
+                             alert_data['title'], alert_data['message'],
+                             json.dumps(alert_data['data']), alert_data['timestamp'],
+                             alert_data['acknowledged'], json.dumps(alert_data['actions_taken']))
+                        )
+                        await transaction.commit()
+                else:
+                    # Fallback to file storage
+                    alert_dir = f"surveillance_data/alerts/{datetime.now().strftime('%Y%m%d')}"
+                    os.makedirs(alert_dir, exist_ok=True)
+                    
+                    alert_file = f"{alert_dir}/{alert.alert_id}.json"
+                    with open(alert_file, 'w') as f:
+                        json.dump(alert_data, f, indent=2)
+                        
+            except Exception as storage_error:
+                logger.warning(f"Primary storage failed, using backup: {storage_error}")
+                # Backup storage
+                backup_path = f"surveillance_backup/alerts_{datetime.now().strftime('%Y%m%d')}.jsonl"
+                os.makedirs(os.path.dirname(backup_path), exist_ok=True)
+                
+                with open(backup_path, 'a') as f:
+                    f.write(json.dumps(alert_data) + '\n')
+            
+            # Trigger real-time notifications for high severity alerts
+            if alert.severity in [AlertSeverity.HIGH, AlertSeverity.CRITICAL]:
+                await self._send_real_time_notification(alert)
+            
+            # Update metrics
+            if hasattr(self, 'metrics'):
+                self.metrics['alerts_stored'] = self.metrics.get('alerts_stored', 0) + 1
+                self.metrics[f'alerts_{alert.severity.value}'] = self.metrics.get(f'alerts_{alert.severity.value}', 0) + 1
+            
+            logger.debug(f"Successfully stored alert {alert.alert_id}")
+            
+        except Exception as e:
+            logger.error(f"Error storing alert {alert.alert_id}: {str(e)}")
+            raise
+    
+    async def _send_real_time_notification(self, alert: SurveillanceAlert) -> None:
+        """Send real-time notification for critical alerts."""
+        try:
+            notification_data = {
+                'alert_id': alert.alert_id,
+                'severity': alert.severity.value,
+                'title': alert.title,
+                'message': alert.message[:200],  # Truncate for notification
+                'timestamp': alert.timestamp.isoformat()
+            }
+            
+            # Here you would integrate with notification services
+            # For now, log the notification
+            logger.warning(f"CRITICAL ALERT: {alert.title} - {alert.message}")
+            
+            # Could integrate with:
+            # - Email notifications
+            # - Slack/Teams webhooks
+            # - SMS alerts
+            # - Push notifications
+            # - Dashboard real-time updates
+            
+        except Exception as e:
+            logger.error(f"Error sending notification for alert {alert.alert_id}: {str(e)}")
     
     # Public interface methods
     def register_alert_handler(self, alert_type: AlertType, handler: Callable) -> None:
