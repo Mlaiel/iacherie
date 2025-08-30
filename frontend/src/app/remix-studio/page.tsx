@@ -20,7 +20,7 @@
 import React from 'react';
 import RemixStudioMain from '@/components/remix_studio/RemixStudioMain';
 
-const RemixStudioShowcase: React.FC = () => {
+export default function RemixStudioPage() {
   const handleSave = async (projectData: any) => {
     console.log('Saving project:', projectData);
     // In real implementation, would save to backend
@@ -40,6 +40,4 @@ const RemixStudioShowcase: React.FC = () => {
       />
     </div>
   );
-};
-
-export default RemixStudioShowcase;
+}
