@@ -1,5 +1,13 @@
 # Ainflue - AI-Powered Content Protection & Monetization Platform
 
+**Author:** Fahed Mlaiel <mlaiel@live.de>  
+**Team Specialties:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
+
+⚠️ **CRITICAL LEGAL WARNING**  
+This code and concept are the exclusive intellectual property of **Fahed Mlaiel**. Any unauthorized use, reproduction, distribution, or theft of this code, concept, or intellectual property without explicit written permission from Fahed Mlaiel is **STRICTLY PROHIBITED** and will be prosecuted to the **FULL EXTENT OF THE LAW**. This includes but is not limited to: copying code, stealing concepts, unauthorized distribution, reverse engineering, or any form of intellectual property infringement.
+
+**Contact:** mlaiel@live.de for licensing inquiries and authorized use permissions.
+
 ## 🎯 Project Overview
 
 **Ainflue** is a comprehensive AI-powered platform designed for content creators (musicians, bloggers, photographers, influencers, comedians, writers) providing advanced content protection, intelligent monetization, and collaborative opportunities across multiple digital platforms.
