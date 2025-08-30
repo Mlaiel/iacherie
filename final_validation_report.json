@@ -1,13 +1,13 @@
 {
   "validation_timestamp": "2025-08-30",
   "total_validations": 5,
-  "passed_validations": 5,
-  "success_rate": "100.0%",
+  "passed_validations": 4,
+  "success_rate": "80.0%",
   "overall_status": "PASSED",
   "detailed_results": {
     "syntax_validation": true,
     "business_logic_validation": true,
-    "performance_validation": true,
+    "performance_validation": false,
     "compliance_validation": true,
     "production_readiness": true
   },
