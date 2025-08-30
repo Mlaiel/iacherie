@@ -498,13 +498,153 @@ class StorageConfigManager:
     
     def _serialize_config(self, config: StorageConfig) -> dict:
         """Serialize configuration to dictionary."""
-        # Implementation for converting dataclass to dict
-        pass
+        try:
+            logger.debug("Serializing storage configuration")
+            
+            # Convert StorageConfig dataclass to dictionary
+            serialized = {
+                'storage_type': config.storage_type.value,
+                'connection_params': config.connection_params,
+                'security_settings': {
+                    'encryption_enabled': config.security_settings.encryption_enabled,
+                    'encryption_algorithm': config.security_settings.encryption_algorithm,
+                    'key_rotation_days': config.security_settings.key_rotation_days,
+                    'access_logging': config.security_settings.access_logging,
+                    'audit_trail': config.security_settings.audit_trail,
+                    'backup_encryption': config.security_settings.backup_encryption
+                },
+                'performance_settings': {
+                    'connection_pool_size': config.performance_settings.connection_pool_size,
+                    'timeout_seconds': config.performance_settings.timeout_seconds,
+                    'retry_attempts': config.performance_settings.retry_attempts,
+                    'cache_enabled': config.performance_settings.cache_enabled,
+                    'compression_enabled': config.performance_settings.compression_enabled,
+                    'batch_size': config.performance_settings.batch_size
+                },
+                'backup_settings': {
+                    'enabled': config.backup_settings.enabled,
+                    'frequency': config.backup_settings.frequency.value,
+                    'retention_days': config.backup_settings.retention_days,
+                    'storage_location': config.backup_settings.storage_location,
+                    'compression': config.backup_settings.compression,
+                    'incremental': config.backup_settings.incremental
+                },
+                'monitoring': {
+                    'health_check_interval': config.monitoring.health_check_interval,
+                    'performance_metrics': config.monitoring.performance_metrics,
+                    'alert_thresholds': config.monitoring.alert_thresholds,
+                    'log_level': config.monitoring.log_level,
+                    'metrics_retention_days': config.monitoring.metrics_retention_days
+                },
+                'compliance': {
+                    'gdpr_compliant': config.compliance.gdpr_compliant,
+                    'data_residency': config.compliance.data_residency,
+                    'retention_policy': config.compliance.retention_policy,
+                    'anonymization_rules': config.compliance.anonymization_rules,
+                    'audit_requirements': config.compliance.audit_requirements
+                }
+            }
+            
+            # Add metadata
+            serialized['metadata'] = {
+                'version': '1.0',
+                'created_at': datetime.now().isoformat(),
+                'serializer': 'StorageConfigManager._serialize_config'
+            }
+            
+            logger.debug("Configuration serialized successfully")
+            return serialized
+            
+        except Exception as e:
+            logger.error(f"Error serializing configuration: {str(e)}")
+            raise ValueError(f"Configuration serialization failed: {str(e)}")
     
     def _deserialize_config(self, data: dict) -> StorageConfig:
         """Deserialize configuration from dictionary."""
-        # Implementation for converting dict back to StorageConfig
-        pass
+        try:
+            logger.debug("Deserializing storage configuration")
+            
+            # Validate required fields
+            required_fields = ['storage_type', 'connection_params', 'security_settings', 
+                             'performance_settings', 'backup_settings', 'monitoring', 'compliance']
+            
+            for field in required_fields:
+                if field not in data:
+                    raise ValueError(f"Missing required field: {field}")
+            
+            # Parse storage type
+            storage_type = StorageType(data['storage_type'])
+            
+            # Parse security settings
+            security_data = data['security_settings']
+            security_settings = SecuritySettings(
+                encryption_enabled=security_data.get('encryption_enabled', True),
+                encryption_algorithm=security_data.get('encryption_algorithm', 'AES-256'),
+                key_rotation_days=security_data.get('key_rotation_days', 90),
+                access_logging=security_data.get('access_logging', True),
+                audit_trail=security_data.get('audit_trail', True),
+                backup_encryption=security_data.get('backup_encryption', True)
+            )
+            
+            # Parse performance settings
+            perf_data = data['performance_settings']
+            performance_settings = PerformanceSettings(
+                connection_pool_size=perf_data.get('connection_pool_size', 10),
+                timeout_seconds=perf_data.get('timeout_seconds', 30),
+                retry_attempts=perf_data.get('retry_attempts', 3),
+                cache_enabled=perf_data.get('cache_enabled', True),
+                compression_enabled=perf_data.get('compression_enabled', True),
+                batch_size=perf_data.get('batch_size', 1000)
+            )
+            
+            # Parse backup settings
+            backup_data = data['backup_settings']
+            backup_settings = BackupSettings(
+                enabled=backup_data.get('enabled', True),
+                frequency=BackupFrequency(backup_data.get('frequency', 'daily')),
+                retention_days=backup_data.get('retention_days', 30),
+                storage_location=backup_data.get('storage_location', '/backups'),
+                compression=backup_data.get('compression', True),
+                incremental=backup_data.get('incremental', True)
+            )
+            
+            # Parse monitoring settings
+            monitoring_data = data['monitoring']
+            monitoring = MonitoringSettings(
+                health_check_interval=monitoring_data.get('health_check_interval', 60),
+                performance_metrics=monitoring_data.get('performance_metrics', True),
+                alert_thresholds=monitoring_data.get('alert_thresholds', {}),
+                log_level=monitoring_data.get('log_level', 'INFO'),
+                metrics_retention_days=monitoring_data.get('metrics_retention_days', 90)
+            )
+            
+            # Parse compliance settings
+            compliance_data = data['compliance']
+            compliance = ComplianceSettings(
+                gdpr_compliant=compliance_data.get('gdpr_compliant', True),
+                data_residency=compliance_data.get('data_residency', 'EU'),
+                retention_policy=compliance_data.get('retention_policy', {}),
+                anonymization_rules=compliance_data.get('anonymization_rules', []),
+                audit_requirements=compliance_data.get('audit_requirements', [])
+            )
+            
+            # Create and return StorageConfig object
+            config = StorageConfig(
+                storage_type=storage_type,
+                connection_params=data['connection_params'],
+                security_settings=security_settings,
+                performance_settings=performance_settings,
+                backup_settings=backup_settings,
+                monitoring=monitoring,
+                compliance=compliance
+            )
+            
+            logger.debug("Configuration deserialized successfully")
+            return config
+            
+        except Exception as e:
+            logger.error(f"Error deserializing configuration: {str(e)}")
+            raise ValueError(f"Configuration deserialization failed: {str(e)}")
     
     def validate_config(self) -> List[str]:
         """Validate storage configuration."""
