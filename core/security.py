@@ -589,10 +589,43 @@ def generate_secure_hash(data: str, salt: Optional[str] = None) -> Dict[str, str
     return service.generate_secure_hash(data, salt)
 
 
+# Compatibility aliases for business modules
+class SecurityManager:
+    """Security manager compatibility class for business modules"""
+    
+    def __init__(self):
+        self._service = ContentProtectionSecurityService()
+    
+    def __getattr__(self, name):
+        """Delegate to the underlying service"""
+        return getattr(self._service, name)
+
+
+class EncryptionManager:
+    """Encryption manager compatibility class for business modules"""
+    
+    def __init__(self):
+        self._service = ContentProtectionSecurityService()
+    
+    def encrypt(self, data: str, key: Optional[str] = None) -> str:
+        """Encrypt data using the service"""
+        return self._service.encrypt_data(data, key)
+    
+    def decrypt(self, encrypted_data: str, key: Optional[str] = None) -> str:
+        """Decrypt data using the service"""
+        return self._service.decrypt_data(encrypted_data, key)
+    
+    def __getattr__(self, name):
+        """Delegate to the underlying service"""
+        return getattr(self._service, name)
+
+
 # Export all security components
 __all__ = [
     'SecurityError',
     'ContentProtectionSecurityService',
+    'SecurityManager',
+    'EncryptionManager',
     'create_security_service',
     'encrypt_sensitive_data',
     'decrypt_sensitive_data',

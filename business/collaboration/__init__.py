@@ -130,11 +130,7 @@ __all__ = [
 # Version and metadata
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__description__ = "Advanced collaboration business logic module for IA Influencer Agent"]
-and will result in immediate legal action under German and International copyright laws.
-
-Contact mlaiel@live.de for licensing inquiries only.
-"""
+__description__ = "Advanced collaboration business logic module for IA Influencer Agent"
 
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass

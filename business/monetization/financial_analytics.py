@@ -25,14 +25,64 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 import uuid
 import json
-import numpy as np
-import pandas as pd
-from scipy import stats
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import StandardScaler
-import matplotlib.pyplot as plt
-import seaborn as sns
+# Optional scientific computing imports with fallbacks
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+    # Fallback implementations for basic numpy functions
+    class NumpyFallback:
+        @staticmethod
+        def std(values):
+            if not values:
+                return 0
+            mean_val = sum(values) / len(values)
+            return (sum((x - mean_val) ** 2 for x in values) / len(values)) ** 0.5
+        
+        @staticmethod 
+        def mean(values):
+            return sum(values) / len(values) if values else 0
+            
+        @staticmethod
+        def percentile(values, percentiles):
+            if not values:
+                return [0] * len(percentiles)
+            sorted_values = sorted(values)
+            n = len(sorted_values)
+            return [sorted_values[int(p/100 * (n-1))] for p in percentiles]
+    
+    np = NumpyFallback()
+
+try:
+    import pandas as pd
+    HAS_PANDAS = True
+except ImportError:
+    HAS_PANDAS = False
+    pd = None
+
+try:
+    from scipy import stats
+    HAS_SCIPY = True
+except ImportError:
+    HAS_SCIPY = False
+    stats = None
+
+try:
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.linear_model import LinearRegression
+    from sklearn.preprocessing import StandardScaler
+    HAS_SKLEARN = True
+except ImportError:
+    HAS_SKLEARN = False
+
+try:
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    HAS_PLOTTING = True
+except ImportError:
+    HAS_PLOTTING = False
+    
 from io import BytesIO
 import base64
 
