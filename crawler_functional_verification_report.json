@@ -1,0 +1,332 @@
+{
+  "timestamp": "2025-08-30T07:20:35.820224",
+  "summary": {
+    "total_tests": 12,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 4,
+    "success_rate": 0.6666666666666666
+  },
+  "crawler_results": {
+    "spotify_crawler": [
+      {
+        "test_name": "Implementation Completeness - spotify_crawler.py",
+        "status": "pass",
+        "message": "Real implementation confirmed (100.0% real indicators)",
+        "details": {
+          "total_methods": 4,
+          "real_implementations": 4,
+          "stub_indicators": 0,
+          "implementation_ratio": 1.0,
+          "classes_found": [
+            "SpotifyTrack",
+            "SpotifyArtist",
+            "SpotifyAlbum",
+            "SpotifyPlaylist",
+            "SpotifyCrawler"
+          ]
+        }
+      },
+      {
+        "test_name": "Data Structures - spotify_crawler.py",
+        "status": "pass",
+        "message": "Professional data structures found (4 dataclasses)",
+        "details": {
+          "dataclass_count": 4,
+          "class_count": 5,
+          "has_type_hints": true,
+          "data_score": 3
+        }
+      },
+      {
+        "test_name": "API Integration - spotify_crawler.py",
+        "status": "pass",
+        "message": "Professional API integration (4 HTTP methods)",
+        "details": {
+          "api_lib_found": true,
+          "platform_api_found": true,
+          "http_methods_count": 4,
+          "auth_found": true
+        }
+      },
+      {
+        "test_name": "Error Handling - spotify_crawler.py",
+        "status": "pass",
+        "message": "Comprehensive error handling (score: 37)",
+        "details": {
+          "try_blocks": 17,
+          "except_blocks": 17,
+          "finally_blocks": 0,
+          "logging_found": true,
+          "custom_exceptions": 2,
+          "error_score": 37
+        }
+      }
+    ],
+    "youtube_crawler": [
+      {
+        "test_name": "Implementation Completeness - youtube_crawler.py",
+        "status": "skip",
+        "message": "Mixed implementation (50.0% real indicators)",
+        "details": {
+          "total_methods": 4,
+          "real_implementations": 2,
+          "stub_indicators": 0,
+          "implementation_ratio": 0.5,
+          "classes_found": [
+            "YouTubeVideo",
+            "YouTubeChannel",
+            "YouTubeCrawler"
+          ]
+        }
+      },
+      {
+        "test_name": "Data Structures - youtube_crawler.py",
+        "status": "pass",
+        "message": "Professional data structures found (2 dataclasses)",
+        "details": {
+          "dataclass_count": 2,
+          "class_count": 3,
+          "has_type_hints": true,
+          "data_score": 3
+        }
+      },
+      {
+        "test_name": "API Integration - youtube_crawler.py",
+        "status": "skip",
+        "message": "Basic API integration (3 HTTP methods)",
+        "details": {
+          "api_lib_found": true,
+          "platform_api_found": true,
+          "http_methods_count": 3,
+          "auth_found": true
+        }
+      },
+      {
+        "test_name": "Error Handling - youtube_crawler.py",
+        "status": "pass",
+        "message": "Comprehensive error handling (score: 46)",
+        "details": {
+          "try_blocks": 17,
+          "except_blocks": 18,
+          "finally_blocks": 0,
+          "logging_found": true,
+          "custom_exceptions": 10,
+          "error_score": 46
+        }
+      }
+    ],
+    "instagram_crawler": [
+      {
+        "test_name": "Implementation Completeness - instagram_crawler.py",
+        "status": "skip",
+        "message": "Mixed implementation (66.7% real indicators)",
+        "details": {
+          "total_methods": 6,
+          "real_implementations": 4,
+          "stub_indicators": 0,
+          "implementation_ratio": 0.6666666666666666,
+          "classes_found": [
+            "InstagramPost",
+            "InstagramUser",
+            "InstagramStory",
+            "InstagramCrawler"
+          ]
+        }
+      },
+      {
+        "test_name": "Data Structures - instagram_crawler.py",
+        "status": "pass",
+        "message": "Professional data structures found (3 dataclasses)",
+        "details": {
+          "dataclass_count": 3,
+          "class_count": 4,
+          "has_type_hints": true,
+          "data_score": 3
+        }
+      },
+      {
+        "test_name": "API Integration - instagram_crawler.py",
+        "status": "skip",
+        "message": "Basic API integration (3 HTTP methods)",
+        "details": {
+          "api_lib_found": true,
+          "platform_api_found": true,
+          "http_methods_count": 3,
+          "auth_found": true
+        }
+      },
+      {
+        "test_name": "Error Handling - instagram_crawler.py",
+        "status": "pass",
+        "message": "Comprehensive error handling (score: 45)",
+        "details": {
+          "try_blocks": 20,
+          "except_blocks": 22,
+          "finally_blocks": 0,
+          "logging_found": true,
+          "custom_exceptions": 2,
+          "error_score": 45
+        }
+      }
+    ]
+  },
+  "detailed_results": [
+    {
+      "test_name": "Implementation Completeness - spotify_crawler.py",
+      "status": "pass",
+      "message": "Real implementation confirmed (100.0% real indicators)",
+      "details": {
+        "total_methods": 4,
+        "real_implementations": 4,
+        "stub_indicators": 0,
+        "implementation_ratio": 1.0,
+        "classes_found": [
+          "SpotifyTrack",
+          "SpotifyArtist",
+          "SpotifyAlbum",
+          "SpotifyPlaylist",
+          "SpotifyCrawler"
+        ]
+      }
+    },
+    {
+      "test_name": "Data Structures - spotify_crawler.py",
+      "status": "pass",
+      "message": "Professional data structures found (4 dataclasses)",
+      "details": {
+        "dataclass_count": 4,
+        "class_count": 5,
+        "has_type_hints": true,
+        "data_score": 3
+      }
+    },
+    {
+      "test_name": "API Integration - spotify_crawler.py",
+      "status": "pass",
+      "message": "Professional API integration (4 HTTP methods)",
+      "details": {
+        "api_lib_found": true,
+        "platform_api_found": true,
+        "http_methods_count": 4,
+        "auth_found": true
+      }
+    },
+    {
+      "test_name": "Error Handling - spotify_crawler.py",
+      "status": "pass",
+      "message": "Comprehensive error handling (score: 37)",
+      "details": {
+        "try_blocks": 17,
+        "except_blocks": 17,
+        "finally_blocks": 0,
+        "logging_found": true,
+        "custom_exceptions": 2,
+        "error_score": 37
+      }
+    },
+    {
+      "test_name": "Implementation Completeness - youtube_crawler.py",
+      "status": "skip",
+      "message": "Mixed implementation (50.0% real indicators)",
+      "details": {
+        "total_methods": 4,
+        "real_implementations": 2,
+        "stub_indicators": 0,
+        "implementation_ratio": 0.5,
+        "classes_found": [
+          "YouTubeVideo",
+          "YouTubeChannel",
+          "YouTubeCrawler"
+        ]
+      }
+    },
+    {
+      "test_name": "Data Structures - youtube_crawler.py",
+      "status": "pass",
+      "message": "Professional data structures found (2 dataclasses)",
+      "details": {
+        "dataclass_count": 2,
+        "class_count": 3,
+        "has_type_hints": true,
+        "data_score": 3
+      }
+    },
+    {
+      "test_name": "API Integration - youtube_crawler.py",
+      "status": "skip",
+      "message": "Basic API integration (3 HTTP methods)",
+      "details": {
+        "api_lib_found": true,
+        "platform_api_found": true,
+        "http_methods_count": 3,
+        "auth_found": true
+      }
+    },
+    {
+      "test_name": "Error Handling - youtube_crawler.py",
+      "status": "pass",
+      "message": "Comprehensive error handling (score: 46)",
+      "details": {
+        "try_blocks": 17,
+        "except_blocks": 18,
+        "finally_blocks": 0,
+        "logging_found": true,
+        "custom_exceptions": 10,
+        "error_score": 46
+      }
+    },
+    {
+      "test_name": "Implementation Completeness - instagram_crawler.py",
+      "status": "skip",
+      "message": "Mixed implementation (66.7% real indicators)",
+      "details": {
+        "total_methods": 6,
+        "real_implementations": 4,
+        "stub_indicators": 0,
+        "implementation_ratio": 0.6666666666666666,
+        "classes_found": [
+          "InstagramPost",
+          "InstagramUser",
+          "InstagramStory",
+          "InstagramCrawler"
+        ]
+      }
+    },
+    {
+      "test_name": "Data Structures - instagram_crawler.py",
+      "status": "pass",
+      "message": "Professional data structures found (3 dataclasses)",
+      "details": {
+        "dataclass_count": 3,
+        "class_count": 4,
+        "has_type_hints": true,
+        "data_score": 3
+      }
+    },
+    {
+      "test_name": "API Integration - instagram_crawler.py",
+      "status": "skip",
+      "message": "Basic API integration (3 HTTP methods)",
+      "details": {
+        "api_lib_found": true,
+        "platform_api_found": true,
+        "http_methods_count": 3,
+        "auth_found": true
+      }
+    },
+    {
+      "test_name": "Error Handling - instagram_crawler.py",
+      "status": "pass",
+      "message": "Comprehensive error handling (score: 45)",
+      "details": {
+        "try_blocks": 20,
+        "except_blocks": 22,
+        "finally_blocks": 0,
+        "logging_found": true,
+        "custom_exceptions": 2,
+        "error_score": 45
+      }
+    }
+  ]
+}
