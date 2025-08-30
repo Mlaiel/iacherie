@@ -1,0 +1,58 @@
+
+Docker Compose Services Validation Report
+==========================================
+
+
+BASIC Environment:
+========================================
+📁 File: docker-compose.yml
+✅ Syntax Valid: True
+✅ Required Files: True
+✅ Dependencies: True
+✅ Dry Run: True
+
+🩺 Health Endpoints:
+   • ainflue-app: http://localhost:8000/health
+   • postgres: pg_isready
+   • redis: redis-cli ping
+   • mongodb: mongosh --eval "db.adminCommand('ping')"
+   • nginx: http://localhost:80/health
+   • prometheus: http://localhost:9090/-/healthy
+   • grafana: http://localhost:3000/api/health
+
+🧪 Test Script: /home/runner/work/Ainflue/Ainflue/test_basic_startup.sh
+
+MONITORING Environment:
+========================================
+📁 File: docker-compose.monitoring.yml
+✅ Syntax Valid: True
+✅ Required Files: True
+✅ Dependencies: True
+✅ Dry Run: True
+
+🩺 Health Endpoints:
+   • prometheus: http://localhost:9090/-/healthy
+   • grafana: http://localhost:3000/api/health
+   • elasticsearch: http://localhost:9200/_cluster/health
+   • alertmanager: http://localhost:9093/-/healthy
+
+🧪 Test Script: /home/runner/work/Ainflue/Ainflue/test_monitoring_startup.sh
+
+PRODUCTION Environment:
+========================================
+📁 File: docker-compose.production.yml
+✅ Syntax Valid: True
+✅ Required Files: True
+✅ Dependencies: True
+✅ Dry Run: True
+
+🧪 Test Script: /home/runner/work/Ainflue/Ainflue/test_production_startup.sh
+
+
+SUMMARY
+========================================
+Total Environments: 3
+Passing Validation: 3
+Success Rate: 100.0%
+
+🎉 All Docker Compose configurations are valid!

@@ -40,7 +40,6 @@ services:
   # =============================================================================
   nginx-loadbalancer:
     image: nginx:alpine
-    container_name: ainflue-nginx-lb
     ports:
       - "80:80"
       - "443:443"
@@ -575,7 +574,6 @@ services:
       context: .
       dockerfile: docker/Dockerfile.crawler
       target: production
-    container_name: ainflue-crawler-service
     environment:
       <<: *common-variables
       SERVICE_NAME: crawler
@@ -617,7 +615,6 @@ services:
       context: .
       dockerfile: docker/Dockerfile.ai
       target: production
-    container_name: ainflue-ai-service
     environment:
       <<: *common-variables
       SERVICE_NAME: ai
@@ -662,7 +659,6 @@ services:
       context: .
       dockerfile: docker/Dockerfile.monetization
       target: production
-    container_name: ainflue-monetization-service
     environment:
       <<: *common-variables
       SERVICE_NAME: monetization
@@ -695,7 +691,6 @@ services:
       context: .
       dockerfile: docker/Dockerfile.analytics
       target: production
-    container_name: ainflue-analytics-service
     environment:
       <<: *common-variables
       SERVICE_NAME: analytics

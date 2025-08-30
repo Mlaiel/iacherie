@@ -196,7 +196,7 @@ services:
       timeout: 15s
       retries: 3
 
-  # Redis Exporter - Redis metrics
+  # Redis Exporter - Redis metrics (external connection)
   redis-exporter:
     image: oliver006/redis_exporter:v1.45.0
     container_name: ainflue-redis-exporter
@@ -204,19 +204,16 @@ services:
     ports:
       - "9121:9121"
     environment:
-      - REDIS_ADDR=redis://redis:6379
+      - REDIS_ADDR=redis://host.docker.internal:6379
     networks:
       - monitoring
-      - backend
-    depends_on:
-      - redis
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9121/metrics"]
       interval: 30s
       timeout: 15s
       retries: 3
 
-  # PostgreSQL Exporter - Database metrics
+  # PostgreSQL Exporter - Database metrics (external connection)
   postgres-exporter:
     image: prometheuscommunity/postgres-exporter:v0.11.1
     container_name: ainflue-postgres-exporter
@@ -224,12 +221,9 @@ services:
     ports:
       - "9187:9187"
     environment:
-      - DATA_SOURCE_NAME=postgresql://postgres:postgres@postgres:5432/ainflue?sslmode=disable
+      - DATA_SOURCE_NAME=postgresql://ainflue:ainflue123@host.docker.internal:5432/ainflue_platform?sslmode=disable
     networks:
       - monitoring
-      - backend
-    depends_on:
-      - postgres
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9187/metrics"]
       interval: 30s
