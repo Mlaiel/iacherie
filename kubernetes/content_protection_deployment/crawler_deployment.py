@@ -1078,8 +1078,24 @@ class PlatformCrawlerManager:
                 results = await self._crawl_twitter_api(target)
             elif self.platform == PlatformType.SPOTIFY:
                 results = await self._crawl_spotify_api(target)
+            elif self.platform == PlatformType.INSTAGRAM:
+                results = await self._crawl_instagram_api(target)
+            elif self.platform == PlatformType.TIKTOK:
+                results = await self._crawl_tiktok_api(target)
+            elif self.platform == PlatformType.FACEBOOK:
+                results = await self._crawl_facebook_api(target)
+            elif self.platform == PlatformType.SOUNDCLOUD:
+                results = await self._crawl_soundcloud_api(target)
+            elif self.platform == PlatformType.PINTEREST:
+                results = await self._crawl_pinterest_api(target)
+            elif self.platform == PlatformType.REDDIT:
+                results = await self._crawl_reddit_api(target)
+            elif self.platform == PlatformType.LINKEDIN:
+                results = await self._crawl_linkedin_api(target)
             else:
-                raise NotImplementedError(f"API crawling not implemented for {self.platform.value}")
+                # For unsupported platforms, fall back to generic web crawling
+                self.logger.warning(f"API crawling not available for {self.platform.value}, falling back to generic approach")
+                results = await self._crawl_generic_api(target)
                 
         except Exception as e:
             self.logger.error(f"API crawling failed for {self.platform.value}: {str(e)}")
@@ -1570,6 +1586,479 @@ class PlatformCrawlerManager:
             
         except Exception as e:
             self.logger.error(f"Spotify API crawling failed: {str(e)}")
+        
+        return results
+    
+    async def _crawl_instagram_api(self, target: CrawlTarget) -> List[CrawlResult]:
+        """Instagram API crawling implementation"""
+        results = []
+        
+        try:
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.INSTAGRAM):
+                self.logger.warning("Instagram API rate limit exceeded")
+                return results
+            
+            # Instagram Graph API implementation
+            access_token = self.config.get("instagram_access_token") or "demo_access_token"
+            
+            async with aiohttp.ClientSession() as session:
+                # Get Instagram user media
+                url = f"https://graph.instagram.com/me/media"
+                params = {
+                    'fields': 'id,caption,media_type,media_url,permalink,timestamp,username',
+                    'access_token': access_token
+                }
+                
+                async with session.get(url, params=params) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        for item in data.get('data', []):
+                            result = CrawlResult(
+                                task_id=target.target_id,
+                                platform=PlatformType.INSTAGRAM,
+                                content_url=item.get('permalink', ''),
+                                content_type=item.get('media_type', 'photo').lower(),
+                                title=item.get('caption', '')[:100] if item.get('caption') else 'Instagram Post',
+                                description=item.get('caption', ''),
+                                author_info={
+                                    "username": item.get('username', ''),
+                                    "user_id": item.get('id', '')
+                                },
+                                engagement_metrics={
+                                    "media_type": item.get('media_type', ''),
+                                    "timestamp": item.get('timestamp', '')
+                                },
+                                content_metadata={
+                                    "media_id": item.get('id', ''),
+                                    "media_url": item.get('media_url', ''),
+                                    "permalink": item.get('permalink', '')
+                                },
+                                discovered_at=datetime.now(),
+                                fingerprint_required=True,
+                                dmca_candidate=True
+                            )
+                            results.append(result)
+            
+            self.logger.info(f"Instagram API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"Instagram API crawling failed: {str(e)}")
+        
+        return results
+    
+    async def _crawl_tiktok_api(self, target: CrawlTarget) -> List[CrawlResult]:
+        """TikTok API crawling implementation"""
+        results = []
+        
+        try:
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.TIKTOK):
+                self.logger.warning("TikTok API rate limit exceeded")
+                return results
+            
+            # TikTok API implementation (Note: Official API access is limited)
+            access_token = self.config.get("tiktok_access_token") or "demo_access_token"
+            
+            async with aiohttp.ClientSession() as session:
+                # Get TikTok user videos
+                url = "https://open-api.tiktok.com/video/list/"
+                headers = {
+                    'Authorization': f'Bearer {access_token}',
+                    'Content-Type': 'application/json'
+                }
+                params = {
+                    'fields': 'id,video_description,duration,create_time,share_url',
+                    'max_count': 20
+                }
+                
+                async with session.get(url, headers=headers, params=params) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        for video in data.get('data', {}).get('videos', []):
+                            result = CrawlResult(
+                                task_id=target.target_id,
+                                platform=PlatformType.TIKTOK,
+                                content_url=video.get('share_url', ''),
+                                content_type='video',
+                                title=video.get('video_description', '')[:100] if video.get('video_description') else 'TikTok Video',
+                                description=video.get('video_description', ''),
+                                author_info={
+                                    "video_id": video.get('id', '')
+                                },
+                                engagement_metrics={
+                                    "duration": video.get('duration', 0),
+                                    "create_time": video.get('create_time', 0)
+                                },
+                                content_metadata={
+                                    "video_id": video.get('id', ''),
+                                    "share_url": video.get('share_url', '')
+                                },
+                                discovered_at=datetime.now(),
+                                fingerprint_required=True,
+                                dmca_candidate=True
+                            )
+                            results.append(result)
+            
+            self.logger.info(f"TikTok API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"TikTok API crawling failed: {str(e)}")
+        
+        return results
+    
+    async def _crawl_facebook_api(self, target: CrawlTarget) -> List[CrawlResult]:
+        """Facebook API crawling implementation"""
+        results = []
+        
+        try:
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.FACEBOOK):
+                self.logger.warning("Facebook API rate limit exceeded")
+                return results
+            
+            # Facebook Graph API implementation
+            access_token = self.config.get("facebook_access_token") or "demo_access_token"
+            
+            async with aiohttp.ClientSession() as session:
+                # Get Facebook posts
+                url = f"https://graph.facebook.com/me/posts"
+                params = {
+                    'fields': 'id,message,created_time,type,link,source',
+                    'access_token': access_token
+                }
+                
+                async with session.get(url, params=params) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        for post in data.get('data', []):
+                            result = CrawlResult(
+                                task_id=target.target_id,
+                                platform=PlatformType.FACEBOOK,
+                                content_url=post.get('link', ''),
+                                content_type=post.get('type', 'status'),
+                                title=post.get('message', '')[:100] if post.get('message') else 'Facebook Post',
+                                description=post.get('message', ''),
+                                author_info={
+                                    "post_id": post.get('id', '')
+                                },
+                                engagement_metrics={
+                                    "post_type": post.get('type', ''),
+                                    "created_time": post.get('created_time', '')
+                                },
+                                content_metadata={
+                                    "post_id": post.get('id', ''),
+                                    "source": post.get('source', ''),
+                                    "link": post.get('link', '')
+                                },
+                                discovered_at=datetime.now(),
+                                fingerprint_required=True,
+                                dmca_candidate=True
+                            )
+                            results.append(result)
+            
+            self.logger.info(f"Facebook API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"Facebook API crawling failed: {str(e)}")
+        
+        return results
+    
+    async def _crawl_soundcloud_api(self, target: CrawlTarget) -> List[CrawlResult]:
+        """SoundCloud API crawling implementation"""
+        results = []
+        
+        try:
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.SOUNDCLOUD):
+                self.logger.warning("SoundCloud API rate limit exceeded")
+                return results
+            
+            # SoundCloud API implementation
+            client_id = self.config.get("soundcloud_client_id") or "demo_client_id"
+            
+            async with aiohttp.ClientSession() as session:
+                # Get SoundCloud tracks
+                url = "https://api.soundcloud.com/tracks"
+                params = {
+                    'client_id': client_id,
+                    'limit': 20
+                }
+                
+                async with session.get(url, params=params) as response:
+                    if response.status == 200:
+                        tracks = await response.json()
+                        
+                        for track in tracks:
+                            result = CrawlResult(
+                                task_id=target.target_id,
+                                platform=PlatformType.SOUNDCLOUD,
+                                content_url=track.get('permalink_url', ''),
+                                content_type='audio',
+                                title=track.get('title', ''),
+                                description=track.get('description', ''),
+                                author_info={
+                                    "username": track.get('user', {}).get('username', ''),
+                                    "user_id": track.get('user_id', '')
+                                },
+                                engagement_metrics={
+                                    "playback_count": track.get('playback_count', 0),
+                                    "likes_count": track.get('likes_count', 0),
+                                    "duration": track.get('duration', 0)
+                                },
+                                content_metadata={
+                                    "track_id": track.get('id', ''),
+                                    "waveform_url": track.get('waveform_url', ''),
+                                    "stream_url": track.get('stream_url', ''),
+                                    "genre": track.get('genre', ''),
+                                    "bpm": track.get('bpm', 0)
+                                },
+                                discovered_at=datetime.now(),
+                                fingerprint_required=True,
+                                dmca_candidate=True
+                            )
+                            results.append(result)
+            
+            self.logger.info(f"SoundCloud API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"SoundCloud API crawling failed: {str(e)}")
+        
+        return results
+    
+    async def _crawl_pinterest_api(self, target: CrawlTarget) -> List[CrawlResult]:
+        """Pinterest API crawling implementation"""
+        results = []
+        
+        try:
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.PINTEREST):
+                self.logger.warning("Pinterest API rate limit exceeded")
+                return results
+            
+            # Pinterest API implementation
+            access_token = self.config.get("pinterest_access_token") or "demo_access_token"
+            
+            async with aiohttp.ClientSession() as session:
+                # Get Pinterest pins
+                url = "https://api.pinterest.com/v5/pins"
+                headers = {
+                    'Authorization': f'Bearer {access_token}',
+                    'Content-Type': 'application/json'
+                }
+                
+                async with session.get(url, headers=headers) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        for pin in data.get('items', []):
+                            result = CrawlResult(
+                                task_id=target.target_id,
+                                platform=PlatformType.PINTEREST,
+                                content_url=pin.get('link', ''),
+                                content_type='image',
+                                title=pin.get('title', ''),
+                                description=pin.get('description', ''),
+                                author_info={
+                                    "pin_id": pin.get('id', '')
+                                },
+                                engagement_metrics={
+                                    "save_count": pin.get('save_count', 0),
+                                    "comment_count": pin.get('comment_count', 0)
+                                },
+                                content_metadata={
+                                    "pin_id": pin.get('id', ''),
+                                    "board_id": pin.get('board_id', ''),
+                                    "media_url": pin.get('media', {}).get('images', {}).get('original', {}).get('url', '')
+                                },
+                                discovered_at=datetime.now(),
+                                fingerprint_required=True,
+                                dmca_candidate=True
+                            )
+                            results.append(result)
+            
+            self.logger.info(f"Pinterest API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"Pinterest API crawling failed: {str(e)}")
+        
+        return results
+    
+    async def _crawl_reddit_api(self, target: CrawlTarget) -> List[CrawlResult]:
+        """Reddit API crawling implementation"""
+        results = []
+        
+        try:
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.REDDIT):
+                self.logger.warning("Reddit API rate limit exceeded")
+                return results
+            
+            # Reddit API implementation
+            client_id = self.config.get("reddit_client_id") or "demo_client_id"
+            client_secret = self.config.get("reddit_client_secret") or "demo_client_secret"
+            user_agent = self.config.get("reddit_user_agent") or "ContentProtectionBot/1.0"
+            
+            async with aiohttp.ClientSession() as session:
+                # Get Reddit posts
+                url = "https://www.reddit.com/hot.json"
+                headers = {
+                    'User-Agent': user_agent
+                }
+                params = {
+                    'limit': 25
+                }
+                
+                async with session.get(url, headers=headers, params=params) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        for post_data in data.get('data', {}).get('children', []):
+                            post = post_data.get('data', {})
+                            
+                            result = CrawlResult(
+                                task_id=target.target_id,
+                                platform=PlatformType.REDDIT,
+                                content_url=f"https://reddit.com{post.get('permalink', '')}",
+                                content_type='text' if not post.get('url', '').endswith(('.jpg', '.png', '.gif', '.mp4')) else 'media',
+                                title=post.get('title', ''),
+                                description=post.get('selftext', ''),
+                                author_info={
+                                    "username": post.get('author', ''),
+                                    "subreddit": post.get('subreddit', '')
+                                },
+                                engagement_metrics={
+                                    "score": post.get('score', 0),
+                                    "num_comments": post.get('num_comments', 0),
+                                    "upvote_ratio": post.get('upvote_ratio', 0)
+                                },
+                                content_metadata={
+                                    "post_id": post.get('id', ''),
+                                    "subreddit": post.get('subreddit', ''),
+                                    "url": post.get('url', ''),
+                                    "domain": post.get('domain', ''),
+                                    "created_utc": post.get('created_utc', 0)
+                                },
+                                discovered_at=datetime.now(),
+                                fingerprint_required=True,
+                                dmca_candidate=True
+                            )
+                            results.append(result)
+            
+            self.logger.info(f"Reddit API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"Reddit API crawling failed: {str(e)}")
+        
+        return results
+    
+    async def _crawl_linkedin_api(self, target: CrawlTarget) -> List[CrawlResult]:
+        """LinkedIn API crawling implementation"""
+        results = []
+        
+        try:
+            # Check rate limits
+            if not await self._check_rate_limit(PlatformType.LINKEDIN):
+                self.logger.warning("LinkedIn API rate limit exceeded")
+                return results
+            
+            # LinkedIn API implementation
+            access_token = self.config.get("linkedin_access_token") or "demo_access_token"
+            
+            async with aiohttp.ClientSession() as session:
+                # Get LinkedIn posts
+                url = "https://api.linkedin.com/v2/posts"
+                headers = {
+                    'Authorization': f'Bearer {access_token}',
+                    'Content-Type': 'application/json',
+                    'X-Restli-Protocol-Version': '2.0.0'
+                }
+                
+                async with session.get(url, headers=headers) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        for post in data.get('elements', []):
+                            result = CrawlResult(
+                                task_id=target.target_id,
+                                platform=PlatformType.LINKEDIN,
+                                content_url=f"https://linkedin.com/posts/{post.get('id', '')}",
+                                content_type='post',
+                                title=post.get('commentary', '')[:100] if post.get('commentary') else 'LinkedIn Post',
+                                description=post.get('commentary', ''),
+                                author_info={
+                                    "author_id": post.get('author', ''),
+                                    "post_id": post.get('id', '')
+                                },
+                                engagement_metrics={
+                                    "visibility": post.get('visibility', {}),
+                                    "created_time": post.get('createdTime', 0)
+                                },
+                                content_metadata={
+                                    "post_id": post.get('id', ''),
+                                    "activity_urn": post.get('activity', ''),
+                                    "created_time": post.get('createdTime', 0)
+                                },
+                                discovered_at=datetime.now(),
+                                fingerprint_required=True,
+                                dmca_candidate=True
+                            )
+                            results.append(result)
+            
+            self.logger.info(f"LinkedIn API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"LinkedIn API crawling failed: {str(e)}")
+        
+        return results
+    
+    async def _crawl_generic_api(self, target: CrawlTarget) -> List[CrawlResult]:
+        """Generic API crawling fallback implementation"""
+        results = []
+        
+        try:
+            self.logger.info(f"Performing generic API crawl for {self.platform.value}")
+            
+            # Generic web API crawling approach
+            async with aiohttp.ClientSession() as session:
+                # Try to get content from the target URL
+                if hasattr(target, 'url') and target.url:
+                    async with session.get(target.url) as response:
+                        if response.status == 200:
+                            content = await response.text()
+                            
+                            result = CrawlResult(
+                                task_id=target.target_id,
+                                platform=self.platform,
+                                content_url=target.url,
+                                content_type='web_content',
+                                title=f"Content from {self.platform.value}",
+                                description=content[:500] if content else '',
+                                author_info={
+                                    "source": self.platform.value
+                                },
+                                engagement_metrics={
+                                    "response_status": response.status,
+                                    "content_length": len(content)
+                                },
+                                content_metadata={
+                                    "url": target.url,
+                                    "platform": self.platform.value,
+                                    "method": "generic_api"
+                                },
+                                discovered_at=datetime.now(),
+                                fingerprint_required=True,
+                                dmca_candidate=True
+                            )
+                            results.append(result)
+            
+            self.logger.info(f"Generic API crawl completed: {len(results)} items found")
+            
+        except Exception as e:
+            self.logger.error(f"Generic API crawling failed: {str(e)}")
         
         return results
     
