@@ -52,7 +52,18 @@ except ImportError:
 
 # Import our API router and configuration
 from api.api.router import router as api_router
-from config import settings
+try:
+    from simple_config import settings
+except ImportError:
+    # Fallback settings if simple_config is not available
+    class MockSettings:
+        class App:
+            environment = "development"
+            debug = True
+            host = "0.0.0.0"
+            port = 8000
+        app = App()
+    settings = MockSettings()
 
 # Initialize Sentry if available
 if SENTRY_AVAILABLE and os.getenv("SENTRY_DSN"):
@@ -274,7 +285,7 @@ app.add_middleware(
 # CORS Middleware with enhanced security
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=getattr(settings, 'cors_allow_origins', ["*"]) if settings.app.debug 
+    allow_origins=getattr(settings.app, 'cors_allow_origins', ["*"]) if settings.app.debug 
                   else ["https://ainflue.com", "https://*.ainflue.com"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
@@ -374,7 +385,7 @@ async def redoc_html():
     )
 
 # API Routing with configured root prefix
-root_prefix = getattr(settings, 'api_root_prefix', '/api').rstrip("/")
+root_prefix = getattr(settings.app, 'api_root_prefix', '/api').rstrip("/")
 app.include_router(api_router, prefix=root_prefix)
 
 # Enhanced Health Endpoint

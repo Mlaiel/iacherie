@@ -8,6 +8,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 import asyncio
 import sys
+import importlib.util
 from pathlib import Path
 
 # Add project root to Python path
@@ -15,22 +16,24 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 # Try to import the app, fallback to a simple one if complex dependencies fail
 try:
-    from api.main import app
-    print("✓ Successfully imported main FastAPI app")
+    from api.asgi import app
+    print("✓ Successfully imported api.asgi app")
     MAIN_APP_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  Could not import api.main app: {e}")
+    print(f"⚠️  Could not import api.asgi app: {e}")
     MAIN_APP_AVAILABLE = False
 
 # Try to import config, fallback to simple config if needed
 try:
-    from config import settings
-    print("✓ Successfully imported config.py")
+    # Try to use simple_config.py directly
+    import simple_config
+    settings = simple_config.settings
+    print("✓ Successfully imported simple_config.py")
     print(f"✓ Environment: {settings.app.environment}")
     print(f"✓ Debug mode: {settings.app.debug}")
     print(f"✓ Host: {settings.app.host}")
     print(f"✓ Port: {settings.app.port}")
-except ImportError as e:
+except Exception as e:
     print(f"❌ Failed to import config: {e}")
     # Create minimal fallback settings
     class MockSettings:

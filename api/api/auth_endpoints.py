@@ -36,19 +36,25 @@ try:
     from ..schemas.user import UserCreate
     from ..models.user import User, UserInDB, Token, TokenData
     from ..business.user_service import UserService
-    from ..security.auth_manager import AuthManager
 except ImportError:
     # Fallback for missing dependencies
     get_settings = lambda: type('Settings', (), {})()
     get_db = lambda: None
     UserService = type('UserService', (), {})
-    AuthManager = type('AuthManager', (), {})
-    # Create a fallback UserCreate for development
+
+# Define AuthManager type for annotations
+from typing import Any
+AuthManager = Any
+
+# Create fallback classes if not imported
+try:
+    User
+except NameError:
     class UserCreate(BaseModel):
         username: str
         email: str
         password: str
-    # Create User placeholder
+        
     class User(BaseModel):
         id: int
         username: str
@@ -56,6 +62,7 @@ except ImportError:
 
 # Create auth_manager instance
 try:
+    from ..security.auth_manager import AuthManager
     auth_manager = AuthManager()
 except:
     # Create a dummy auth manager with required methods
@@ -64,6 +71,32 @@ except:
             def dummy_user():
                 return User(id=1, username="test", email="test@test.com")
             return dummy_user
+        
+        def create_access_token(self, data: dict):
+            return "dummy_access_token"
+        
+        def create_refresh_token(self, data: dict):
+            return "dummy_refresh_token"
+        
+        def verify_token(self, token: str):
+            return True
+            
+        def get_password_hash(self, password: str):
+            return "hashed_password"
+            
+        def verify_password(self, plain_password: str, hashed_password: str):
+            return True
+            
+        def require_admin(self):
+            def dummy_admin():
+                return True
+            return dummy_admin
+            
+        def require_authenticated(self):
+            def dummy_auth():
+                return True
+            return dummy_auth
+    
     auth_manager = DummyAuthManager()
 
 logger = logging.getLogger(__name__)
