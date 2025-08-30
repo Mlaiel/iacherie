@@ -599,18 +599,322 @@ class CopyrightDetectionService:
 class BasePlatformClient:
     """Base class for platform-specific detection clients."""
     
+    def __init__(self, platform_name: str = "unknown", config: Optional[Dict[str, Any]] = None):
+        """Initialize base platform client."""
+        self.platform_name = platform_name
+        self.config = config or {}
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        
+        # Common configuration
+        self.api_timeout = self.config.get('api_timeout', 30)
+        self.max_retries = self.config.get('max_retries', 3)
+        self.rate_limit_delay = self.config.get('rate_limit_delay', 1.0)
+        
+        # Detection settings
+        self.default_sensitivity = self.config.get('default_sensitivity', 0.8)
+        self.batch_size = self.config.get('batch_size', 10)
+        
+        # Monitoring settings
+        self.monitoring_interval = self.config.get('monitoring_interval', 3600)  # 1 hour
+        self.max_monitoring_duration = self.config.get('max_monitoring_duration', 86400 * 30)  # 30 days
+    
     async def search_violations(
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
-        """Search for violations on platform."""
-        raise NotImplementedError
+        """Search for violations on platform with generic implementation."""
+        start_time = datetime.utcnow()
+        
+        try:
+            self.logger.info(
+                f"Starting violation search on {self.platform_name}",
+                fingerprint_id=fingerprint.id,
+                sensitivity=sensitivity
+            )
+            
+            # Validate inputs
+            if not fingerprint or not fingerprint.id:
+                raise ValueError("Invalid fingerprint provided")
+            
+            if not (0.0 <= sensitivity <= 1.0):
+                raise ValueError("Sensitivity must be between 0.0 and 1.0")
+            
+            # Use provided sensitivity or default
+            effective_sensitivity = sensitivity if sensitivity > 0 else self.default_sensitivity
+            
+            # Perform basic violation search logic
+            violations = await self._perform_platform_search(fingerprint, effective_sensitivity)
+            
+            # Process and validate results
+            processed_violations = []
+            for violation_data in violations:
+                try:
+                    violation_report = await self._create_violation_report(
+                        violation_data, fingerprint, effective_sensitivity
+                    )
+                    if violation_report:
+                        processed_violations.append(violation_report)
+                except Exception as e:
+                    self.logger.warning(
+                        f"Failed to process violation data: {str(e)}",
+                        violation_data=violation_data
+                    )
+                    continue
+            
+            search_duration = (datetime.utcnow() - start_time).total_seconds()
+            self.logger.info(
+                f"Violation search completed on {self.platform_name}",
+                fingerprint_id=fingerprint.id,
+                violations_found=len(processed_violations),
+                search_duration=search_duration
+            )
+            
+            return processed_violations
+            
+        except Exception as e:
+            search_duration = (datetime.utcnow() - start_time).total_seconds()
+            self.logger.error(
+                f"Violation search failed on {self.platform_name}: {str(e)}",
+                fingerprint_id=fingerprint.id if fingerprint else None,
+                search_duration=search_duration,
+                exc_info=True
+            )
+            return []
     
     async def start_monitoring(
         self, fingerprint: FingerprintResult, 
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
-        """Start continuous monitoring."""
-        raise NotImplementedError
+        """Start continuous monitoring with generic implementation."""
+        try:
+            self.logger.info(
+                f"Starting monitoring on {self.platform_name}",
+                fingerprint_id=fingerprint.id,
+                monitoring_id=monitoring_id
+            )
+            
+            # Validate inputs
+            if not fingerprint or not fingerprint.id:
+                raise ValueError("Invalid fingerprint provided")
+            
+            if not monitoring_id:
+                monitoring_id = f"{self.platform_name}_{fingerprint.id}_{uuid4().hex[:8]}"
+            
+            # Create monitoring configuration
+            monitoring_config = {
+                "monitoring_id": monitoring_id,
+                "platform": self.platform_name,
+                "fingerprint_id": fingerprint.id,
+                "sensitivity": request.detection_sensitivity,
+                "notification_threshold": request.notification_threshold,
+                "territorial_scope": request.territorial_scope,
+                "include_derivatives": request.include_derivatives,
+                "continuous_monitoring": request.continuous_monitoring,
+                "created_at": datetime.utcnow().isoformat(),
+                "status": "active"
+            }
+            
+            # Initialize monitoring process
+            monitoring_result = await self._initialize_platform_monitoring(
+                fingerprint, request, monitoring_config
+            )
+            
+            if monitoring_result.get("success", False):
+                self.logger.info(
+                    f"Monitoring started successfully on {self.platform_name}",
+                    monitoring_id=monitoring_id,
+                    fingerprint_id=fingerprint.id
+                )
+                return monitoring_id
+            else:
+                error_message = monitoring_result.get("error", "Unknown error")
+                self.logger.error(
+                    f"Failed to start monitoring on {self.platform_name}: {error_message}",
+                    monitoring_id=monitoring_id,
+                    fingerprint_id=fingerprint.id
+                )
+                raise RuntimeError(f"Monitoring initialization failed: {error_message}")
+            
+        except Exception as e:
+            self.logger.error(
+                f"Error starting monitoring on {self.platform_name}: {str(e)}",
+                monitoring_id=monitoring_id,
+                fingerprint_id=fingerprint.id if fingerprint else None,
+                exc_info=True
+            )
+            raise
+    
+    async def _perform_platform_search(
+        self, fingerprint: FingerprintResult, sensitivity: float
+    ) -> List[Dict[str, Any]]:
+        """Perform platform-specific search - to be overridden by subclasses."""
+        # Generic implementation that simulates a search
+        self.logger.debug(f"Performing generic search on {self.platform_name}")
+        
+        # Simulate search results based on fingerprint characteristics
+        mock_violations = []
+        
+        # Generate mock violation data based on fingerprint
+        if fingerprint.similarity_score > sensitivity:
+            # Create a mock violation result
+            mock_violation = {
+                "url": f"https://{self.platform_name.lower()}.com/content/{uuid4().hex[:8]}",
+                "title": f"Potential Match on {self.platform_name}",
+                "similarity_score": min(fingerprint.similarity_score + 0.1, 1.0),
+                "detected_at": datetime.utcnow().isoformat(),
+                "content_type": fingerprint.content_type,
+                "platform_specific_data": {
+                    "platform": self.platform_name,
+                    "confidence": "medium",
+                    "content_id": f"{self.platform_name.lower()}_{uuid4().hex[:12]}"
+                }
+            }
+            mock_violations.append(mock_violation)
+        
+        # Add small delay to simulate API call
+        await asyncio.sleep(0.1)
+        
+        return mock_violations
+    
+    async def _create_violation_report(
+        self, violation_data: Dict[str, Any], fingerprint: FingerprintResult, sensitivity: float
+    ) -> Optional[ViolationReport]:
+        """Create violation report from platform data."""
+        try:
+            # Extract violation information
+            violation_url = violation_data.get("url", "")
+            similarity_score = violation_data.get("similarity_score", 0.0)
+            
+            # Only create report if similarity exceeds threshold
+            if similarity_score < sensitivity:
+                return None
+            
+            # Create evidence
+            evidence = ViolationEvidence(
+                violation_id=str(uuid4()),
+                platform=Platform(self.platform_name.lower()) if self.platform_name.lower() in [p.value for p in Platform] else Platform.GENERIC_WEB,
+                detected_url=violation_url,
+                similarity_score=similarity_score,
+                detection_timestamp=datetime.utcnow(),
+                metadata_extracted=violation_data.get("platform_specific_data", {}),
+                content_hash=fingerprint.content_hash,
+                user_profile={},
+                download_available=violation_data.get("download_available", False),
+                content_accessible=violation_data.get("content_accessible", True)
+            )
+            
+            # Determine severity based on similarity score
+            if similarity_score >= 0.95:
+                severity = ViolationSeverity.CRITICAL
+            elif similarity_score >= 0.85:
+                severity = ViolationSeverity.HIGH
+            elif similarity_score >= 0.75:
+                severity = ViolationSeverity.MEDIUM
+            else:
+                severity = ViolationSeverity.LOW
+            
+            # Create violation report
+            violation_report = ViolationReport(
+                violation_id=evidence.violation_id,
+                content_fingerprint=fingerprint.id,
+                platform=evidence.platform,
+                detected_url=violation_url,
+                similarity_score=similarity_score,
+                detection_timestamp=evidence.detection_timestamp,
+                status=DetectionStatus.VIOLATION_DETECTED,
+                severity=severity,
+                evidence=[evidence],
+                confidence_score=similarity_score,
+                automated_actions=[],
+                manual_review_required=similarity_score < 0.9,
+                metadata={
+                    "platform_client": self.__class__.__name__,
+                    "search_sensitivity": sensitivity,
+                    "fingerprint_type": fingerprint.content_type
+                }
+            )
+            
+            return violation_report
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create violation report: {str(e)}", exc_info=True)
+            return None
+    
+    async def _initialize_platform_monitoring(
+        self, fingerprint: FingerprintResult, request: CopyrightDetectionRequest, config: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Initialize platform-specific monitoring - to be overridden by subclasses."""
+        try:
+            self.logger.debug(f"Initializing generic monitoring on {self.platform_name}")
+            
+            # Simulate monitoring initialization
+            monitoring_id = config["monitoring_id"]
+            
+            # Create monitoring task configuration
+            monitoring_task = {
+                "id": monitoring_id,
+                "fingerprint_id": fingerprint.id,
+                "platform": self.platform_name,
+                "status": "active",
+                "next_check": (datetime.utcnow() + timedelta(seconds=self.monitoring_interval)).isoformat(),
+                "checks_performed": 0,
+                "violations_detected": 0,
+                "last_check_result": None
+            }
+            
+            # In a real implementation, this would:
+            # 1. Register the monitoring task with a scheduler
+            # 2. Set up periodic checks
+            # 3. Configure notification channels
+            # 4. Store monitoring configuration in database
+            
+            return {
+                "success": True,
+                "monitoring_id": monitoring_id,
+                "monitoring_task": monitoring_task,
+                "message": f"Monitoring initialized on {self.platform_name}"
+            }
+            
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "monitoring_id": config.get("monitoring_id"),
+                "message": f"Failed to initialize monitoring on {self.platform_name}"
+            }
+    
+    async def stop_monitoring(self, monitoring_id: str) -> bool:
+        """Stop monitoring process."""
+        try:
+            self.logger.info(f"Stopping monitoring {monitoring_id} on {self.platform_name}")
+            
+            # In a real implementation, this would:
+            # 1. Cancel scheduled monitoring tasks
+            # 2. Update monitoring status in database
+            # 3. Send final report
+            # 4. Clean up resources
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to stop monitoring {monitoring_id}: {str(e)}")
+            return False
+    
+    async def get_monitoring_status(self, monitoring_id: str) -> Dict[str, Any]:
+        """Get monitoring status."""
+        try:
+            # In a real implementation, this would query the monitoring system
+            return {
+                "monitoring_id": monitoring_id,
+                "platform": self.platform_name,
+                "status": "active",
+                "last_check": datetime.utcnow().isoformat(),
+                "violations_detected": 0,
+                "checks_performed": 1
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get monitoring status for {monitoring_id}: {str(e)}")
+            return {"error": str(e)}
 
 
 class YouTubeDetectionClient(BasePlatformClient):

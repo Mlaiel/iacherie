@@ -618,7 +618,8 @@ class SpleeterEngine:
         
         self._models_cache.clear()
         logger.info("Moteur Spleeter nettoyé")
-\n\n
+
+
 # ==========================================================================================
 # MODULE 2/99: separator.py
 # SOURCE: /spleeter/separator.py
@@ -662,7 +663,7 @@ class Separator:
         except Exception as e:
             self.logger.error(f"Audio separation failed: {e}")
             return {'vocals': np.zeros((1000,)), 'accompaniment': np.zeros((1000,))}
-\n\n
+
 # ==========================================================================================
 # MODULE 3/99: processor.py
 # SOURCE: /spleeter/processor.py
@@ -1662,7 +1663,7 @@ class BatchProcessor:
         
         await self.monitor.cleanup()
         logger.info("BatchProcessor nettoyé")
-\n\n
+
 # ==========================================================================================
 # MODULE 4/99: utils.py
 # SOURCE: /spleeter/utils.py
@@ -2647,7 +2648,7 @@ class PerformanceOptimizer:
             "total_mb": total_mb,
             "recommended_system_mb": total_mb * 1.5  # Marge de sécurité
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 5/99: models.py
 # SOURCE: /spleeter/models.py
@@ -3416,7 +3417,7 @@ class ModelManager:
         
         await self.monitor.cleanup()
         logger.info("ModelManager nettoyé")
-\n\n
+
 # ==========================================================================================
 # MODULE 6/99: exceptions.py
 # SOURCE: /spleeter/exceptions.py
@@ -4311,7 +4312,7 @@ class ErrorCollector:
             Liste des erreurs correspondantes
         """
         return [error for error in self.errors if error.error_code == error_code]
-\n\n
+
 # ==========================================================================================
 # MODULE 7/99: __init__.py
 # SOURCE: /spleeter/__init__.py
@@ -4378,7 +4379,7 @@ __all__ = [
     'AudioProcessingError',
     'DEFAULT_CONFIG'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 8/99: upload_processing_config.py
 # SOURCE: /app/business/creators/creator_workflow/handlers/collaboration/config/core/upload_processing/upload_processing_config.py
@@ -4785,7 +4786,7 @@ __all__ = [
     'UploadProcessingConfiguration',
     'get_upload_processing_config'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 9/99: fingerprinting_service.py
 # SOURCE: /app/business/creators/creator_workflow/handlers/collaboration/config/core/ai_protection/services/fingerprinting_service.py
@@ -5308,7 +5309,7 @@ __all__ = [
     'FingerprintType',
     'FingerprintResult'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 10/99: processing_alerts.py
 # SOURCE: /app/business/creators/creator_workflow/handlers/processing/processing_alerts.py
@@ -5527,7 +5528,7 @@ class ProcessingAlertHandler:
         self.logger.info("Shutting down processing alert handler...")
         self.processing_sessions.clear()
         self.logger.info("Processing alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 11/99: __init__.py
 # SOURCE: /app/business/creators/creator_workflow/handlers/processing/__init__.py
@@ -5562,7 +5563,7 @@ __all__ = [
     'ProcessingMetrics',
     'ProcessingAlert'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 12/99: audio_analysis.py
 # SOURCE: /app/tasks/ai_tasks/audio_analysis.py
@@ -5599,7 +5600,7 @@ def analyze_audio_task(self, audio_path: str, model_version: str = "latest", tra
     }
     # ... Audit-Log, Metrics, Monitoring ...
     return result
-\n\n
+
 # ==========================================================================================
 # MODULE 13/99: track_analysis.py
 # SOURCE: /app/tasks/spotify_tasks/track_analysis.py
@@ -5650,7 +5651,7 @@ def analyze_track(self, track_id: str, deep_analysis: bool = True) -> Dict[str, 
     except Exception as e:
         logger.error(f"[TRACK][ERROR] {track_id}: {e}")
         raise
-\n\n
+
 # ==========================================================================================
 # MODULE 14/99: analytics_processing.py
 # SOURCE: /app/tasks/analytics_tasks/analytics_processing.py
@@ -5703,7 +5704,7 @@ def process_analytics(self, data: Dict[str, Any], analysis_type: str = "trend", 
             sentry_sdk.capture_exception(e)
             logger.error(f"[ANALYTICS][ERROR]: {e}")
             raise
-\n\n
+
 # ==========================================================================================
 # MODULE 15/99: musical_utils.py
 # SOURCE: /app/ml/audio_intelligence/musical_utils.py
@@ -6998,7 +6999,7 @@ def compare_audio_features(analysis1: MusicalAnalysis,
     )
     
     return max(0.0, min(1.0, similarity))
-\n\n
+
 # ==========================================================================================
 # MODULE 16/99: musical_quality_strategy.py
 # SOURCE: /app/ml/audio_intelligence/musical_quality_strategy.py
@@ -7751,7 +7752,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         """Met à jour les métriques Prometheus musicales"""
         # Implémentation des métriques spécifiques
         pass
-\n\n
+
 # ==========================================================================================
 # MODULE 17/99: audio_networks.py
 # SOURCE: /app/ml/audio_intelligence/audio_networks.py
@@ -8744,7 +8745,7 @@ def extract_audio_embeddings(
         embeddings = embeddings[0] if embeddings else None
     
     return embeddings
-\n\n
+
 # ==========================================================================================
 # MODULE 18/99: audio_features.py
 # SOURCE: /app/ml/audio_intelligence/audio_features.py
@@ -9360,7 +9361,7 @@ __all__ = [
     'TemporalFeatureExtractor',
     'AudioConfig'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 19/99: analyzer.py
 # SOURCE: /app/utils/audio/analyzer.py
@@ -9854,7 +9855,7 @@ class MoodAnalyzer:
             genres.extend(['indie', 'alternative', 'jazz', 'world'])
         
         return genres[:4]  # Limite à 4 suggestions
-\n\n
+
 # ==========================================================================================
 # MODULE 20/99: processor.py
 # SOURCE: /app/utils/audio/processor.py
@@ -10645,7 +10646,7 @@ class AudioNormalizer:
             }
         
         return await loop.run_in_executor(None, _analyze)
-\n\n
+
 # ==========================================================================================
 # MODULE 21/99: __init__.py
 # SOURCE: /app/utils/audio/__init__.py
@@ -11121,7 +11122,7 @@ def create_full_pipeline():
         'metadata': create_metadata_extractor(),
         'utils': get_audio_utils()
     }
-\n\n
+
 # ==========================================================================================
 # MODULE 22/99: extractor.py
 # SOURCE: /app/utils/audio/extractor.py
@@ -11846,7 +11847,7 @@ def create_extractor(
 def create_similarity_analyzer() -> AudioSimilarityAnalyzer:
     """Factory pour créer un analyseur de similarité."""
     return AudioSimilarityAnalyzer()
-\n\n
+
 # ==========================================================================================
 # MODULE 23/99: media_formatter.py
 # SOURCE: /app/utils/formatting/media_formatter.py
@@ -12026,8 +12027,281 @@ class BaseMediaFormatter:
         return file_size <= self.max_file_size
     
     async def process_media_content(self, content_data: Dict[str, Any]) -> FormattedMediaContent:
-        """Process media content - to be implemented by subclasses."""
-        raise NotImplementedError("Subclasses must implement process_media_content")
+        """Process media content with basic formatting and validation."""
+        start_time = time.time()
+        self.logger.info("Processing media content", content_type=content_data.get('type', 'unknown'))
+        
+        try:
+            # Generate unique content ID
+            content_id = self.generate_content_id(
+                json.dumps(content_data, sort_keys=True, default=str)
+            )
+            
+            # Determine media type
+            media_type = self._determine_media_type(content_data)
+            
+            # Extract and validate metadata
+            metadata = self._extract_media_metadata(content_data)
+            
+            # Validate content size
+            content_size = content_data.get('size', 0)
+            if not self.validate_media_size(content_size):
+                raise ValueError(f"Content size {content_size} exceeds maximum {self.max_file_size}")
+            
+            # Process content based on type
+            formatted_content = await self._format_content_by_type(content_data, media_type)
+            
+            # Generate interactive elements
+            interactive_elements = self._generate_interactive_elements(content_data, media_type)
+            
+            # Apply styling
+            styling = self._apply_media_styling(content_data, media_type)
+            
+            # Create formatted media content
+            formatted_media = FormattedMediaContent(
+                content_id=content_id,
+                media_type=media_type,
+                formatted_content=formatted_content,
+                metadata=metadata,
+                interactive_elements=interactive_elements,
+                embedded_media=self._extract_embedded_media(content_data),
+                styling=styling
+            )
+            
+            processing_time = time.time() - start_time
+            self.logger.info(
+                "Media content processed successfully",
+                content_id=content_id,
+                media_type=media_type.value,
+                processing_time=processing_time
+            )
+            
+            return formatted_media
+            
+        except Exception as e:
+            processing_time = time.time() - start_time
+            self.logger.error(
+                "Failed to process media content",
+                error=str(e),
+                processing_time=processing_time
+            )
+            raise
+    
+    def _determine_media_type(self, content_data: Dict[str, Any]) -> MediaType:
+        """Determine media type from content data."""
+        content_type = content_data.get('type', '').lower()
+        file_extension = content_data.get('file_extension', '').lower()
+        mime_type = content_data.get('mime_type', '').lower()
+        
+        # Audio types
+        if any(x in content_type for x in ['audio', 'music', 'sound']):
+            return MediaType.AUDIO
+        if any(x in file_extension for x in ['.mp3', '.wav', '.flac', '.aac', '.ogg']):
+            return MediaType.AUDIO
+        if 'audio/' in mime_type:
+            return MediaType.AUDIO
+        
+        # Video types
+        if any(x in content_type for x in ['video', 'movie', 'film']):
+            return MediaType.VIDEO
+        if any(x in file_extension for x in ['.mp4', '.avi', '.mov', '.mkv', '.webm']):
+            return MediaType.VIDEO
+        if 'video/' in mime_type:
+            return MediaType.VIDEO
+        
+        # Image types
+        if any(x in content_type for x in ['image', 'photo', 'picture']):
+            return MediaType.IMAGE
+        if any(x in file_extension for x in ['.jpg', '.jpeg', '.png', '.gif', '.webp']):
+            return MediaType.IMAGE
+        if 'image/' in mime_type:
+            return MediaType.IMAGE
+        
+        # Text types
+        if any(x in content_type for x in ['text', 'document', 'article']):
+            return MediaType.TEXT
+        if any(x in file_extension for x in ['.txt', '.md', '.doc', '.pdf']):
+            return MediaType.TEXT
+        if 'text/' in mime_type:
+            return MediaType.TEXT
+        
+        # Default to mixed for unknown types
+        return MediaType.MIXED
+    
+    def _extract_media_metadata(self, content_data: Dict[str, Any]) -> MediaMetadata:
+        """Extract metadata from content data."""
+        return MediaMetadata(
+            title=content_data.get('title', 'Untitled'),
+            description=content_data.get('description', ''),
+            duration=content_data.get('duration', 0),
+            format=content_data.get('format', 'unknown'),
+            quality=content_data.get('quality', 'standard'),
+            tags=content_data.get('tags', []),
+            creator=content_data.get('creator', ''),
+            created_at=content_data.get('created_at', datetime.utcnow().isoformat()),
+            file_size=content_data.get('size', 0),
+            resolution=content_data.get('resolution', ''),
+            extra_metadata=content_data.get('metadata', {})
+        )
+    
+    async def _format_content_by_type(self, content_data: Dict[str, Any], media_type: MediaType) -> str:
+        """Format content based on media type."""
+        if media_type == MediaType.AUDIO:
+            return await self._format_audio_content(content_data)
+        elif media_type == MediaType.VIDEO:
+            return await self._format_video_content(content_data)
+        elif media_type == MediaType.IMAGE:
+            return await self._format_image_content(content_data)
+        elif media_type == MediaType.TEXT:
+            return await self._format_text_content(content_data)
+        else:
+            return await self._format_mixed_content(content_data)
+    
+    async def _format_audio_content(self, content_data: Dict[str, Any]) -> str:
+        """Format audio content."""
+        return f"""
+        <div class="audio-player">
+            <h3>{content_data.get('title', 'Audio Content')}</h3>
+            <div class="audio-controls">
+                <button class="play-btn">Play</button>
+                <div class="progress-bar"></div>
+                <span class="duration">{content_data.get('duration', '0:00')}</span>
+            </div>
+            <div class="audio-metadata">
+                <span>Artist: {content_data.get('artist', 'Unknown')}</span>
+                <span>Quality: {content_data.get('quality', 'Standard')}</span>
+            </div>
+        </div>
+        """
+    
+    async def _format_video_content(self, content_data: Dict[str, Any]) -> str:
+        """Format video content."""
+        return f"""
+        <div class="video-player">
+            <h3>{content_data.get('title', 'Video Content')}</h3>
+            <div class="video-container">
+                <div class="video-placeholder">Video Player</div>
+                <div class="video-controls">
+                    <button class="play-btn">Play</button>
+                    <div class="progress-bar"></div>
+                    <button class="fullscreen-btn">Fullscreen</button>
+                </div>
+            </div>
+            <div class="video-metadata">
+                <span>Duration: {content_data.get('duration', '0:00')}</span>
+                <span>Resolution: {content_data.get('resolution', 'Standard')}</span>
+            </div>
+        </div>
+        """
+    
+    async def _format_image_content(self, content_data: Dict[str, Any]) -> str:
+        """Format image content."""
+        return f"""
+        <div class="image-viewer">
+            <h3>{content_data.get('title', 'Image Content')}</h3>
+            <div class="image-container">
+                <div class="image-placeholder">Image Display</div>
+                <div class="image-controls">
+                    <button class="zoom-in">Zoom In</button>
+                    <button class="zoom-out">Zoom Out</button>
+                    <button class="download">Download</button>
+                </div>
+            </div>
+            <div class="image-metadata">
+                <span>Resolution: {content_data.get('resolution', 'Unknown')}</span>
+                <span>Size: {content_data.get('size', 0)} bytes</span>
+            </div>
+        </div>
+        """
+    
+    async def _format_text_content(self, content_data: Dict[str, Any]) -> str:
+        """Format text content."""
+        return f"""
+        <div class="text-content">
+            <h3>{content_data.get('title', 'Text Content')}</h3>
+            <div class="text-body">
+                {content_data.get('content', content_data.get('text', 'No content available'))}
+            </div>
+            <div class="text-metadata">
+                <span>Words: {len(content_data.get('content', '').split())}</span>
+                <span>Characters: {len(content_data.get('content', ''))}</span>
+            </div>
+        </div>
+        """
+    
+    async def _format_mixed_content(self, content_data: Dict[str, Any]) -> str:
+        """Format mixed content."""
+        return f"""
+        <div class="mixed-content">
+            <h3>{content_data.get('title', 'Mixed Content')}</h3>
+            <div class="content-body">
+                <pre>{json.dumps(content_data, indent=2, default=str)}</pre>
+            </div>
+        </div>
+        """
+    
+    def _generate_interactive_elements(self, content_data: Dict[str, Any], media_type: MediaType) -> List[str]:
+        """Generate interactive elements for the content."""
+        elements = []
+        
+        # Common elements
+        elements.extend(['share', 'bookmark', 'like'])
+        
+        # Type-specific elements
+        if media_type == MediaType.AUDIO:
+            elements.extend(['playlist_add', 'repeat', 'shuffle'])
+        elif media_type == MediaType.VIDEO:
+            elements.extend(['subtitle_toggle', 'quality_selector', 'speed_control'])
+        elif media_type == MediaType.IMAGE:
+            elements.extend(['zoom', 'rotate', 'filter'])
+        elif media_type == MediaType.TEXT:
+            elements.extend(['copy', 'translate', 'highlight'])
+        
+        return elements
+    
+    def _apply_media_styling(self, content_data: Dict[str, Any], media_type: MediaType) -> Dict[str, Any]:
+        """Apply styling based on media type and content."""
+        base_styling = {
+            'theme': self.visualization_config.get('color_scheme', 'default'),
+            'width': self.visualization_config.get('width', 800),
+            'height': self.visualization_config.get('height', 400),
+            'responsive': True
+        }
+        
+        # Type-specific styling
+        if media_type == MediaType.AUDIO:
+            base_styling.update({
+                'waveform_color': '#1db954',
+                'controls_color': '#191414',
+                'background_color': '#000000'
+            })
+        elif media_type == MediaType.VIDEO:
+            base_styling.update({
+                'controls_position': 'bottom',
+                'aspect_ratio': '16:9',
+                'autoplay': False
+            })
+        elif media_type == MediaType.IMAGE:
+            base_styling.update({
+                'zoom_enabled': True,
+                'pan_enabled': True,
+                'border_radius': '8px'
+            })
+        
+        return base_styling
+    
+    def _extract_embedded_media(self, content_data: Dict[str, Any]) -> Dict[str, str]:
+        """Extract embedded media (thumbnails, previews, etc.)."""
+        embedded = {}
+        
+        if 'thumbnail' in content_data:
+            embedded['thumbnail'] = content_data['thumbnail']
+        if 'preview' in content_data:
+            embedded['preview'] = content_data['preview']
+        if 'cover_art' in content_data:
+            embedded['cover_art'] = content_data['cover_art']
+        
+        return embedded
 
 
 class AudioVisualizationFormatter(BaseMediaFormatter):
@@ -13279,7 +13553,7 @@ def create_media_formatter(
     
     formatter_class = formatters[formatter_type]
     return formatter_class(tenant_id, config or {})
-\n\n
+
 # ==========================================================================================
 # MODULE 24/99: processors.py
 # SOURCE: /app/utils/processors/processors.py
@@ -14357,7 +14631,7 @@ async def process_template(
         pipeline = default_pipeline
     
     return await pipeline.process_template(template, context)
-\n\n
+
 # ==========================================================================================
 # MODULE 25/99: analyzers.py
 # SOURCE: /app/utils/helpers/analyzers.py
@@ -15367,7 +15641,7 @@ def create_analyzers(config: MonitoringConfig) -> Dict[str, BaseAnalyzer]:
 # Suppress warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 warnings.filterwarnings("ignore", category=FutureWarning)
-\n\n
+
 # ==========================================================================================
 # MODULE 26/99: audio_importer.py
 # SOURCE: /app/utils/helpers/audio_importer.py
@@ -15541,8 +15815,323 @@ class BaseAudioImporter:
         }
     
     async def import_data(self, source_params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Import audio data - to be implemented by subclasses."""
-        raise NotImplementedError("Subclasses must implement import_data")
+        """Import audio data with basic validation and processing."""
+        self.import_stats["start_time"] = datetime.now()
+        imported_data = []
+        
+        try:
+            # Validate source parameters
+            source_params = source_params or {}
+            
+            # Initialize import process
+            self.logger.info("Starting audio data import", tenant_id=self.tenant_id)
+            
+            # Get data source configuration
+            data_source = source_params.get('source_type', 'file')
+            source_path = source_params.get('source_path', '')
+            batch_processing = source_params.get('batch_processing', True)
+            
+            # Process based on source type
+            if data_source == 'file':
+                imported_data = await self._import_from_files(source_params)
+            elif data_source == 'url':
+                imported_data = await self._import_from_urls(source_params)
+            elif data_source == 'database':
+                imported_data = await self._import_from_database(source_params)
+            elif data_source == 'stream':
+                imported_data = await self._import_from_stream(source_params)
+            else:
+                imported_data = await self._import_generic_data(source_params)
+            
+            # Validate imported data
+            validated_data = []
+            for item in imported_data:
+                if await self._validate_imported_item(item):
+                    validated_data.append(item)
+                else:
+                    self.import_stats["failed_imports"] += 1
+            
+            # Deduplicate if enabled
+            if source_params.get('deduplicate', True):
+                validated_data = await self._deduplicate_data(validated_data)
+            
+            # Apply transformations if specified
+            if 'transformations' in source_params:
+                validated_data = await self._apply_transformations(validated_data, source_params['transformations'])
+            
+            self.import_stats["successful_imports"] = len(validated_data)
+            self.import_stats["total_imported"] = len(validated_data)
+            
+            self.logger.info(
+                "Audio data import completed successfully",
+                tenant_id=self.tenant_id,
+                imported_count=len(validated_data),
+                failed_count=self.import_stats["failed_imports"]
+            )
+            
+            return {
+                "success": True,
+                "platform": "base_audio_importer",
+                "source_type": data_source,
+                "imported_data": validated_data,
+                "statistics": self.import_stats,
+                "tenant_id": self.tenant_id,
+                "metadata": {
+                    "import_timestamp": datetime.now().isoformat(),
+                    "source_params": source_params,
+                    "data_count": len(validated_data)
+                }
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Audio import failed: {str(e)}", tenant_id=self.tenant_id, exc_info=True)
+            self.import_stats["failed_imports"] += len(imported_data) if imported_data else 1
+            
+            return {
+                "success": False,
+                "error": str(e),
+                "platform": "base_audio_importer",
+                "statistics": self.import_stats,
+                "tenant_id": self.tenant_id
+            }
+        finally:
+            self.import_stats["end_time"] = datetime.now()
+    
+    async def _import_from_files(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import audio data from local files."""
+        file_paths = source_params.get('file_paths', [])
+        file_directory = source_params.get('directory', '')
+        file_extensions = source_params.get('extensions', ['.mp3', '.wav', '.flac', '.aac'])
+        
+        imported_items = []
+        
+        # If directory is specified, scan for audio files
+        if file_directory and os.path.exists(file_directory):
+            for root, dirs, files in os.walk(file_directory):
+                for file in files:
+                    if any(file.lower().endswith(ext) for ext in file_extensions):
+                        file_path = os.path.join(root, file)
+                        file_paths.append(file_path)
+        
+        # Process each file
+        for file_path in file_paths:
+            try:
+                if os.path.exists(file_path):
+                    file_data = await self._extract_file_metadata(file_path)
+                    if file_data:
+                        imported_items.append(file_data)
+            except Exception as e:
+                self.logger.warning(f"Failed to process file {file_path}: {str(e)}")
+                continue
+        
+        return imported_items
+    
+    async def _import_from_urls(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import audio data from URLs."""
+        urls = source_params.get('urls', [])
+        imported_items = []
+        
+        for url in urls:
+            try:
+                url_data = await self._fetch_url_metadata(url)
+                if url_data:
+                    imported_items.append(url_data)
+            except Exception as e:
+                self.logger.warning(f"Failed to process URL {url}: {str(e)}")
+                continue
+        
+        return imported_items
+    
+    async def _import_from_database(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import audio data from database."""
+        query = source_params.get('query', '')
+        table_name = source_params.get('table', 'audio_content')
+        limit = source_params.get('limit', 1000)
+        
+        # This would connect to actual database
+        # For now, return sample data structure
+        return [{
+            "id": f"db_item_{i}",
+            "title": f"Database Track {i}",
+            "source": "database",
+            "metadata": {"table": table_name, "query": query}
+        } for i in range(min(10, limit))]
+    
+    async def _import_from_stream(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import audio data from streaming source."""
+        stream_url = source_params.get('stream_url', '')
+        duration = source_params.get('duration', 60)  # seconds
+        
+        # This would connect to actual stream
+        # For now, return sample stream data
+        return [{
+            "id": "stream_data",
+            "title": "Stream Content",
+            "source": "stream",
+            "stream_url": stream_url,
+            "duration": duration,
+            "metadata": {"captured_at": datetime.now().isoformat()}
+        }]
+    
+    async def _import_generic_data(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import generic audio data."""
+        data_items = source_params.get('data', [])
+        
+        # Process generic data items
+        processed_items = []
+        for item in data_items:
+            if isinstance(item, dict):
+                processed_item = {
+                    "id": item.get('id', str(uuid.uuid4())),
+                    "title": item.get('title', 'Unknown'),
+                    "source": "generic",
+                    "original_data": item
+                }
+                processed_items.append(processed_item)
+        
+        return processed_items
+    
+    async def _extract_file_metadata(self, file_path: str) -> Optional[Dict[str, Any]]:
+        """Extract metadata from audio file."""
+        try:
+            file_stat = os.stat(file_path)
+            file_name = os.path.basename(file_path)
+            file_ext = os.path.splitext(file_name)[1]
+            
+            return {
+                "id": hashlib.md5(file_path.encode()).hexdigest(),
+                "title": os.path.splitext(file_name)[0],
+                "file_path": file_path,
+                "file_name": file_name,
+                "file_extension": file_ext,
+                "file_size": file_stat.st_size,
+                "modified_time": datetime.fromtimestamp(file_stat.st_mtime).isoformat(),
+                "source": "file",
+                "metadata": {
+                    "mime_type": f"audio/{file_ext[1:] if file_ext else 'unknown'}",
+                    "accessible": True
+                }
+            }
+        except Exception as e:
+            self.logger.error(f"Failed to extract metadata from {file_path}: {str(e)}")
+            return None
+    
+    async def _fetch_url_metadata(self, url: str) -> Optional[Dict[str, Any]]:
+        """Fetch metadata from URL."""
+        try:
+            # This would make actual HTTP request to get metadata
+            # For now, return parsed URL data
+            from urllib.parse import urlparse, parse_qs
+            
+            parsed_url = urlparse(url)
+            query_params = parse_qs(parsed_url.query)
+            
+            return {
+                "id": hashlib.md5(url.encode()).hexdigest(),
+                "title": query_params.get('title', ['Unknown URL'])[0],
+                "url": url,
+                "domain": parsed_url.netloc,
+                "source": "url",
+                "metadata": {
+                    "scheme": parsed_url.scheme,
+                    "path": parsed_url.path,
+                    "query_params": query_params
+                }
+            }
+        except Exception as e:
+            self.logger.error(f"Failed to fetch metadata from {url}: {str(e)}")
+            return None
+    
+    async def _validate_imported_item(self, item: Dict[str, Any]) -> bool:
+        """Validate imported data item."""
+        required_fields = ['id', 'title', 'source']
+        
+        for field in required_fields:
+            if field not in item or not item[field]:
+                self.logger.warning(f"Missing required field '{field}' in imported item")
+                return False
+        
+        # Additional validation based on source type
+        source = item.get('source', '')
+        
+        if source == 'file':
+            if 'file_path' not in item:
+                return False
+            if not os.path.exists(item['file_path']):
+                return False
+        elif source == 'url':
+            if 'url' not in item:
+                return False
+            # Add URL validation here
+        
+        return True
+    
+    async def _deduplicate_data(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Remove duplicate entries from imported data."""
+        seen_ids = set()
+        deduplicated = []
+        
+        for item in data:
+            item_id = item.get('id', '')
+            if item_id and item_id not in seen_ids:
+                seen_ids.add(item_id)
+                deduplicated.append(item)
+        
+        return deduplicated
+    
+    async def _apply_transformations(self, data: List[Dict[str, Any]], transformations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Apply data transformations."""
+        transformed_data = data.copy()
+        
+        for transformation in transformations:
+            transform_type = transformation.get('type', '')
+            
+            if transform_type == 'normalize_titles':
+                for item in transformed_data:
+                    if 'title' in item:
+                        item['title'] = item['title'].strip().title()
+            
+            elif transform_type == 'add_metadata':
+                metadata_to_add = transformation.get('metadata', {})
+                for item in transformed_data:
+                    if 'metadata' not in item:
+                        item['metadata'] = {}
+                    item['metadata'].update(metadata_to_add)
+            
+            elif transform_type == 'filter':
+                filter_criteria = transformation.get('criteria', {})
+                transformed_data = [
+                    item for item in transformed_data
+                    if self._matches_filter_criteria(item, filter_criteria)
+                ]
+        
+        return transformed_data
+    
+    def _matches_filter_criteria(self, item: Dict[str, Any], criteria: Dict[str, Any]) -> bool:
+        """Check if item matches filter criteria."""
+        for key, expected_value in criteria.items():
+            if key not in item:
+                return False
+            
+            item_value = item[key]
+            
+            if isinstance(expected_value, list):
+                if item_value not in expected_value:
+                    return False
+            elif isinstance(expected_value, dict):
+                # Handle range criteria
+                if 'min' in expected_value or 'max' in expected_value:
+                    min_val = expected_value.get('min', float('-inf'))
+                    max_val = expected_value.get('max', float('inf'))
+                    if not isinstance(item_value, (int, float)):
+                        return False
+                    if not (min_val <= item_value <= max_val):
+                        return False
+            else:
+                if item_value != expected_value:
+                    return False
+        
+        return True
     
     async def validate_audio_metadata(self, metadata: AudioMetadata) -> bool:
         """Validate audio metadata quality and completeness."""
@@ -16419,7 +17008,7 @@ def create_audio_importer(
     
     importer_class = importers[importer_type]
     return importer_class(tenant_id, config or {})
-\n\n
+
 # ==========================================================================================
 # MODULE 27/99: apple_music_integration.py
 # SOURCE: /app/utils/helpers/apple_music_integration.py
@@ -17167,7 +17756,7 @@ class AppleMusicIntegration(BaseIntegration):
             'artwork_url': apple_music_song.artwork_url,
             'provider': 'apple_music'
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 28/99: audio_quality_collector_engine.py
 # SOURCE: /app/analytics/tools/data_collection/specialized_collectors/audio_quality_collector_engine.py
@@ -18596,7 +19185,7 @@ __all__ = [
     'AudioQuality',
     'StreamingProtocol'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 29/99: validation.py
 # SOURCE: /app/analytics/core/business_logic/validation/validation.py
@@ -19362,7 +19951,7 @@ def validate_ml_input(data: Any, expected_features: Optional[List[str]] = None) 
         return result
     else:
         return manager.validate("ml_input", data)
-\n\n
+
 # ==========================================================================================
 # MODULE 30/99: youtube_music_integration.py
 # SOURCE: /app/analytics/core/business_logic/content_analysis/youtube_music_integration.py
@@ -20278,7 +20867,7 @@ class YouTubeMusicIntegration(BaseIntegration):
             'region': self.region,
             'client_initialized': bool(self.client.session and self.client.visitor_data)
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 31/99: music_data_processing.py
 # SOURCE: /app/analytics/core/data_processing/transformation/music_data_processing.py
@@ -20974,7 +21563,7 @@ __all__ = [
     "UserBehaviorMetrics", 
     "MusicDataProcessor"
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 32/99: fingerprint_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/content_protection/fingerprint_alerts.py
@@ -21747,7 +22336,7 @@ class FingerprintAlertHandler:
     
     # Additional implementation methods would continue here...
     # For brevity, showing the core structure and key methods
-\n\n
+
 # ==========================================================================================
 # MODULE 33/99: upload_processing_config.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_workflow/handlers/collaboration/config/core/upload_processing/upload_processing_config.py
@@ -22154,7 +22743,7 @@ __all__ = [
     'UploadProcessingConfiguration',
     'get_upload_processing_config'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 34/99: fingerprinting_service.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_workflow/handlers/collaboration/config/core/ai_protection/services/fingerprinting_service.py
@@ -22677,7 +23266,7 @@ __all__ = [
     'FingerprintType',
     'FingerprintResult'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 35/99: processing_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_workflow/handlers/processing/processing_alerts.py
@@ -22896,7 +23485,7 @@ class ProcessingAlertHandler:
         self.logger.info("Shutting down processing alert handler...")
         self.processing_sessions.clear()
         self.logger.info("Processing alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 36/99: fingerprint_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/content_protection/fingerprint_alerts.py
@@ -23669,7 +24258,7 @@ class FingerprintAlertHandler:
     
     # Additional implementation methods would continue here...
     # For brevity, showing the core structure and key methods
-\n\n
+
 # ==========================================================================================
 # MODULE 37/99: upload_processing_config.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/creator_workflow/handlers/collaboration/config/core/upload_processing/upload_processing_config.py
@@ -24076,7 +24665,7 @@ __all__ = [
     'UploadProcessingConfiguration',
     'get_upload_processing_config'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 38/99: fingerprinting_service.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/creator_workflow/handlers/collaboration/config/core/ai_protection/services/fingerprinting_service.py
@@ -24599,7 +25188,7 @@ __all__ = [
     'FingerprintType',
     'FingerprintResult'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 39/99: processing_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/creator_workflow/handlers/processing/processing_alerts.py
@@ -24818,49 +25407,49 @@ class ProcessingAlertHandler:
         self.logger.info("Shutting down processing alert handler...")
         self.processing_sessions.clear()
         self.logger.info("Processing alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 40/99: music_service.py
 # SOURCE: /app/api/v2/grpc/music_service.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 41/99: beat_generator.py
 # SOURCE: /app/api/v1/music_generation/beat_generator.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 42/99: audio_synthesis.py
 # SOURCE: /app/api/v1/music_generation/audio_synthesis.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 43/99: stem_separation.py
 # SOURCE: /app/api/v1/music_generation/stem_separation.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 44/99: mastering_ai.py
 # SOURCE: /app/api/v1/music_generation/mastering_ai.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 45/99: harmony_analyzer.py
 # SOURCE: /app/api/v1/music_generation/harmony_analyzer.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 46/99: __init__.py
 # SOURCE: /app/api/v1/music_generation/__init__.py
@@ -24887,21 +25476,21 @@ __all__ = [
     "StemSeparator",
     "HarmonyAnalyzer"
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 47/99: audio_effects.py
 # SOURCE: /app/api/v1/music_generation/audio_effects.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 48/99: music_streaming.py
 # SOURCE: /app/api/websocket/music_streaming.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 49/99: trend_analysis_service.py
 # SOURCE: /app/services/analytics/trend_analysis_service.py
@@ -24936,7 +25525,7 @@ class TrendAnalysisService:
             "trends": trends,
             "audit_log": [audit_entry],
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 50/99: fingerprint_types.py
 # SOURCE: /app/services/protection/fingerprinting/fingerprint_types.py
@@ -25199,7 +25788,7 @@ PROCESSING_TIME_LIMITS = {
     ContentFormat.TXT: 10,
     ContentFormat.PDF: 25,
 }
-\n\n
+
 # ==========================================================================================
 # MODULE 51/99: exceptions.py
 # SOURCE: /app/services/protection/fingerprinting/exceptions.py
@@ -25574,7 +26163,7 @@ RECOVERY_STRATEGIES = {
     "TIMEOUT_ERROR": "batch_processing",
     "RESOURCE_ERROR": "queue_for_later"
 }
-\n\n
+
 # ==========================================================================================
 # MODULE 52/99: __init__.py
 # SOURCE: /app/services/protection/fingerprinting/__init__.py
@@ -25628,28 +26217,28 @@ __all__ = [
 
 __version__ = '1.0.0'
 __author__ = 'Spotify AI Agent Team'
-\n\n
+
 # ==========================================================================================
 # MODULE 53/99: audio_utils.py
 # SOURCE: /app/services/audio/audio_utils.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 54/99: spleeter_client.py
 # SOURCE: /app/services/audio/spleeter_client.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 55/99: __init__.py
 # SOURCE: /app/services/audio/__init__.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 56/99: music_analysis_service.py
 # SOURCE: /app/services/ai/music_analysis_service.py
@@ -25690,7 +26279,7 @@ class MusicAnalysisService:
             "mood": mood,
             "audit_log": [audit_entry],
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 57/99: audio_fingerprint.py
 # SOURCE: /app/services/ai/audio_fingerprint.py
@@ -26036,7 +26625,7 @@ class AudioFingerprintEngine(FingerprintBase):
         except Exception as e:
             db.rollback()
             raise Exception(f"Erreur stockage fingerprint: {str(e)}")
-\n\n
+
 # ==========================================================================================
 # MODULE 58/99: video_fingerprint.py
 # SOURCE: /app/services/ai/video_fingerprint.py
@@ -26596,7 +27185,7 @@ class VideoFingerprintEngine(FingerprintBase):
         except Exception as e:
             db.rollback()
             raise Exception(f"Erreur stockage fingerprint vidéo: {str(e)}")
-\n\n
+
 # ==========================================================================================
 # MODULE 59/99: data_processing.py
 # SOURCE: /app/fixtures/processing_services/data_processing.py
@@ -27552,7 +28141,7 @@ async def create_processing_pipeline(
         return current_data
     
     return pipeline
-\n\n
+
 # ==========================================================================================
 # MODULE 60/99: audio.py
 # SOURCE: /app/ml_analytics/audio.py
@@ -28371,49 +28960,49 @@ __all__ = [
     'MoodClassifier', 
     'QualityAssessor'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 61/99: test_setup_spleeter_venv.py
 # SOURCE: /tests_backend/scripts/deployment/test_setup_spleeter_venv.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 62/99: test_utils.py
 # SOURCE: /tests_backend/services/spleeter_microservice/test_utils.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 63/99: test_config.py
 # SOURCE: /tests_backend/services/spleeter_microservice/test_config.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 64/99: test_fixtures_json.py
 # SOURCE: /tests_backend/services/spleeter_microservice/tests/test_fixtures_json.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 65/99: __init__.py
 # SOURCE: /tests_backend/services/spleeter_microservice/tests/__init__.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 66/99: test_validate_fixtures.py
 # SOURCE: /tests_backend/services/spleeter_microservice/tests/test_validate_fixtures.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 67/99: test_core.py
 # SOURCE: /tests_backend/spleeter/test_core.py
@@ -29037,7 +29626,7 @@ class TestSeparationResult:
         result_dict = result.to_dict()
         assert "error" in result_dict
         assert result_dict["error"]["type"] == "AudioProcessingError"
-\n\n
+
 # ==========================================================================================
 # MODULE 68/99: test_integration.py
 # SOURCE: /tests_backend/spleeter/test_integration.py
@@ -29741,7 +30330,7 @@ class TestEndToEndScenarios:
                 final_stats = engine.get_processing_stats()
                 assert final_stats['total_files'] >= 20
                 assert final_stats['success_rate'] >= 90.0
-\n\n
+
 # ==========================================================================================
 # MODULE 69/99: test_processor.py
 # SOURCE: /tests_backend/spleeter/test_processor.py
@@ -30316,7 +30905,7 @@ class TestProcessingJob:
         
         job.status = "completed"
         assert job.status == "completed"
-\n\n
+
 # ==========================================================================================
 # MODULE 70/99: test_utils.py
 # SOURCE: /tests_backend/spleeter/test_utils.py
@@ -30955,7 +31544,7 @@ class TestPerformanceOptimizer:
         
         # Mais modèle reste constant
         assert short_req["model_mb"] == long_req["model_mb"]
-\n\n
+
 # ==========================================================================================
 # MODULE 71/99: test_performance.py
 # SOURCE: /tests_backend/spleeter/test_performance.py
@@ -31696,7 +32285,7 @@ def measure_memory(func):
         print(f"{func.__name__} used {end_memory - start_memory:.1f}MB")
         return result
     return wrapper
-\n\n
+
 # ==========================================================================================
 # MODULE 72/99: conftest.py
 # SOURCE: /tests_backend/spleeter/conftest.py
@@ -32225,7 +32814,7 @@ def configure_test_logging():
     logging.getLogger('spleeter').setLevel(logging.WARNING)
     logging.getLogger('tensorflow').setLevel(logging.ERROR)
     logging.getLogger('librosa').setLevel(logging.ERROR)
-\n\n
+
 # ==========================================================================================
 # MODULE 73/99: test_monitoring.py
 # SOURCE: /tests_backend/spleeter/test_monitoring.py
@@ -32857,7 +33446,7 @@ class TestGlobalFunctions:
         assert timer.name == "global_timer"
         assert timer.collector is mock_collector
         assert timer.auto_record is True
-\n\n
+
 # ==========================================================================================
 # MODULE 74/99: test_audio_separation_utilities.py
 # SOURCE: /tests_backend/spleeter/test_audio_separation_utilities.py
@@ -33503,7 +34092,7 @@ def pytest_collection_modifyitems(config, items):
         
         if "integration" in item.nodeid:
             item.add_marker(pytest.mark.integration)
-\n\n
+
 # ==========================================================================================
 # MODULE 75/99: test_analytics_processing.py
 # SOURCE: /tests_backend/app/tasks/test_analytics_processing.py
@@ -33550,7 +34139,7 @@ def test_process_analytics():
         pytest.fail('Erreur lors de l\'appel réel : {}'.format(exc))
     assert result is not None
 
-\n\n
+
 # ==========================================================================================
 # MODULE 76/99: test_audio_analysis.py
 # SOURCE: /tests_backend/app/tasks/ai_tasks/test_audio_analysis.py
@@ -33607,7 +34196,7 @@ def test_analyze_audio_task():
         pytest.fail('Erreur lors de l\'appel réel : {}'.format(exc))
     assert result is not None
 
-\n\n
+
 # ==========================================================================================
 # MODULE 77/99: test_track_analysis.py
 # SOURCE: /tests_backend/app/tasks/spotify_tasks/test_track_analysis.py
@@ -33654,7 +34243,7 @@ def test_analyze_track():
         pytest.fail('Erreur lors de l\'appel réel : {}'.format(exc))
     assert result is not None
 
-\n\n
+
 # ==========================================================================================
 # MODULE 78/99: test_data_processors.py
 # SOURCE: /tests_backend/app/utils/test_data_processors.py
@@ -34415,7 +35004,7 @@ class TestDataProcessorsPerformance:
             assert result['processing_rate_records_per_second'] > 500
             assert result['memory_efficiency'] > 0.8
             assert result['completion_time_minutes'] < size / 10000  # Scaling target
-\n\n
+
 # ==========================================================================================
 # MODULE 79/99: test_streaming_audio.py
 # SOURCE: /tests_backend/app/utils/audio/test_streaming_audio.py
@@ -35244,7 +35833,7 @@ class TestStreamingLoadBalancer:
         assert adaptive_result['adaptive_adjustments']['optimization_accuracy'] > 0.8
         assert adaptive_result['ml_optimization_insights']['prediction_accuracy'] > 0.8
         assert adaptive_result['resilience_metrics']['failover_success_rate'] > 0.95
-\n\n
+
 # ==========================================================================================
 # MODULE 80/99: test_audio_quality.py
 # SOURCE: /tests_backend/app/utils/audio/test_audio_quality.py
@@ -36090,7 +36679,7 @@ class TestRealTimeQualityMonitor:
         assert adaptive_result['quality_improvement_metrics']['quality_improvement_score'] > 0.5
         assert adaptive_result['adaptation_learning']['learning_algorithm_performance']['convergence_achieved']
         assert adaptive_result['adaptation_learning']['continuous_improvement']['adaptation_success_rate'] > 0.8
-\n\n
+
 # ==========================================================================================
 # MODULE 81/99: test_audio_processors.py
 # SOURCE: /tests_backend/app/utils/audio/test_audio_processors.py
@@ -37135,7 +37724,7 @@ class TestAudioProcessorsPerformance:
         assert throughput_result['throughput_metrics']['samples_per_second'] > 1000000
         assert throughput_result['latency_analysis']['mean_latency_ms'] < 1.0
         assert throughput_result['scalability_metrics']['concurrent_streams_supported'] > 20
-\n\n
+
 # ==========================================================================================
 # MODULE 82/99: test_utils.py
 # SOURCE: /tests_backend/app/utils/audio/test_utils.py
@@ -37477,7 +38066,7 @@ class PerformanceProfiler:
             report.append("")
         
         return "\n".join(report)
-\n\n
+
 # ==========================================================================================
 # MODULE 83/99: __init__.py
 # SOURCE: /tests_backend/app/utils/audio/__init__.py
@@ -37758,7 +38347,7 @@ __all__ = [
     'setup_audio_test_environment',
     'logger'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 84/99: test_feature_extractors.py
 # SOURCE: /tests_backend/app/utils/audio/test_feature_extractors.py
@@ -38712,7 +39301,7 @@ class TestDeepAudioFeatureExtractor:
         assert contrastive_result['learned_representations']['semantic_clustering_quality'] > 0.7
         assert contrastive_result['embedding_space_analysis']['nearest_neighbor_consistency'] > 0.8
         assert contrastive_result['deployment_metrics']['inference_time_ms'] < 100
-\n\n
+
 # ==========================================================================================
 # MODULE 85/99: test_music_service.py
 # SOURCE: /tests_backend/app/api/v2/grpc/test_music_service.py
@@ -38775,7 +39364,7 @@ def test_serve():
         pytest.fail('Erreur lors de l\'appel réel : {}'.format(exc))
     assert result is not None
 
-\n\n
+
 # ==========================================================================================
 # MODULE 86/99: test_audio_synthesis.py
 # SOURCE: /tests_backend/app/api/v1/music_generation/test_audio_synthesis.py
@@ -38830,7 +39419,7 @@ def test_audiosynthesizer_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 87/99: test_stem_separation.py
 # SOURCE: /tests_backend/app/api/v1/music_generation/test_stem_separation.py
@@ -38892,7 +39481,7 @@ def test_stemseparator_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 88/99: test_audio_effects.py
 # SOURCE: /tests_backend/app/api/v1/music_generation/test_audio_effects.py
@@ -38950,7 +39539,7 @@ def test_audioeffects_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 89/99: test_beat_generator.py
 # SOURCE: /tests_backend/app/api/v1/music_generation/test_beat_generator.py
@@ -39005,7 +39594,7 @@ def test_beatgenerator_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 90/99: test_harmony_analyzer.py
 # SOURCE: /tests_backend/app/api/v1/music_generation/test_harmony_analyzer.py
@@ -39060,7 +39649,7 @@ def test_harmonyanalyzer_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 91/99: test_mastering_ai.py
 # SOURCE: /tests_backend/app/api/v1/music_generation/test_mastering_ai.py
@@ -39115,7 +39704,7 @@ def test_masteringai_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 92/99: test_music_streaming.py
 # SOURCE: /tests_backend/app/api/websocket/test_music_streaming.py
@@ -39169,7 +39758,7 @@ def test_musicstreaminghandler_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 93/99: test_trend_analysis_service.py
 # SOURCE: /tests_backend/app/services/analytics/test_trend_analysis_service.py
@@ -39215,7 +39804,7 @@ def test_trendanalysisservice_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 94/99: test_audio_analyzer.py
 # SOURCE: /tests_backend/app/services/audio/test_audio_analyzer.py
@@ -39264,7 +39853,7 @@ def test_analyze_basic():
     assert isinstance(result, dict)
     assert "tags" in result
     assert "genre" in result
-\n\n
+
 # ==========================================================================================
 # MODULE 95/99: test_audio_utils.py
 # SOURCE: /tests_backend/app/services/audio/test_audio_utils.py
@@ -39328,14 +39917,14 @@ def test_extract_features():
     features = audio_utils.extract_features(arr, 44100)
     assert isinstance(features, dict)
     assert "rms" in features
-\n\n
+
 # ==========================================================================================
 # MODULE 96/99: __init__.py
 # SOURCE: /tests_backend/app/services/audio/__init__.py
 # LIGNES: 1
 # ==========================================================================================
 
-\n\n
+
 # ==========================================================================================
 # MODULE 97/99: test_spleeter_client.py
 # SOURCE: /tests_backend/app/services/audio/test_spleeter_client.py
@@ -39369,7 +39958,7 @@ except ImportError:
         sys.modules['grpc_tools'] = Mock()
 
 from unittest.mock import Mock
-\n\n
+
 # ==========================================================================================
 # MODULE 98/99: test_track_analysis_service.py
 # SOURCE: /tests_backend/app/services/spotify/test_track_analysis_service.py
@@ -39415,7 +40004,7 @@ def test_trackanalysisservice_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 99/99: test_music_analysis_service.py
 # SOURCE: /tests_backend/app/services/ai/test_music_analysis_service.py
@@ -39461,4 +40050,3 @@ def test_musicanalysisservice_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
