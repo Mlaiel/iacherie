@@ -173,7 +173,7 @@ __all__ = [
     'REPOSITORY_REGISTRY', 'ASYNC_REPOSITORY_REGISTRY',
     'RepositoryFactory',
     'get_repository', 'get_async_repository',
-    'create_repository_suite', 'create_async_repository_suite'
+    'create_full_repository_suite', 'create_full_async_repository_suite'
 ]
 
 # Module Metadata for Documentation
@@ -290,5 +290,5 @@ __all__ = [
     'REPOSITORY_REGISTRY', 'ASYNC_REPOSITORY_REGISTRY',
     'RepositoryFactory',
     'get_repository', 'get_async_repository',
-    'create_repository_suite', 'create_async_repository_suite'
+    'create_full_repository_suite', 'create_full_async_repository_suite'
 ]
