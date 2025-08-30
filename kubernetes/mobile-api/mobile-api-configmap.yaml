@@ -1,0 +1,246 @@
+# Ainflue Mobile API Module - ConfigMap
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Production-ready configuration for mobile API service
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mobile-api-config
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: configuration
+    app.kubernetes.io/part-of: ainflue-platform
+    created-by: fahed-mlaiel
+  annotations:
+    description: "Mobile API configuration optimized for mobile app performance"
+data:
+  # Application Configuration
+  APP_NAME: "Ainflue-Mobile-API"
+  APP_VERSION: "1.0.0"
+  ENVIRONMENT: "production"
+  SERVICE_NAME: "mobile-api"
+  SERVICE_PORT: "8006"
+  
+  # Mobile Optimization Configuration
+  MOBILE_OPTIMIZATION_ENABLED: "true"
+  RESPONSE_COMPRESSION_ENABLED: "true"
+  GZIP_COMPRESSION_LEVEL: "6"
+  BROTLI_COMPRESSION_ENABLED: "true"
+  IMAGE_OPTIMIZATION_ENABLED: "true"
+  VIDEO_TRANSCODING_ENABLED: "true"
+  ADAPTIVE_BITRATE_ENABLED: "true"
+  
+  # Network Optimization
+  NETWORK_OPTIMIZATION_ENABLED: "true"
+  CONNECTION_POOLING_ENABLED: "true"
+  KEEP_ALIVE_ENABLED: "true"
+  HTTP2_ENABLED: "true"
+  CONNECTION_TIMEOUT: "30"
+  READ_TIMEOUT: "60"
+  WRITE_TIMEOUT: "60"
+  IDLE_TIMEOUT: "120"
+  
+  # Cache Configuration
+  MOBILE_CACHE_ENABLED: "true"
+  CACHE_TTL_SHORT: "300"
+  CACHE_TTL_MEDIUM: "1800"
+  CACHE_TTL_LONG: "3600"
+  CACHE_SIZE_LIMIT: "2GB"
+  CACHE_COMPRESSION_ENABLED: "true"
+  
+  # Offline Sync Configuration
+  OFFLINE_SYNC_ENABLED: "true"
+  OFFLINE_CACHE_SIZE: "1GB"
+  OFFLINE_SYNC_INTERVAL: "1800"
+  BACKGROUND_SYNC_ENABLED: "true"
+  SYNC_CONFLICT_RESOLUTION: "server_wins"
+  
+  # Push Notifications Configuration
+  PUSH_NOTIFICATIONS_ENABLED: "true"
+  FCM_ENABLED: "true"
+  APNS_ENABLED: "true"
+  WEB_PUSH_ENABLED: "true"
+  NOTIFICATION_RETRY_ATTEMPTS: "3"
+  NOTIFICATION_BATCH_SIZE: "1000"
+  
+  # Mobile Analytics Configuration
+  MOBILE_ANALYTICS_ENABLED: "true"
+  SESSION_TRACKING_ENABLED: "true"
+  CRASH_REPORTING_ENABLED: "true"
+  PERFORMANCE_MONITORING_ENABLED: "true"
+  USER_BEHAVIOR_TRACKING_ENABLED: "true"
+  
+  # Battery Optimization
+  BATTERY_OPTIMIZATION_ENABLED: "true"
+  LOW_POWER_MODE_ENABLED: "true"
+  BACKGROUND_PROCESSING_THROTTLING: "true"
+  NETWORK_USAGE_OPTIMIZATION: "true"
+  CPU_USAGE_OPTIMIZATION: "true"
+  
+  # API Rate Limiting
+  API_RATE_LIMIT_MOBILE: "500"
+  API_RATE_LIMIT_WINDOW: "3600"
+  BURST_LIMIT: "100"
+  RATE_LIMIT_HEADERS_ENABLED: "true"
+  
+  # Content Delivery Configuration
+  CDN_ENABLED: "true"
+  EDGE_CACHING_ENABLED: "true"
+  STATIC_ASSET_OPTIMIZATION: "true"
+  LAZY_LOADING_ENABLED: "true"
+  PRELOADING_ENABLED: "true"
+  
+  # Database Configuration
+  DATABASE_HOST: "postgresql-primary.ainflue.svc.cluster.local"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "ainflue_mobile"
+  DATABASE_POOL_SIZE: "15"
+  DATABASE_MAX_OVERFLOW: "25"
+  DATABASE_TIMEOUT: "30"
+  DATABASE_MOBILE_OPTIMIZED: "true"
+  
+  # Redis Configuration
+  REDIS_HOST: "redis-master.ainflue.svc.cluster.local"
+  REDIS_PORT: "6379"
+  REDIS_DB: "6"
+  REDIS_POOL_SIZE: "10"
+  REDIS_TIMEOUT: "15"
+  REDIS_MOBILE_CACHE_DB: "7"
+  
+  # Message Queue Configuration
+  CELERY_BROKER_URL: "redis://redis-master.ainflue.svc.cluster.local:6379/8"
+  CELERY_RESULT_BACKEND: "redis://redis-master.ainflue.svc.cluster.local:6379/9"
+  CELERY_MOBILE_WORKER_CONCURRENCY: "6"
+  CELERY_TASK_SERIALIZER: "json"
+  
+  # Media Processing Configuration
+  IMAGE_PROCESSING_ENABLED: "true"
+  IMAGE_RESIZE_ENABLED: "true"
+  IMAGE_FORMATS: "webp,jpg,png"
+  VIDEO_PROCESSING_ENABLED: "true"
+  VIDEO_FORMATS: "mp4,webm"
+  AUDIO_PROCESSING_ENABLED: "true"
+  AUDIO_FORMATS: "aac,mp3,ogg"
+  
+  # Security Configuration
+  JWT_ALGORITHM: "HS256"
+  SESSION_TIMEOUT: "7200"
+  MOBILE_TOKEN_REFRESH_ENABLED: "true"
+  BIOMETRIC_AUTH_ENABLED: "true"
+  DEVICE_FINGERPRINTING_ENABLED: "true"
+  
+  # CORS Configuration
+  CORS_ORIGINS: "https://app.ainflue.com,capacitor://localhost,ionic://localhost"
+  CORS_METHODS: "GET,POST,PUT,DELETE,PATCH,OPTIONS"
+  CORS_HEADERS: "Content-Type,Authorization,X-Device-ID,X-App-Version,X-Platform"
+  
+  # Monitoring Configuration
+  METRICS_ENABLED: "true"
+  METRICS_PORT: "9090"
+  HEALTH_CHECK_PORT: "8081"
+  PROMETHEUS_ENABLED: "true"
+  MOBILE_METRICS_ENABLED: "true"
+  
+  # Feature Flags
+  BETA_FEATURES_ENABLED: "false"
+  EXPERIMENTAL_API_ENABLED: "false"
+  ADVANCED_MOBILE_FEATURES_ENABLED: "true"
+  OFFLINE_FIRST_MODE_ENABLED: "true"
+  
+  # Platform Specific Configuration
+  IOS_OPTIMIZATION_ENABLED: "true"
+  ANDROID_OPTIMIZATION_ENABLED: "true"
+  PWA_SUPPORT_ENABLED: "true"
+  CORDOVA_SUPPORT_ENABLED: "true"
+  REACT_NATIVE_SUPPORT_ENABLED: "true"
+  FLUTTER_SUPPORT_ENABLED: "true"
+  
+  # Business Logic Configuration
+  CONTENT_PREVIEW_ENABLED: "true"
+  QUICK_UPLOAD_ENABLED: "true"
+  BATCH_OPERATIONS_ENABLED: "true"
+  MOBILE_COLLABORATION_ENABLED: "true"
+  MOBILE_PAYMENT_ENABLED: "true"
+  
+  # Integration Configuration
+  USER_SERVICE_URL: "http://user-service.ainflue.svc.cluster.local:8000"
+  CONTENT_SERVICE_URL: "http://content-service.ainflue.svc.cluster.local:8001"
+  GAMIFICATION_SERVICE_URL: "http://gamification-service.ainflue-gamification.svc.cluster.local:8004"
+  REMIX_AI_SERVICE_URL: "http://remix-ai-service.ainflue-remix-ai.svc.cluster.local:8005"
+  NOTIFICATION_SERVICE_URL: "http://notification-service.ainflue.svc.cluster.local:8007"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mobile-assets-config
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/component: asset-configuration
+data:
+  mobile_app_config.json: |
+    {
+      "app_name": "Ainflue",
+      "app_version": "1.0.0",
+      "api_version": "v1",
+      "base_url": "https://api.ainflue.com/v1/mobile",
+      "cdn_url": "https://cdn.ainflue.com",
+      "websocket_url": "wss://ws.ainflue.com/mobile",
+      "features": {
+        "offline_mode": true,
+        "background_sync": true,
+        "push_notifications": true,
+        "biometric_auth": true,
+        "quick_upload": true,
+        "collaboration": true,
+        "ai_remix": true,
+        "gamification": true
+      },
+      "cache_policy": {
+        "user_data": 3600,
+        "content_previews": 1800,
+        "media_thumbnails": 86400,
+        "app_settings": 604800
+      },
+      "network_policy": {
+        "retry_attempts": 3,
+        "timeout_seconds": 30,
+        "background_sync_interval": 1800,
+        "low_data_mode": true
+      }
+    }
+    
+  ios_config.plist: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+        <key>AinflueAPIBaseURL</key>
+        <string>https://api.ainflue.com/v1/mobile</string>
+        <key>BackgroundModes</key>
+        <array>
+            <string>background-processing</string>
+            <string>background-fetch</string>
+        </array>
+        <key>NSAppTransportSecurity</key>
+        <dict>
+            <key>NSAllowsArbitraryLoads</key>
+            <false/>
+        </dict>
+    </dict>
+    </plist>
+    
+  android_config.xml: |
+    <?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string name="ainflue_api_base_url">https://api.ainflue.com/v1/mobile</string>
+        <string name="ainflue_websocket_url">wss://ws.ainflue.com/mobile</string>
+        <bool name="offline_mode_enabled">true</bool>
+        <bool name="background_sync_enabled">true</bool>
+        <integer name="cache_size_mb">1024</integer>
+        <integer name="network_timeout_seconds">30</integer>
+    </resources>

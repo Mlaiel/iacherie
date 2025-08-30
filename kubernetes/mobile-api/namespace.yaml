@@ -1,0 +1,77 @@
+# Ainflue Mobile API Module - Kubernetes Namespace
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Production-ready namespace for mobile API microservice
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue-mobile-api
+  labels:
+    name: ainflue-mobile-api
+    environment: production
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: mobile-api-service
+    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/managed-by: kubectl
+    managed-by: fahed-mlaiel
+    business-domain: mobile-optimization
+  annotations:
+    description: "Ainflue Mobile API - Optimized backend services for mobile applications"
+    contact: "mlaiel@live.de"
+    created-by: "Fahed Mlaiel"
+    business-purpose: "Mobile-optimized API layer for content creators on mobile platforms"
+
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mobile-api-quota
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/component: resource-management
+spec:
+  hard:
+    requests.cpu: "6"
+    requests.memory: 12Gi
+    limits.cpu: "12"
+    limits.memory: 24Gi
+    persistentvolumeclaims: "8"
+    pods: "25"
+    services: "12"
+    secrets: "20"
+    configmaps: "15"
+    count/deployments.apps: "5"
+    count/replicasets.apps: "10"
+
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mobile-api-limits
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/component: resource-limits
+spec:
+  limits:
+  - type: Container
+    default:
+      cpu: 300m
+      memory: 512Mi
+    defaultRequest:
+      cpu: 150m
+      memory: 256Mi
+    max:
+      cpu: 1500m
+      memory: 4Gi
+    min:
+      cpu: 50m
+      memory: 128Mi
+  - type: PersistentVolumeClaim
+    max:
+      storage: 100Gi
+    min:
+      storage: 5Gi

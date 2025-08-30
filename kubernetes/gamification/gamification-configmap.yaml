@@ -1,0 +1,211 @@
+# Ainflue Gamification Module - ConfigMap
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Production-ready configuration for gamification engine
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gamification-config
+  namespace: ainflue-gamification
+  labels:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: configuration
+    app.kubernetes.io/part-of: ainflue-platform
+    created-by: fahed-mlaiel
+  annotations:
+    description: "Gamification engine configuration for creator engagement and monetization"
+data:
+  # Application Configuration
+  APP_NAME: "Ainflue-Gamification"
+  APP_VERSION: "1.0.0"
+  ENVIRONMENT: "production"
+  SERVICE_NAME: "gamification"
+  SERVICE_PORT: "8004"
+  
+  # Gamification Engine Configuration
+  POINTS_SYSTEM_ENABLED: "true"
+  ACHIEVEMENTS_SYSTEM_ENABLED: "true"
+  LEADERBOARDS_ENABLED: "true"
+  CREATOR_TIERS_ENABLED: "true"
+  REWARD_SYSTEM_ENABLED: "true"
+  ENGAGEMENT_TRACKING_ENABLED: "true"
+  
+  # Points Configuration
+  CONTENT_UPLOAD_POINTS: "10"
+  CONTENT_VIEW_POINTS: "1"
+  CONTENT_LIKE_POINTS: "2"
+  CONTENT_SHARE_POINTS: "5"
+  CONTENT_COMMENT_POINTS: "3"
+  COLLABORATION_POINTS: "25"
+  PROTECTION_CLAIM_POINTS: "15"
+  REVENUE_MILESTONE_POINTS: "50"
+  
+  # Achievement Configuration
+  ACHIEVEMENT_CHECK_INTERVAL: "600"
+  ACHIEVEMENT_NOTIFICATION_ENABLED: "true"
+  CUSTOM_ACHIEVEMENTS_ENABLED: "true"
+  ACHIEVEMENT_LEVELS: "bronze,silver,gold,platinum,diamond"
+  
+  # Leaderboard Configuration
+  LEADERBOARD_UPDATE_INTERVAL: "900"
+  LEADERBOARD_CATEGORIES: "content_creators,engagement_leaders,revenue_leaders,collaboration_masters"
+  LEADERBOARD_TIMEFRAMES: "daily,weekly,monthly,yearly"
+  LEADERBOARD_MAX_ENTRIES: "1000"
+  
+  # Creator Tier Configuration
+  TIER_CALCULATION_INTERVAL: "86400"
+  TIER_LEVELS: "starter,rising,established,professional,elite"
+  TIER_POINT_THRESHOLDS: "0,1000,5000,15000,50000"
+  TIER_BENEFITS_ENABLED: "true"
+  
+  # Reward System Configuration
+  REWARD_PROCESSING_INTERVAL: "3600"
+  REWARD_TYPES: "points,badges,tier_upgrade,revenue_boost,feature_unlock"
+  AUTOMATIC_REWARDS_ENABLED: "true"
+  MANUAL_REWARDS_ENABLED: "true"
+  
+  # Engagement Multipliers
+  ENGAGEMENT_MULTIPLIER_ENABLED: "true"
+  STREAK_MULTIPLIER_ENABLED: "true"
+  COLLABORATION_BONUS_ENABLED: "true"
+  QUALITY_BONUS_ENABLED: "true"
+  PLATFORM_DIVERSITY_BONUS: "true"
+  
+  # Database Configuration
+  DATABASE_HOST: "postgresql-primary.ainflue.svc.cluster.local"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "ainflue_gamification"
+  DATABASE_POOL_SIZE: "10"
+  DATABASE_MAX_OVERFLOW: "20"
+  DATABASE_TIMEOUT: "30"
+  
+  # Redis Configuration
+  REDIS_HOST: "redis-master.ainflue.svc.cluster.local"
+  REDIS_PORT: "6379"
+  REDIS_DB: "2"
+  REDIS_POOL_SIZE: "5"
+  REDIS_TIMEOUT: "10"
+  
+  # Cache Configuration
+  CACHE_TTL_POINTS: "300"
+  CACHE_TTL_ACHIEVEMENTS: "600"
+  CACHE_TTL_LEADERBOARDS: "900"
+  CACHE_TTL_TIERS: "3600"
+  
+  # API Configuration
+  API_RATE_LIMIT: "1000"
+  API_RATE_LIMIT_WINDOW: "3600"
+  API_TIMEOUT: "30"
+  API_MAX_RETRY: "3"
+  
+  # Monitoring Configuration
+  METRICS_ENABLED: "true"
+  METRICS_PORT: "9090"
+  HEALTH_CHECK_PORT: "8081"
+  PROMETHEUS_ENABLED: "true"
+  
+  # Security Configuration
+  JWT_ALGORITHM: "HS256"
+  SESSION_TIMEOUT: "3600"
+  CORS_ORIGINS: "https://app.ainflue.com,https://dashboard.ainflue.com"
+  
+  # Feature Flags
+  BETA_FEATURES_ENABLED: "false"
+  EXPERIMENTAL_REWARDS_ENABLED: "false"
+  ADVANCED_ANALYTICS_ENABLED: "true"
+  SOCIAL_FEATURES_ENABLED: "true"
+  
+  # Business Logic Configuration
+  CREATOR_ONBOARDING_POINTS: "100"
+  FIRST_UPLOAD_BONUS: "50"
+  VERIFICATION_BONUS: "200"
+  COLLABORATION_INVITATION_POINTS: "10"
+  SUCCESSFUL_PROTECTION_CLAIM_BONUS: "25"
+  
+  # Integration Configuration
+  NOTIFICATION_SERVICE_URL: "http://notification-service.ainflue.svc.cluster.local:8007"
+  ANALYTICS_SERVICE_URL: "http://analytics-service.ainflue.svc.cluster.local:8002"
+  USER_SERVICE_URL: "http://user-service.ainflue.svc.cluster.local:8000"
+  CONTENT_SERVICE_URL: "http://content-service.ainflue.svc.cluster.local:8001"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: achievement-templates
+  namespace: ainflue-gamification
+  labels:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/component: achievement-templates
+data:
+  first_upload.json: |
+    {
+      "id": "first_upload",
+      "name": "First Steps",
+      "description": "Upload your first content",
+      "points": 50,
+      "badge_icon": "upload",
+      "tier": "bronze",
+      "category": "content",
+      "requirements": {
+        "content_uploads": 1
+      }
+    }
+  
+  content_master.json: |
+    {
+      "id": "content_master",
+      "name": "Content Master",
+      "description": "Upload 100 pieces of content",
+      "points": 1000,
+      "badge_icon": "crown",
+      "tier": "gold",
+      "category": "content",
+      "requirements": {
+        "content_uploads": 100
+      }
+    }
+    
+  collaboration_pioneer.json: |
+    {
+      "id": "collaboration_pioneer",
+      "name": "Collaboration Pioneer",
+      "description": "Complete your first collaboration",
+      "points": 100,
+      "badge_icon": "handshake",
+      "tier": "silver",
+      "category": "collaboration",
+      "requirements": {
+        "completed_collaborations": 1
+      }
+    }
+    
+  protection_guardian.json: |
+    {
+      "id": "protection_guardian",
+      "name": "Protection Guardian",
+      "description": "Successfully protect 50 pieces of content",
+      "points": 500,
+      "badge_icon": "shield",
+      "tier": "gold",
+      "category": "protection",
+      "requirements": {
+        "successful_protections": 50
+      }
+    }
+    
+  revenue_milestone.json: |
+    {
+      "id": "revenue_milestone",
+      "name": "Revenue Milestone",
+      "description": "Earn your first $100",
+      "points": 200,
+      "badge_icon": "dollar",
+      "tier": "silver",
+      "category": "monetization",
+      "requirements": {
+        "total_revenue_usd": 100
+      }
+    }

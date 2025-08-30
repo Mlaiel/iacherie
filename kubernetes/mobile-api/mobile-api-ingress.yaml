@@ -1,0 +1,336 @@
+# Ainflue Mobile API Module - Ingress Configuration
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Production-ready ingress for mobile API endpoints with mobile optimizations
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mobile-api-ingress
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/managed-by: kubectl
+    created-by: fahed-mlaiel
+  annotations:
+    description: "Ingress for mobile API - optimized for mobile app performance"
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://app.ainflue.com,capacitor://localhost,ionic://localhost"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,X-Device-ID,X-App-Version,X-Platform,X-Session-ID"
+    nginx.ingress.kubernetes.io/rate-limit: "300"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    nginx.ingress.kubernetes.io/rate-limit-rps: "15"
+    nginx.ingress.kubernetes.io/client-body-buffer-size: "50M"
+    nginx.ingress.kubernetes.io/proxy-body-size: "200M"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "15"
+    nginx.ingress.kubernetes.io/proxy-buffering: "on"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    nginx.ingress.kubernetes.io/proxy-buffers-number: "8"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-User-ID,X-Device-ID,X-Platform"
+    nginx.ingress.kubernetes.io/enable-brotli: "true"
+    nginx.ingress.kubernetes.io/brotli-level: "6"
+    nginx.ingress.kubernetes.io/brotli-types: "application/json,application/javascript,text/css,text/plain,text/xml"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: DENY";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-XSS-Protection: 1; mode=block";
+      more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains";
+      more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";
+      more_set_headers "Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:";
+      more_set_headers "X-Service-Name: mobile-api";
+      more_set_headers "X-Service-Version: 1.0";
+      more_set_headers "X-Mobile-Optimized: true";
+      more_set_headers "Cache-Control: public, max-age=300" always;
+      gzip on;
+      gzip_vary on;
+      gzip_min_length 1024;
+      gzip_types application/json application/javascript text/css text/plain text/xml application/xml application/xml+rss;
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location /mobile-api/metrics {
+        deny all;
+        return 403;
+      }
+      location /mobile-api/internal {
+        deny all;
+        return 403;
+      }
+      # Mobile-specific optimizations
+      location ~* \.(jpg|jpeg|png|gif|ico|webp)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header Vary "Accept-Encoding";
+      }
+      location ~* \.(js|css)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        gzip_static on;
+      }
+      # API response caching for mobile
+      location ~* /v1/mobile/(user|content|settings) {
+        add_header Cache-Control "private, max-age=300";
+      }
+spec:
+  tls:
+  - hosts:
+    - api.ainflue.com
+    - mobile.ainflue.com
+    - m.ainflue.com
+    secretName: mobile-api-tls-secret
+  rules:
+  - host: api.ainflue.com
+    http:
+      paths:
+      - path: /v1/mobile/auth
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /v1/mobile/user
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /v1/mobile/content
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /v1/mobile/upload
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /v1/mobile/sync
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /v1/mobile/notifications
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /v1/mobile/collaboration
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /v1/mobile/gamification
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /v1/mobile/analytics
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /v1/mobile/health
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8081
+  - host: mobile.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+      - path: /health
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8081
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+  - host: m.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 8006
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mobile-api-grpc-ingress
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/component: grpc-ingress
+  annotations:
+    description: "gRPC ingress for mobile API high-performance endpoints"
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/grpc-backend: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - grpc.mobile.ainflue.com
+    secretName: mobile-api-grpc-tls-secret
+  rules:
+  - host: grpc.mobile.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: mobile-api-service
+            port:
+              number: 9000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mobile-api-network-policy
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/component: security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: mobile-api
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue-monitoring
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue-gamification
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue-remix-ai
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/part-of: ainflue-platform
+    ports:
+    - protocol: TCP
+      port: 8006
+    - protocol: TCP
+      port: 8081
+    - protocol: TCP
+      port: 9000
+    - protocol: TCP
+      port: 9090
+  egress:
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 5432
+    - protocol: TCP
+      port: 6379
+    - protocol: TCP
+      port: 8000
+    - protocol: TCP
+      port: 8001
+    - protocol: TCP
+      port: 8004
+    - protocol: TCP
+      port: 8005
+    - protocol: TCP
+      port: 8007
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mobile-cdn-config
+  namespace: ainflue-mobile-api
+  labels:
+    app.kubernetes.io/name: mobile-api
+    app.kubernetes.io/component: cdn-configuration
+data:
+  cdn_config.yaml: |
+    cdn_settings:
+      cache_policies:
+        static_assets:
+          max_age: 31536000  # 1 year
+          browser_cache: true
+          cdn_cache: true
+        api_responses:
+          max_age: 300  # 5 minutes
+          browser_cache: true
+          cdn_cache: false
+        user_content:
+          max_age: 86400  # 1 day
+          browser_cache: true
+          cdn_cache: true
+      compression:
+        gzip_enabled: true
+        brotli_enabled: true
+        webp_enabled: true
+      mobile_optimizations:
+        adaptive_images: true
+        lazy_loading: true
+        preconnect_enabled: true
+        resource_hints: true

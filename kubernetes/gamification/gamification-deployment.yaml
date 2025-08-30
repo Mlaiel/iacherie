@@ -1,0 +1,217 @@
+# Ainflue Gamification Module - Deployment Manifest
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Production-ready deployment for gamification engine
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-gamification
+  namespace: ainflue-gamification
+  labels:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/instance: production
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: gamification-engine
+    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/managed-by: kubectl
+    created-by: fahed-mlaiel
+  annotations:
+    description: "Gamification engine for content creator engagement and monetization"
+    deployment.kubernetes.io/revision: "1"
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gamification
+      app.kubernetes.io/instance: production
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gamification
+        app.kubernetes.io/instance: production
+        app.kubernetes.io/version: "1.0"
+        app.kubernetes.io/component: gamification-engine
+        app.kubernetes.io/part-of: ainflue-platform
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+        sidecar.istio.io/inject: "true"
+    spec:
+      serviceAccountName: gamification-service-account
+      imagePullSecrets:
+        - name: docker-registry-secret
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+      containers:
+      - name: gamification-engine
+        image: ghcr.io/mlaiel/ainflue/gamification:1.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8004
+          protocol: TCP
+        - name: metrics
+          containerPort: 9090
+          protocol: TCP
+        - name: health
+          containerPort: 8081
+          protocol: TCP
+        env:
+        - name: SERVICE_NAME
+          value: "gamification"
+        - name: SERVICE_PORT
+          value: "8004"
+        - name: ENVIRONMENT
+          value: "production"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: GAMIFICATION_ENGINE_MODE
+          value: "production"
+        - name: POINTS_CALCULATION_INTERVAL
+          value: "300"
+        - name: ACHIEVEMENT_CHECK_INTERVAL
+          value: "600"
+        - name: LEADERBOARD_UPDATE_INTERVAL
+          value: "900"
+        - name: REWARD_PROCESSING_ENABLED
+          value: "true"
+        - name: CREATOR_TIER_CALCULATION_ENABLED
+          value: "true"
+        - name: ENGAGEMENT_MULTIPLIER_ENABLED
+          value: "true"
+        envFrom:
+        - configMapRef:
+            name: gamification-config
+        - secretRef:
+            name: gamification-secrets
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: health
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: health
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        startupProbe:
+          httpGet:
+            path: /health/startup
+            port: health
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
+        volumeMounts:
+        - name: gamification-data
+          mountPath: /app/data
+        - name: achievement-templates
+          mountPath: /app/templates
+        - name: temp-storage
+          mountPath: /tmp
+        - name: logs
+          mountPath: /app/logs
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: gamification-data
+        persistentVolumeClaim:
+          claimName: gamification-data-pvc
+      - name: achievement-templates
+        configMap:
+          name: achievement-templates
+      - name: temp-storage
+        emptyDir:
+          sizeLimit: 1Gi
+      - name: logs
+        emptyDir:
+          sizeLimit: 2Gi
+      nodeSelector:
+        node-type: cpu-optimized
+        workload-type: microservice
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - gamification
+              topologyKey: kubernetes.io/hostname
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 50
+            preference:
+              matchExpressions:
+              - key: instance-type
+                operator: In
+                values:
+                - m5.large
+                - m5.xlarge
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: gamification
+        effect: NoSchedule
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gamification-data-pvc
+  namespace: ainflue-gamification
+  labels:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: gp3
+  
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gamification-service-account
+  namespace: ainflue-gamification
+  labels:
+    app.kubernetes.io/name: gamification
+    app.kubernetes.io/component: security
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT:role/GamificationServiceRole
+automountServiceAccountToken: true
