@@ -8,11 +8,11 @@
 - **Projet**: Agent IA Influenceur + Plateforme de Protection de Contenu
 - **Module**: Système Avancé d'Engagement et de Gamification
 - **Architecture**: Entreprise 3-Tiers Prêt pour Production (Backend Niveau 2)
-- **Licence**: Tous droits réservés. Utilisation non autorisée interdite.
+- **Licence**: Tous droits réservés (copyright). Utilisation non autorisée interdite.
 
 ### 🚨 AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE
 
-Ce code, concept et architecture sont la **propriété intellectuelle exclusive** de **Fahed Mlaiel** (mlaiel@live.de). Toute utilisation, copie, distribution ou exploitation sans **autorisation écrite explicite** est **STRICTEMENT INTERDITE** et sera poursuivie dans toute la mesure permise par la loi.
+Ce code, concept et architecture sont la **propriété intellectuelle exclusive** de **Fahed Mlaiel** (mlaiel@live.de). Toute utilisation, copie, distribution ou exploitation sans **autorisation écrite explicite** est **STRICTEMENT INTERDITE (STRICTLY PROHIBITED)** et sera poursuivie dans toute la mesure permise par la loi.
 
 **Pour les demandes de licence UNIQUEMENT**: mlaiel@live.de
 

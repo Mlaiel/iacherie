@@ -8,11 +8,11 @@
 - **Projekt**: IA Influencer Agent + Content-Schutz-Plattform
 - **Modul**: Erweiterte Engagement & Gamification System
 - **Architektur**: Unternehmen 3-Tier Produktionsreif (Backend Level 2)
-- **Lizenz**: Alle Rechte vorbehalten. Unbefugte Nutzung verboten.
+- **Lizenz**: Alle Rechte vorbehalten (copyright). Unbefugte Nutzung verboten.
 
 ### 🚨 WARNUNG GEISTIGES EIGENTUM
 
-Dieser Code, Konzept und Architektur sind das **exklusive geistige Eigentum** von **Fahed Mlaiel** (mlaiel@live.de). Jede Nutzung, Kopie, Verteilung oder Verwertung ohne **ausdrückliche schriftliche Genehmigung** ist **STRENG VERBOTEN** und wird in vollem Umfang des Gesetzes verfolgt.
+Dieser Code, Konzept und Architektur sind das **exklusive geistige Eigentum** von **Fahed Mlaiel** (mlaiel@live.de). Jede Nutzung, Kopie, Verteilung oder Verwertung ohne **ausdrückliche schriftliche Genehmigung** ist **STRENG VERBOTEN (STRICTLY PROHIBITED)** und wird in vollem Umfang des Gesetzes verfolgt.
 
 **Für Lizenzanfragen NUR**: mlaiel@live.de
 
