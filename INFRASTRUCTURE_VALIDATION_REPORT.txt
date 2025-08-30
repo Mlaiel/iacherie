@@ -1,0 +1,53 @@
+
+AINFLUE PLATFORM - INFRASTRUCTURE VALIDATION REPORT
+====================================================
+
+Validation completed in 2.69 seconds
+
+OVERALL STATUS: ❌ FAILED
+
+COMPONENT VALIDATION RESULTS:
+============================
+
+📋 Prerequisites: ✅ PASSED
+
+🐳 Docker Compose Services: ✅ PASSED
+
+📊 Monitoring Configuration: ✅ PASSED
+
+🗄️ Database Schema & Migrations: ❌ FAILED
+
+GENERATED FILES:
+===============
+✅ docker_services_validation_report.txt
+✅ monitoring_validation_report.txt
+✅ database_validation_report.txt
+✅ test_basic_startup.sh
+✅ test_monitoring_startup.sh
+✅ test_production_startup.sh
+✅ start_monitoring_stack.sh
+✅ test_database_migrations.sh
+✅ INFRASTRUCTURE_STARTUP_GUIDE.md
+
+📖 Startup Guide: /home/runner/work/Ainflue/Ainflue/INFRASTRUCTURE_STARTUP_GUIDE.md
+
+SUMMARY & NEXT STEPS:
+====================
+
+⚠️ Some infrastructure components need attention.
+
+Please review the individual component reports for details:
+- docker_services_validation_report.txt
+- monitoring_validation_report.txt  
+- database_validation_report.txt
+
+Fix the reported issues and re-run this validation.
+
+
+SUPPORT:
+========
+For technical support and deployment assistance:
+📧 Email: mlaiel@live.de
+📖 Documentation: See generated reports and startup guide
+
+© 2025 Fahed Mlaiel. All rights reserved.
