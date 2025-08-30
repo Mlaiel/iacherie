@@ -915,6 +915,9 @@ def get_cache_manager() -> ProductionCacheManager:
 
 # Alias for backward compatibility
 CacheManager = IntelligentCacheManager
+
+
+class CacheManagerDocumentation:
     """
     🎯 Gestionnaire CacheManager - IA-Influencer-Agent
     
