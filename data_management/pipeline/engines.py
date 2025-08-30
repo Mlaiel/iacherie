@@ -2359,7 +2359,6 @@ class ValidationEngine:
             }
         
         return validate_text_content
-        )
         
         self.kafka_consumer = KafkaConsumer(
             'content-processing',

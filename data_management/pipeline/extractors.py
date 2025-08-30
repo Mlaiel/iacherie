@@ -2444,6 +2444,9 @@ class TextFeatureExtractor:
 
 
 class MultiFormatExtractor:
+    """Multi-format content extractor supporting audio, video, image, and text files."""
+    
+    def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector("multi_format_extractor")

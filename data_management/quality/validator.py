@@ -185,6 +185,8 @@ class ContentValidator:
                 }
             }
         }
+        
+        self.audio_thresholds = {
             'recommended_sample_rate': 44100,
             'min_bitrate': 128,
             'recommended_bitrate': 320,
