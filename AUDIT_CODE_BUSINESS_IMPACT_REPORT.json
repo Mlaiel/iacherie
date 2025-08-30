@@ -1,15 +1,15 @@
 {
   "metadata": {
-    "audit_date": "2025-08-30T07:22:31.392422",
+    "audit_date": "2025-08-30T07:42:30.718197",
     "repository_path": "/home/runner/work/Ainflue/Ainflue",
     "auditor": "AUDIT_CODE_BUSINESS_IMPACT.py v1.0",
     "author": "Fahed Mlaiel (mlaiel@live.de)"
   },
   "summary": {
-    "total_files_analyzed": 5913,
-    "total_lines_of_code": 5853486,
-    "files_with_issues": 4315,
-    "total_issues_found": 24556,
+    "total_files_analyzed": 5919,
+    "total_lines_of_code": 5857794,
+    "files_with_issues": 4319,
+    "total_issues_found": 24583,
     "critical_files_with_issues": 991
   },
   "business_impact_distribution": {
@@ -22,7 +22,7 @@
     "ÉLEVÉ": {
       "file_count": 828,
       "percentage": 14.0,
-      "total_lines": 878362,
+      "total_lines": 878385,
       "files_with_issues": 718
     },
     "MOYEN": {
@@ -32,16 +32,16 @@
       "files_with_issues": 78
     },
     "FAIBLE": {
-      "file_count": 355,
+      "file_count": 354,
       "percentage": 6.0,
-      "total_lines": 180057,
-      "files_with_issues": 163
+      "total_lines": 179658,
+      "files_with_issues": 162
     },
     "INCONNU": {
-      "file_count": 2957,
-      "percentage": 50.0,
-      "total_lines": 3368387,
-      "files_with_issues": 2365
+      "file_count": 2964,
+      "percentage": 50.1,
+      "total_lines": 3373071,
+      "files_with_issues": 2370
     }
   },
   "code_type_distribution": {
@@ -76,8 +76,8 @@
       "average_business_score": 83.8
     },
     "UTILITAIRE": {
-      "file_count": 2980,
-      "percentage": 50.4,
+      "file_count": 2987,
+      "percentage": 50.5,
       "average_business_score": 19.5
     },
     "INFRASTRUCTURE": {
@@ -86,7 +86,7 @@
       "average_business_score": 68.2
     },
     "TEST": {
-      "file_count": 133,
+      "file_count": 132,
       "percentage": 2.2,
       "average_business_score": 28.0
     },
@@ -591,23 +591,23 @@
     }
   ],
   "issues_by_type": {
-    "TODO": 75,
-    "FIXME": 5,
+    "TODO": 80,
+    "FIXME": 11,
+    "EMPTY_IMPLEMENTATION": 7134,
     "HACK": 30,
-    "XXX": 34,
+    "XXX": 35,
     "BUG": 21,
-    "WARNING": 17257,
-    "EMPTY_IMPLEMENTATION": 7132,
-    "NOT_IMPLEMENTED": 2
+    "WARNING": 17269,
+    "NOT_IMPLEMENTED": 3
   },
   "revenue_impact_summary": {
     "critical_modules": {
       "file_count": 1673,
       "estimated_hourly_revenue_impact": "€167,300",
       "categories": [
+        "MONÉTISATION",
         "PROTECTION",
         "LOGIQUE_MÉTIER",
-        "MONÉTISATION",
         "AGENT_IA"
       ]
     },
@@ -615,9 +615,9 @@
       "file_count": 828,
       "estimated_hourly_revenue_impact": "€41,400",
       "categories": [
+        "CRAWLER",
         "INFRASTRUCTURE",
-        "API_ENDPOINT",
-        "CRAWLER"
+        "API_ENDPOINT"
       ]
     },
     "total_estimated_platform_value": "€1,828,212,000/an"
