@@ -355,8 +355,6 @@ logger = logging.getLogger(__name__)
 logger.info(f"🧠 Conversational Analytics Module v{__version__} initialized successfully")
 logger.info(f"✅ {len(__all__)} components loaded and ready")
 logger.info(f"🚀 Enterprise-grade analytics platform operational")
-    "InteractionAnalytics"
-]
 
 # Import new enterprise analytics engines
 from .collaboration_analytics import (
