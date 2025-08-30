@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Ainflue Android Application Strings
+    
+    Localization strings for the advanced mobile content creation platform
+    Supports professional content creators with multi-format capabilities
+    
+    Author: Fahed Mlaiel (mlaiel@live.de)
+    Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+    
+    ⚠️ LEGAL NOTICE: These strings are the exclusive intellectual property of Fahed Mlaiel.
+    Any unauthorized use, copying, or distribution is strictly prohibited under
+    German and international copyright law.
+-->
+
+<resources>
+    <!-- ================================ -->
+    <!-- APPLICATION CORE                 -->
+    <!-- ================================ -->
+    
+    <!-- Application Name and Branding -->
+    <string name="app_name">Ainflue</string>
+    <string name="app_name_full">Ainflue - AI Content Protection Platform</string>
+    <string name="app_tagline">Protect. Monetize. Collaborate.</string>
+    <string name="app_description">Advanced AI-powered platform for content creators to protect, monetize, and collaborate on multi-format content</string>
+    
+    <!-- Legal and Copyright -->
+    <string name="app_author">Fahed Mlaiel</string>
+    <string name="app_author_email">mlaiel@live.de</string>
+    <string name="app_copyright">© 2025 Fahed Mlaiel. All rights reserved.</string>
+    <string name="legal_notice">⚠️ This application and all its content are the exclusive intellectual property of Fahed Mlaiel. Unauthorized use is prohibited.</string>
+    
+    <!-- ================================ -->
+    <!-- AUTHENTICATION                   -->
+    <!-- ================================ -->
+    
+    <!-- Login Screen -->
+    <string name="login_title">Welcome to Ainflue</string>
+    <string name="login_subtitle">Sign in to protect and monetize your content</string>
+    <string name="login_email_hint">Email address</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Sign In</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_create_account">Create new account</string>
+    <string name="login_biometric_prompt">Use fingerprint to sign in</string>
+    <string name="login_error_invalid_credentials">Invalid email or password</string>
+    <string name="login_error_network">Network error. Please check your connection.</string>
+    
+    <!-- Registration Screen -->
+    <string name="register_title">Join Ainflue</string>
+    <string name="register_subtitle">Start protecting your creative content today</string>
+    <string name="register_first_name_hint">First name</string>
+    <string name="register_last_name_hint">Last name</string>
+    <string name="register_email_hint">Email address</string>
+    <string name="register_password_hint">Password (min 8 characters)</string>
+    <string name="register_confirm_password_hint">Confirm password</string>
+    <string name="register_button">Create Account</string>
+    <string name="register_terms_agreement">By creating an account, you agree to our Terms of Service and Privacy Policy</string>
+    <string name="register_error_password_mismatch">Passwords do not match</string>
+    <string name="register_error_weak_password">Password is too weak</string>
+    
+    <!-- Biometric Authentication -->
+    <string name="biometric_title">Biometric Authentication</string>
+    <string name="biometric_subtitle">Use your fingerprint or face to secure your account</string>
+    <string name="biometric_description">Place your finger on the sensor or look at the camera</string>
+    <string name="biometric_negative_button">Use Password</string>
+    <string name="biometric_error_hardware_unavailable">Biometric hardware is not available</string>
+    <string name="biometric_error_none_enrolled">No biometric credentials are enrolled</string>
+    <string name="biometric_error_lockout">Too many failed attempts. Try again later.</string>
+    
+    <!-- ================================ -->
+    <!-- MAIN NAVIGATION                  -->
+    <!-- ================================ -->
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_content">Content</string>
+    <string name="nav_protection">Protection</string>
+    <string name="nav_analytics">Analytics</string>
+    <string name="nav_profile">Profile</string>
+    
+    <!-- Menu Items -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_help">Help &amp; Support</string>
+    <string name="menu_logout">Sign Out</string>
+    <string name="menu_about">About Ainflue</string>
+    
+    <!-- ================================ -->
+    <!-- DASHBOARD                        -->
+    <!-- ================================ -->
+    
+    <!-- Dashboard Overview -->
+    <string name="dashboard_welcome">Welcome back, %1$s</string>
+    <string name="dashboard_overview_title">Content Overview</string>
+    <string name="dashboard_total_content">Total Content</string>
+    <string name="dashboard_protected_content">Protected</string>
+    <string name="dashboard_violations_detected">Violations Detected</string>
+    <string name="dashboard_revenue_earned">Revenue Earned</string>
+    <string name="dashboard_recent_activity">Recent Activity</string>
+    <string name="dashboard_quick_actions">Quick Actions</string>
+    
+    <!-- Quick Actions -->
+    <string name="action_upload_content">Upload Content</string>
+    <string name="action_scan_violations">Scan for Violations</string>
+    <string name="action_view_analytics">View Analytics</string>
+    <string name="action_manage_licenses">Manage Licenses</string>
+    
+    <!-- ================================ -->
+    <!-- CONTENT MANAGEMENT               -->
+    <!-- ================================ -->
+    
+    <!-- Content Library -->
+    <string name="content_library_title">Content Library</string>
+    <string name="content_library_empty">No content uploaded yet</string>
+    <string name="content_library_empty_subtitle">Start by uploading your first audio, video, or image</string>
+    <string name="content_filter_all">All Content</string>
+    <string name="content_filter_audio">Audio</string>
+    <string name="content_filter_video">Video</string>
+    <string name="content_filter_images">Images</string>
+    <string name="content_filter_protected">Protected</string>
+    <string name="content_filter_unprotected">Unprotected</string>
+    
+    <!-- Content Upload -->
+    <string name="upload_title">Upload Content</string>
+    <string name="upload_subtitle">Select files to protect and monetize</string>
+    <string name="upload_select_files">Select Files</string>
+    <string name="upload_from_camera">Take Photo/Video</string>
+    <string name="upload_from_microphone">Record Audio</string>
+    <string name="upload_from_gallery">Choose from Gallery</string>
+    <string name="upload_progress">Uploading… %1$d%%</string>
+    <string name="upload_success">Content uploaded successfully</string>
+    <string name="upload_error">Upload failed. Please try again.</string>
+    <string name="upload_processing">Processing content with AI…</string>
+    
+    <!-- Content Details -->
+    <string name="content_details_title">Content Details</string>
+    <string name="content_details_name">Name</string>
+    <string name="content_details_type">Type</string>
+    <string name="content_details_size">Size</string>
+    <string name="content_details_uploaded">Uploaded</string>
+    <string name="content_details_status">Protection Status</string>
+    <string name="content_details_fingerprint">Digital Fingerprint</string>
+    <string name="content_details_revenue">Revenue Generated</string>
+    
+    <!-- ================================ -->
+    <!-- CONTENT PROTECTION               -->
+    <!-- ================================ -->
+    
+    <!-- Protection Overview -->
+    <string name="protection_title">Content Protection</string>
+    <string name="protection_subtitle">AI-powered copyright monitoring</string>
+    <string name="protection_status_protected">Protected</string>
+    <string name="protection_status_scanning">Scanning…</string>
+    <string name="protection_status_vulnerable">Vulnerable</string>
+    <string name="protection_scan_platforms">Scan Platforms</string>
+    <string name="protection_scan_all">Scan All Platforms</string>
+    
+    <!-- Violation Detection -->
+    <string name="violations_title">Violation Alerts</string>
+    <string name="violations_new">New Violations</string>
+    <string name="violations_resolved">Resolved</string>
+    <string name="violations_pending">Pending Action</string>
+    <string name="violation_details_platform">Platform</string>
+    <string name="violation_details_similarity">Similarity</string>
+    <string name="violation_details_detected">Detected</string>
+    <string name="violation_action_report">Report Violation</string>
+    <string name="violation_action_monetize">Monetize</string>
+    <string name="violation_action_dismiss">Dismiss</string>
+    
+    <!-- Protection Settings -->
+    <string name="protection_settings_title">Protection Settings</string>
+    <string name="protection_auto_scan">Automatic Scanning</string>
+    <string name="protection_auto_scan_subtitle">Continuously monitor for violations</string>
+    <string name="protection_sensitivity">Detection Sensitivity</string>
+    <string name="protection_sensitivity_high">High</string>
+    <string name="protection_sensitivity_medium">Medium</string>
+    <string name="protection_sensitivity_low">Low</string>
+    
+    <!-- ================================ -->
+    <!-- ANALYTICS AND REVENUE            -->
+    <!-- ================================ -->
+    
+    <!-- Analytics Dashboard -->
+    <string name="analytics_title">Analytics</string>
+    <string name="analytics_overview">Overview</string>
+    <string name="analytics_revenue">Revenue</string>
+    <string name="analytics_performance">Performance</string>
+    <string name="analytics_engagement">Engagement</string>
+    <string name="analytics_timeframe_24h">Last 24 Hours</string>
+    <string name="analytics_timeframe_7d">Last 7 Days</string>
+    <string name="analytics_timeframe_30d">Last 30 Days</string>
+    <string name="analytics_timeframe_1y">Last Year</string>
+    
+    <!-- Revenue Tracking -->
+    <string name="revenue_title">Revenue Tracking</string>
+    <string name="revenue_total">Total Revenue</string>
+    <string name="revenue_this_month">This Month</string>
+    <string name="revenue_pending">Pending</string>
+    <string name="revenue_paid">Paid</string>
+    <string name="revenue_breakdown">Revenue Breakdown</string>
+    <string name="revenue_source_licensing">Licensing</string>
+    <string name="revenue_source_monetization">Monetization</string>
+    <string name="revenue_source_collaborations">Collaborations</string>
+    
+    <!-- ================================ -->
+    <!-- AUDIO RECORDING                  -->
+    <!-- ================================ -->
+    
+    <!-- Audio Recorder -->
+    <string name="audio_recorder_title">Audio Recorder</string>
+    <string name="audio_recorder_subtitle">Record high-quality audio for protection</string>
+    <string name="audio_record_start">Start Recording</string>
+    <string name="audio_record_stop">Stop Recording</string>
+    <string name="audio_record_pause">Pause</string>
+    <string name="audio_record_resume">Resume</string>
+    <string name="audio_record_duration">Duration: %1$s</string>
+    <string name="audio_record_quality">Quality: %1$s</string>
+    <string name="audio_record_format">Format: %1$s</string>
+    
+    <!-- Audio Settings -->
+    <string name="audio_settings_title">Audio Settings</string>
+    <string name="audio_quality_high">High Quality (48kHz)</string>
+    <string name="audio_quality_medium">Medium Quality (44.1kHz)</string>
+    <string name="audio_quality_low">Low Quality (22kHz)</string>
+    <string name="audio_format_mp3">MP3</string>
+    <string name="audio_format_wav">WAV</string>
+    <string name="audio_format_aac">AAC</string>
+    <string name="audio_noise_reduction">Noise Reduction</string>
+    <string name="audio_echo_cancellation">Echo Cancellation</string>
+    
+    <!-- ================================ -->
+    <!-- CAMERA MANAGEMENT                -->
+    <!-- ================================ -->
+    
+    <!-- Camera Interface -->
+    <string name="camera_title">Camera</string>
+    <string name="camera_take_photo">Take Photo</string>
+    <string name="camera_record_video">Record Video</string>
+    <string name="camera_switch_camera">Switch Camera</string>
+    <string name="camera_flash_on">Flash On</string>
+    <string name="camera_flash_off">Flash Off</string>
+    <string name="camera_flash_auto">Flash Auto</string>
+    <string name="camera_recording">Recording…</string>
+    <string name="camera_recording_duration">%1$s</string>
+    
+    <!-- Camera Settings -->
+    <string name="camera_settings_title">Camera Settings</string>
+    <string name="camera_resolution">Resolution</string>
+    <string name="camera_resolution_4k">4K (3840x2160)</string>
+    <string name="camera_resolution_1080p">1080p (1920x1080)</string>
+    <string name="camera_resolution_720p">720p (1280x720)</string>
+    <string name="camera_stabilization">Image Stabilization</string>
+    <string name="camera_autofocus">Auto Focus</string>
+    <string name="camera_grid_lines">Grid Lines</string>
+    
+    <!-- ================================ -->
+    <!-- SYNCHRONIZATION                  -->
+    <!-- ================================ -->
+    
+    <!-- Sync Status -->
+    <string name="sync_title">Synchronization</string>
+    <string name="sync_status_synced">All data is up to date</string>
+    <string name="sync_status_syncing">Synchronizing…</string>
+    <string name="sync_status_pending">Sync pending</string>
+    <string name="sync_status_error">Sync error</string>
+    <string name="sync_last_sync">Last sync: %1$s</string>
+    <string name="sync_force_sync">Force Sync</string>
+    <string name="sync_auto_sync">Auto Sync</string>
+    <string name="sync_wifi_only">Sync on WiFi only</string>
+    
+    <!-- Sync Progress -->
+    <string name="sync_progress_uploading">Uploading changes…</string>
+    <string name="sync_progress_downloading">Downloading updates…</string>
+    <string name="sync_progress_processing">Processing data…</string>
+    <string name="sync_progress_complete">Sync complete</string>
+    
+    <!-- ================================ -->
+    <!-- NOTIFICATIONS                    -->
+    <!-- ================================ -->
+    
+    <!-- Notification Channels -->
+    <string name="notification_channel_protection">Content Protection</string>
+    <string name="notification_channel_revenue">Revenue Updates</string>
+    <string name="notification_channel_sync">Synchronization</string>
+    <string name="notification_channel_general">General</string>
+    <string name="default_notification_channel_id">ainflue_general</string>
+    
+    <!-- Notification Messages -->
+    <string name="notification_violation_detected">Copyright violation detected</string>
+    <string name="notification_revenue_milestone">Revenue milestone reached: $%1$s</string>
+    <string name="notification_sync_complete">Content synchronized successfully</string>
+    <string name="notification_upload_complete">Upload complete: %1$s</string>
+    <string name="notification_collaboration_invite">New collaboration invitation</string>
+    
+    <!-- ================================ -->
+    <!-- PERMISSIONS                      -->
+    <!-- ================================ -->
+    
+    <!-- Permission Requests -->
+    <string name="permission_camera_title">Camera Access</string>
+    <string name="permission_camera_message">Ainflue needs camera access to capture photos and videos for content protection.</string>
+    <string name="permission_microphone_title">Microphone Access</string>
+    <string name="permission_microphone_message">Ainflue needs microphone access to record high-quality audio content.</string>
+    <string name="permission_storage_title">Storage Access</string>
+    <string name="permission_storage_message">Ainflue needs storage access to save and manage your content files.</string>
+    <string name="permission_location_title">Location Access</string>
+    <string name="permission_location_message">Ainflue uses location data to enhance content metadata and protection.</string>
+    
+    <!-- Permission Actions -->
+    <string name="permission_grant">Grant Permission</string>
+    <string name="permission_deny">Deny</string>
+    <string name="permission_settings">Open Settings</string>
+    <string name="permission_required">This permission is required for the app to function properly.</string>
+    
+    <!-- ================================ -->
+    <!-- SETTINGS AND PREFERENCES         -->
+    <!-- ================================ -->
+    
+    <!-- General Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_general">General</string>
+    <string name="settings_privacy">Privacy &amp; Security</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_about">About</string>
+    
+    <!-- Privacy Settings -->
+    <string name="privacy_biometric_auth">Biometric Authentication</string>
+    <string name="privacy_auto_lock">Auto Lock</string>
+    <string name="privacy_data_encryption">Data Encryption</string>
+    <string name="privacy_analytics">Usage Analytics</string>
+    <string name="privacy_crash_reporting">Crash Reporting</string>
+    
+    <!-- Notification Settings -->
+    <string name="notifications_enable_all">Enable Notifications</string>
+    <string name="notifications_protection_alerts">Protection Alerts</string>
+    <string name="notifications_revenue_updates">Revenue Updates</string>
+    <string name="notifications_collaboration">Collaboration</string>
+    <string name="notifications_marketing">Marketing &amp; Updates</string>
+    
+    <!-- ================================ -->
+    <!-- ERROR MESSAGES                   -->
+    <!-- ================================ -->
+    
+    <!-- Network Errors -->
+    <string name="error_network_unavailable">No internet connection available</string>
+    <string name="error_network_timeout">Request timed out. Please try again.</string>
+    <string name="error_server_error">Server error. Please try again later.</string>
+    
+    <!-- File Errors -->
+    <string name="error_file_not_found">File not found</string>
+    <string name="error_file_too_large">File is too large. Maximum size: %1$s</string>
+    <string name="error_file_format_unsupported">File format not supported</string>
+    <string name="error_storage_full">Storage is full. Please free up space.</string>
+    
+    <!-- Permission Errors -->
+    <string name="error_permission_camera">Camera permission is required</string>
+    <string name="error_permission_microphone">Microphone permission is required</string>
+    <string name="error_permission_storage">Storage permission is required</string>
+    
+    <!-- Authentication Errors -->
+    <string name="error_auth_expired">Session expired. Please sign in again.</string>
+    <string name="error_auth_invalid">Invalid credentials</string>
+    <string name="error_biometric_failed">Biometric authentication failed</string>
+    
+    <!-- ================================ -->
+    <!-- SUCCESS MESSAGES                 -->
+    <!-- ================================ -->
+    
+    <string name="success_content_uploaded">Content uploaded successfully</string>
+    <string name="success_protection_enabled">Content protection enabled</string>
+    <string name="success_violation_reported">Violation reported successfully</string>
+    <string name="success_settings_saved">Settings saved</string>
+    <string name="success_sync_complete">Synchronization complete</string>
+    
+    <!-- ================================ -->
+    <!-- COLLABORATION FEATURES           -->
+    <!-- ================================ -->
+    
+    <!-- Collaboration -->
+    <string name="collaboration_title">Collaborations</string>
+    <string name="collaboration_invites">Invitations</string>
+    <string name="collaboration_active">Active Projects</string>
+    <string name="collaboration_completed">Completed</string>
+    <string name="collaboration_invite_user">Invite Collaborator</string>
+    <string name="collaboration_role_owner">Owner</string>
+    <string name="collaboration_role_editor">Editor</string>
+    <string name="collaboration_role_viewer">Viewer</string>
+    
+    <!-- ================================ -->
+    <!-- COMMON ACTIONS                   -->
+    <!-- ================================ -->
+    
+    <!-- General Actions -->
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_share">Share</string>
+    <string name="action_download">Download</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_continue">Continue</string>
+    <string name="action_close">Close</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_search">Search</string>
+    <string name="action_filter">Filter</string>
+    <string name="action_sort">Sort</string>
+    
+    <!-- Confirmation Actions -->
+    <string name="confirm_delete">Are you sure you want to delete this item?</string>
+    <string name="confirm_logout">Are you sure you want to sign out?</string>
+    <string name="confirm_exit">Are you sure you want to exit Ainflue?</string>
+    
+    <!-- ================================ -->
+    <!-- LOADING AND STATUS               -->
+    <!-- ================================ -->
+    
+    <string name="loading">Loading…</string>
+    <string name="processing">Processing…</string>
+    <string name="initializing">Initializing…</string>
+    <string name="connecting">Connecting…</string>
+    <string name="saving">Saving…</string>
+    <string name="uploading">Uploading…</string>
+    <string name="downloading">Downloading…</string>
+    
+    <!-- Status Messages -->
+    <string name="status_online">Online</string>
+    <string name="status_offline">Offline</string>
+    <string name="status_connected">Connected</string>
+    <string name="status_disconnected">Disconnected</string>
+    
+    <!-- ================================ -->
+    <!-- HELP AND SUPPORT                 -->
+    <!-- ================================ -->
+    
+    <string name="help_title">Help &amp; Support</string>
+    <string name="help_faq">Frequently Asked Questions</string>
+    <string name="help_contact_support">Contact Support</string>
+    <string name="help_user_guide">User Guide</string>
+    <string name="help_video_tutorials">Video Tutorials</string>
+    <string name="help_report_issue">Report an Issue</string>
+    
+    <!-- About -->
+    <string name="about_title">About Ainflue</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_build">Build %1$d</string>
+    <string name="about_author">Created by %1$s</string>
+    <string name="about_email">Contact: %1$s</string>
+    <string name="about_website">Website: ainflue.com</string>
+    <string name="about_terms">Terms of Service</string>
+    <string name="about_privacy">Privacy Policy</string>
+    <string name="about_licenses">Open Source Licenses</string>
+</resources>

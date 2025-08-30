@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Ainflue Android Application Manifest
+    
+    Advanced mobile content creation platform manifest configuration
+    Defines permissions, services, and application configuration
+    
+    Author: Fahed Mlaiel (mlaiel@live.de)
+    Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+    
+    ⚠️ LEGAL NOTICE: This configuration is the exclusive intellectual property of Fahed Mlaiel.
+    Any unauthorized use, copying, or distribution is strictly prohibited under
+    German and international copyright law.
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ainflue.mobile">
+
+    <!-- ================================ -->
+    <!-- CORE PERMISSIONS                 -->
+    <!-- ================================ -->
+    
+    <!-- Network and Connectivity -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    
+    <!-- Audio and Media -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" 
+        tools:ignore="ProtectedPermissions" />
+    
+    <!-- Camera and Visual -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    
+    <!-- Storage and File System -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" 
+        tools:ignore="ScopedStorage" />
+    
+    <!-- Location Services -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    
+    <!-- Biometric and Security -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FACE_AUTHENTICATION" />
+    
+    <!-- Notifications and Communication -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    
+    <!-- Contacts and Social -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    
+    <!-- Bluetooth for Audio Devices -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    
+    <!-- System and Performance -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    
+    <!-- ================================ -->
+    <!-- HARDWARE FEATURES               -->
+    <!-- ================================ -->
+    
+    <!-- Required Hardware Features -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.audio.low_latency"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.audio.pro"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.fingerprint"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
+    
+    <!-- ================================ -->
+    <!-- APPLICATION CONFIGURATION        -->
+    <!-- ================================ -->
+    
+    <application
+        android:name=".AinflueMobileApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="false"
+        tools:targetApi="31">
+        
+        <!-- ================================ -->
+        <!-- MAIN ACTIVITY                    -->
+        <!-- ================================ -->
+        
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SplashScreen"
+            android:windowSoftInputMode="adjustResize">
+            
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+            <!-- Deep Linking -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="ainflue.com" />
+            </intent-filter>
+            
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="ainflue" />
+            </intent-filter>
+            
+            <!-- File Association -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+        
+        <!-- ================================ -->
+        <!-- BACKGROUND SERVICES              -->
+        <!-- ================================ -->
+        
+        <!-- Audio Recording Service -->
+        <service
+            android:name=".services.AudioRecorderService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+        
+        <!-- Camera Management Service -->
+        <service
+            android:name=".services.CameraManagerService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="camera" />
+        
+        <!-- Synchronization Service -->
+        <service
+            android:name=".services.SyncService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+        
+        <!-- Notification Service -->
+        <service
+            android:name=".services.NotificationService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        
+        <!-- ================================ -->
+        <!-- BROADCAST RECEIVERS              -->
+        <!-- ================================ -->
+        
+        <!-- Boot Completed Receiver -->
+        <receiver
+            android:name=".receivers.BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- Network State Receiver -->
+        <receiver
+            android:name=".receivers.NetworkStateReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- ================================ -->
+        <!-- CONTENT PROVIDERS                -->
+        <!-- ================================ -->
+        
+        <!-- File Provider for secure file sharing -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        
+        <!-- ================================ -->
+        <!-- FIREBASE CONFIGURATION           -->
+        <!-- ================================ -->
+        
+        <!-- Firebase Cloud Messaging -->
+        <service
+            android:name=".firebase.AinflueFCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        
+        <!-- Firebase Metadata -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        
+        <!-- ================================ -->
+        <!-- SECURITY CONFIGURATION           -->
+        <!-- ================================ -->
+        
+        <!-- Prevent app from being installed on external storage -->
+        <meta-data
+            android:name="android.app.install_location"
+            android:value="internalOnly" />
+        
+        <!-- Security provider -->
+        <meta-data
+            android:name="com.google.android.gms.security.CRYPTO_ENABLED"
+            android:value="true" />
+        
+        <!-- ================================ -->
+        <!-- PERFORMANCE CONFIGURATION        -->
+        <!-- ================================ -->
+        
+        <!-- Allow large heap for media processing -->
+        <meta-data
+            android:name="android.app.large_heap"
+            android:value="true" />
+        
+        <!-- Hardware acceleration -->
+        <meta-data
+            android:name="android.app.hardware_accelerated"
+            android:value="true" />
+        
+        <!-- ================================ -->
+        <!-- REACT NATIVE CONFIGURATION       -->
+        <!-- ================================ -->
+        
+        <!-- React Native -->
+        <meta-data
+            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+            android:value="@string/react_native_dev_server_port" />
+        
+        <!-- Flipper (Debug Only) -->
+        <meta-data
+            android:name="flipper_enabled"
+            android:value="@bool/flipper_enabled" />
+    </application>
+    
+    <!-- ================================ -->
+    <!-- QUERIES (API 30+)               -->
+    <!-- ================================ -->
+    
+    <queries>
+        <!-- Camera apps -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.media.action.VIDEO_CAPTURE" />
+        </intent>
+        
+        <!-- File management apps -->
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+            <data android:mimeType="*/*" />
+        </intent>
+        
+        <!-- Social sharing apps -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+        
+        <!-- Browser apps -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        
+        <!-- Music streaming apps -->
+        <package android:name="com.spotify.music" />
+        <package android:name="com.google.android.music" />
+        <package android:name="com.apple.android.music" />
+        <package android:name="com.soundcloud.android" />
+    </queries>
+</manifest>
