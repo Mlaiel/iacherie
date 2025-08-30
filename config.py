@@ -52,67 +52,7 @@ class APISettings(BaseSettings):
         env_file_encoding = "utf-8"
 
 
-class SecuritySettings(BaseSettings):
-    """Enhanced security configuration settings"""
-    
-    # JWT Configuration
-    jwt_secret_key: str = Field(..., env="JWT_SECRET_KEY")
-    jwt_algorithm: str = Field(default="HS256", env="JWT_ALGORITHM")
-    jwt_access_token_expire_minutes: int = Field(default=60, env="JWT_ACCESS_TOKEN_EXPIRE_MINUTES")
-    jwt_refresh_token_expire_days: int = Field(default=30, env="JWT_REFRESH_TOKEN_EXPIRE_DAYS")
-    jwt_issuer: str = Field(default="ainflue.com", env="JWT_ISSUER")
-    jwt_audience: str = Field(default="ainflue-api", env="JWT_AUDIENCE")
-    
-    # Password Security
-    password_min_length: int = Field(default=12, env="PASSWORD_MIN_LENGTH")
-    password_require_uppercase: bool = Field(default=True, env="PASSWORD_REQUIRE_UPPERCASE")
-    password_require_lowercase: bool = Field(default=True, env="PASSWORD_REQUIRE_LOWERCASE")
-    password_require_numbers: bool = Field(default=True, env="PASSWORD_REQUIRE_NUMBERS")
-    password_require_special: bool = Field(default=True, env="PASSWORD_REQUIRE_SPECIAL")
-    password_hash_rounds: int = Field(default=12, env="PASSWORD_HASH_ROUNDS")
-    
-    # Session Management
-    session_timeout_minutes: int = Field(default=120, env="SESSION_TIMEOUT_MINUTES")
-    max_concurrent_sessions: int = Field(default=5, env="MAX_CONCURRENT_SESSIONS")
-    
-    # Rate Limiting
-    rate_limit_enabled: bool = Field(default=True, env="RATE_LIMIT_ENABLED")
-    rate_limit_requests_per_minute: int = Field(default=60, env="RATE_LIMIT_REQUESTS_PER_MINUTE")
-    rate_limit_burst: int = Field(default=10, env="RATE_LIMIT_BURST")
-    
-    # Two-Factor Authentication
-    totp_issuer: str = Field(default="Ainflue Platform", env="TOTP_ISSUER")
-    backup_codes_count: int = Field(default=10, env="BACKUP_CODES_COUNT")
-    
-    # OAuth2 Configuration
-    oauth2_google_client_id: Optional[str] = Field(default=None, env="OAUTH2_GOOGLE_CLIENT_ID")
-    oauth2_google_client_secret: Optional[str] = Field(default=None, env="OAUTH2_GOOGLE_CLIENT_SECRET")
-    oauth2_github_client_id: Optional[str] = Field(default=None, env="OAUTH2_GITHUB_CLIENT_ID")
-    oauth2_github_client_secret: Optional[str] = Field(default=None, env="OAUTH2_GITHUB_CLIENT_SECRET")
-    oauth2_spotify_client_id: Optional[str] = Field(default=None, env="OAUTH2_SPOTIFY_CLIENT_ID")
-    oauth2_spotify_client_secret: Optional[str] = Field(default=None, env="OAUTH2_SPOTIFY_CLIENT_SECRET")
-    
-    # Encryption
-    encryption_key: str = Field(..., env="ENCRYPTION_KEY")
-    encryption_algorithm: str = Field(default="AES-256-GCM", env="ENCRYPTION_ALGORITHM")
-    
-    # SSL/TLS Configuration
-    ssl_cert_file: Optional[str] = Field(default=None, env="SSL_CERT_FILE")
-    ssl_key_file: Optional[str] = Field(default=None, env="SSL_KEY_FILE")
-    ssl_ca_file: Optional[str] = Field(default=None, env="SSL_CA_FILE")
-    
-    # Security Headers
-    security_headers_enabled: bool = Field(default=True, env="SECURITY_HEADERS_ENABLED")
-    hsts_max_age: int = Field(default=31536000, env="HSTS_MAX_AGE")  # 1 year
-    
-    # Audit Logging
-    audit_log_enabled: bool = Field(default=True, env="AUDIT_LOG_ENABLED")
-    audit_log_level: str = Field(default="INFO", env="AUDIT_LOG_LEVEL")
-    audit_log_retention_days: int = Field(default=365, env="AUDIT_LOG_RETENTION_DAYS")
-    
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+
 
 
 class DatabaseSettings(BaseSettings):
@@ -165,7 +105,7 @@ class SecuritySettings(BaseSettings):
     """Security and authentication configuration"""
     
     # JWT Configuration
-    jwt_secret_key: str = Field(env="JWT_SECRET_KEY")
+    jwt_secret_key: str = Field(default="dev-secret-key-change-in-production", env="JWT_SECRET_KEY")
     jwt_algorithm: str = Field(default="HS256", env="JWT_ALGORITHM")
     jwt_access_token_expire: int = Field(default=3600, env="JWT_ACCESS_TOKEN_EXPIRE")  # 1 hour
     jwt_refresh_token_expire: int = Field(default=604800, env="JWT_REFRESH_TOKEN_EXPIRE")  # 7 days
@@ -177,12 +117,16 @@ class SecuritySettings(BaseSettings):
     oauth2_github_client_secret: Optional[str] = Field(default=None, env="OAUTH2_GITHUB_CLIENT_SECRET")
     
     # Encryption Configuration
-    encryption_key: str = Field(env="ENCRYPTION_KEY")
-    password_salt: str = Field(env="PASSWORD_SALT")
+    encryption_key: str = Field(default="dev-encryption-key-change-in-production", env="ENCRYPTION_KEY")
+    password_salt: str = Field(default="dev-password-salt-change-in-production", env="PASSWORD_SALT")
     
     # Rate Limiting
     rate_limit_requests: int = Field(default=1000, env="RATE_LIMIT_REQUESTS")
     rate_limit_window: int = Field(default=3600, env="RATE_LIMIT_WINDOW")  # 1 hour
+
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
 
 
 class AISettings(BaseSettings):
@@ -318,39 +262,14 @@ class Settings:
     """Main settings aggregator"""
     
     def __init__(self):
-        self.app = APISettings()  # Renamed from ApplicationSettings to APISettings
+        self.app = ApplicationSettings()
         self.database = DatabaseSettings()
         self.security = SecuritySettings()
-        # Note: These would need to be implemented if they don't exist
-        try:
-            from .ai_settings import AISettings
-            self.ai = AISettings()
-        except ImportError:
-            self.ai = None
-            
-        try:
-            from .platform_settings import PlatformSettings
-            self.platforms = PlatformSettings()
-        except ImportError:
-            self.platforms = None
-            
-        try:
-            from .payment_settings import PaymentSettings
-            self.payments = PaymentSettings()
-        except ImportError:
-            self.payments = None
-            
-        try:
-            from .storage_settings import StorageSettings
-            self.storage = StorageSettings()
-        except ImportError:
-            self.storage = None
-            
-        try:
-            from .monitoring_settings import MonitoringSettings
-            self.monitoring = MonitoringSettings()
-        except ImportError:
-            self.monitoring = None
+        self.ai = AISettings()
+        self.platforms = PlatformSettings()
+        self.payments = PaymentSettings()
+        self.storage = StorageSettings()
+        self.monitoring = MonitoringSettings()
 
 
 # Global settings instance
