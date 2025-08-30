@@ -186,12 +186,31 @@ class BaseAgent(ABC):
         REQUEST_DURATION = Histogram('agent_request_duration_seconds', 'Request duration', ['agent_type'])
         ACTIVE_CONNECTIONS = Gauge('agent_active_connections', 'Active connections', ['agent_type'])
     else:
-        # Fallback metrics (no-op)
+        # Fallback metrics (functional implementation)
         class MockMetric:
-            def labels(self, **kwargs): return self
-            def inc(self): pass
-            def observe(self, value): pass
-            def set(self, value): pass
+            def __init__(self):
+                self._value = 0
+                self._labels = {}
+                self._observations = []
+                
+            def labels(self, **kwargs): 
+                self._labels.update(kwargs)
+                return self
+                
+            def inc(self): 
+                """Increment counter metric for monitoring agent performance"""
+                self._value += 1
+                logging.debug(f"MockMetric incremented to {self._value} with labels {self._labels}")
+                
+            def observe(self, value): 
+                """Observe histogram value for performance tracking"""
+                self._observations.append(value)
+                logging.debug(f"MockMetric observed value {value}, total observations: {len(self._observations)}")
+                
+            def set(self, value): 
+                """Set gauge value for real-time monitoring"""
+                self._value = value
+                logging.debug(f"MockMetric set to {value} with labels {self._labels}")
         
         REQUEST_COUNT = MockMetric()
         REQUEST_DURATION = MockMetric()
