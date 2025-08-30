@@ -12026,8 +12026,281 @@ class BaseMediaFormatter:
         return file_size <= self.max_file_size
     
     async def process_media_content(self, content_data: Dict[str, Any]) -> FormattedMediaContent:
-        """Process media content - to be implemented by subclasses."""
-        raise NotImplementedError("Subclasses must implement process_media_content")
+        """Process media content with basic formatting and validation."""
+        start_time = time.time()
+        self.logger.info("Processing media content", content_type=content_data.get('type', 'unknown'))
+        
+        try:
+            # Generate unique content ID
+            content_id = self.generate_content_id(
+                json.dumps(content_data, sort_keys=True, default=str)
+            )
+            
+            # Determine media type
+            media_type = self._determine_media_type(content_data)
+            
+            # Extract and validate metadata
+            metadata = self._extract_media_metadata(content_data)
+            
+            # Validate content size
+            content_size = content_data.get('size', 0)
+            if not self.validate_media_size(content_size):
+                raise ValueError(f"Content size {content_size} exceeds maximum {self.max_file_size}")
+            
+            # Process content based on type
+            formatted_content = await self._format_content_by_type(content_data, media_type)
+            
+            # Generate interactive elements
+            interactive_elements = self._generate_interactive_elements(content_data, media_type)
+            
+            # Apply styling
+            styling = self._apply_media_styling(content_data, media_type)
+            
+            # Create formatted media content
+            formatted_media = FormattedMediaContent(
+                content_id=content_id,
+                media_type=media_type,
+                formatted_content=formatted_content,
+                metadata=metadata,
+                interactive_elements=interactive_elements,
+                embedded_media=self._extract_embedded_media(content_data),
+                styling=styling
+            )
+            
+            processing_time = time.time() - start_time
+            self.logger.info(
+                "Media content processed successfully",
+                content_id=content_id,
+                media_type=media_type.value,
+                processing_time=processing_time
+            )
+            
+            return formatted_media
+            
+        except Exception as e:
+            processing_time = time.time() - start_time
+            self.logger.error(
+                "Failed to process media content",
+                error=str(e),
+                processing_time=processing_time
+            )
+            raise
+    
+    def _determine_media_type(self, content_data: Dict[str, Any]) -> MediaType:
+        """Determine media type from content data."""
+        content_type = content_data.get('type', '').lower()
+        file_extension = content_data.get('file_extension', '').lower()
+        mime_type = content_data.get('mime_type', '').lower()
+        
+        # Audio types
+        if any(x in content_type for x in ['audio', 'music', 'sound']):
+            return MediaType.AUDIO
+        if any(x in file_extension for x in ['.mp3', '.wav', '.flac', '.aac', '.ogg']):
+            return MediaType.AUDIO
+        if 'audio/' in mime_type:
+            return MediaType.AUDIO
+        
+        # Video types
+        if any(x in content_type for x in ['video', 'movie', 'film']):
+            return MediaType.VIDEO
+        if any(x in file_extension for x in ['.mp4', '.avi', '.mov', '.mkv', '.webm']):
+            return MediaType.VIDEO
+        if 'video/' in mime_type:
+            return MediaType.VIDEO
+        
+        # Image types
+        if any(x in content_type for x in ['image', 'photo', 'picture']):
+            return MediaType.IMAGE
+        if any(x in file_extension for x in ['.jpg', '.jpeg', '.png', '.gif', '.webp']):
+            return MediaType.IMAGE
+        if 'image/' in mime_type:
+            return MediaType.IMAGE
+        
+        # Text types
+        if any(x in content_type for x in ['text', 'document', 'article']):
+            return MediaType.TEXT
+        if any(x in file_extension for x in ['.txt', '.md', '.doc', '.pdf']):
+            return MediaType.TEXT
+        if 'text/' in mime_type:
+            return MediaType.TEXT
+        
+        # Default to mixed for unknown types
+        return MediaType.MIXED
+    
+    def _extract_media_metadata(self, content_data: Dict[str, Any]) -> MediaMetadata:
+        """Extract metadata from content data."""
+        return MediaMetadata(
+            title=content_data.get('title', 'Untitled'),
+            description=content_data.get('description', ''),
+            duration=content_data.get('duration', 0),
+            format=content_data.get('format', 'unknown'),
+            quality=content_data.get('quality', 'standard'),
+            tags=content_data.get('tags', []),
+            creator=content_data.get('creator', ''),
+            created_at=content_data.get('created_at', datetime.utcnow().isoformat()),
+            file_size=content_data.get('size', 0),
+            resolution=content_data.get('resolution', ''),
+            extra_metadata=content_data.get('metadata', {})
+        )
+    
+    async def _format_content_by_type(self, content_data: Dict[str, Any], media_type: MediaType) -> str:
+        """Format content based on media type."""
+        if media_type == MediaType.AUDIO:
+            return await self._format_audio_content(content_data)
+        elif media_type == MediaType.VIDEO:
+            return await self._format_video_content(content_data)
+        elif media_type == MediaType.IMAGE:
+            return await self._format_image_content(content_data)
+        elif media_type == MediaType.TEXT:
+            return await self._format_text_content(content_data)
+        else:
+            return await self._format_mixed_content(content_data)
+    
+    async def _format_audio_content(self, content_data: Dict[str, Any]) -> str:
+        """Format audio content."""
+        return f"""
+        <div class="audio-player">
+            <h3>{content_data.get('title', 'Audio Content')}</h3>
+            <div class="audio-controls">
+                <button class="play-btn">Play</button>
+                <div class="progress-bar"></div>
+                <span class="duration">{content_data.get('duration', '0:00')}</span>
+            </div>
+            <div class="audio-metadata">
+                <span>Artist: {content_data.get('artist', 'Unknown')}</span>
+                <span>Quality: {content_data.get('quality', 'Standard')}</span>
+            </div>
+        </div>
+        """
+    
+    async def _format_video_content(self, content_data: Dict[str, Any]) -> str:
+        """Format video content."""
+        return f"""
+        <div class="video-player">
+            <h3>{content_data.get('title', 'Video Content')}</h3>
+            <div class="video-container">
+                <div class="video-placeholder">Video Player</div>
+                <div class="video-controls">
+                    <button class="play-btn">Play</button>
+                    <div class="progress-bar"></div>
+                    <button class="fullscreen-btn">Fullscreen</button>
+                </div>
+            </div>
+            <div class="video-metadata">
+                <span>Duration: {content_data.get('duration', '0:00')}</span>
+                <span>Resolution: {content_data.get('resolution', 'Standard')}</span>
+            </div>
+        </div>
+        """
+    
+    async def _format_image_content(self, content_data: Dict[str, Any]) -> str:
+        """Format image content."""
+        return f"""
+        <div class="image-viewer">
+            <h3>{content_data.get('title', 'Image Content')}</h3>
+            <div class="image-container">
+                <div class="image-placeholder">Image Display</div>
+                <div class="image-controls">
+                    <button class="zoom-in">Zoom In</button>
+                    <button class="zoom-out">Zoom Out</button>
+                    <button class="download">Download</button>
+                </div>
+            </div>
+            <div class="image-metadata">
+                <span>Resolution: {content_data.get('resolution', 'Unknown')}</span>
+                <span>Size: {content_data.get('size', 0)} bytes</span>
+            </div>
+        </div>
+        """
+    
+    async def _format_text_content(self, content_data: Dict[str, Any]) -> str:
+        """Format text content."""
+        return f"""
+        <div class="text-content">
+            <h3>{content_data.get('title', 'Text Content')}</h3>
+            <div class="text-body">
+                {content_data.get('content', content_data.get('text', 'No content available'))}
+            </div>
+            <div class="text-metadata">
+                <span>Words: {len(content_data.get('content', '').split())}</span>
+                <span>Characters: {len(content_data.get('content', ''))}</span>
+            </div>
+        </div>
+        """
+    
+    async def _format_mixed_content(self, content_data: Dict[str, Any]) -> str:
+        """Format mixed content."""
+        return f"""
+        <div class="mixed-content">
+            <h3>{content_data.get('title', 'Mixed Content')}</h3>
+            <div class="content-body">
+                <pre>{json.dumps(content_data, indent=2, default=str)}</pre>
+            </div>
+        </div>
+        """
+    
+    def _generate_interactive_elements(self, content_data: Dict[str, Any], media_type: MediaType) -> List[str]:
+        """Generate interactive elements for the content."""
+        elements = []
+        
+        # Common elements
+        elements.extend(['share', 'bookmark', 'like'])
+        
+        # Type-specific elements
+        if media_type == MediaType.AUDIO:
+            elements.extend(['playlist_add', 'repeat', 'shuffle'])
+        elif media_type == MediaType.VIDEO:
+            elements.extend(['subtitle_toggle', 'quality_selector', 'speed_control'])
+        elif media_type == MediaType.IMAGE:
+            elements.extend(['zoom', 'rotate', 'filter'])
+        elif media_type == MediaType.TEXT:
+            elements.extend(['copy', 'translate', 'highlight'])
+        
+        return elements
+    
+    def _apply_media_styling(self, content_data: Dict[str, Any], media_type: MediaType) -> Dict[str, Any]:
+        """Apply styling based on media type and content."""
+        base_styling = {
+            'theme': self.visualization_config.get('color_scheme', 'default'),
+            'width': self.visualization_config.get('width', 800),
+            'height': self.visualization_config.get('height', 400),
+            'responsive': True
+        }
+        
+        # Type-specific styling
+        if media_type == MediaType.AUDIO:
+            base_styling.update({
+                'waveform_color': '#1db954',
+                'controls_color': '#191414',
+                'background_color': '#000000'
+            })
+        elif media_type == MediaType.VIDEO:
+            base_styling.update({
+                'controls_position': 'bottom',
+                'aspect_ratio': '16:9',
+                'autoplay': False
+            })
+        elif media_type == MediaType.IMAGE:
+            base_styling.update({
+                'zoom_enabled': True,
+                'pan_enabled': True,
+                'border_radius': '8px'
+            })
+        
+        return base_styling
+    
+    def _extract_embedded_media(self, content_data: Dict[str, Any]) -> Dict[str, str]:
+        """Extract embedded media (thumbnails, previews, etc.)."""
+        embedded = {}
+        
+        if 'thumbnail' in content_data:
+            embedded['thumbnail'] = content_data['thumbnail']
+        if 'preview' in content_data:
+            embedded['preview'] = content_data['preview']
+        if 'cover_art' in content_data:
+            embedded['cover_art'] = content_data['cover_art']
+        
+        return embedded
 
 
 class AudioVisualizationFormatter(BaseMediaFormatter):
@@ -15541,8 +15814,323 @@ class BaseAudioImporter:
         }
     
     async def import_data(self, source_params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Import audio data - to be implemented by subclasses."""
-        raise NotImplementedError("Subclasses must implement import_data")
+        """Import audio data with basic validation and processing."""
+        self.import_stats["start_time"] = datetime.now()
+        imported_data = []
+        
+        try:
+            # Validate source parameters
+            source_params = source_params or {}
+            
+            # Initialize import process
+            self.logger.info("Starting audio data import", tenant_id=self.tenant_id)
+            
+            # Get data source configuration
+            data_source = source_params.get('source_type', 'file')
+            source_path = source_params.get('source_path', '')
+            batch_processing = source_params.get('batch_processing', True)
+            
+            # Process based on source type
+            if data_source == 'file':
+                imported_data = await self._import_from_files(source_params)
+            elif data_source == 'url':
+                imported_data = await self._import_from_urls(source_params)
+            elif data_source == 'database':
+                imported_data = await self._import_from_database(source_params)
+            elif data_source == 'stream':
+                imported_data = await self._import_from_stream(source_params)
+            else:
+                imported_data = await self._import_generic_data(source_params)
+            
+            # Validate imported data
+            validated_data = []
+            for item in imported_data:
+                if await self._validate_imported_item(item):
+                    validated_data.append(item)
+                else:
+                    self.import_stats["failed_imports"] += 1
+            
+            # Deduplicate if enabled
+            if source_params.get('deduplicate', True):
+                validated_data = await self._deduplicate_data(validated_data)
+            
+            # Apply transformations if specified
+            if 'transformations' in source_params:
+                validated_data = await self._apply_transformations(validated_data, source_params['transformations'])
+            
+            self.import_stats["successful_imports"] = len(validated_data)
+            self.import_stats["total_imported"] = len(validated_data)
+            
+            self.logger.info(
+                "Audio data import completed successfully",
+                tenant_id=self.tenant_id,
+                imported_count=len(validated_data),
+                failed_count=self.import_stats["failed_imports"]
+            )
+            
+            return {
+                "success": True,
+                "platform": "base_audio_importer",
+                "source_type": data_source,
+                "imported_data": validated_data,
+                "statistics": self.import_stats,
+                "tenant_id": self.tenant_id,
+                "metadata": {
+                    "import_timestamp": datetime.now().isoformat(),
+                    "source_params": source_params,
+                    "data_count": len(validated_data)
+                }
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Audio import failed: {str(e)}", tenant_id=self.tenant_id, exc_info=True)
+            self.import_stats["failed_imports"] += len(imported_data) if imported_data else 1
+            
+            return {
+                "success": False,
+                "error": str(e),
+                "platform": "base_audio_importer",
+                "statistics": self.import_stats,
+                "tenant_id": self.tenant_id
+            }
+        finally:
+            self.import_stats["end_time"] = datetime.now()
+    
+    async def _import_from_files(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import audio data from local files."""
+        file_paths = source_params.get('file_paths', [])
+        file_directory = source_params.get('directory', '')
+        file_extensions = source_params.get('extensions', ['.mp3', '.wav', '.flac', '.aac'])
+        
+        imported_items = []
+        
+        # If directory is specified, scan for audio files
+        if file_directory and os.path.exists(file_directory):
+            for root, dirs, files in os.walk(file_directory):
+                for file in files:
+                    if any(file.lower().endswith(ext) for ext in file_extensions):
+                        file_path = os.path.join(root, file)
+                        file_paths.append(file_path)
+        
+        # Process each file
+        for file_path in file_paths:
+            try:
+                if os.path.exists(file_path):
+                    file_data = await self._extract_file_metadata(file_path)
+                    if file_data:
+                        imported_items.append(file_data)
+            except Exception as e:
+                self.logger.warning(f"Failed to process file {file_path}: {str(e)}")
+                continue
+        
+        return imported_items
+    
+    async def _import_from_urls(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import audio data from URLs."""
+        urls = source_params.get('urls', [])
+        imported_items = []
+        
+        for url in urls:
+            try:
+                url_data = await self._fetch_url_metadata(url)
+                if url_data:
+                    imported_items.append(url_data)
+            except Exception as e:
+                self.logger.warning(f"Failed to process URL {url}: {str(e)}")
+                continue
+        
+        return imported_items
+    
+    async def _import_from_database(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import audio data from database."""
+        query = source_params.get('query', '')
+        table_name = source_params.get('table', 'audio_content')
+        limit = source_params.get('limit', 1000)
+        
+        # This would connect to actual database
+        # For now, return sample data structure
+        return [{
+            "id": f"db_item_{i}",
+            "title": f"Database Track {i}",
+            "source": "database",
+            "metadata": {"table": table_name, "query": query}
+        } for i in range(min(10, limit))]
+    
+    async def _import_from_stream(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import audio data from streaming source."""
+        stream_url = source_params.get('stream_url', '')
+        duration = source_params.get('duration', 60)  # seconds
+        
+        # This would connect to actual stream
+        # For now, return sample stream data
+        return [{
+            "id": "stream_data",
+            "title": "Stream Content",
+            "source": "stream",
+            "stream_url": stream_url,
+            "duration": duration,
+            "metadata": {"captured_at": datetime.now().isoformat()}
+        }]
+    
+    async def _import_generic_data(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Import generic audio data."""
+        data_items = source_params.get('data', [])
+        
+        # Process generic data items
+        processed_items = []
+        for item in data_items:
+            if isinstance(item, dict):
+                processed_item = {
+                    "id": item.get('id', str(uuid.uuid4())),
+                    "title": item.get('title', 'Unknown'),
+                    "source": "generic",
+                    "original_data": item
+                }
+                processed_items.append(processed_item)
+        
+        return processed_items
+    
+    async def _extract_file_metadata(self, file_path: str) -> Optional[Dict[str, Any]]:
+        """Extract metadata from audio file."""
+        try:
+            file_stat = os.stat(file_path)
+            file_name = os.path.basename(file_path)
+            file_ext = os.path.splitext(file_name)[1]
+            
+            return {
+                "id": hashlib.md5(file_path.encode()).hexdigest(),
+                "title": os.path.splitext(file_name)[0],
+                "file_path": file_path,
+                "file_name": file_name,
+                "file_extension": file_ext,
+                "file_size": file_stat.st_size,
+                "modified_time": datetime.fromtimestamp(file_stat.st_mtime).isoformat(),
+                "source": "file",
+                "metadata": {
+                    "mime_type": f"audio/{file_ext[1:] if file_ext else 'unknown'}",
+                    "accessible": True
+                }
+            }
+        except Exception as e:
+            self.logger.error(f"Failed to extract metadata from {file_path}: {str(e)}")
+            return None
+    
+    async def _fetch_url_metadata(self, url: str) -> Optional[Dict[str, Any]]:
+        """Fetch metadata from URL."""
+        try:
+            # This would make actual HTTP request to get metadata
+            # For now, return parsed URL data
+            from urllib.parse import urlparse, parse_qs
+            
+            parsed_url = urlparse(url)
+            query_params = parse_qs(parsed_url.query)
+            
+            return {
+                "id": hashlib.md5(url.encode()).hexdigest(),
+                "title": query_params.get('title', ['Unknown URL'])[0],
+                "url": url,
+                "domain": parsed_url.netloc,
+                "source": "url",
+                "metadata": {
+                    "scheme": parsed_url.scheme,
+                    "path": parsed_url.path,
+                    "query_params": query_params
+                }
+            }
+        except Exception as e:
+            self.logger.error(f"Failed to fetch metadata from {url}: {str(e)}")
+            return None
+    
+    async def _validate_imported_item(self, item: Dict[str, Any]) -> bool:
+        """Validate imported data item."""
+        required_fields = ['id', 'title', 'source']
+        
+        for field in required_fields:
+            if field not in item or not item[field]:
+                self.logger.warning(f"Missing required field '{field}' in imported item")
+                return False
+        
+        # Additional validation based on source type
+        source = item.get('source', '')
+        
+        if source == 'file':
+            if 'file_path' not in item:
+                return False
+            if not os.path.exists(item['file_path']):
+                return False
+        elif source == 'url':
+            if 'url' not in item:
+                return False
+            # Add URL validation here
+        
+        return True
+    
+    async def _deduplicate_data(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Remove duplicate entries from imported data."""
+        seen_ids = set()
+        deduplicated = []
+        
+        for item in data:
+            item_id = item.get('id', '')
+            if item_id and item_id not in seen_ids:
+                seen_ids.add(item_id)
+                deduplicated.append(item)
+        
+        return deduplicated
+    
+    async def _apply_transformations(self, data: List[Dict[str, Any]], transformations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Apply data transformations."""
+        transformed_data = data.copy()
+        
+        for transformation in transformations:
+            transform_type = transformation.get('type', '')
+            
+            if transform_type == 'normalize_titles':
+                for item in transformed_data:
+                    if 'title' in item:
+                        item['title'] = item['title'].strip().title()
+            
+            elif transform_type == 'add_metadata':
+                metadata_to_add = transformation.get('metadata', {})
+                for item in transformed_data:
+                    if 'metadata' not in item:
+                        item['metadata'] = {}
+                    item['metadata'].update(metadata_to_add)
+            
+            elif transform_type == 'filter':
+                filter_criteria = transformation.get('criteria', {})
+                transformed_data = [
+                    item for item in transformed_data
+                    if self._matches_filter_criteria(item, filter_criteria)
+                ]
+        
+        return transformed_data
+    
+    def _matches_filter_criteria(self, item: Dict[str, Any], criteria: Dict[str, Any]) -> bool:
+        """Check if item matches filter criteria."""
+        for key, expected_value in criteria.items():
+            if key not in item:
+                return False
+            
+            item_value = item[key]
+            
+            if isinstance(expected_value, list):
+                if item_value not in expected_value:
+                    return False
+            elif isinstance(expected_value, dict):
+                # Handle range criteria
+                if 'min' in expected_value or 'max' in expected_value:
+                    min_val = expected_value.get('min', float('-inf'))
+                    max_val = expected_value.get('max', float('inf'))
+                    if not isinstance(item_value, (int, float)):
+                        return False
+                    if not (min_val <= item_value <= max_val):
+                        return False
+            else:
+                if item_value != expected_value:
+                    return False
+        
+        return True
     
     async def validate_audio_metadata(self, metadata: AudioMetadata) -> bool:
         """Validate audio metadata quality and completeness."""
