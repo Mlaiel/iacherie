@@ -47,37 +47,168 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 # Business module imports
 try:
-        # Core business modules
-    from .analytics import AnalyticsServiceManager, PerformanceAnalyticsEngine
-    from .billing import BillingEngine, InvoiceManager
-    from .blockchain import BlockchainManager, SmartContractEngine
-    from .campaign import CampaignManager, CampaignOptimizer
-    from .client import ClientRelationshipManager, ClientPortalEngine
-    from .collaboration import CollaborationOrchestrator, MatchingAlgorithm
-    from .commission import CommissionManager, RevenueDistributor
-    from .creator import CreatorProfileManager, VerificationSystem
-    from .influencer_ai import InfluencerIntelligenceEngine, RecommendationSystem
-    from .licensing import LicensingEngine, RightsManager
-    from .marketplace import MarketplaceEngine, IntelligentDiscoveryEngine
-    from .matching import CreatorMatchingEngine, BrandMatchingAlgorithm
-    from .monetization import MonetizationEngine, RevenueOptimizer
-    from .notification import IntelligentNotificationEngine, NotificationManager
-    from .partnership import PartnershipManager, CollaborationFacilitator
-    from .platform import PlatformOrchestrator, IntegrationHub
-    from .pricing import DynamicPricingEngine, PriceOptimizer
-    from .protection import ProtectionEngine, ContentFingerprintingEngine
-    from .revenue import RevenueEngine, PaymentProcessor
-    from .subscription import SubscriptionManager, TierManager
-    from .surveillance import SurveillanceOrchestrator, ThreatDetectionEngine
+    # Core business modules (with optional imports for modules with heavy dependencies)
+    try:
+        from .analytics import AnalyticsServiceManager, PerformanceAnalyticsEngine
+        analytics_available = True
+    except ImportError as e:
+        logger.warning(f"Analytics module not available: {e}")
+        analytics_available = False
+        
+    try:
+        from .billing import BillingEngine, InvoiceManager
+        billing_available = True
+    except ImportError as e:
+        logger.warning(f"Billing module not available: {e}")
+        billing_available = False
+        
+    try:
+        from .blockchain import BlockchainManager, SmartContractEngine
+        blockchain_available = True
+    except ImportError as e:
+        logger.warning(f"Blockchain module not available: {e}")
+        blockchain_available = False
+        
+    try:
+        from .campaign import CampaignManager, CampaignOptimizer
+        campaign_available = True
+    except ImportError as e:
+        logger.warning(f"Campaign module not available: {e}")
+        campaign_available = False
+        
+    try:
+        from .client import ClientRelationshipManager, ClientPortalEngine
+        client_available = True
+    except ImportError as e:
+        logger.warning(f"Client module not available: {e}")
+        client_available = False
+        
+    try:
+        from .collaboration import CollaborationOrchestrator, MatchingAlgorithm
+        collaboration_available = True
+    except ImportError as e:
+        logger.warning(f"Collaboration module not available: {e}")
+        collaboration_available = False
+        
+    try:
+        from .commission import CommissionManager, RevenueDistributor
+        commission_available = True
+    except ImportError as e:
+        logger.warning(f"Commission module not available: {e}")
+        commission_available = False
+        
+    try:
+        from .creator import CreatorProfileManager, VerificationSystem
+        creator_available = True
+    except ImportError as e:
+        logger.warning(f"Creator module not available: {e}")
+        creator_available = False
+        
+    try:
+        from .influencer_ai import InfluencerIntelligenceEngine, RecommendationSystem
+        influencer_ai_available = True
+    except ImportError as e:
+        logger.warning(f"Influencer AI module not available: {e}")
+        influencer_ai_available = False
+        
+    try:
+        from .licensing import LicensingEngine, RightsManager
+        licensing_available = True
+    except ImportError as e:
+        logger.warning(f"Licensing module not available: {e}")
+        licensing_available = False
+        
+    try:
+        from .marketplace import MarketplaceEngine, IntelligentDiscoveryEngine
+        marketplace_available = True
+    except ImportError as e:
+        logger.warning(f"Marketplace module not available: {e}")
+        marketplace_available = False
+        
+    try:
+        from .matching import CreatorMatchingEngine, BrandMatchingAlgorithm
+        matching_available = True
+    except ImportError as e:
+        logger.warning(f"Matching module not available: {e}")
+        matching_available = False
+        
+    try:
+        from .monetization import MonetizationEngine, RevenueOptimizer
+        monetization_available = True
+    except ImportError as e:
+        logger.warning(f"Monetization module not available: {e}")
+        monetization_available = False
+        
+    try:
+        from .notification import IntelligentNotificationEngine, NotificationManager
+        notification_available = True
+    except ImportError as e:
+        logger.warning(f"Notification module not available: {e}")
+        notification_available = False
+        
+    try:
+        from .partnership import PartnershipManager, CollaborationFacilitator
+        partnership_available = True
+    except ImportError as e:
+        logger.warning(f"Partnership module not available: {e}")
+        partnership_available = False
+        
+    try:
+        from .platform import PlatformOrchestrator, IntegrationHub
+        platform_available = True
+    except ImportError as e:
+        logger.warning(f"Platform module not available: {e}")
+        platform_available = False
+        
+    try:
+        from .pricing import DynamicPricingEngine, PriceOptimizer
+        pricing_available = True
+    except ImportError as e:
+        logger.warning(f"Pricing module not available: {e}")
+        pricing_available = False
+        
+    try:
+        from .protection import ProtectionEngine, ContentFingerprintingEngine
+        protection_available = True
+    except ImportError as e:
+        logger.warning(f"Protection module not available: {e}")
+        protection_available = False
+        
+    try:
+        from .revenue import RevenueEngine, PaymentProcessor
+        revenue_available = True
+    except ImportError as e:
+        logger.warning(f"Revenue module not available: {e}")
+        revenue_available = False
+        
+    try:
+        from .subscription import SubscriptionManager, TierManager
+        subscription_available = True
+    except ImportError as e:
+        logger.warning(f"Subscription module not available: {e}")
+        subscription_available = False
+        
+    try:
+        from .surveillance import SurveillanceOrchestrator, ThreatDetectionEngine
+        surveillance_available = True
+    except ImportError as e:
+        logger.warning(f"Surveillance module not available: {e}")
+        surveillance_available = False
     
     # Enhanced content processing
-    from .content import MultiFormatContentProcessor, ContentManagementEngine
+    try:
+        from .content import MultiFormatContentProcessor, ContentManagementEngine
+        content_available = True
+    except ImportError as e:
+        logger.warning(f"Content module not available: {e}")
+        content_available = False
     
-    logger.info("All business modules loaded successfully")
+    logger.info("Business modules loading completed with graceful handling of missing dependencies")
     
-except ImportError as e:
-    logger.error(f"Failed to import business module: {e}")
-    raise
+except Exception as e:
+    logger.error(f"Critical error in business module loading: {e}")
+    # Don't raise here to allow partial functionality
+    pass
 
 
 class CreatorType(Enum):

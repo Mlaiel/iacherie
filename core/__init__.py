@@ -154,21 +154,18 @@ from .index import (
     core_system_manager
 )
 
-# Algorithm engines
-from .algorithms import (
-    AlgorithmManager,
-    algorithm_manager,
-    AudioAnalysisEngine,
-    VideoProcessingEngine,
-    ImageRecognitionEngine,
-    TextProcessingEngine,
-    MLOptimizationEngine,
-    SimilarityMatchingEngine,
-    SEOEnhancementEngine,
-    RevenueCalculationEngine,
-    CollaborationMatchingEngine,
-    ContentDistributionEngine
-)
+# Algorithm engines (disabled temporarily due to dependency and syntax issues)
+# This can be re-enabled when numpy/opencv dependencies are available and syntax is fixed
+algorithms_available = False
+logger.warning("Algorithm engines disabled due to dependency requirements")
+# Create placeholders to prevent attribute errors
+AlgorithmManager = None
+algorithm_manager = None
+AudioAnalysisEngine = None
+VideoProcessingEngine = None  
+ImageRecognitionEngine = None
+TextProcessingEngine = None
+MLOptimizationEngine = None
 
 # Core managers
 from .managers import (

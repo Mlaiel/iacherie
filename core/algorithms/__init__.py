@@ -38,21 +38,76 @@ For licensing inquiries: mlaiel@live.de
 from typing import Dict, List, Any, Optional, Union, Tuple
 import logging
 
-# Core algorithm modules
-from .audio_analysis import AudioAnalysisEngine
-from .video_processing import VideoProcessingEngine
-from .image_recognition import ImageRecognitionEngine
-from .text_processing import TextProcessingEngine
-from .ml_optimization import MLOptimizationEngine
-from .similarity_matching import SimilarityMatchingEngine
-from .seo_enhancement import SEOEnhancementEngine
-from .revenue_calculation import RevenueCalculationEngine
-from .collaboration_matching import CollaborationMatchingEngine
-from .content_distribution import ContentDistributionEngine
-from .feature_extraction import FeatureExtractionEngine
-from .pattern_recognition import PatternRecognitionEngine
-from .quality_assessment import QualityAssessmentEngine
-from .rights_protection import RightsProtectionEngine
+# Core algorithm modules (with conditional imports for modules with heavy dependencies)
+try:
+    from .audio_analysis import AudioAnalysisEngine
+except ImportError:
+    AudioAnalysisEngine = None
+
+try:
+    from .video_processing import VideoProcessingEngine  
+except ImportError:
+    VideoProcessingEngine = None
+
+try:
+    from .image_recognition import ImageRecognitionEngine
+except ImportError:
+    ImageRecognitionEngine = None
+
+try:
+    from .text_processing import TextProcessingEngine
+except ImportError:
+    TextProcessingEngine = None
+
+try:
+    from .ml_optimization import MLOptimizationEngine
+except ImportError:
+    MLOptimizationEngine = None
+
+try:
+    from .similarity_matching import SimilarityMatchingEngine
+except ImportError:
+    SimilarityMatchingEngine = None
+
+try:
+    from .seo_enhancement import SEOEnhancementEngine
+except ImportError:
+    SEOEnhancementEngine = None
+
+try:
+    from .revenue_calculation import RevenueCalculationEngine
+except ImportError:
+    RevenueCalculationEngine = None
+
+try:
+    from .collaboration_matching import CollaborationMatchingEngine
+except ImportError:
+    CollaborationMatchingEngine = None
+
+try:
+    from .content_distribution import ContentDistributionEngine
+except ImportError:
+    ContentDistributionEngine = None
+
+try:
+    from .feature_extraction import FeatureExtractionEngine
+except ImportError:
+    FeatureExtractionEngine = None
+
+try:
+    from .pattern_recognition import PatternRecognitionEngine
+except ImportError:
+    PatternRecognitionEngine = None
+
+try:
+    from .quality_assessment import QualityAssessmentEngine
+except ImportError:
+    QualityAssessmentEngine = None
+
+try:
+    from .rights_protection import RightsProtectionEngine
+except ImportError:
+    RightsProtectionEngine = None
 
 logger = logging.getLogger(__name__)
 

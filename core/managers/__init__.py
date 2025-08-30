@@ -32,9 +32,17 @@ from abc import ABC, abstractmethod
 # Configuration logging module
 logger = logging.getLogger(__name__)
 
-# Manager imports - existing
+# Manager imports - existing (with optional imports for missing modules)
 from .analytics_manager import AnalyticsManager, get_analytics_manager
-from .backup_manager import BackupManager, get_backup_manager
+try:
+    from .backup_manager import BackupManager, get_backup_manager
+    backup_manager_available = True
+except ImportError:
+    logger.warning("BackupManager not available - backup_manager.py missing")
+    BackupManager = None
+    get_backup_manager = lambda: None
+    backup_manager_available = False
+    
 from .cache_manager import CacheManager, get_cache_manager
 from .collaboration_manager import CollaborationManager, get_collaboration_manager
 from .database_manager import DatabaseManager, get_database_manager
@@ -88,7 +96,6 @@ async def initialize_all_managers() -> bool:
     try:
         managers = [
             ("analytics", get_analytics_manager()),
-            ("backup", get_backup_manager()),
             ("cache", get_cache_manager()),
             ("collaboration", get_collaboration_manager()),
             ("database", get_database_manager()),
@@ -114,6 +121,10 @@ async def initialize_all_managers() -> bool:
             ("compliance", get_compliance_manager()),
             ("performance", get_performance_manager()),
         ]
+        
+        # Add backup manager if available
+        if backup_manager_available:
+            managers.append(("backup", get_backup_manager()))
         
         # Initialize all managers concurrently for optimal performance
         results = await asyncio.gather(
