@@ -840,8 +840,6 @@ class QualityAssuranceCoordinator:
             recommendations.append("Minor quality improvements recommended")
         
         return recommendations
-            processing_options=processing_config
-        )
         
         self.active_pipelines[context.pipeline_id] = context
         
