@@ -381,6 +381,32 @@ class AchievementTracker:
             ]
         )
         self._achievements[achievement.achievement_id] = achievement
+        
+        # Add specific "Viral Hit" achievement as required by cahier des charges
+        viral_hit = Achievement(
+            name="Viral Hit",
+            description="1M+ views/listens on any content",
+            detailed_description="Achieve viral status with content that reaches over 1 million views or listens, demonstrating mass appeal and engagement.",
+            category=AchievementCategory.CONTENT_CREATION,
+            difficulty=AchievementDifficulty.HARD,
+            achievement_type=AchievementType.THRESHOLD,
+            experience_points=1000,
+            virtual_currency=500,
+            real_currency=50.0,
+            badge_icon="viral_hit",
+            special_benefits=["viral_creator_status", "featured_content"],
+            tags=["viral", "hit", "million", "views"],
+            criteria=[
+                AchievementCriteria(
+                    name="Viral Hit Milestone",
+                    description="Content reaches 1M+ views/listens",
+                    metric_key="content_views",
+                    target_value=1000000,
+                    comparison_operator=">="
+                )
+            ]
+        )
+        self._achievements[viral_hit.achievement_id] = viral_hit
     
     def _create_consistency_achievements(self) -> None:
         """Create consistency-based achievements."""

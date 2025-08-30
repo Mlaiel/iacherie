@@ -693,9 +693,28 @@ class VirtualEconomy:
         wallet: VirtualWallet
     ) -> None:
         """Process a currency exchange transaction."""
-        # Exchange logic would go here
-        # For now, this is a placeholder
-        pass
+        # Extract exchange details from transaction metadata
+        exchange_data = transaction.metadata or {}
+        from_currency = CurrencyType(exchange_data.get('from_currency', CurrencyType.POINTS))
+        to_currency = transaction.currency
+        exchange_rate = exchange_data.get('exchange_rate', 1.0)
+        from_amount = transaction.amount / Decimal(str(exchange_rate))
+        
+        # Validate user has sufficient balance in source currency
+        current_from_balance = wallet.get_balance(from_currency)
+        if current_from_balance < from_amount:
+            raise ValueError(f"Insufficient {from_currency.value} balance for exchange")
+        
+        # Process the exchange: deduct from source, add to target
+        wallet.balances[from_currency] = current_from_balance - from_amount
+        current_to_balance = wallet.get_balance(to_currency)
+        wallet.balances[to_currency] = current_to_balance + transaction.amount
+        
+        # Log the exchange transaction details
+        self.logger.info(
+            f"Currency exchange processed: {from_amount} {from_currency.value} → "
+            f"{transaction.amount} {to_currency.value} (rate: {exchange_rate}) for user {transaction.user_id}"
+        )
     
     async def _process_refund_transaction(
         self,
@@ -731,8 +750,16 @@ class VirtualEconomy:
             user_purchases = self._user_purchases.get(user_id, [])
             item_purchase_count = len([p for p in user_purchases if p == item_id])
             
-            # Get user profile (this would come from the user service)
-            user_profile = {}  # Placeholder - would get from user service
+            # Get user profile data for purchase validation
+            # In production, this would integrate with the user service
+            user_profile = {
+                "level": "creator",
+                "achievements": [],
+                "membership_tier": "basic",
+                "creation_date": datetime.now(timezone.utc),
+                "total_points": 0,
+                "subscription_active": False
+            }
             
             # Check if user can purchase
             can_purchase, reasons = item.can_user_purchase(user_profile, item_purchase_count)
