@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-30T06:47:27.807215",
+  "timestamp": "2025-08-30T07:17:30.777378",
   "summary": {
     "total_crawlers": 115,
     "real_implementations": 111,
@@ -19,7 +19,7 @@
         "spotipy"
       ],
       "test_exists": false,
-      "file_path": "crawlers/spotify_crawler.py"
+      "file_path": "crawlers/platforms/spotify_crawler.py"
     },
     "youtube_crawler": {
       "status": "real",
@@ -43,101 +43,104 @@
         "selenium"
       ],
       "test_exists": false,
-      "file_path": "crawlers/platforms/instagram_crawler.py"
+      "file_path": "crawlers/instagram_crawler.py"
     }
   },
   "categorized_results": {
     "real_implementations": [
       {
-        "name": "data_collection_integrator",
-        "confidence": 0.608,
-        "file_path": "core/crawlers/data_collection_integrator.py",
+        "name": "orchestrator",
+        "confidence": 0.6150278293135436,
+        "file_path": "core/crawlers/orchestrator.py",
         "api_dependencies": [],
-        "test_exists": false
-      },
-      {
-        "name": "deezer_crawler",
-        "confidence": 0.8002717391304348,
-        "file_path": "crawlers/platforms/deezer_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "bereal_crawler",
-        "confidence": 0.7355072463768116,
-        "file_path": "crawlers/platforms/bereal_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "mastodon_crawler",
-        "confidence": 0.7111388196176226,
-        "file_path": "crawlers/mastodon_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "vimeo_crawler",
-        "confidence": 0.7731554160125589,
-        "file_path": "crawlers/vimeo_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "security_monitor",
-        "confidence": 0.6079590228526399,
-        "file_path": "core/crawlers/security_monitor.py",
-        "api_dependencies": [
-          "aiohttp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "youtube_music_crawler",
-        "confidence": 0.6727467811158798,
-        "file_path": "crawlers/youtube_music_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "content_analyzer",
-        "confidence": 0.5863309352517986,
-        "file_path": "core/crawlers/content_analyzer.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
         "test_exists": false
       },
       {
         "name": "twine_crawler",
         "confidence": 0.7454545454545455,
-        "file_path": "crawlers/twine_crawler.py",
+        "file_path": "crawlers/platforms/twine_crawler.py",
         "api_dependencies": [
           "aiohttp"
         ],
         "test_exists": false
       },
       {
-        "name": "clubhouse_crawler",
-        "confidence": 0.7323943661971831,
-        "file_path": "crawlers/platforms/clubhouse_crawler.py",
+        "name": "twitter_crawler",
+        "confidence": 0.6102831594634873,
+        "file_path": "crawlers/twitter_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "tweepy",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "config",
+        "confidence": 0.5289855072463768,
+        "file_path": "core/crawlers/config.py",
+        "api_dependencies": [
+          "requests"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "data_collection_utils",
+        "confidence": 0.5505050505050505,
+        "file_path": "core/crawlers/data_collection_utils.py",
+        "api_dependencies": [
+          "requests"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "realtime_monitor",
+        "confidence": 0.5993657505285412,
+        "file_path": "core/crawlers/realtime_monitor.py",
+        "api_dependencies": [],
+        "test_exists": false
+      },
+      {
+        "name": "index",
+        "confidence": 0.5141342756183745,
+        "file_path": "core/crawlers/index.py",
+        "api_dependencies": [],
+        "test_exists": false
+      },
+      {
+        "name": "youtube_api",
+        "confidence": 0.6599045346062052,
+        "file_path": "core/crawlers/youtube_api.py",
+        "api_dependencies": [
+          "aiohttp",
+          "googleapiclient",
+          "yt_dlp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "automation_engine",
+        "confidence": 0.6215250198570293,
+        "file_path": "core/crawlers/automation_engine.py",
+        "api_dependencies": [
+          "aiohttp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "dailymotion_crawler",
+        "confidence": 0.7527114967462039,
+        "file_path": "crawlers/dailymotion_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "piracy_detector",
+        "confidence": 0.6178414096916299,
+        "file_path": "core/crawlers/piracy_detector.py",
         "api_dependencies": [
           "aiohttp",
           "urllib"
@@ -156,73 +159,9 @@
         "test_exists": false
       },
       {
-        "name": "rumble_crawler",
-        "confidence": 0.6738261738261738,
-        "file_path": "crawlers/rumble_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "mixcloud_crawler",
-        "confidence": 0.7422586520947176,
-        "file_path": "crawlers/mixcloud_crawler.py",
-        "api_dependencies": [
-          "aiohttp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "data_collection_utils",
-        "confidence": 0.5505050505050505,
-        "file_path": "core/crawlers/data_collection_utils.py",
-        "api_dependencies": [
-          "requests"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "index",
-        "confidence": 0.5807860262008734,
-        "file_path": "crawlers/platforms/index.py",
-        "api_dependencies": [],
-        "test_exists": false
-      },
-      {
-        "name": "whatsapp_crawler",
-        "confidence": 0.6231979030144168,
-        "file_path": "crawlers/platforms/whatsapp_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "piracy_detector",
-        "confidence": 0.6178414096916299,
-        "file_path": "core/crawlers/piracy_detector.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "analytics_dashboard",
-        "confidence": 0.5967016491754122,
-        "file_path": "core/crawlers/analytics_dashboard.py",
-        "api_dependencies": [
-          "aiohttp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "tiktok_crawler",
-        "confidence": 0.6386503067484662,
-        "file_path": "crawlers/tiktok_crawler.py",
+        "name": "generic_crawler",
+        "confidence": 0.6380471380471381,
+        "file_path": "crawlers/platforms/generic_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "requests",
@@ -232,9 +171,20 @@
         "test_exists": false
       },
       {
-        "name": "onlyfans_crawler",
-        "confidence": 0.6853582554517134,
-        "file_path": "crawlers/platforms/onlyfans_crawler.py",
+        "name": "data_harvester",
+        "confidence": 0.6383219954648526,
+        "file_path": "core/crawlers/data_harvester.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "trend_monitor",
+        "confidence": 0.62877030162413,
+        "file_path": "core/crawlers/trend_monitor.py",
         "api_dependencies": [
           "aiohttp",
           "urllib"
@@ -242,14 +192,30 @@
         "test_exists": false
       },
       {
-        "name": "instagram_api",
-        "confidence": 0.6628721541155866,
-        "file_path": "core/crawlers/instagram_api.py",
+        "name": "patreon_crawler",
+        "confidence": 0.6676168757126568,
+        "file_path": "crawlers/platforms/patreon_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "requests",
-          "selenium"
+          "urllib"
         ],
+        "test_exists": false
+      },
+      {
+        "name": "network_analyzer",
+        "confidence": 0.5809399477806789,
+        "file_path": "core/crawlers/network_analyzer.py",
+        "api_dependencies": [
+          "aiohttp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "data_collection_integrator",
+        "confidence": 0.608,
+        "file_path": "core/crawlers/data_collection_integrator.py",
+        "api_dependencies": [],
         "test_exists": false
       },
       {
@@ -263,14 +229,105 @@
         "test_exists": false
       },
       {
-        "name": "bandcamp_crawler",
-        "confidence": 0.7196652719665272,
-        "file_path": "crawlers/bandcamp_crawler.py",
+        "name": "mastodon_crawler",
+        "confidence": 0.7111388196176226,
+        "file_path": "crawlers/platforms/mastodon_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "social_tracker",
+        "confidence": 0.6065292096219931,
+        "file_path": "core/crawlers/social_tracker.py",
+        "api_dependencies": [
+          "aiohttp",
+          "tweepy",
+          "selenium",
+          "yt_dlp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "soundcloud_crawler",
+        "confidence": 0.7412645590682196,
+        "file_path": "crawlers/platforms/soundcloud_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "requests",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "seo_crawler",
+        "confidence": 0.5673635307781649,
+        "file_path": "core/crawlers/seo_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "data_synchronizer",
+        "confidence": 0.6023864511162433,
+        "file_path": "core/crawlers/data_synchronizer.py",
+        "api_dependencies": [
+          "aiohttp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "threads_crawler",
+        "confidence": 0.6678214010777521,
+        "file_path": "crawlers/platforms/threads_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "soundcloud_crawler",
+        "confidence": 0.7412645590682196,
+        "file_path": "crawlers/soundcloud_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "tiktok_crawler",
+        "confidence": 0.5721500721500722,
+        "file_path": "crawlers/surveillance/tiktok_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
           "urllib"
         ],
+        "test_exists": false
+      },
+      {
+        "name": "performance_optimizer",
+        "confidence": 0.6041141897565071,
+        "file_path": "core/crawlers/performance_optimizer.py",
+        "api_dependencies": [
+          "aiohttp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "coordinator",
+        "confidence": 0.5862745098039216,
+        "file_path": "core/crawlers/coordinator.py",
+        "api_dependencies": [],
         "test_exists": false
       },
       {
@@ -285,142 +342,19 @@
         "test_exists": false
       },
       {
-        "name": "tiktok_crawler",
-        "confidence": 0.6386503067484662,
-        "file_path": "crawlers/platforms/tiktok_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "media_processor",
-        "confidence": 0.6291759465478842,
-        "file_path": "core/crawlers/media_processor.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "tiktok_scraper",
-        "confidence": 0.6618852459016393,
-        "file_path": "core/crawlers/tiktok_scraper.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "twitter_api",
-        "confidence": 0.5789473684210527,
-        "file_path": "core/crawlers/twitter_api.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "tweepy",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "dailymotion_crawler",
-        "confidence": 0.7527114967462039,
-        "file_path": "crawlers/dailymotion_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "engagement_tracker",
-        "confidence": 0.5851769911504425,
-        "file_path": "core/crawlers/engagement_tracker.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "substack_crawler",
-        "confidence": 0.5831533477321814,
-        "file_path": "crawlers/platforms/substack_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "crawler_worker",
-        "confidence": 0.6259600614439325,
-        "file_path": "crawlers/workers/crawler_worker.py",
+        "name": "content_scanner",
+        "confidence": 0.6168831168831168,
+        "file_path": "core/crawlers/content_scanner.py",
         "api_dependencies": [],
         "test_exists": false
       },
       {
-        "name": "automation_engine",
-        "confidence": 0.6215250198570293,
-        "file_path": "core/crawlers/automation_engine.py",
-        "api_dependencies": [
-          "aiohttp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "instagram_crawler",
-        "confidence": 0.6679273827534039,
-        "file_path": "crawlers/platforms/instagram_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "clubhouse_crawler",
-        "confidence": 0.7323943661971831,
-        "file_path": "crawlers/clubhouse_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "telegram_crawler",
-        "confidence": 0.5698576972833118,
-        "file_path": "crawlers/telegram_crawler.py",
+        "name": "threads_crawler",
+        "confidence": 0.6678214010777521,
+        "file_path": "crawlers/threads_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "requests",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "index",
-        "confidence": 0.5141342756183745,
-        "file_path": "core/crawlers/index.py",
-        "api_dependencies": [],
-        "test_exists": false
-      },
-      {
-        "name": "seo_crawler",
-        "confidence": 0.5673635307781649,
-        "file_path": "core/crawlers/seo_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
           "urllib",
           "selenium"
         ],
@@ -437,48 +371,51 @@
         "test_exists": false
       },
       {
-        "name": "config",
-        "confidence": 0.5289855072463768,
-        "file_path": "core/crawlers/config.py",
-        "api_dependencies": [
-          "requests"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "content_scanner",
-        "confidence": 0.6168831168831168,
-        "file_path": "core/crawlers/content_scanner.py",
-        "api_dependencies": [],
-        "test_exists": false
-      },
-      {
-        "name": "twitch_crawler",
-        "confidence": 0.7186046511627907,
-        "file_path": "crawlers/twitch_crawler.py",
+        "name": "vimeo_crawler",
+        "confidence": 0.7731554160125589,
+        "file_path": "crawlers/vimeo_crawler.py",
         "api_dependencies": [
           "aiohttp",
-          "requests",
-          "selenium"
+          "urllib"
         ],
         "test_exists": false
       },
       {
-        "name": "twine_crawler",
-        "confidence": 0.7454545454545455,
-        "file_path": "crawlers/platforms/twine_crawler.py",
-        "api_dependencies": [
-          "aiohttp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "patreon_crawler",
-        "confidence": 0.6676168757126568,
-        "file_path": "crawlers/platforms/patreon_crawler.py",
+        "name": "snapchat_crawler",
+        "confidence": 0.7194835680751174,
+        "file_path": "crawlers/snapchat_crawler.py",
         "api_dependencies": [
           "aiohttp",
-          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "media_processor",
+        "confidence": 0.6291759465478842,
+        "file_path": "core/crawlers/media_processor.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "medium_crawler",
+        "confidence": 0.6477627471383975,
+        "file_path": "crawlers/platforms/medium_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "clubhouse_crawler",
+        "confidence": 0.7323943661971831,
+        "file_path": "crawlers/clubhouse_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
           "urllib"
         ],
         "test_exists": false
@@ -505,30 +442,9 @@
         "test_exists": false
       },
       {
-        "name": "platform_monitor",
-        "confidence": 0.6216056670602125,
-        "file_path": "core/crawlers/platform_monitor.py",
-        "api_dependencies": [
-          "aiohttp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "universal_web",
-        "confidence": 0.6666666666666666,
-        "file_path": "core/crawlers/universal_web.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "dailymotion_crawler",
-        "confidence": 0.7527114967462039,
-        "file_path": "crawlers/platforms/dailymotion_crawler.py",
+        "name": "content_analyzer",
+        "confidence": 0.5863309352517986,
+        "file_path": "core/crawlers/content_analyzer.py",
         "api_dependencies": [
           "aiohttp",
           "urllib"
@@ -536,64 +452,52 @@
         "test_exists": false
       },
       {
-        "name": "reddit_crawler",
-        "confidence": 0.7063914780292943,
-        "file_path": "crawlers/platforms/reddit_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "mastodon_crawler",
-        "confidence": 0.7111388196176226,
-        "file_path": "crawlers/platforms/mastodon_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "detection",
-        "confidence": 0.7,
-        "file_path": "core/crawlers/detection.py",
-        "api_dependencies": [],
-        "test_exists": false
-      },
-      {
-        "name": "youtube_api",
-        "confidence": 0.6599045346062052,
-        "file_path": "core/crawlers/youtube_api.py",
+        "name": "youtube_crawler",
+        "confidence": 0.638401559454191,
+        "file_path": "crawlers/platforms/youtube_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "googleapiclient",
-          "yt_dlp"
+          "selenium"
+        ],
+        "test_exists": true
+      },
+      {
+        "name": "copyright_guardian",
+        "confidence": 0.5851970181043663,
+        "file_path": "core/crawlers/copyright_guardian.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests"
         ],
         "test_exists": false
       },
       {
-        "name": "crawler_manager",
-        "confidence": 0.5574162679425837,
-        "file_path": "crawlers/crawler_manager.py",
+        "name": "crawler_worker",
+        "confidence": 0.6259600614439325,
+        "file_path": "crawlers/workers/crawler_worker.py",
         "api_dependencies": [],
         "test_exists": false
       },
       {
-        "name": "realtime_monitor",
-        "confidence": 0.5993657505285412,
-        "file_path": "core/crawlers/realtime_monitor.py",
-        "api_dependencies": [],
-        "test_exists": false
-      },
-      {
-        "name": "crawler_queue_manager",
-        "confidence": 0.6070336391437309,
-        "file_path": "crawlers/queues/crawler_queue_manager.py",
+        "name": "user_profiler",
+        "confidence": 0.5977443609022557,
+        "file_path": "core/crawlers/user_profiler.py",
         "api_dependencies": [
-          "requests"
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "twitter_api",
+        "confidence": 0.5789473684210527,
+        "file_path": "core/crawlers/twitter_api.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "tweepy",
+          "selenium"
         ],
         "test_exists": false
       },
@@ -608,107 +512,13 @@
         "test_exists": false
       },
       {
-        "name": "spotify_crawler",
-        "confidence": 0.8302034428794991,
-        "file_path": "crawlers/spotify_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "spotipy"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "kick_crawler",
-        "confidence": 0.7173479561316052,
-        "file_path": "crawlers/platforms/kick_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "medium_crawler",
-        "confidence": 0.6477627471383975,
-        "file_path": "crawlers/platforms/medium_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "discord_crawler",
-        "confidence": 0.6988265971316818,
-        "file_path": "crawlers/platforms/discord_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "patreon_crawler",
-        "confidence": 0.6676168757126568,
-        "file_path": "crawlers/patreon_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "onlyfans_crawler",
-        "confidence": 0.6853582554517134,
-        "file_path": "crawlers/onlyfans_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "data_harvester",
-        "confidence": 0.6383219954648526,
-        "file_path": "core/crawlers/data_harvester.py",
+        "name": "substack_crawler",
+        "confidence": 0.5831533477321814,
+        "file_path": "crawlers/platforms/substack_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "urllib",
           "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "tiktok_crawler",
-        "confidence": 0.5721500721500722,
-        "file_path": "crawlers/surveillance/tiktok_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "user_profiler",
-        "confidence": 0.5977443609022557,
-        "file_path": "core/crawlers/user_profiler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "reddit_crawler",
-        "confidence": 0.7063914780292943,
-        "file_path": "crawlers/reddit_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib"
         ],
         "test_exists": false
       },
@@ -724,41 +534,9 @@
         "test_exists": false
       },
       {
-        "name": "spotify_crawler",
-        "confidence": 0.8302034428794991,
-        "file_path": "crawlers/platforms/spotify_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "spotipy"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "rumble_crawler",
-        "confidence": 0.6738261738261738,
-        "file_path": "crawlers/platforms/rumble_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "threads_crawler",
-        "confidence": 0.6678214010777521,
-        "file_path": "crawlers/platforms/threads_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "whatsapp_crawler",
-        "confidence": 0.6231979030144168,
-        "file_path": "crawlers/whatsapp_crawler.py",
+        "name": "engagement_tracker",
+        "confidence": 0.5851769911504425,
+        "file_path": "core/crawlers/engagement_tracker.py",
         "api_dependencies": [
           "aiohttp",
           "urllib"
@@ -773,9 +551,18 @@
         "test_exists": false
       },
       {
-        "name": "web_monitor",
-        "confidence": 0.6371742112482853,
-        "file_path": "core/crawlers/web_monitor.py",
+        "name": "platform_monitor",
+        "confidence": 0.6216056670602125,
+        "file_path": "core/crawlers/platform_monitor.py",
+        "api_dependencies": [
+          "aiohttp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "whatsapp_crawler",
+        "confidence": 0.6231979030144168,
+        "file_path": "crawlers/whatsapp_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "urllib"
@@ -783,16 +570,9 @@
         "test_exists": false
       },
       {
-        "name": "coordinator",
-        "confidence": 0.5862745098039216,
-        "file_path": "core/crawlers/coordinator.py",
-        "api_dependencies": [],
-        "test_exists": false
-      },
-      {
-        "name": "soundcloud_crawler",
-        "confidence": 0.7412645590682196,
-        "file_path": "crawlers/platforms/soundcloud_crawler.py",
+        "name": "evidence",
+        "confidence": 0.6241830065359477,
+        "file_path": "core/crawlers/evidence.py",
         "api_dependencies": [
           "aiohttp",
           "requests",
@@ -801,19 +581,95 @@
         "test_exists": false
       },
       {
-        "name": "orchestrator",
-        "confidence": 0.6150278293135436,
-        "file_path": "core/crawlers/orchestrator.py",
-        "api_dependencies": [],
+        "name": "instagram_api",
+        "confidence": 0.6628721541155866,
+        "file_path": "core/crawlers/instagram_api.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "selenium"
+        ],
         "test_exists": false
       },
       {
-        "name": "twitter_crawler",
-        "confidence": 0.6102831594634873,
-        "file_path": "crawlers/platforms/twitter_crawler.py",
+        "name": "twine_crawler",
+        "confidence": 0.7454545454545455,
+        "file_path": "crawlers/twine_crawler.py",
+        "api_dependencies": [
+          "aiohttp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "discord_crawler",
+        "confidence": 0.6988265971316818,
+        "file_path": "crawlers/discord_crawler.py",
         "api_dependencies": [
           "aiohttp",
-          "tweepy",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "deezer_crawler",
+        "confidence": 0.8002717391304348,
+        "file_path": "crawlers/platforms/deezer_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "linkedin_crawler",
+        "confidence": 0.7172995780590717,
+        "file_path": "crawlers/linkedin_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "rumble_crawler",
+        "confidence": 0.6738261738261738,
+        "file_path": "crawlers/platforms/rumble_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "linkedin_crawler",
+        "confidence": 0.7172995780590717,
+        "file_path": "crawlers/platforms/linkedin_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "twitch_crawler",
+        "confidence": 0.7186046511627907,
+        "file_path": "crawlers/twitch_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "facebook_crawler",
+        "confidence": 0.7216494845360825,
+        "file_path": "crawlers/platforms/facebook_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
           "selenium"
         ],
         "test_exists": false
@@ -830,20 +686,18 @@
         "test_exists": false
       },
       {
-        "name": "twitter_crawler",
-        "confidence": 0.6102831594634873,
-        "file_path": "crawlers/twitter_crawler.py",
+        "name": "crawler_queue_manager",
+        "confidence": 0.6070336391437309,
+        "file_path": "crawlers/queues/crawler_queue_manager.py",
         "api_dependencies": [
-          "aiohttp",
-          "tweepy",
-          "selenium"
+          "requests"
         ],
         "test_exists": false
       },
       {
-        "name": "threads_crawler",
-        "confidence": 0.6678214010777521,
-        "file_path": "crawlers/threads_crawler.py",
+        "name": "tiktok_crawler",
+        "confidence": 0.6386503067484662,
+        "file_path": "crawlers/platforms/tiktok_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "requests",
@@ -853,38 +707,9 @@
         "test_exists": false
       },
       {
-        "name": "copyright_guardian",
-        "confidence": 0.5851970181043663,
-        "file_path": "core/crawlers/copyright_guardian.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "pinterest_crawler",
-        "confidence": 0.8087248322147651,
-        "file_path": "crawlers/pinterest_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "network_analyzer",
-        "confidence": 0.5809399477806789,
-        "file_path": "core/crawlers/network_analyzer.py",
-        "api_dependencies": [
-          "aiohttp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "generic_crawler",
-        "confidence": 0.6380471380471381,
-        "file_path": "crawlers/generic_crawler.py",
+        "name": "tiktok_crawler",
+        "confidence": 0.6386503067484662,
+        "file_path": "crawlers/tiktok_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "requests",
@@ -905,182 +730,6 @@
         "test_exists": false
       },
       {
-        "name": "youtube_crawler",
-        "confidence": 0.638401559454191,
-        "file_path": "crawlers/platforms/youtube_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "googleapiclient",
-          "selenium"
-        ],
-        "test_exists": true
-      },
-      {
-        "name": "mixcloud_crawler",
-        "confidence": 0.7422586520947176,
-        "file_path": "crawlers/platforms/mixcloud_crawler.py",
-        "api_dependencies": [
-          "aiohttp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "facebook_crawler",
-        "confidence": 0.7216494845360825,
-        "file_path": "crawlers/platforms/facebook_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "facebook_crawler",
-        "confidence": 0.7216494845360825,
-        "file_path": "crawlers/facebook_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "compliance_monitor",
-        "confidence": 0.5968294772922023,
-        "file_path": "core/crawlers/compliance_monitor.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "youtube_crawler",
-        "confidence": 0.638401559454191,
-        "file_path": "crawlers/youtube_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "googleapiclient",
-          "selenium"
-        ],
-        "test_exists": true
-      },
-      {
-        "name": "linkedin_crawler",
-        "confidence": 0.7172995780590717,
-        "file_path": "crawlers/platforms/linkedin_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "snapchat_crawler",
-        "confidence": 0.7194835680751174,
-        "file_path": "crawlers/platforms/snapchat_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "generic_crawler",
-        "confidence": 0.6380471380471381,
-        "file_path": "crawlers/platforms/generic_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "trend_monitor",
-        "confidence": 0.62877030162413,
-        "file_path": "core/crawlers/trend_monitor.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "evidence",
-        "confidence": 0.6241830065359477,
-        "file_path": "core/crawlers/evidence.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "deezer_crawler",
-        "confidence": 0.8002717391304348,
-        "file_path": "crawlers/deezer_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "performance_optimizer",
-        "confidence": 0.6041141897565071,
-        "file_path": "core/crawlers/performance_optimizer.py",
-        "api_dependencies": [
-          "aiohttp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "discord_crawler",
-        "confidence": 0.6988265971316818,
-        "file_path": "crawlers/discord_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "medium_crawler",
-        "confidence": 0.6477627471383975,
-        "file_path": "crawlers/medium_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "snapchat_crawler",
-        "confidence": 0.7194835680751174,
-        "file_path": "crawlers/snapchat_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "urllib"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "twitch_crawler",
-        "confidence": 0.7186046511627907,
-        "file_path": "crawlers/platforms/twitch_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
         "name": "apple_music_crawler",
         "confidence": 0.8082926829268293,
         "file_path": "crawlers/apple_music_crawler.py",
@@ -1092,55 +741,30 @@
         "test_exists": false
       },
       {
-        "name": "data_synchronizer",
-        "confidence": 0.6023864511162433,
-        "file_path": "core/crawlers/data_synchronizer.py",
+        "name": "security_monitor",
+        "confidence": 0.6079590228526399,
+        "file_path": "core/crawlers/security_monitor.py",
         "api_dependencies": [
           "aiohttp"
         ],
         "test_exists": false
       },
       {
-        "name": "universal_web_crawler",
-        "confidence": 0.6023842917251052,
-        "file_path": "crawlers/surveillance/universal_web_crawler.py",
+        "name": "spotify_crawler",
+        "confidence": 0.8302034428794991,
+        "file_path": "crawlers/platforms/spotify_crawler.py",
         "api_dependencies": [
           "aiohttp",
-          "requests",
-          "urllib"
+          "spotipy"
         ],
         "test_exists": false
       },
       {
-        "name": "soundcloud_crawler",
-        "confidence": 0.7412645590682196,
-        "file_path": "crawlers/soundcloud_crawler.py",
+        "name": "facebook_crawler",
+        "confidence": 0.7216494845360825,
+        "file_path": "crawlers/facebook_crawler.py",
         "api_dependencies": [
           "aiohttp",
-          "requests",
-          "selenium"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "social_tracker",
-        "confidence": 0.6065292096219931,
-        "file_path": "core/crawlers/social_tracker.py",
-        "api_dependencies": [
-          "aiohttp",
-          "tweepy",
-          "selenium",
-          "yt_dlp"
-        ],
-        "test_exists": false
-      },
-      {
-        "name": "linkedin_crawler",
-        "confidence": 0.7172995780590717,
-        "file_path": "crawlers/linkedin_crawler.py",
-        "api_dependencies": [
-          "aiohttp",
-          "requests",
           "selenium"
         ],
         "test_exists": false
@@ -1157,12 +781,388 @@
         "test_exists": false
       },
       {
+        "name": "rumble_crawler",
+        "confidence": 0.6738261738261738,
+        "file_path": "crawlers/rumble_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
         "name": "bandcamp_crawler",
         "confidence": 0.7196652719665272,
         "file_path": "crawlers/platforms/bandcamp_crawler.py",
         "api_dependencies": [
           "aiohttp",
           "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "mixcloud_crawler",
+        "confidence": 0.7422586520947176,
+        "file_path": "crawlers/mixcloud_crawler.py",
+        "api_dependencies": [
+          "aiohttp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "analytics_dashboard",
+        "confidence": 0.5967016491754122,
+        "file_path": "core/crawlers/analytics_dashboard.py",
+        "api_dependencies": [
+          "aiohttp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "twitch_crawler",
+        "confidence": 0.7186046511627907,
+        "file_path": "crawlers/platforms/twitch_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "instagram_crawler",
+        "confidence": 0.6679273827534039,
+        "file_path": "crawlers/platforms/instagram_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "dailymotion_crawler",
+        "confidence": 0.7527114967462039,
+        "file_path": "crawlers/platforms/dailymotion_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "bereal_crawler",
+        "confidence": 0.7355072463768116,
+        "file_path": "crawlers/platforms/bereal_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "whatsapp_crawler",
+        "confidence": 0.6231979030144168,
+        "file_path": "crawlers/platforms/whatsapp_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "medium_crawler",
+        "confidence": 0.6477627471383975,
+        "file_path": "crawlers/medium_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "onlyfans_crawler",
+        "confidence": 0.6853582554517134,
+        "file_path": "crawlers/platforms/onlyfans_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "reddit_crawler",
+        "confidence": 0.7063914780292943,
+        "file_path": "crawlers/platforms/reddit_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "twitter_crawler",
+        "confidence": 0.6102831594634873,
+        "file_path": "crawlers/platforms/twitter_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "tweepy",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "universal_web",
+        "confidence": 0.6666666666666666,
+        "file_path": "core/crawlers/universal_web.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "generic_crawler",
+        "confidence": 0.6380471380471381,
+        "file_path": "crawlers/generic_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "index",
+        "confidence": 0.5807860262008734,
+        "file_path": "crawlers/platforms/index.py",
+        "api_dependencies": [],
+        "test_exists": false
+      },
+      {
+        "name": "discord_crawler",
+        "confidence": 0.6988265971316818,
+        "file_path": "crawlers/platforms/discord_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "reddit_crawler",
+        "confidence": 0.7063914780292943,
+        "file_path": "crawlers/reddit_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "clubhouse_crawler",
+        "confidence": 0.7323943661971831,
+        "file_path": "crawlers/platforms/clubhouse_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "youtube_music_crawler",
+        "confidence": 0.6727467811158798,
+        "file_path": "crawlers/youtube_music_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "spotify_crawler",
+        "confidence": 0.8302034428794991,
+        "file_path": "crawlers/spotify_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "spotipy"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "deezer_crawler",
+        "confidence": 0.8002717391304348,
+        "file_path": "crawlers/deezer_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "kick_crawler",
+        "confidence": 0.7173479561316052,
+        "file_path": "crawlers/platforms/kick_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "universal_web_crawler",
+        "confidence": 0.6023842917251052,
+        "file_path": "crawlers/surveillance/universal_web_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "youtube_crawler",
+        "confidence": 0.638401559454191,
+        "file_path": "crawlers/youtube_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "googleapiclient",
+          "selenium"
+        ],
+        "test_exists": true
+      },
+      {
+        "name": "onlyfans_crawler",
+        "confidence": 0.6853582554517134,
+        "file_path": "crawlers/onlyfans_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "patreon_crawler",
+        "confidence": 0.6676168757126568,
+        "file_path": "crawlers/patreon_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "mixcloud_crawler",
+        "confidence": 0.7422586520947176,
+        "file_path": "crawlers/platforms/mixcloud_crawler.py",
+        "api_dependencies": [
+          "aiohttp"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "bandcamp_crawler",
+        "confidence": 0.7196652719665272,
+        "file_path": "crawlers/bandcamp_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "web_monitor",
+        "confidence": 0.6371742112482853,
+        "file_path": "core/crawlers/web_monitor.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "crawler_manager",
+        "confidence": 0.5574162679425837,
+        "file_path": "crawlers/crawler_manager.py",
+        "api_dependencies": [],
+        "test_exists": false
+      },
+      {
+        "name": "mastodon_crawler",
+        "confidence": 0.7111388196176226,
+        "file_path": "crawlers/mastodon_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "detection",
+        "confidence": 0.7,
+        "file_path": "core/crawlers/detection.py",
+        "api_dependencies": [],
+        "test_exists": false
+      },
+      {
+        "name": "snapchat_crawler",
+        "confidence": 0.7194835680751174,
+        "file_path": "crawlers/platforms/snapchat_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "tiktok_scraper",
+        "confidence": 0.6618852459016393,
+        "file_path": "core/crawlers/tiktok_scraper.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "selenium"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "compliance_monitor",
+        "confidence": 0.5968294772922023,
+        "file_path": "core/crawlers/compliance_monitor.py",
+        "api_dependencies": [
+          "aiohttp",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "telegram_crawler",
+        "confidence": 0.5698576972833118,
+        "file_path": "crawlers/telegram_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
+          "requests",
+          "urllib"
+        ],
+        "test_exists": false
+      },
+      {
+        "name": "pinterest_crawler",
+        "confidence": 0.8087248322147651,
+        "file_path": "crawlers/pinterest_crawler.py",
+        "api_dependencies": [
+          "aiohttp",
           "urllib"
         ],
         "test_exists": false
