@@ -1,0 +1,234 @@
+# Ainflue iOS Podfile
+# Professional iOS dependencies configuration for advanced content creation platform
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# Team Specialties:
+# - Lead AI Developer + Backend Senior + ML Engineer
+# - Database Administrator + Security Expert
+# - Microservices Architect + Audio Processing Specialist
+# - DevOps Engineer + IA Prompt Engineer
+#
+# ⚠️ STRICT COPYRIGHT NOTICE ⚠️
+# This code is proprietary and confidential to Fahed Mlaiel.
+# Any unauthorized use, copying, modification, or distribution
+# without explicit written permission is strictly prohibited.
+# Violations will result in legal action.
+# Contact: mlaiel@live.de for licensing inquiries.
+
+platform :ios, '14.0'
+require_relative '../react_native/node_modules/react-native/scripts/react_native_pods'
+require_relative '../react_native/node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+target 'Ainflue' do
+  config = use_native_modules!
+  
+  # Flags change depending on the env values.
+  flags = get_default_flags()
+  
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # Hermes is now enabled by default for better performance
+    :hermes_enabled => flags[:hermes_enabled],
+    :fabric_enabled => flags[:fabric_enabled],
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  # Core React Native Dependencies
+  pod 'RCT-Folly', :podspec => '../react_native/node_modules/react-native/third-party-podspecs/RCT-Folly.podspec'
+  
+  # Navigation and UI Framework
+  pod 'React-Core/RCTWebSocket', :path => '../react_native/node_modules/react-native/'
+  pod 'RNGestureHandler', :path => '../react_native/node_modules/react-native-gesture-handler'
+  pod 'RNReanimated', :path => '../react_native/node_modules/react-native-reanimated'
+  pod 'RNScreens', :path => '../react_native/node_modules/react-native-screens'
+  pod 'react-native-safe-area-context', :path => '../react_native/node_modules/react-native-safe-area-context'
+  
+  # Professional Audio/Video Processing
+  pod 'RNFS', :path => '../react_native/node_modules/react-native-fs'
+  pod 'react-native-video', :path => '../react_native/node_modules/react-native-video'
+  pod 'react-native-sound', :path => '../react_native/node_modules/react-native-sound'
+  pod 'RNAudio', :path => '../react_native/node_modules/react-native-audio'
+  pod 'react-native-audio-recorder-player', :path => '../react_native/node_modules/react-native-audio-recorder-player'
+  
+  # Camera and Media Capture
+  pod 'react-native-camera', :path => '../react_native/node_modules/react-native-camera'
+  pod 'react-native-image-picker', :path => '../react_native/node_modules/react-native-image-picker'
+  pod 'react-native-image-crop-picker', :path => '../react_native/node_modules/react-native-image-crop-picker'
+  pod 'react-native-vision-camera', :path => '../react_native/node_modules/react-native-vision-camera'
+  
+  # Security and Authentication
+  pod 'react-native-keychain', :path => '../react_native/node_modules/react-native-keychain'
+  pod 'react-native-biometrics', :path => '../react_native/node_modules/react-native-biometrics'
+  pod 'RNEncryptedStorage', :path => '../react_native/node_modules/react-native-encrypted-storage'
+  
+  # Push Notifications
+  pod 'RNFirebase', :path => '../react_native/node_modules/react-native-firebase/ios'
+  pod 'Firebase/Core', '~> 10.0'
+  pod 'Firebase/Messaging', '~> 10.0'
+  pod 'Firebase/Analytics', '~> 10.0'
+  
+  # Background Processing
+  pod 'react-native-background-job', :path => '../react_native/node_modules/react-native-background-job'
+  pod 'react-native-background-timer', :path => '../react_native/node_modules/react-native-background-timer'
+  
+  # Network and API
+  pod 'react-native-netinfo', :path => '../react_native/node_modules/@react-native-community/netinfo'
+  pod 'RNHTTP', :path => '../react_native/node_modules/react-native-http'
+  
+  # Device Features
+  pod 'react-native-device-info', :path => '../react_native/node_modules/react-native-device-info'
+  pod 'react-native-haptic-feedback', :path => '../react_native/node_modules/react-native-haptic-feedback'
+  pod 'react-native-orientation', :path => '../react_native/node_modules/react-native-orientation'
+  
+  # File Management
+  pod 'react-native-document-picker', :path => '../react_native/node_modules/react-native-document-picker'
+  pod 'react-native-share', :path => '../react_native/node_modules/react-native-share'
+  
+  # Analytics and Performance
+  pod 'react-native-performance', :path => '../react_native/node_modules/react-native-performance'
+  pod 'Flipper', '~> 0.125.0', :configurations => ['Debug']
+  pod 'Flipper-Folly', '~> 2.6', :configurations => ['Debug']
+  pod 'Flipper-RSocket', '~> 1.4', :configurations => ['Debug']
+  
+  # AI and Machine Learning
+  pod 'TensorFlowLiteObjC', '~> 2.13.0'
+  pod 'TensorFlowLiteSelectTfOps', '~> 2.13.0'
+  
+  # Advanced iOS Native Features
+  pod 'CoreML'
+  pod 'Vision'
+  pod 'AVFoundation'
+  pod 'Photos'
+  pod 'PhotosUI'
+  pod 'LocalAuthentication'
+  pod 'UserNotifications'
+  pod 'BackgroundTasks'
+  pod 'Network'
+  pod 'CryptoKit'
+  pod 'Combine'
+  
+  # Professional Audio Processing
+  pod 'AudioToolbox'
+  pod 'AudioUnit'
+  pod 'CoreAudio'
+  pod 'MediaPlayer'
+  
+  # Professional Video Processing
+  pod 'VideoToolbox'
+  pod 'CoreVideo'
+  pod 'Metal'
+  pod 'MetalKit'
+  pod 'CoreImage'
+  
+  # Enterprise Security
+  pod 'Security'
+  pod 'CommonCrypto'
+  pod 'CryptoTokenKit'
+  
+  # Performance and Monitoring
+  pod 'MetricKit'
+  pod 'OSLog'
+  pod 'os'
+  
+  target 'AinflueiOSTests' do
+    inherit! :complete
+    # Test dependencies
+    pod 'OCMock', '~> 3.9'
+    pod 'Quick', '~> 6.0'
+    pod 'Nimble', '~> 11.0'
+  end
+
+  post_install do |installer|
+    react_native_post_install(
+      installer,
+      # Set `mac_catalyst_enabled` to `true` for Mac Catalyst builds
+      :mac_catalyst_enabled => false
+    )
+    
+    # Configure build settings for professional deployment
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        # Optimize for production builds
+        if config.name == 'Release'
+          config.build_settings['GCC_OPTIMIZATION_LEVEL'] = '3'
+          config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-O'
+          config.build_settings['ENABLE_BITCODE'] = 'YES'
+        end
+        
+        # Security settings
+        config.build_settings['ENABLE_HARDENED_RUNTIME'] = 'YES'
+        config.build_settings['ENABLE_LIBRARY_VALIDATION'] = 'YES'
+        
+        # Code signing settings
+        config.build_settings['CODE_SIGN_STYLE'] = 'Manual'
+        config.build_settings['DEVELOPMENT_TEAM'] = 'FAHED_MLAIEL_TEAM_ID'
+        
+        # Deployment settings
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+        config.build_settings['TARGETED_DEVICE_FAMILY'] = '1,2' # iPhone and iPad
+        
+        # Privacy settings
+        config.build_settings['CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED'] = 'YES'
+        config.build_settings['CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER'] = 'YES'
+        
+        # Performance settings
+        config.build_settings['CLANG_ENABLE_OBJC_WEAK'] = 'YES'
+        config.build_settings['GCC_NO_COMMON_BLOCKS'] = 'YES'
+        
+        # Memory management
+        config.build_settings['CLANG_ENABLE_OBJC_ARC'] = 'YES'
+        config.build_settings['CLANG_WARN_OBJC_ROOT_CLASS'] = 'YES_ERROR'
+        
+        # Architecture settings
+        config.build_settings['ARCHS'] = '$(ARCHS_STANDARD)'
+        config.build_settings['VALID_ARCHS'] = 'arm64 arm64e'
+        
+        # Strip debug symbols in release
+        if config.name == 'Release'
+          config.build_settings['STRIP_INSTALLED_PRODUCT'] = 'YES'
+          config.build_settings['SEPARATE_STRIP'] = 'YES'
+          config.build_settings['COPY_PHASE_STRIP'] = 'YES'
+        end
+      end
+    end
+    
+    # Fix for Flipper in newer Xcode versions
+    installer.pods_project.targets.each do |target|
+      if target.name == 'Flipper'
+        target.build_configurations.each do |config|
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+        end
+      end
+    end
+    
+    # Custom script for asset optimization
+    installer.pods_project.targets.each do |target|
+      if target.name.include?('React')
+        target.build_configurations.each do |config|
+          config.build_settings['HEADER_SEARCH_PATHS'] ||= '$(inherited) '
+          config.build_settings['HEADER_SEARCH_PATHS'] << '"$(PODS_ROOT)/Headers/Private/React-Core"'
+        end
+      end
+    end
+  end
+end
+
+# Test target for enterprise validation
+target 'AinflueiOSUITests' do
+  inherit! :complete
+  # UI testing dependencies
+  pod 'EarlGrey', '~> 2.0'
+end
+
+# Development pods for debugging and optimization
+target 'AinflueiOSDev' do
+  inherit! :complete
+  
+  # Development only pods
+  pod 'FLEX', '~> 4.7.0', :configurations => ['Debug']
+  pod 'CocoaLumberjack', '~> 3.8.0'
+  pod 'Reveal-SDK', '~> 34', :configurations => ['Debug']
+end
