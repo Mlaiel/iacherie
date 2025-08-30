@@ -1,0 +1,152 @@
+{
+  "timestamp": "2025-08-30T07:00:00",
+  "summary": {
+    "total_crawlers_analyzed": 10,
+    "real_implementations": 10,
+    "stub_implementations": 0,
+    "priority_crawler_status": {
+      "spotify": "IMPLEMENTED",
+      "youtube": "IMPLEMENTED",
+      "instagram": "IMPLEMENTED"
+    },
+    "accessible_apis": 0,
+    "total_apis_tested": 3
+  },
+  "detailed_analysis": {
+    "spotify": [
+      {
+        "file_path": "crawlers/spotify_crawler.py",
+        "implementation_type": "REAL",
+        "confidence": 0.9,
+        "total_lines": 639,
+        "method_count": 19,
+        "real_indicators": 139,
+        "stub_indicators": 0,
+        "has_api_imports": true,
+        "has_async": true
+      },
+      {
+        "file_path": "crawlers/platforms/spotify_crawler.py",
+        "implementation_type": "REAL",
+        "confidence": 0.9,
+        "total_lines": 639,
+        "method_count": 19,
+        "real_indicators": 139,
+        "stub_indicators": 0,
+        "has_api_imports": true,
+        "has_async": true
+      }
+    ],
+    "youtube": [
+      {
+        "file_path": "crawlers/youtube_music_crawler.py",
+        "implementation_type": "REAL",
+        "confidence": 0.9,
+        "total_lines": 932,
+        "method_count": 23,
+        "real_indicators": 143,
+        "stub_indicators": 0,
+        "has_api_imports": true,
+        "has_async": true
+      },
+      {
+        "file_path": "crawlers/youtube_crawler.py",
+        "implementation_type": "REAL",
+        "confidence": 0.5,
+        "total_lines": 513,
+        "method_count": 15,
+        "real_indicators": 50,
+        "stub_indicators": 2,
+        "has_api_imports": true,
+        "has_async": true
+      },
+      {
+        "file_path": "crawlers/platforms/youtube_music_crawler.py",
+        "implementation_type": "REAL",
+        "confidence": 0.9,
+        "total_lines": 932,
+        "method_count": 23,
+        "real_indicators": 143,
+        "stub_indicators": 0,
+        "has_api_imports": true,
+        "has_async": true
+      },
+      {
+        "file_path": "crawlers/platforms/youtube_crawler.py",
+        "implementation_type": "REAL",
+        "confidence": 0.5,
+        "total_lines": 513,
+        "method_count": 15,
+        "real_indicators": 50,
+        "stub_indicators": 2,
+        "has_api_imports": true,
+        "has_async": true
+      },
+      {
+        "file_path": "core/crawlers/youtube_api.py",
+        "implementation_type": "REAL",
+        "confidence": 0.37,
+        "total_lines": 419,
+        "method_count": 14,
+        "real_indicators": 37,
+        "stub_indicators": 0,
+        "has_api_imports": true,
+        "has_async": true
+      }
+    ],
+    "instagram": [
+      {
+        "file_path": "crawlers/instagram_crawler.py",
+        "implementation_type": "REAL",
+        "confidence": 0.65,
+        "total_lines": 661,
+        "method_count": 21,
+        "real_indicators": 65,
+        "stub_indicators": 3,
+        "has_api_imports": true,
+        "has_async": true
+      },
+      {
+        "file_path": "crawlers/platforms/instagram_crawler.py",
+        "implementation_type": "REAL",
+        "confidence": 0.65,
+        "total_lines": 661,
+        "method_count": 21,
+        "real_indicators": 65,
+        "stub_indicators": 3,
+        "has_api_imports": true,
+        "has_async": true
+      },
+      {
+        "file_path": "core/crawlers/instagram_api.py",
+        "implementation_type": "REAL",
+        "confidence": 0.68,
+        "total_lines": 571,
+        "method_count": 16,
+        "real_indicators": 68,
+        "stub_indicators": 2,
+        "has_api_imports": true,
+        "has_async": true
+      }
+    ]
+  },
+  "api_connectivity": {
+    "spotify": {
+      "accessible": false,
+      "error": "Cannot connect to host api.spotify.com:443 ssl:default [No address associated with hostname]"
+    },
+    "youtube": {
+      "accessible": false,
+      "error": "Cannot connect to host www.googleapis.com:443 ssl:default [No address associated with hostname]"
+    },
+    "instagram": {
+      "accessible": false,
+      "error": "Cannot connect to host graph.instagram.com:443 ssl:default [No address associated with hostname]"
+    }
+  },
+  "recommendations": [
+    "WARNING: Spotify API not accessible - check network connectivity",
+    "WARNING: Youtube API not accessible - check network connectivity",
+    "WARNING: Instagram API not accessible - check network connectivity"
+  ]
+}
