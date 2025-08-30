@@ -129,7 +129,6 @@ from .content_management_config import (
     get_content_processing_pipeline,
     validate_content_upload
 )
-)
 
 # Export all classes and enums for external use
 __all__ = [

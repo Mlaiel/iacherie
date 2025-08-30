@@ -17,13 +17,21 @@ without explicit written permission from the author is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
 
-from .postgresql_config import PostgreSQLConfig
+try:
+    from .postgresql_config import PostgreSQLConfig
+except ImportError:
+    # PostgreSQL not available, create placeholder
+    PostgreSQLConfig = None
 try:
     from .mongodb_config import MongoDBConfig  
 except ImportError:
     # MongoDB not available, create placeholder
     MongoDBConfig = None
-from .redis_config import RedisConfig
+try:
+    from .redis_config import RedisConfig
+except ImportError:
+    # Redis not available, create placeholder
+    RedisConfig = None
 try:
     from .faiss_config import FAISSConfig
 except ImportError:

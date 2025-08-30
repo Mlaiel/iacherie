@@ -9,7 +9,17 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 import os
 from typing import Optional, List
 from pydantic_settings import BaseSettings
-from pydantic import Field, PostgresDsn, RedisDsn
+from pydantic import Field
+
+# Optional database-related imports for URL validation
+try:
+    from pydantic import PostgresDsn, RedisDsn
+    DATABASE_VALIDATORS_AVAILABLE = True
+except ImportError:
+    # Create placeholder types if database validators not available
+    PostgresDsn = str
+    RedisDsn = str
+    DATABASE_VALIDATORS_AVAILABLE = False
 
 
 class APISettings(BaseSettings):
@@ -56,7 +66,7 @@ class SecuritySettings(BaseSettings):
     """Enhanced security configuration settings"""
     
     # JWT Configuration
-    jwt_secret_key: str = Field(..., env="JWT_SECRET_KEY")
+    jwt_secret_key: str = Field(default="dev-secret-key-change-in-production", env="JWT_SECRET_KEY")
     jwt_algorithm: str = Field(default="HS256", env="JWT_ALGORITHM")
     jwt_access_token_expire_minutes: int = Field(default=60, env="JWT_ACCESS_TOKEN_EXPIRE_MINUTES")
     jwt_refresh_token_expire_days: int = Field(default=30, env="JWT_REFRESH_TOKEN_EXPIRE_DAYS")
@@ -93,7 +103,7 @@ class SecuritySettings(BaseSettings):
     oauth2_spotify_client_secret: Optional[str] = Field(default=None, env="OAUTH2_SPOTIFY_CLIENT_SECRET")
     
     # Encryption
-    encryption_key: str = Field(..., env="ENCRYPTION_KEY")
+    encryption_key: str = Field(default="dev-encryption-key-change-in-production", env="ENCRYPTION_KEY")
     encryption_algorithm: str = Field(default="AES-256-GCM", env="ENCRYPTION_ALGORITHM")
     
     # SSL/TLS Configuration
@@ -161,11 +171,11 @@ class DatabaseSettings(BaseSettings):
         env_file_encoding = "utf-8"
 
 
-class SecuritySettings(BaseSettings):
+class AdditionalSecuritySettings(BaseSettings):
     """Security and authentication configuration"""
     
     # JWT Configuration
-    jwt_secret_key: str = Field(env="JWT_SECRET_KEY")
+    jwt_secret_key: str = Field(default="dev-secret-key-change-in-production", env="JWT_SECRET_KEY")
     jwt_algorithm: str = Field(default="HS256", env="JWT_ALGORITHM")
     jwt_access_token_expire: int = Field(default=3600, env="JWT_ACCESS_TOKEN_EXPIRE")  # 1 hour
     jwt_refresh_token_expire: int = Field(default=604800, env="JWT_REFRESH_TOKEN_EXPIRE")  # 7 days
@@ -177,8 +187,8 @@ class SecuritySettings(BaseSettings):
     oauth2_github_client_secret: Optional[str] = Field(default=None, env="OAUTH2_GITHUB_CLIENT_SECRET")
     
     # Encryption Configuration
-    encryption_key: str = Field(env="ENCRYPTION_KEY")
-    password_salt: str = Field(env="PASSWORD_SALT")
+    encryption_key: str = Field(default="dev-encryption-key-change-in-production", env="ENCRYPTION_KEY")
+    password_salt: str = Field(default="dev-password-salt-change-in-production", env="PASSWORD_SALT")
     
     # Rate Limiting
     rate_limit_requests: int = Field(default=1000, env="RATE_LIMIT_REQUESTS")

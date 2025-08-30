@@ -23,25 +23,41 @@ except ImportError as e:
     MAIN_APP_AVAILABLE = False
 
 # Try to import config, fallback to simple config if needed
-try:
-    from config import settings
-    print("✓ Successfully imported config.py")
+import os
+if os.path.exists(os.path.join(os.path.dirname(__file__), "config", ".disabled")):
+    # Use the simple config.py instead of complex config/ directory
+    import sys
+    import importlib.util
+    config_path = os.path.join(os.path.dirname(__file__), "config.py")
+    spec = importlib.util.spec_from_file_location("simple_config", config_path)
+    config_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(config_module)
+    settings = config_module.settings
+    print("✓ Successfully imported simplified config.py")
     print(f"✓ Environment: {settings.app.environment}")
     print(f"✓ Debug mode: {settings.app.debug}")
     print(f"✓ Host: {settings.app.host}")
     print(f"✓ Port: {settings.app.port}")
-except ImportError as e:
-    print(f"❌ Failed to import config: {e}")
-    # Create minimal fallback settings
-    class MockSettings:
-        class App:
-            environment = "development"
-            debug = True
-            host = "127.0.0.1"
-            port = 8000
-        app = App()
-    settings = MockSettings()
-    print("⚠️  Using fallback settings")
+else:
+    try:
+        from config import settings
+        print("✓ Successfully imported config.py")
+        print(f"✓ Environment: {settings.app.environment}")
+        print(f"✓ Debug mode: {settings.app.debug}")
+        print(f"✓ Host: {settings.app.host}")
+        print(f"✓ Port: {settings.app.port}")
+    except ImportError as e:
+        print(f"❌ Failed to import config: {e}")
+        # Create minimal fallback settings
+        class MockSettings:
+            class App:
+                environment = "development"
+                debug = True
+                host = "127.0.0.1"
+                port = 8000
+            app = App()
+        settings = MockSettings()
+        print("⚠️  Using fallback settings")
 
 # Create minimal FastAPI app if main app not available
 if not MAIN_APP_AVAILABLE:

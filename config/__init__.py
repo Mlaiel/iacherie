@@ -44,64 +44,133 @@ except ImportError:
     AuthenticationConfig = None
     AuthorizationConfig = None
     EncryptionConfig = None
-from .database import (
-    DatabaseConfigManager,
-    CacheConfigManager,
-    VectorDatabaseConfigManager,
-    SearchConfigManager
-)
-from .integrations import (
-    SpotifyConfigManager,
-    SocialPlatformsConfigManager,
-    PaymentGatewaysConfigManager,
-    CloudStorageConfigManager
-)
-from .ai_engines import (
-    MachineLearningConfigManager,
-    FingerprintingConfigManager,
-    AudioProcessingConfigManager,
-    ContentAnalysisConfigManager
-)
-from .infrastructure import (
-    KubernetesConfigManager,
-    MonitoringConfigManager,
-    LoggingConfigManager,
-    NetworkingConfigManager
-)
-from .business import (
-    MonetizationConfigManager,
-    LicensingConfigManager,
-    AnalyticsConfigManager,
-    NotificationConfigManager
-)
+try:
+    from .database import (
+        DatabaseConfigManager,
+        CacheConfigManager,
+        VectorDatabaseConfigManager,
+        SearchConfigManager
+    )
+except ImportError:
+    # Database modules not available, create placeholders
+    DatabaseConfigManager = None
+    CacheConfigManager = None
+    VectorDatabaseConfigManager = None
+    SearchConfigManager = None
+try:
+    from .integrations import (
+        SpotifyConfigManager,
+        SocialPlatformsConfigManager,
+        PaymentGatewaysConfigManager,
+        CloudStorageConfigManager
+    )
+except ImportError:
+    # Integration modules not available, create placeholders
+    SpotifyConfigManager = None
+    SocialPlatformsConfigManager = None
+    PaymentGatewaysConfigManager = None
+    CloudStorageConfigManager = None
+
+try:
+    from .ai_engines import (
+        MachineLearningConfigManager,
+        FingerprintingConfigManager,
+        AudioProcessingConfigManager,
+        ContentAnalysisConfigManager
+    )
+except ImportError:
+    # AI engine modules not available, create placeholders
+    MachineLearningConfigManager = None
+    FingerprintingConfigManager = None
+    AudioProcessingConfigManager = None
+    ContentAnalysisConfigManager = None
+try:
+    from .infrastructure import (
+        KubernetesConfigManager,
+        MonitoringConfigManager,
+        LoggingConfigManager,
+        NetworkingConfigManager
+    )
+except ImportError:
+    # Infrastructure modules not available, create placeholders
+    KubernetesConfigManager = None
+    MonitoringConfigManager = None
+    LoggingConfigManager = None
+    NetworkingConfigManager = None
+
+try:
+    from .business import (
+        MonetizationConfigManager,
+        LicensingConfigManager,
+        AnalyticsConfigManager,
+        NotificationConfigManager
+    )
+except ImportError:
+    # Business modules not available, create placeholders
+    MonetizationConfigManager = None
+    LicensingConfigManager = None
+    AnalyticsConfigManager = None
+    NotificationConfigManager = None
 
 # Import des nouvelles configurations avancées
-from .apis import (
-    content_delivery_apis_config,
-    ml_apis_config,
-    blockchain_apis_config,
-    CDNProvider,
-    MLFramework,
-    BlockchainNetwork
-)
-from .business.advanced_monetization_config import (
-    advanced_monetization_config,
-    RevenueStream,
-    PricingTier,
-    PaymentMethod
-)
-from .business.content_management_config import (
-    content_management_config,
-    ContentType,
-    ContentStatus,
-    QualityLevel
-)
-from .security.advanced_cybersecurity_config import (
-    advanced_cybersecurity_config,
-    ThreatLevel,
-    AttackType,
-    SecurityAction
-)
+try:
+    from .apis import (
+        content_delivery_apis_config,
+        ml_apis_config,
+        blockchain_apis_config,
+        CDNProvider,
+        MLFramework,
+        BlockchainNetwork
+    )
+except ImportError:
+    # API configs not available, create placeholders
+    content_delivery_apis_config = None
+    ml_apis_config = None
+    blockchain_apis_config = None
+    CDNProvider = None
+    MLFramework = None
+    BlockchainNetwork = None
+
+try:
+    from .business.advanced_monetization_config import (
+        advanced_monetization_config,
+        RevenueStream,
+        PricingTier,
+        PaymentMethod
+    )
+except ImportError:
+    # Advanced monetization configs not available, create placeholders
+    advanced_monetization_config = None
+    RevenueStream = None
+    PricingTier = None
+    PaymentMethod = None
+
+try:
+    from .business.content_management_config import (
+        content_management_config,
+        ContentType,
+        ContentStatus,
+        QualityLevel
+    )
+except ImportError:
+    # Content management configs not available, create placeholders
+    content_management_config = None
+    ContentType = None
+    ContentStatus = None
+    QualityLevel = None
+try:
+    from .security.advanced_cybersecurity_config import (
+        advanced_cybersecurity_config,
+        ThreatLevel,
+        AttackType,
+        SecurityAction
+    )
+except ImportError:
+    # Advanced cybersecurity configs not available, create placeholders
+    advanced_cybersecurity_config = None
+    ThreatLevel = None
+    AttackType = None
+    SecurityAction = None
 
 logger = logging.getLogger(__name__)
 
