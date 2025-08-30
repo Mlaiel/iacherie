@@ -47,6 +47,8 @@ Ce code et ce concept sont la propriété intellectuelle exclusive de **Fahed Ml
 
 ### Stack Technologique Principal
 - **Backend**: Python + FastAPI + Django
+- **Mobile**: Infrastructure mobile complète avec support natif Android/iOS + React Native
+- **Backend Mobile**: Passerelle API mobile de niveau entreprise avec synchronisation hors ligne
 - **IA/ML**: TensorFlow + PyTorch + Hugging Face
 - **Bases de Données**: PostgreSQL + Redis + MongoDB + FAISS Vector DB
 - **Sécurité**: JWT + OAuth2 + Chiffrement AES-256
