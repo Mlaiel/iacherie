@@ -51,6 +51,7 @@ from .vision_agent import VisionAgent
 from .music_agent import MusicAgent
 from .ml_agent import MLAgent
 from .vector_agent import VectorAgent
+from .remix_agent import RemixAgent
 
 # Import platform and business agents
 from .platform_agent import PlatformAgent
@@ -130,6 +131,7 @@ AGENT_REGISTRY = {
     'music_agent': MusicAgent,
     'ml_agent': MLAgent,
     'vector_agent': VectorAgent,
+    'remix_agent': RemixAgent,
     
     # Platform and business agents
     'platform_agent': PlatformAgent,
@@ -324,6 +326,7 @@ __all__ = [
     'MusicAgent',
     'MLAgent',
     'VectorAgent',
+    'RemixAgent',
     
     # Platform and business agents
     'PlatformAgent',
