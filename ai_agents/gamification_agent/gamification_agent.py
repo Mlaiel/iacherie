@@ -36,19 +36,31 @@ from datetime import datetime, timezone, timedelta
 from enum import Enum
 import uuid
 
-# Import base agent
+# Import base agent with proper fallback
 try:
-    from ..base import BaseAgent, AgentStatus
+    from ai_agents.base import BaseAgent, AgentStatus
 except ImportError:
-    # Fallback for direct testing
-    import sys
-    import os
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from base import BaseAgent, AgentStatus
+    try:
+        from ..base import BaseAgent, AgentStatus
+    except ImportError:
+        # Mock for standalone operation
+        class AgentStatus:
+            INITIALIZING = "initializing"
+            RUNNING = "running"
+            ACTIVE = "active"
+            STOPPED = "stopped"
+            ERROR = "error"
+        
+        class BaseAgent:
+            def __init__(self, agent_id: str = None, agent_type: str = None, config: Dict[str, Any] = None):
+                self.agent_id = agent_id or str(uuid.uuid4())
+                self.agent_type = agent_type or "unknown"
+                self.config = config or {}
+                self.status = AgentStatus.INITIALIZING
 
 # Import gamification system
 try:
-    from ...services.gamification_system import GamificationSystem
+    from services.gamification_system import GamificationSystem
 except ImportError:
     # Mock for standalone operation
     class GamificationSystem:
