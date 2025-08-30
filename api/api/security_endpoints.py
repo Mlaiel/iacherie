@@ -64,7 +64,7 @@ class SecurityAuditRequest(BaseModel):
     audit_type: str = Field(
         default="full",
         description="Type of audit to perform",
-        regex="^(full|quick|compliance|targeted)$",
+        pattern="^(full|quick|compliance|targeted)$",
         example="full"
     )
     scope: Optional[List[str]] = Field(
@@ -84,7 +84,7 @@ class SecurityAuditRequest(BaseModel):
     priority: str = Field(
         default="normal",
         description="Audit priority level",
-        regex="^(low|normal|high|urgent)$"
+        pattern="^(low|normal|high|urgent)$"
     )
 
 class VulnerabilityScanRequest(BaseModel):
@@ -92,7 +92,7 @@ class VulnerabilityScanRequest(BaseModel):
     scan_type: str = Field(
         ...,
         description="Type of vulnerability scan",
-        regex="^(dependencies|infrastructure|application|api|full)$",
+        pattern="^(dependencies|infrastructure|application|api|full)$",
         example="dependencies"
     )
     target: Optional[str] = Field(
@@ -103,7 +103,7 @@ class VulnerabilityScanRequest(BaseModel):
     severity_filter: Optional[str] = Field(
         None,
         description="Filter by severity level",
-        regex="^(critical|high|medium|low|info)$"
+        pattern="^(critical|high|medium|low|info)$"
     )
 
 class SecurityConfigurationRequest(BaseModel):
@@ -153,7 +153,7 @@ class ComplianceReportRequest(BaseModel):
     format: str = Field(
         default="json",
         description="Report format",
-        regex="^(json|pdf|csv|xml)$"
+        pattern="^(json|pdf|csv|xml)$"
     )
     include_evidence: bool = Field(
         default=True,
@@ -393,7 +393,7 @@ async def get_audit_status(
 )
 async def get_audit_report(
     audit_id: str = Path(..., description="Audit identifier"),
-    format: str = Query("json", regex="^(json|pdf|csv)$", description="Report format"),
+    format: str = Query("json", pattern="^(json|pdf|csv)$", description="Report format"),
     current_user: str = Depends(lambda: "admin_user")
 ):
     """Get the complete security audit report."""

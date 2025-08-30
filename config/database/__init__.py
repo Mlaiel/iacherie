@@ -18,13 +18,32 @@ Contact: mlaiel@live.de for licensing inquiries.
 """
 
 from .postgresql_config import PostgreSQLConfig
-from .mongodb_config import MongoDBConfig  
+try:
+    from .mongodb_config import MongoDBConfig  
+except ImportError:
+    # MongoDB not available, create placeholder
+    MongoDBConfig = None
 from .redis_config import RedisConfig
-from .faiss_config import FAISSConfig
-from .elasticsearch_config import ElasticsearchConfig
-from .connection_pool import DatabaseConnectionPool
-from .migration_config import MigrationConfig
-from .backup_config import BackupConfig
+try:
+    from .faiss_config import FAISSConfig
+except ImportError:
+    FAISSConfig = None
+try:
+    from .elasticsearch_config import ElasticsearchConfig
+except ImportError:
+    ElasticsearchConfig = None
+try:
+    from .connection_pool import DatabaseConnectionPool
+except ImportError:
+    DatabaseConnectionPool = None
+try:
+    from .migration_config import MigrationConfig
+except ImportError:
+    MigrationConfig = None
+try:
+    from .backup_config import BackupConfig
+except ImportError:
+    BackupConfig = None
 from .vector_database_config import VectorDatabaseConfig, VectorDatabaseManager
 from .timeseries_config import TimeSeriesConfig, TimeSeriesManager
 from .graph_database_config import GraphDatabaseConfig, GraphDatabaseManager

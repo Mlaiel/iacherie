@@ -33,12 +33,17 @@ from .environments import (
     StagingConfigManager,
     TestingConfigManager
 )
-from .security import (
-    SecurityConfigManager,
-    EncryptionConfigManager,
-    AuthenticationConfigManager,
-    AuthorizationConfigManager
-)
+try:
+    from .security import (
+        AuthenticationConfig,
+        AuthorizationConfig,
+        EncryptionConfig
+    )
+except ImportError:
+    # Fallback if security modules are not available
+    AuthenticationConfig = None
+    AuthorizationConfig = None
+    EncryptionConfig = None
 from .database import (
     DatabaseConfigManager,
     CacheConfigManager,

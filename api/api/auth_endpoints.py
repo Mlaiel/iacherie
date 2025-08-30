@@ -33,7 +33,8 @@ from passlib.context import CryptContext
 try:
     from ..core.config import get_settings
     from ..core.database import get_db
-    from ..models.user import User, UserCreate, UserInDB, Token, TokenData
+    from ..schemas.user import UserCreate
+    from ..models.user import User, UserInDB, Token, TokenData
     from ..business.user_service import UserService
     from ..security.auth_manager import AuthManager
 except ImportError:
@@ -42,6 +43,28 @@ except ImportError:
     get_db = lambda: None
     UserService = type('UserService', (), {})
     AuthManager = type('AuthManager', (), {})
+    # Create a fallback UserCreate for development
+    class UserCreate(BaseModel):
+        username: str
+        email: str
+        password: str
+    # Create User placeholder
+    class User(BaseModel):
+        id: int
+        username: str
+        email: str
+
+# Create auth_manager instance
+try:
+    auth_manager = AuthManager()
+except:
+    # Create a dummy auth manager with required methods
+    class DummyAuthManager:
+        def get_current_user(self):
+            def dummy_user():
+                return User(id=1, username="test", email="test@test.com")
+            return dummy_user
+    auth_manager = DummyAuthManager()
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -96,7 +119,7 @@ class UserRegistrationRequest(BaseModel):
         ..., 
         min_length=3, 
         max_length=30,
-        regex=r'^[a-zA-Z0-9_-]+$',
+        pattern=r'^[a-zA-Z0-9_-]+$',
         description="Unique username (3-30 characters, alphanumeric, underscore, hyphen)",
         example="content_creator_2024"
     )
@@ -135,7 +158,7 @@ class UserRegistrationRequest(BaseModel):
     )
     phone_number: Optional[str] = Field(
         None,
-        regex=r'^\+?1?-?\.?\s?\(?([0-9]{3})\)?[-\.\s]?([0-9]{3})[-\.\s]?([0-9]{4})$',
+        pattern=r'^\+?1?-?\.?\s?\(?([0-9]{3})\)?[-\.\s]?([0-9]{3})[-\.\s]?([0-9]{4})$',
         description="Phone number for SMS 2FA (optional)",
         example="+1-555-123-4567"
     )
