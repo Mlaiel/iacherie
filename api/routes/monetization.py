@@ -28,7 +28,7 @@ from ...monetization.licensing_manager import LicensingManager
 
 # Pydantic models
 class PlatformConnection(BaseModel):
-    platform: str = Field(..., regex="^(youtube|spotify|instagram|tiktok|facebook|twitter|patreon|onlyfans)$")
+    platform: str = Field(..., pattern="^(youtube|spotify|instagram|tiktok|facebook|twitter|patreon|onlyfans)$")
     api_key: Optional[str] = None
     access_token: Optional[str] = None
     channel_id: Optional[str] = None
@@ -40,11 +40,11 @@ class RevenueStream(BaseModel):
     stream_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     platform: str
     content_id: str
-    revenue_type: str = Field(..., regex="^(ad_revenue|subscriptions|donations|sponsorships|licensing|merchandise)$")
+    revenue_type: str = Field(..., pattern="^(ad_revenue|subscriptions|donations|sponsorships|licensing|merchandise)$")
     amount: Decimal = Field(..., gt=0)
-    currency: str = Field(default="USD", regex="^[A-Z]{3}$")
+    currency: str = Field(default="USD", pattern="^[A-Z]{3}$")
     date_earned: datetime
-    payment_status: str = Field(default="pending", regex="^(pending|processing|paid|failed)$")
+    payment_status: str = Field(default="pending", pattern="^(pending|processing|paid|failed)$")
     metadata: Optional[Dict[str, Any]] = None
 
 
@@ -71,22 +71,22 @@ class MonetizationGoal(BaseModel):
     target_date: datetime
     platforms: List[str]
     revenue_types: List[str]
-    status: str = Field(default="active", regex="^(active|paused|completed|cancelled)$")
+    status: str = Field(default="active", pattern="^(active|paused|completed|cancelled)$")
 
 
 class PayoutRequest(BaseModel):
     amount: Decimal = Field(..., gt=0)
     currency: str = Field(default="USD")
-    payment_method: str = Field(..., regex="^(bank_transfer|paypal|stripe|wise|crypto)$")
+    payment_method: str = Field(..., pattern="^(bank_transfer|paypal|stripe|wise|crypto)$")
     payment_details: Dict[str, str]
-    priority: str = Field(default="normal", regex="^(low|normal|high|urgent)$")
+    priority: str = Field(default="normal", pattern="^(low|normal|high|urgent)$")
 
 
 class LicensingDeal(BaseModel):
     deal_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str
     licensee_name: str
-    license_type: str = Field(..., regex="^(exclusive|non_exclusive|sync|master|mechanical)$")
+    license_type: str = Field(..., pattern="^(exclusive|non_exclusive|sync|master|mechanical)$")
     territory: str = Field(default="worldwide")
     duration_months: int = Field(..., gt=0, le=120)
     total_amount: Decimal = Field(..., gt=0)
@@ -204,7 +204,7 @@ async def connect_platform(
 
 @router.get("/revenue/summary", response_model=RevenueAnalytics)
 async def get_revenue_summary(
-    period: str = Field(default="30d", regex="^(7d|30d|90d|1y|all)$"),
+    period: str = Field(default="30d", pattern="^(7d|30d|90d|1y|all)$"),
     user: dict = Depends(get_current_user)
 ):
     """Get revenue summary and analytics"""
@@ -571,7 +571,7 @@ async def create_licensing_deal(
 async def generate_revenue_report(
     start_date: datetime,
     end_date: datetime,
-    report_type: str = Field(default="comprehensive", regex="^(summary|detailed|comprehensive|tax)$"),
+    report_type: str = Field(default="comprehensive", pattern="^(summary|detailed|comprehensive|tax)$"),
     user: dict = Depends(get_current_user)
 ):
     """Generate detailed revenue report"""

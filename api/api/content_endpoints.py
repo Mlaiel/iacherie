@@ -548,7 +548,7 @@ async def search_content(
 
 @router.get("/trending", response_model=Dict[str, Any])
 async def get_trending_content(
-    timeframe: str = Query("week", regex="^(day|week|month)$"),
+    timeframe: str = Query("week", pattern="^(day|week|month)$"),
     category: Optional[str] = Query(None),
     limit: int = Query(20, ge=1, le=50),
     content_service: ContentService = Depends()

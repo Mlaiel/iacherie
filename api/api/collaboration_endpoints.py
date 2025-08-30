@@ -203,7 +203,7 @@ async def propose_partnership(
 
 @router.get("/requests", response_model=Dict[str, Any])
 async def get_collaboration_requests(
-    status_filter: Optional[str] = Query(None, regex="^(pending|accepted|rejected|active|completed)$"),
+    status_filter: Optional[str] = Query(None, pattern="^(pending|accepted|rejected|active|completed)$"),
     type_filter: Optional[str] = Query(None),
     skip: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=50),

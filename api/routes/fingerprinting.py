@@ -32,9 +32,9 @@ from ...ai_engine.fingerprinting.vector_matching_engine import VectorMatchingEng
 # Pydantic models
 class FingerprintRequest(BaseModel):
     file_id: str
-    content_type: str = Field(..., regex="^(audio|video|image|text)$")
-    analysis_level: str = Field(default="standard", regex="^(basic|standard|advanced|enterprise)$")
-    priority: str = Field(default="normal", regex="^(low|normal|high|urgent)$")
+    content_type: str = Field(..., pattern="^(audio|video|image|text)$")
+    analysis_level: str = Field(default="standard", pattern="^(basic|standard|advanced|enterprise)$")
+    priority: str = Field(default="normal", pattern="^(low|normal|high|urgent)$")
     metadata: Optional[Dict[str, Any]] = None
 
 

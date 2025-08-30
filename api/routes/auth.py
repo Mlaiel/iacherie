@@ -27,7 +27,7 @@ class UserRegistration(BaseModel):
     username: str = Field(..., min_length=3, max_length=50)
     first_name: str = Field(..., min_length=1, max_length=50)
     last_name: str = Field(..., min_length=1, max_length=50)
-    creator_type: str = Field(..., regex="^(musician|blogger|photographer|influencer|comedian|writer|other)$")
+    creator_type: str = Field(..., pattern="^(musician|blogger|photographer|influencer|comedian|writer|other)$")
     terms_accepted: bool = Field(..., description="Must accept terms of service")
 
 

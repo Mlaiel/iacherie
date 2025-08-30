@@ -72,7 +72,7 @@ class WebhookStatus(str, Enum):
 # Pydantic models
 class WebhookEndpoint(BaseModel):
     webhook_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    url: str = Field(..., regex=r'^https?://.+')
+    url: str = Field(..., pattern=r'^https?://.+')
     platform: PlatformType
     events: List[WebhookEvent]
     secret: Optional[str] = None

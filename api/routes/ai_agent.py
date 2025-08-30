@@ -70,7 +70,7 @@ class MusicCompositionRequest(BaseModel):
 
 class MusicAnalysisRequest(BaseModel):
     audio_file_id: str
-    analysis_type: str = Field(..., regex="^(full|structure|harmony|rhythm|melody|style)$")
+    analysis_type: str = Field(..., pattern="^(full|structure|harmony|rhythm|melody|style)$")
     include_recommendations: bool = Field(default=True)
     compare_to_library: bool = Field(default=False)
     generate_insights: bool = Field(default=True)
@@ -82,12 +82,12 @@ class RecommendationRequest(BaseModel):
     collaboration_goals: Optional[str] = None
     target_audience: Optional[str] = None
     platform_focus: List[str] = Field(default=["all"])
-    recommendation_type: str = Field(..., regex="^(tracks|artists|genres|collaborators|tools)$")
+    recommendation_type: str = Field(..., pattern="^(tracks|artists|genres|collaborators|tools)$")
     max_recommendations: int = Field(default=10, ge=1, le=50)
 
 
 class ContentGenerationRequest(BaseModel):
-    content_type: str = Field(..., regex="^(lyrics|description|social_post|blog_article|press_release)$")
+    content_type: str = Field(..., pattern="^(lyrics|description|social_post|blog_article|press_release)$")
     topic: str = Field(..., min_length=1)
     style: str = Field(default="professional")
     tone: str = Field(default="neutral")

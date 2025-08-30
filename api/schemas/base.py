@@ -189,7 +189,7 @@ class SearchQuerySchema(BaseSchema):
     query: Optional[str] = Field(None, description="Search query string")
     filters: Dict[str, Any] = Field(default_factory=dict, description="Search filters")
     sort_by: Optional[str] = Field(None, description="Field to sort by")
-    sort_order: str = Field("desc", regex="^(asc|desc)$", description="Sort order")
+    sort_order: str = Field("desc", pattern="^(asc|desc)$", description="Sort order")
     page: int = Field(1, ge=1, description="Page number")
     page_size: int = Field(10, ge=1, le=100, description="Items per page")
     include_deleted: bool = Field(False, description="Include soft deleted records")

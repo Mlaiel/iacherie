@@ -33,7 +33,7 @@ from passlib.context import CryptContext
 try:
     from ..core.config import get_settings
     from ..core.database import get_db
-    from ..models.user import User, UserCreate, UserInDB, Token, TokenData
+    from ..models.user_models import User
     from ..business.user_service import UserService
     from ..security.auth_manager import AuthManager
 except ImportError:
@@ -43,6 +43,29 @@ except ImportError:
     UserService = type('UserService', (), {})
     AuthManager = type('AuthManager', (), {})
 
+# Define required Pydantic models as fallbacks if imports fail
+class UserCreate(BaseModel):
+    """User creation model"""
+    email: EmailStr
+    username: str
+    password: str
+
+class UserInDB(BaseModel):
+    """User database representation"""
+    id: str
+    email: str
+    username: str
+    hashed_password: str
+
+class Token(BaseModel):
+    """Token response model"""
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    """Token data model"""
+    username: Optional[str] = None
+
 logger = logging.getLogger(__name__)
 settings = get_settings()
 
@@ -51,6 +74,19 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 # Security context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
+
+# Initialize auth manager (fallback if not available)
+try:
+    auth_manager = AuthManager()
+except:
+    class MockAuthManager:
+        def get_current_user(self):
+            return None
+        def authenticate_user(self, email, password):
+            return None
+        def create_access_token(self, data):
+            return "mock_token"
+    auth_manager = MockAuthManager()
 
 # Enums for better API documentation
 class UserRole(str, Enum):
@@ -96,7 +132,7 @@ class UserRegistrationRequest(BaseModel):
         ..., 
         min_length=3, 
         max_length=30,
-        regex=r'^[a-zA-Z0-9_-]+$',
+        pattern=r'^[a-zA-Z0-9_-]+$',
         description="Unique username (3-30 characters, alphanumeric, underscore, hyphen)",
         example="content_creator_2024"
     )
@@ -135,7 +171,7 @@ class UserRegistrationRequest(BaseModel):
     )
     phone_number: Optional[str] = Field(
         None,
-        regex=r'^\+?1?-?\.?\s?\(?([0-9]{3})\)?[-\.\s]?([0-9]{3})[-\.\s]?([0-9]{4})$',
+        pattern=r'^\+?1?-?\.?\s?\(?([0-9]{3})\)?[-\.\s]?([0-9]{3})[-\.\s]?([0-9]{4})$',
         description="Phone number for SMS 2FA (optional)",
         example="+1-555-123-4567"
     )

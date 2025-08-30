@@ -97,7 +97,7 @@ class PayoutRequest(BaseModel):
     currency: Currency = Field(default=Currency.USD)
     destination_method_id: str
     description: str = Field(..., min_length=1, max_length=500)
-    priority: str = Field(default="normal", regex="^(low|normal|high|urgent)$")
+    priority: str = Field(default="normal", pattern="^(low|normal|high|urgent)$")
     metadata: Optional[Dict[str, Any]] = None
 
 
@@ -134,7 +134,7 @@ class BankAccountDetails(BaseModel):
     swift_code: Optional[str] = None
     bank_name: str = Field(..., min_length=1, max_length=200)
     bank_address: Dict[str, str]
-    account_type: str = Field(default="checking", regex="^(checking|savings|business)$")
+    account_type: str = Field(default="checking", pattern="^(checking|savings|business)$")
 
 
 class PaymentAnalytics(BaseModel):

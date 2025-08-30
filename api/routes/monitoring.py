@@ -30,11 +30,11 @@ from ...monitoring.automation.dmca_automation import DMCAAutomation
 class MonitoringTarget(BaseModel):
     target_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     fingerprint_id: str
-    platform: str = Field(..., regex="^(youtube|instagram|tiktok|spotify|facebook|twitter|all)$")
-    monitoring_frequency: str = Field(default="hourly", regex="^(realtime|hourly|daily|weekly)$")
+    platform: str = Field(..., pattern="^(youtube|instagram|tiktok|spotify|facebook|twitter|all)$")
+    monitoring_frequency: str = Field(default="hourly", pattern="^(realtime|hourly|daily|weekly)$")
     alert_threshold: float = Field(default=0.8, ge=0.5, le=1.0)
     auto_takedown: bool = Field(default=False)
-    notification_channels: List[str] = Field(default=["email"], regex="^(email|sms|push|slack|webhook)$")
+    notification_channels: List[str] = Field(default=["email"], pattern="^(email|sms|push|slack|webhook)$")
 
 
 class MonitoringAlert(BaseModel):
@@ -68,8 +68,8 @@ class DMCARequest(BaseModel):
     target_id: str
     violation_url: str
     evidence_fingerprint_id: str
-    claim_type: str = Field(default="copyright", regex="^(copyright|trademark|privacy)$")
-    urgency: str = Field(default="normal", regex="^(low|normal|high|urgent)$")
+    claim_type: str = Field(default="copyright", pattern="^(copyright|trademark|privacy)$")
+    urgency: str = Field(default="normal", pattern="^(low|normal|high|urgent)$")
     custom_message: Optional[str] = None
 
 
@@ -77,8 +77,8 @@ class PlatformScanRequest(BaseModel):
     platform: str
     search_terms: List[str]
     fingerprint_ids: List[str]
-    scan_depth: str = Field(default="standard", regex="^(quick|standard|deep|comprehensive)$")
-    time_range: str = Field(default="24h", regex="^(1h|6h|24h|7d|30d)$")
+    scan_depth: str = Field(default="standard", pattern="^(quick|standard|deep|comprehensive)$")
+    time_range: str = Field(default="24h", pattern="^(1h|6h|24h|7d|30d)$")
 
 
 class MonitoringSettings(BaseModel):

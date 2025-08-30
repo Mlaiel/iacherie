@@ -108,7 +108,7 @@ class NotificationPreferences(BaseModel):
     slack_webhook_url: Optional[str] = None
     custom_webhook_url: Optional[str] = None
     quiet_hours: Optional[Dict[str, str]] = None
-    alert_frequency: str = Field(default="immediate", regex="^(immediate|hourly|daily|weekly)$")
+    alert_frequency: str = Field(default="immediate", pattern="^(immediate|hourly|daily|weekly)$")
 
 
 class ManualAlert(BaseModel):

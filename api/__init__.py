@@ -46,28 +46,29 @@ will result in immediate legal action under international copyright laws.
 """
 
 # Import all core application modules
-from . import (
-    ai,
-    api, 
-    business,
-    core,
-    models,
-    services,
-    utils,
-    schemas,
-    security,
-    database,
-    config,
-    protection,
-    fingerprinting,
-    monetization,
-    crawlers,
-    workflow,
-    observability,
-    notifications,
-    multimedia,
-    blockchain
-)
+# Temporarily commented out to allow basic app startup
+# from . import (
+#     ai,
+#     api, 
+#     business,
+#     core,
+#     models,
+#     services,
+#     utils,
+#     schemas,
+#     security,
+#     database,
+#     config,
+#     protection,
+#     fingerprinting,
+#     monetization,
+#     crawlers,
+#     workflow,
+#     observability,
+#     notifications,
+#     multimedia,
+#     blockchain
+# )
 
 # Export all modules for external access
 __all__ = [

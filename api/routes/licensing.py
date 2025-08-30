@@ -61,7 +61,7 @@ class LicenseAgreement(BaseModel):
     license_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str
     licensee_name: str = Field(..., min_length=1, max_length=200)
-    licensee_email: str = Field(..., regex=r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+    licensee_email: str = Field(..., pattern=r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
     licensee_company: Optional[str] = None
     license_type: LicenseType
     territory: Territory = Field(default=Territory.WORLDWIDE)

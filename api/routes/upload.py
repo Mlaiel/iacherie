@@ -57,7 +57,7 @@ class UploadMetadata(BaseModel):
     genre: Optional[str] = None
     artist: Optional[str] = None
     album: Optional[str] = None
-    privacy_level: str = Field(default="private", regex="^(public|private|unlisted)$")
+    privacy_level: str = Field(default="private", pattern="^(public|private|unlisted)$")
     enable_protection: bool = Field(default=True)
     auto_fingerprint: bool = Field(default=True)
     custom_metadata: Optional[Dict[str, Any]] = None
@@ -77,7 +77,7 @@ class UploadResponse(BaseModel):
 
 class ProcessingStatus(BaseModel):
     file_id: str
-    status: str = Field(..., regex="^(pending|processing|completed|failed)$")
+    status: str = Field(..., pattern="^(pending|processing|completed|failed)$")
     progress: float = Field(..., ge=0.0, le=100.0)
     current_step: str
     estimated_completion: Optional[datetime] = None
@@ -613,7 +613,7 @@ async def delete_uploaded_file(
 @router.get("/download/{file_id}")
 async def download_file(
     file_id: str,
-    version: str = Field(default="original", regex="^(original|processed|compressed)$"),
+    version: str = Field(default="original", pattern="^(original|processed|compressed)$"),
     user: dict = Depends(get_current_user)
 ):
     """Download uploaded file"""

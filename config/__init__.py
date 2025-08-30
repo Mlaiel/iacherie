@@ -27,76 +27,78 @@ from pathlib import Path
 from abc import ABC, abstractmethod
 
 # Import des managers de configuration
-from .environments import (
-    DevelopmentConfigManager,
-    ProductionConfigManager,
-    StagingConfigManager,
-    TestingConfigManager
-)
-from .security import (
-    SecurityConfigManager,
-    EncryptionConfigManager,
-    AuthenticationConfigManager,
-    AuthorizationConfigManager
-)
-from .database import (
-    DatabaseConfigManager,
-    CacheConfigManager,
-    VectorDatabaseConfigManager,
-    SearchConfigManager
-)
-from .integrations import (
-    SpotifyConfigManager,
-    SocialPlatformsConfigManager,
-    PaymentGatewaysConfigManager,
-    CloudStorageConfigManager
-)
-from .ai_engines import (
-    MachineLearningConfigManager,
-    FingerprintingConfigManager,
-    AudioProcessingConfigManager,
-    ContentAnalysisConfigManager
-)
-from .infrastructure import (
-    KubernetesConfigManager,
-    MonitoringConfigManager,
-    LoggingConfigManager,
-    NetworkingConfigManager
-)
-from .business import (
-    MonetizationConfigManager,
-    LicensingConfigManager,
-    AnalyticsConfigManager,
-    NotificationConfigManager
-)
+# Temporarily commented out to allow basic config loading
+# from .environments import (
+#     DevelopmentConfigManager,
+#     ProductionConfigManager,
+#     StagingConfigManager,
+#     TestingConfigManager
+# )
+# Temporarily commented out missing imports
+# from .security import (
+#     SecurityConfigManager,
+#     EncryptionConfigManager,
+#     AuthenticationConfigManager,
+#     AuthorizationConfigManager
+# )
+# from .database import (
+#     DatabaseConfigManager,
+#     CacheConfigManager,
+#     VectorDatabaseConfigManager,
+#     SearchConfigManager
+# )
+# from .integrations import (
+#     SpotifyConfigManager,
+#     SocialPlatformsConfigManager,
+#     PaymentGatewaysConfigManager,
+#     CloudStorageConfigManager
+# )
+# from .ai_engines import (
+#     MachineLearningConfigManager,
+#     FingerprintingConfigManager,
+#     AudioProcessingConfigManager,
+#     ContentAnalysisConfigManager
+# )
+# from .infrastructure import (
+#     KubernetesConfigManager,
+#     MonitoringConfigManager,
+#     LoggingConfigManager,
+#     NetworkingConfigManager
+# )
+# from .business import (
+#     MonetizationConfigManager,
+#     LicensingConfigManager,
+#     AnalyticsConfigManager,
+#     NotificationConfigManager
+# )
 
 # Import des nouvelles configurations avancées
-from .apis import (
-    content_delivery_apis_config,
-    ml_apis_config,
-    blockchain_apis_config,
-    CDNProvider,
-    MLFramework,
-    BlockchainNetwork
-)
-from .business.advanced_monetization_config import (
-    advanced_monetization_config,
-    RevenueStream,
-    PricingTier,
-    PaymentMethod
-)
-from .business.content_management_config import (
-    content_management_config,
-    ContentType,
-    ContentStatus,
-    QualityLevel
-)
-from .security.advanced_cybersecurity_config import (
-    advanced_cybersecurity_config,
-    ThreatLevel,
-    AttackType,
-    SecurityAction
-)
+# from .apis import (
+#     content_delivery_apis_config,
+#     ml_apis_config,
+#     blockchain_apis_config,
+#     CDNProvider,
+#     MLFramework,
+#     BlockchainNetwork
+# )
+# from .business.advanced_monetization_config import (
+#     advanced_monetization_config,
+#     RevenueStream,
+#     PricingTier,
+#     PaymentMethod
+# )
+# from .business.content_management_config import (
+#     content_management_config,
+#     ContentType,
+#     ContentStatus,
+#     QualityLevel
+# )
+# from .security.advanced_cybersecurity_config import (
+#     advanced_cybersecurity_config,
+#     ThreatLevel,
+#     AttackType,
+#     SecurityAction
+# )
 
 logger = logging.getLogger(__name__)
 
