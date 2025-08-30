@@ -535,7 +535,7 @@ class CopyrightComplianceChecker:
         
         return issues
     
-    def _detect_watermark(self, content: Dict[str, Any]) -> bool:
+    async def _detect_watermark(self, content: Dict[str, Any]) -> bool:
         """Détecte la présence d'un watermark"""
         # Analyse basique pour détecter watermarks
         

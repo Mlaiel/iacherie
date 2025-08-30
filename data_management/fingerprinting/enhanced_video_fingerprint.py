@@ -455,15 +455,18 @@ class VideoFingerprintEngine:
         
         elif self.config.extraction_mode == FrameExtractionMode.KEYFRAMES:
             # Extraction des frames clés
-            yield from self._extract_keyframes(cap, fps)
+            async for frame_data in self._extract_keyframes(cap, fps):
+                yield frame_data
         
         elif self.config.extraction_mode == FrameExtractionMode.SCENE_CHANGES:
             # Extraction sur les changements de scène
-            yield from self._extract_scene_change_frames(cap, fps)
+            async for frame_data in self._extract_scene_change_frames(cap, fps):
+                yield frame_data
         
         elif self.config.extraction_mode == FrameExtractionMode.ADAPTIVE:
             # Extraction adaptative combinée
-            yield from self._extract_adaptive_frames(cap, fps)
+            async for frame_data in self._extract_adaptive_frames(cap, fps):
+                yield frame_data
         
         cap.release()
     
@@ -502,7 +505,8 @@ class VideoFingerprintEngine:
         """Extrait les frames sur les changements de scène"""
         # Implementation would use scene detection algorithm
         # For now, use simplified version
-        yield from self._extract_keyframes(cap, fps)
+        async for frame_data in self._extract_keyframes(cap, fps):
+            yield frame_data
     
     async def _extract_adaptive_frames(self, cap: cv2.VideoCapture, fps: float):
         """Extraction adaptative intelligente"""
