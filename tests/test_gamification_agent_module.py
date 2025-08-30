@@ -280,7 +280,7 @@ class TestGamificationAgentModule(unittest.TestCase):
         base_amounts = [50, 100, 200, 500]
         optimized_amounts = [60, 150, 300, 1200]
         
-        expected_tiers = ["silver", "platinum", "gold", "diamond"]
+        expected_tiers = ["silver", "platinum", "platinum", "diamond"]
         
         def determine_tier(optimized_amount, base_amount):
             ratio = optimized_amount / base_amount if base_amount > 0 else 1.0
