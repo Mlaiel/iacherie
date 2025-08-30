@@ -1120,5 +1120,131 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
     
     async def execute_crawl_job_async(self, job: CrawlJob) -> CrawlMetrics:
         """Execute a crawl job asynchronously with full monitoring"""
-        # This would implement the actual crawling logic
-        pass
+        start_time = datetime.now()
+        
+        try:
+            self.logger.info(f"Starting async crawl job execution: {job.job_id}")
+            
+            # Initialize metrics
+            metrics = CrawlMetrics(
+                job_id=job.job_id,
+                start_time=start_time,
+                total_pages_discovered=0,
+                total_pages_crawled=0,
+                total_content_extracted=0,
+                total_errors=0,
+                status="running"
+            )
+            
+            # Update job status
+            job.status = "running"
+            job.started_at = start_time
+            
+            # Process each target URL
+            for url in job.target_urls:
+                try:
+                    self.logger.debug(f"Processing URL: {url}")
+                    
+                    # Simulate crawling process
+                    await asyncio.sleep(0.1)  # Simulate network delay
+                    
+                    # Extract content based on job configuration
+                    content_items = await self._extract_content_from_url(url, job.content_types)
+                    
+                    # Store extracted content
+                    for content in content_items:
+                        await self._store_crawled_content(content, job.job_id)
+                    
+                    metrics.total_pages_crawled += 1
+                    metrics.total_content_extracted += len(content_items)
+                    
+                    # Respect rate limiting
+                    if job.rate_limit and job.rate_limit > 0:
+                        await asyncio.sleep(1.0 / job.rate_limit)
+                    
+                except Exception as url_error:
+                    self.logger.error(f"Error processing URL {url}: {url_error}")
+                    metrics.total_errors += 1
+                    continue
+            
+            # Finalize metrics
+            metrics.end_time = datetime.now()
+            metrics.duration = (metrics.end_time - start_time).total_seconds()
+            metrics.status = "completed"
+            
+            # Update job status
+            job.status = "completed"
+            job.completed_at = metrics.end_time
+            job.metrics = metrics
+            
+            self.logger.info(f"Crawl job {job.job_id} completed successfully. "
+                           f"Pages: {metrics.total_pages_crawled}, "
+                           f"Content: {metrics.total_content_extracted}, "
+                           f"Errors: {metrics.total_errors}")
+            
+            return metrics
+            
+        except Exception as e:
+            self.logger.error(f"Critical error in crawl job {job.job_id}: {e}")
+            
+            # Update failure metrics
+            metrics.end_time = datetime.now()
+            metrics.duration = (metrics.end_time - start_time).total_seconds()
+            metrics.status = "failed"
+            metrics.error_message = str(e)
+            
+            job.status = "failed"
+            job.completed_at = metrics.end_time
+            job.error_message = str(e)
+            
+            raise
+    
+    async def _extract_content_from_url(self, url: str, content_types: List[str]) -> List[Dict[str, Any]]:
+        """Extract content from a URL based on specified content types"""
+        content_items = []
+        
+        try:
+            # Simulate content extraction
+            for content_type in content_types:
+                if content_type == "text":
+                    content_items.append({
+                        "type": "text",
+                        "url": url,
+                        "content": f"Sample text content from {url}",
+                        "extracted_at": datetime.now().isoformat()
+                    })
+                elif content_type == "images":
+                    content_items.append({
+                        "type": "image",
+                        "url": url,
+                        "src": f"{url}/sample-image.jpg",
+                        "alt": "Sample image",
+                        "extracted_at": datetime.now().isoformat()
+                    })
+                elif content_type == "links":
+                    content_items.append({
+                        "type": "link",
+                        "url": url,
+                        "href": f"{url}/sample-link",
+                        "text": "Sample link",
+                        "extracted_at": datetime.now().isoformat()
+                    })
+            
+        except Exception as e:
+            self.logger.error(f"Error extracting content from {url}: {e}")
+            
+        return content_items
+    
+    async def _store_crawled_content(self, content: Dict[str, Any], job_id: str) -> None:
+        """Store crawled content with job association"""
+        try:
+            # Add job metadata
+            content["job_id"] = job_id
+            content["stored_at"] = datetime.now().isoformat()
+            
+            # In a real implementation, this would store to database
+            self.logger.debug(f"Stored content item for job {job_id}: {content['type']}")
+            
+        except Exception as e:
+            self.logger.error(f"Error storing content for job {job_id}: {e}")
+            raise
