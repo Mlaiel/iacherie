@@ -30,64 +30,40 @@ export * from './types';
 // Styling System
 export { gamificationStyles, tierIcons, challengeIcons, difficultyColors, getDifficultyLabel } from './gamification.styles';
 
-// Main Dashboard Component
-export { default as GamificationDashboard } from './GamificationDashboard';
+// Import all components first
+import GamificationDashboard from './GamificationDashboard';
+import ChallengeInterface from './ChallengeInterface';
+import LeaderboardComponent from './LeaderboardComponent';
+import SocialCompetitions from './SocialCompetitions';
+import AchievementPanel from './AchievementPanel';
+import RewardSystem from './RewardSystem';
+import ProgressTracker from './ProgressTracker';
+import BadgeCollection from './BadgeCollection';
+import VirtualEconomy from './VirtualEconomy';
+import ChallengeCreator from './ChallengeCreator';
+import CompetitionCalendar from './CompetitionCalendar';
+import EngagementMetrics from './EngagementMetrics';
+import RewardStore from './RewardStore';
 
-// Challenge Management
-export { default as ChallengeInterface } from './ChallengeInterface';
+// Export all components
+export { 
+  GamificationDashboard,
+  ChallengeInterface,
+  LeaderboardComponent,
+  SocialCompetitions,
+  AchievementPanel,
+  RewardSystem,
+  ProgressTracker,
+  BadgeCollection,
+  VirtualEconomy,
+  ChallengeCreator,
+  CompetitionCalendar,
+  EngagementMetrics,
+  RewardStore
+};
 
-// Ranking and Competition
-export { default as LeaderboardComponent } from './LeaderboardComponent';
-export { default as SocialCompetitions } from './SocialCompetitions';
-
-// Achievement System
-export { default as AchievementPanel } from './AchievementPanel';
-
-// Reward Management
-export { default as RewardSystem } from './RewardSystem';
-
-// Progress Tracking
-export { default as ProgressTracker } from './ProgressTracker';
-
-// Additional Professional Components
-export { default as BadgeCollection } from './BadgeCollection';
-export { default as VirtualEconomy } from './VirtualEconomy';
-export { default as ChallengeCreator } from './ChallengeCreator';
-export { default as CompetitionCalendar } from './CompetitionCalendar';
-export { default as EngagementMetrics } from './EngagementMetrics';
-export { default as RewardStore } from './RewardStore';
-
-// Component Props Types for easy import
-export type { 
-  GamificationDashboardProps 
-} from './GamificationDashboard';
-
-export type { 
-  ChallengeInterfaceProps 
-} from './ChallengeInterface';
-
-export type { 
-  LeaderboardComponentProps 
-} from './LeaderboardComponent';
-
-export type { 
-  AchievementPanelProps 
-} from './AchievementPanel';
-
-export type { 
-  RewardSystemProps 
-} from './RewardSystem';
-
-export type { 
-  ProgressTrackerProps 
-} from './ProgressTracker';
-
-export type { 
-  SocialCompetitionsProps 
-} from './SocialCompetitions';
-
-// Re-export component prop types for external usage
-interface GamificationDashboardProps {
+// Re-export component prop types for external usage - Defined inline for type safety
+export interface GamificationDashboardProps {
   userId: string;
   className?: string;
   onChallengeClick?: (challenge: any) => void;
@@ -96,7 +72,7 @@ interface GamificationDashboardProps {
   onRewardClick?: (reward: any) => void;
 }
 
-interface ChallengeInterfaceProps {
+export interface ChallengeInterfaceProps {
   userId: string;
   className?: string;
   onChallengeJoin?: (challengeId: string) => Promise<void>;
@@ -104,7 +80,7 @@ interface ChallengeInterfaceProps {
   onChallengeDetails?: (challenge: any) => void;
 }
 
-interface LeaderboardComponentProps {
+export interface LeaderboardComponentProps {
   userId: string;
   className?: string;
   initialTimeframe?: 'daily' | 'weekly' | 'monthly' | 'all_time';
@@ -114,7 +90,7 @@ interface LeaderboardComponentProps {
   maxEntries?: number;
 }
 
-interface AchievementPanelProps {
+export interface AchievementPanelProps {
   userId: string;
   className?: string;
   onAchievementClick?: (achievement: any) => void;
@@ -123,7 +99,7 @@ interface AchievementPanelProps {
   maxDisplay?: number;
 }
 
-interface RewardSystemProps {
+export interface RewardSystemProps {
   userId: string;
   userPoints: number;
   userCurrency: number;
@@ -133,7 +109,7 @@ interface RewardSystemProps {
   showRedeemed?: boolean;
 }
 
-interface ProgressTrackerProps {
+export interface ProgressTrackerProps {
   userId: string;
   className?: string;
   timeframe?: 'week' | 'month' | 'quarter' | 'year';
@@ -141,7 +117,7 @@ interface ProgressTrackerProps {
   showComparisons?: boolean;
 }
 
-interface SocialCompetitionsProps {
+export interface SocialCompetitionsProps {
   userId: string;
   className?: string;
   onCompetitionJoin?: (competitionId: string) => Promise<boolean>;
@@ -229,5 +205,11 @@ export default {
   RewardSystem,
   ProgressTracker,
   SocialCompetitions,
+  BadgeCollection,
+  VirtualEconomy,
+  ChallengeCreator,
+  CompetitionCalendar,
+  EngagementMetrics,
+  RewardStore,
   Utils: GamificationUtils
 };
