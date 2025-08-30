@@ -58,7 +58,8 @@ def test_agent_instantiation():
     # Create a basic config
     config = AgentConfiguration(
         agent_id="test_agent",
-        capabilities={AgentCapability.ANALYSIS}
+        agent_name="Test Agent",
+        capabilities={AgentCapability.PERFORMANCE_ANALYSIS}
     )
     
     # Test each agent
