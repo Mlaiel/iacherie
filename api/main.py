@@ -6,7 +6,7 @@ Main application entrypoint (developer convenience).
 
 import os
 import uvicorn
-from backend.app.asgi import app
+from api.asgi import app
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
