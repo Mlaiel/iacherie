@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Ainflue Android Application Styles
+    
+    Professional UI themes and styles for the advanced mobile content creation platform
+    Optimized for content creators with modern Material Design principles
+    
+    Author: Fahed Mlaiel (mlaiel@live.de)
+    Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+    
+    ⚠️ LEGAL NOTICE: These styles are the exclusive intellectual property of Fahed Mlaiel.
+    Any unauthorized use, copying, or distribution is strictly prohibited under
+    German and international copyright law.
+-->
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+    
+    <!-- ================================ -->
+    <!-- COLOR PALETTE                    -->
+    <!-- ================================ -->
+    
+    <!-- Primary Brand Colors -->
+    <color name="colorPrimary">#1f2937</color>
+    <color name="colorPrimaryDark">#111827</color>
+    <color name="colorPrimaryLight">#374151</color>
+    <color name="colorAccent">#3b82f6</color>
+    
+    <!-- Secondary Colors -->
+    <color name="colorSecondary">#10b981</color>
+    <color name="colorSecondaryDark">#059669</color>
+    <color name="colorSecondaryLight">#34d399</color>
+    
+    <!-- Background Colors -->
+    <color name="backgroundColor">#ffffff</color>
+    <color name="backgroundColorDark">#1f2937</color>
+    <color name="backgroundColorLight">#f9fafb</color>
+    <color name="surfaceColor">#ffffff</color>
+    <color name="surfaceColorDark">#374151</color>
+    
+    <!-- Text Colors -->
+    <color name="textColorPrimary">#111827</color>
+    <color name="textColorSecondary">#6b7280</color>
+    <color name="textColorTertiary">#9ca3af</color>
+    <color name="textColorInverse">#ffffff</color>
+    <color name="textColorAccent">#3b82f6</color>
+    
+    <!-- Status Colors -->
+    <color name="colorSuccess">#10b981</color>
+    <color name="colorWarning">#f59e0b</color>
+    <color name="colorError">#ef4444</color>
+    <color name="colorInfo">#3b82f6</color>
+    
+    <!-- Protection Status Colors -->
+    <color name="protectionActive">#10b981</color>
+    <color name="protectionScanning">#f59e0b</color>
+    <color name="protectionVulnerable">#ef4444</color>
+    <color name="protectionDisabled">#9ca3af</color>
+    
+    <!-- Revenue Colors -->
+    <color name="revenuePositive">#10b981</color>
+    <color name="revenueNeutral">#6b7280</color>
+    <color name="revenuePending">#f59e0b</color>
+    
+    <!-- Interactive Colors -->
+    <color name="buttonPrimary">#3b82f6</color>
+    <color name="buttonPrimaryPressed">#2563eb</color>
+    <color name="buttonSecondary">#e5e7eb</color>
+    <color name="buttonSecondaryPressed">#d1d5db</color>
+    <color name="buttonDanger">#ef4444</color>
+    <color name="buttonDangerPressed">#dc2626</color>
+    
+    <!-- Overlay Colors -->
+    <color name="overlayLight">#80ffffff</color>
+    <color name="overlayDark">#80000000</color>
+    <color name="overlayPrimary">#801f2937</color>
+    
+    <!-- Border Colors -->
+    <color name="borderColor">#e5e7eb</color>
+    <color name="borderColorFocused">#3b82f6</color>
+    <color name="borderColorError">#ef4444</color>
+    
+    <!-- ================================ -->
+    <!-- BASE THEME - LIGHT               -->
+    <!-- ================================ -->
+    
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        
+        <!-- Secondary colors -->
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryDark</item>
+        
+        <!-- Background colors -->
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="colorSurface">@color/surfaceColor</item>
+        
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        
+        <!-- Navigation bar -->
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        
+        <!-- Window background -->
+        <item name="android:windowBackground">@color/backgroundColor</item>
+        
+        <!-- Text appearance -->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.Ainflue.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.Ainflue.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.Ainflue.Headline3</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Ainflue.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Ainflue.Body2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Ainflue.Caption</item>
+        
+        <!-- Button styles -->
+        <item name="materialButtonStyle">@style/Button.Ainflue.Primary</item>
+        <item name="borderlessButtonStyle">@style/Button.Ainflue.Borderless</item>
+        
+        <!-- Input field styles -->
+        <item name="textInputStyle">@style/TextInputLayout.Ainflue</item>
+        
+        <!-- Card styles -->
+        <item name="materialCardViewStyle">@style/Card.Ainflue</item>
+        
+        <!-- Toolbar styles -->
+        <item name="toolbarStyle">@style/Toolbar.Ainflue</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- SPLASH SCREEN THEME              -->
+    <!-- ================================ -->
+    
+    <style name="AppTheme.SplashScreen" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- TEXT APPEARANCES                 -->
+    <!-- ================================ -->
+    
+    <!-- Headlines -->
+    <style name="TextAppearance.Ainflue.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+    
+    <style name="TextAppearance.Ainflue.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:letterSpacing">-0.005</item>
+    </style>
+    
+    <style name="TextAppearance.Ainflue.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    
+    <style name="TextAppearance.Ainflue.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:letterSpacing">0.005</item>
+    </style>
+    
+    <!-- Body Text -->
+    <style name="TextAppearance.Ainflue.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+    
+    <style name="TextAppearance.Ainflue.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+    
+    <!-- Caption and Labels -->
+    <style name="TextAppearance.Ainflue.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/textColorTertiary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    
+    <style name="TextAppearance.Ainflue.Label" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- BUTTON STYLES                    -->
+    <!-- ================================ -->
+    
+    <!-- Primary Button -->
+    <style name="Button.Ainflue.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/textColorInverse</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="backgroundTint">@color/buttonPrimary</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="elevation">2dp</item>
+        <item name="rippleColor">@color/overlayLight</item>
+    </style>
+    
+    <!-- Secondary Button -->
+    <style name="Button.Ainflue.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="rippleColor">@color/overlayPrimary</item>
+    </style>
+    
+    <!-- Borderless Button -->
+    <style name="Button.Ainflue.Borderless" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="rippleColor">@color/overlayPrimary</item>
+    </style>
+    
+    <!-- Danger Button -->
+    <style name="Button.Ainflue.Danger" parent="Button.Ainflue.Primary">
+        <item name="backgroundTint">@color/buttonDanger</item>
+    </style>
+    
+    <!-- Small Button -->
+    <style name="Button.Ainflue.Small" parent="Button.Ainflue.Primary">
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+    
+    <!-- Floating Action Button -->
+    <style name="FloatingActionButton.Ainflue" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/colorAccent</item>
+        <item name="tint">@color/textColorInverse</item>
+        <item name="elevation">6dp</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- INPUT FIELD STYLES               -->
+    <!-- ================================ -->
+    
+    <!-- Text Input Layout -->
+    <style name="TextInputLayout.Ainflue" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/borderColorFocused</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintTextColor">@color/textColorSecondary</item>
+        <item name="errorTextColor">@color/colorError</item>
+        <item name="helperTextTextColor">@color/textColorTertiary</item>
+        <item name="android:textColorHint">@color/textColorTertiary</item>
+    </style>
+    
+    <!-- Text Input Edit Text -->
+    <style name="TextInputEditText.Ainflue" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+    
+    <!-- Password Input -->
+    <style name="TextInputLayout.Ainflue.Password" parent="TextInputLayout.Ainflue">
+        <item name="passwordToggleEnabled">true</item>
+        <item name="passwordToggleTint">@color/textColorSecondary</item>
+    </style>
+    
+    <!-- Search Input -->
+    <style name="TextInputLayout.Ainflue.Search" parent="TextInputLayout.Ainflue">
+        <item name="startIconDrawable">@drawable/ic_search</item>
+        <item name="startIconTint">@color/textColorSecondary</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- CARD STYLES                      -->
+    <!-- ================================ -->
+    
+    <!-- Default Card -->
+    <style name="Card.Ainflue" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardBackgroundColor">@color/surfaceColor</item>
+        <item name="contentPadding">16dp</item>
+        <item name="rippleColor">@color/overlayLight</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+    
+    <!-- Elevated Card -->
+    <style name="Card.Ainflue.Elevated" parent="Card.Ainflue">
+        <item name="cardElevation">8dp</item>
+    </style>
+    
+    <!-- Flat Card -->
+    <style name="Card.Ainflue.Flat" parent="Card.Ainflue">
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/borderColor</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+    
+    <!-- Content Card -->
+    <style name="Card.Ainflue.Content" parent="Card.Ainflue">
+        <item name="contentPadding">0dp</item>
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- TOOLBAR STYLES                   -->
+    <!-- ================================ -->
+    
+    <!-- Default Toolbar -->
+    <style name="Toolbar.Ainflue" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="titleTextColor">@color/textColorInverse</item>
+        <item name="subtitleTextColor">@color/textColorInverse</item>
+        <item name="android:theme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+    
+    <!-- Transparent Toolbar -->
+    <style name="Toolbar.Ainflue.Transparent" parent="Toolbar.Ainflue">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- BOTTOM NAVIGATION                -->
+    <!-- ================================ -->
+    
+    <style name="BottomNavigation.Ainflue" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/surfaceColor</item>
+        <item name="itemIconTint">@color/bottom_nav_color</item>
+        <item name="itemTextColor">@color/bottom_nav_color</item>
+        <item name="itemRippleColor">@color/overlayPrimary</item>
+        <item name="elevation">8dp</item>
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- TAB LAYOUT                       -->
+    <!-- ================================ -->
+    
+    <style name="TabLayout.Ainflue" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">@color/surfaceColor</item>
+        <item name="tabTextColor">@color/textColorSecondary</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabGravity">start</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Ainflue.Tab</item>
+    </style>
+    
+    <style name="TextAppearance.Ainflue.Tab" parent="TextAppearance.MaterialComponents.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- DIALOG STYLES                    -->
+    <!-- ================================ -->
+    
+    <style name="Dialog.Ainflue" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="dialogCornerRadius">16dp</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Dialog.Ainflue.PositiveButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Dialog.Ainflue.NegativeButton</item>
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+    </style>
+    
+    <style name="Dialog.Ainflue.PositiveButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+    
+    <style name="Dialog.Ainflue.NegativeButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- PROGRESS INDICATORS              -->
+    <!-- ================================ -->
+    
+    <style name="ProgressBar.Ainflue.Circular" parent="Widget.MaterialComponents.CircularProgressIndicator">
+        <item name="indicatorColor">@color/colorAccent</item>
+        <item name="trackColor">@color/borderColor</item>
+        <item name="indicatorSize">48dp</item>
+        <item name="trackThickness">4dp</item>
+    </style>
+    
+    <style name="ProgressBar.Ainflue.Linear" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="indicatorColor">@color/colorAccent</item>
+        <item name="trackColor">@color/borderColor</item>
+        <item name="trackThickness">4dp</item>
+        <item name="trackCornerRadius">2dp</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- CHIP STYLES                      -->
+    <!-- ================================ -->
+    
+    <style name="Chip.Ainflue" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="chipStrokeColor">@color/borderColor</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipCornerRadius">20dp</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- STATUS SPECIFIC STYLES           -->
+    <!-- ================================ -->
+    
+    <!-- Protection Status Styles -->
+    <style name="Status.Protection.Active">
+        <item name="android:textColor">@color/protectionActive</item>
+        <item name="android:background">@drawable/status_background_success</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    
+    <style name="Status.Protection.Scanning">
+        <item name="android:textColor">@color/protectionScanning</item>
+        <item name="android:background">@drawable/status_background_warning</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    
+    <style name="Status.Protection.Vulnerable">
+        <item name="android:textColor">@color/protectionVulnerable</item>
+        <item name="android:background">@drawable/status_background_error</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- ANIMATION STYLES                 -->
+    <!-- ================================ -->
+    
+    <style name="Animation.Ainflue.FadeIn">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+    
+    <style name="Animation.Ainflue.SlideUp">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- RECYCLER VIEW STYLES             -->
+    <!-- ================================ -->
+    
+    <style name="RecyclerView.Ainflue" parent="">
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_thumb</item>
+        <item name="android:scrollbarTrackVertical">@drawable/scrollbar_track</item>
+        <item name="android:fadingEdge">vertical</item>
+        <item name="android:fadingEdgeLength">16dp</item>
+    </style>
+    
+    <!-- ================================ -->
+    <!-- DIMENSIONS                       -->
+    <!-- ================================ -->
+    
+    <!-- Spacing -->
+    <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_xlarge">32dp</dimen>
+    
+    <!-- Content spacing -->
+    <dimen name="content_padding">16dp</dimen>
+    <dimen name="content_margin">16dp</dimen>
+    <dimen name="section_spacing">24dp</dimen>
+    
+    <!-- Component sizes -->
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_height_small">36dp</dimen>
+    <dimen name="input_height">56dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="bottom_nav_height">56dp</dimen>
+    
+    <!-- Card dimensions -->
+    <dimen name="card_corner_radius">16dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="card_margin">8dp</dimen>
+    
+    <!-- Avatar sizes -->
+    <dimen name="avatar_size_small">32dp</dimen>
+    <dimen name="avatar_size_medium">48dp</dimen>
+    <dimen name="avatar_size_large">64dp</dimen>
+    <dimen name="avatar_size_xlarge">96dp</dimen>
+    
+    <!-- Icon sizes -->
+    <dimen name="icon_size_small">16dp</dimen>
+    <dimen name="icon_size_medium">24dp</dimen>
+    <dimen name="icon_size_large">32dp</dimen>
+    <dimen name="icon_size_xlarge">48dp</dimen>
+</resources>
