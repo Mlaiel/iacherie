@@ -1,7 +1,18 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 
-// Supported languages
-export type Language = 'en' | 'fr' | 'de' | 'ar' | 'ber';
+/*
+ * Professional Multilingual Support System
+ * ========================================
+ * Author: Fahed Mlaiel (mlaiel@live.de)
+ * Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+ * 
+ * ⚠️ PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED ⚠️
+ * This modular translation system supports 10 languages with professional-grade
+ * gamification and remix modules for the IA Influencer Agent platform.
+ */
+
+// Supported languages - Extended to 10 professional languages
+export type Language = 'en' | 'fr' | 'de' | 'es' | 'it' | 'pt' | 'ru' | 'zh' | 'ja' | 'ar';
 
 interface TranslationMap {
   [key: string]: string;
@@ -10,33 +21,106 @@ interface TranslationMap {
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, module?: 'common' | 'gamification' | 'remix') => string;
   availableLanguages: { code: Language; name: string; nativeName: string }[];
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// Language configurations
+// Professional language configurations
 const LANGUAGES = [
   { code: 'en' as Language, name: 'English', nativeName: 'English' },
   { code: 'fr' as Language, name: 'French', nativeName: 'Français' },
   { code: 'de' as Language, name: 'German', nativeName: 'Deutsch' },
+  { code: 'es' as Language, name: 'Spanish', nativeName: 'Español' },
+  { code: 'it' as Language, name: 'Italian', nativeName: 'Italiano' },
+  { code: 'pt' as Language, name: 'Portuguese', nativeName: 'Português' },
+  { code: 'ru' as Language, name: 'Russian', nativeName: 'Русский' },
+  { code: 'zh' as Language, name: 'Chinese', nativeName: '中文' },
+  { code: 'ja' as Language, name: 'Japanese', nativeName: '日本語' },
   { code: 'ar' as Language, name: 'Arabic', nativeName: 'العربية' },
-  { code: 'ber' as Language, name: 'Berber', nativeName: 'Tamaziɣt' },
 ];
 
 // RTL languages
-const RTL_LANGUAGES: Language[] = ['ar', 'ber'];
+const RTL_LANGUAGES: Language[] = ['ar'];
 
-// Load translation function
+// Modular translation loading function
 async function loadTranslations(language: Language): Promise<TranslationMap> {
   try {
-    const translations = await import(`../locales/${language}.json`);
-    return translations.default || translations;
+    // Load all three modules: common, gamification, remix
+    const [commonModule, gamificationModule, remixModule] = await Promise.all([
+      import(`../locales/${language}/common.json`).catch(() => 
+        import(`../locales/${language}.json`).catch(() => null)
+      ),
+      import(`../locales/${language}/gamification.json`).catch(() => null),
+      import(`../locales/${language}/remix.json`).catch(() => null)
+    ]);
+
+    // Combine all translations with module prefixes for organization
+    const allTranslations: TranslationMap = {};
+    
+    // Add common translations (no prefix for backward compatibility)
+    if (commonModule) {
+      const commonData = commonModule.default || commonModule;
+      Object.assign(allTranslations, commonData);
+    }
+    
+    // Add gamification translations with prefix
+    if (gamificationModule) {
+      const gamificationData = gamificationModule.default || gamificationModule;
+      Object.keys(gamificationData).forEach(key => {
+        allTranslations[`gamification.${key}`] = gamificationData[key];
+        allTranslations[key] = gamificationData[key]; // Also add without prefix for convenience
+      });
+    }
+    
+    // Add remix translations with prefix
+    if (remixModule) {
+      const remixData = remixModule.default || remixModule;
+      Object.keys(remixData).forEach(key => {
+        allTranslations[`remix.${key}`] = remixData[key];
+        allTranslations[key] = remixData[key]; // Also add without prefix for convenience
+      });
+    }
+
+    return allTranslations;
   } catch (_error) {
     console.warn(`Failed to load translations for ${language}, falling back to English`);
-    const fallbackTranslations = await import('../locales/en.json');
-    return fallbackTranslations.default || fallbackTranslations;
+    try {
+      // Fallback to English with modular structure
+      const [commonModule, gamificationModule, remixModule] = await Promise.all([
+        import('../locales/en/common.json').catch(() => import('../locales/en.json')),
+        import('../locales/en/gamification.json').catch(() => null),
+        import('../locales/en/remix.json').catch(() => null)
+      ]);
+      
+      const fallbackTranslations: TranslationMap = {};
+      
+      if (commonModule) {
+        Object.assign(fallbackTranslations, commonModule.default || commonModule);
+      }
+      
+      if (gamificationModule) {
+        const gamificationData = gamificationModule.default || gamificationModule;
+        Object.keys(gamificationData).forEach(key => {
+          fallbackTranslations[`gamification.${key}`] = gamificationData[key];
+          fallbackTranslations[key] = gamificationData[key];
+        });
+      }
+      
+      if (remixModule) {
+        const remixData = remixModule.default || remixModule;
+        Object.keys(remixData).forEach(key => {
+          fallbackTranslations[`remix.${key}`] = remixData[key];
+          fallbackTranslations[key] = remixData[key];
+        });
+      }
+      
+      return fallbackTranslations;
+    } catch (fallbackError) {
+      console.error('Failed to load fallback translations:', fallbackError);
+      return {};
+    }
   }
 }
 
@@ -101,7 +185,16 @@ export function LanguageProvider({ children, defaultLanguage = 'en' }: LanguageP
     setLanguageState(newLanguage);
   };
 
-  const t = (key: string): string => {
+  const t = (key: string, module?: 'common' | 'gamification' | 'remix'): string => {
+    // If module is specified, try module-prefixed key first
+    if (module && module !== 'common') {
+      const moduleKey = `${module}.${key}`;
+      if (translations[moduleKey]) {
+        return translations[moduleKey];
+      }
+    }
+    
+    // Fallback to direct key lookup
     return translations[key] || key;
   };
 
