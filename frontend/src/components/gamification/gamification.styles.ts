@@ -235,7 +235,7 @@ export const challengeIcons = {
   [ChallengeType.SPECIAL]: "✨"
 };
 
-export const difficultyColors = {
+export const difficultyColors: Record<number, string> = {
   1: "text-green-600 dark:text-green-400",
   2: "text-yellow-600 dark:text-yellow-400",
   3: "text-orange-600 dark:text-orange-400",
@@ -244,12 +244,12 @@ export const difficultyColors = {
 };
 
 export const getDifficultyLabel = (difficulty: number): string => {
-  const labels = {
+  const labels: Record<number, string> = {
     1: "Beginner",
     2: "Intermediate",
     3: "Advanced",
     4: "Expert",
     5: "Master"
   };
-  return labels[difficulty as keyof typeof labels] || "Unknown";
+  return labels[difficulty] || "Unknown";
 };

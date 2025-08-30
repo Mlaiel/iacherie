@@ -219,15 +219,3 @@ export const GamificationUtils = {
     return tierValues[tier.toLowerCase() as keyof typeof tierValues] || 0;
   }
 };
-
-// Default export for convenience
-export default {
-  GamificationDashboard,
-  ChallengeInterface,
-  LeaderboardComponent,
-  AchievementPanel,
-  RewardSystem,
-  ProgressTracker,
-  SocialCompetitions,
-  Utils: GamificationUtils
-};

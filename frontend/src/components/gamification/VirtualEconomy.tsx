@@ -29,7 +29,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { VirtualEconomyStats, ApiResponse } from './types';
 import { gamificationStyles } from './gamification.styles';
-import { CurrencyDollarIcon, ChartBarIcon, TrendingUpIcon } from '@heroicons/react/24/outline';
+import { CurrencyDollarIcon, ChartBarIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import clsx from 'clsx';
 

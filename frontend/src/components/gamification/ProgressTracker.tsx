@@ -36,7 +36,7 @@ import {
 import { gamificationStyles } from './gamification.styles';
 import { 
   ChartBarIcon,
-  TrendingUpIcon,
+  ArrowTrendingUpIcon,
   CalendarIcon,
   StarIcon,
   FireIcon,
@@ -47,7 +47,7 @@ import {
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar } from 'recharts';
 import clsx from 'clsx';
 
-interface ProgressTrackerProps {
+export interface ProgressTrackerProps {
   userId: string;
   className?: string;
   timeframe?: 'week' | 'month' | 'quarter' | 'year';
@@ -199,7 +199,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   };
 
   const getMetricColor = (metric: keyof ProgressData): string => {
-    const colors = {
+    const colors: Partial<Record<keyof ProgressData, string>> = {
       experiencePoints: '#3B82F6',
       level: '#10B981',
       challengesCompleted: '#F59E0B',
@@ -454,7 +454,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
                 "font-bold flex items-center",
                 growthRate >= 0 ? "text-green-600" : "text-red-600"
               )}>
-                <TrendingUpIcon className="w-5 h-5 mr-1" />
+                <ArrowTrendingUpIcon className="w-5 h-5 mr-1" />
                 {growthRate >= 0 ? '+' : ''}{growthRate.toFixed(1)}%
               </div>
             </div>

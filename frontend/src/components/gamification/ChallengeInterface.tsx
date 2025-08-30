@@ -53,7 +53,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
-interface ChallengeInterfaceProps {
+export interface ChallengeInterfaceProps {
   userId: string;
   className?: string;
   onChallengeJoin?: (challengeId: string) => Promise<void>;

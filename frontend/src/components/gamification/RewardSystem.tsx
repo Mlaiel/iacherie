@@ -47,7 +47,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
-interface RewardSystemProps {
+export interface RewardSystemProps {
   userId: string;
   userPoints: number;
   userCurrency: number;

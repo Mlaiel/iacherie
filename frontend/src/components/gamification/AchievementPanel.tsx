@@ -46,7 +46,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
-interface AchievementPanelProps {
+export interface AchievementPanelProps {
   userId: string;
   className?: string;
   onAchievementClick?: (achievement: Achievement) => void;
@@ -195,7 +195,7 @@ const AchievementPanel: React.FC<AchievementPanelProps> = ({
 
   const stats = getAchievementStats();
   const filteredAchievements = getFilteredAchievements();
-  const categories = [...new Set(achievements.map(a => a.category))];
+  const categories = Array.from(new Set(achievements.map(a => a.category)));
 
   if (loading) {
     return (

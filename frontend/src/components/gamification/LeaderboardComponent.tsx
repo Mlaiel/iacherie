@@ -44,7 +44,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
-interface LeaderboardComponentProps {
+export interface LeaderboardComponentProps {
   userId: string;
   className?: string;
   initialTimeframe?: 'daily' | 'weekly' | 'monthly' | 'all_time';

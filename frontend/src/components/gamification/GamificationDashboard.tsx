@@ -48,7 +48,7 @@ import {
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
-interface GamificationDashboardProps {
+export interface GamificationDashboardProps {
   userId: string;
   className?: string;
   onChallengeClick?: (challenge: Challenge) => void;
