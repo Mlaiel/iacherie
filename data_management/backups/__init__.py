@@ -25,7 +25,7 @@ BACKUP STRATEGY:
 ☁️ Multi-cloud: AWS S3 + Azure + Google Cloud redundancy
 🎯 Point-in-time: Récupération à n'importe quel moment
 """
-__version__ = "3.0.0"
+        __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __team__ = "Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices"
 
@@ -52,7 +52,8 @@ from .index import BackupIndex
 
 # Backup Types Enumeration
 class BackupType(str, Enum):
-    """Types de sauvegarde supportés"""    FULL = "full"                    # Sauvegarde complète
+    """Types de sauvegarde supportés"""
+        FULL = "full"                    # Sauvegarde complète
     INCREMENTAL = "incremental"      # Sauvegarde incrémentale
     DIFFERENTIAL = "differential"    # Sauvegarde différentielle
     REALTIME = "realtime"           # Sauvegarde temps réel
@@ -60,14 +61,16 @@ class BackupType(str, Enum):
     ARCHIVE = "archive"             # Archivage long terme
 
 class BackupPriority(str, Enum):
-    """Priorités de sauvegarde"""    CRITICAL = "critical"           # Contenu critique (revenus)
+    """Priorités de sauvegarde"""
+        CRITICAL = "critical"           # Contenu critique (revenus)
     HIGH = "high"                  # Contenu haute valeur
     MEDIUM = "medium"              # Contenu standard
     LOW = "low"                    # Contenu archivable
     BULK = "bulk"                  # Traitement en lot
 
 class StorageClass(str, Enum):
-    """Classes de stockage optimisées"""    HOT = "hot"                    # Accès fréquent (< 1 mois)
+    """Classes de stockage optimisées"""
+        HOT = "hot"                    # Accès fréquent (< 1 mois)
     WARM = "warm"                  # Accès occasionnel (1-6 mois)
     COLD = "cold"                  # Accès rare (6 mois - 2 ans)
     GLACIER = "glacier"            # Archivage long terme (> 2 ans)
@@ -170,10 +173,12 @@ __all__ = [
 ]
 
 def get_backup_manager() -> BackupManager:
-    """Factory function pour obtenir le gestionnaire de sauvegarde principal"""    return BackupManager()
+    """Factory function pour obtenir le gestionnaire de sauvegarde principal"""
+             BackupManager()
 
 def get_recovery_engine() -> RecoveryEngine:
-    """Factory function pour obtenir le moteur de récupération"""    return RecoveryEngine()
+    """Factory function pour obtenir le moteur de récupération"""
+             RecoveryEngine()
 
 def initialize_backup_system() -> None:
     """Initialise le système de sauvegarde avec la configuration par défaut"""    logger.info("Initializing backup system for IA Influencer Agent Platform")

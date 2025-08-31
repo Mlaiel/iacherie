@@ -68,7 +68,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerConfig:
-    """Crawler system configuration."""    max_concurrent_crawlers: int = 50
+    """Crawler system configuration."""
+        max_concurrent_crawlers: int = 50
     default_rate_limit: float = 1.0
     enable_proxy_rotation: bool = True
     enable_user_agent_rotation: bool = True
@@ -89,7 +90,7 @@ class CrawlerOrchestrator:
     - Performance monitoring
     - Data persistence
     - Alert management
-    """    
+    """
     def __init__(self, config: Optional[CrawlerConfig] = None):
         """Initialize crawler orchestrator."""        self.config = config or CrawlerConfig()
         
@@ -152,7 +153,8 @@ class CrawlerOrchestrator:
         self,
         targets: List[Dict[str, Any]]
     ) -> Dict[str, str]:
-        """Start comprehensive monitoring for specified targets."""        target_ids = {}
+        """Start comprehensive monitoring for specified targets."""
+        target_ids = {}
         
         for target_config in targets:
             try:
@@ -189,7 +191,8 @@ class CrawlerOrchestrator:
         platform: str,
         content_type: str = "post"
     ) -> Optional[AnalysisResult]:
-        """Analyze content for violations and similarities."""        if not self.content_analyzer:
+        """Analyze content for violations and similarities."""
+                 not self.content_analyzer:
             logger.warning("Content analysis disabled")
             return None
         
@@ -223,7 +226,9 @@ class CrawlerOrchestrator:
         target: SurveillanceTarget,
         violations: List[Dict[str, Any]]
     ) -> None:
-        """Handle violations detected by surveillance system."""        try:
+        """Handle violations detected by surveillance system."""
+        
+        :
             logger.warning(
                 f"Surveillance violations detected for {target.platform}/{target.identifier}: "
                 f"{len(violations)} violations"
@@ -250,7 +255,9 @@ class CrawlerOrchestrator:
         """Handle surveillance task errors."""        logger.error(f"Surveillance task failed: {task.task_id} - {error}")
     
     async def _handle_content_violation(self, analysis_result: AnalysisResult) -> None:
-        """Handle content violations detected by analysis."""        try:
+        """Handle content violations detected by analysis."""
+        
+        :
             logger.warning(
                 f"Content violation detected for {analysis_result.content_id}: "
                 f"risk={analysis_result.risk_score:.2f}, "
@@ -290,7 +297,9 @@ class CrawlerOrchestrator:
         target: SurveillanceTarget,
         violations: List[Dict[str, Any]]
     ) -> None:
-        """Persist violation data to disk."""        try:
+        """Persist violation data to disk."""
+        
+        :
             violations_dir = self.data_dir / "violations"
             violations_dir.mkdir(exist_ok=True)
             
@@ -328,7 +337,8 @@ class CrawlerOrchestrator:
         """Add callback for monitoring events."""        self.monitoring_callbacks.append(callback)
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""        status = {
+        """Get comprehensive system status."""
+        status = {
             'timestamp': datetime.now().isoformat(),
             'orchestrator': {
                 'config': {

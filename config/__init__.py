@@ -104,21 +104,18 @@ from .security.advanced_cybersecurity_config import (
 logger = logging.getLogger(__name__)
 
 class ConfigurationManagerProtocol(ABC):
-    """Protocol interface pour tous les gestionnaires de configuration"""    
+    """Protocol interface pour tous les gestionnaires de configuration"""
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du manager"""        pass
-    
+        """Initialisation du manager"""
     @abstractmethod
     async def validate_configuration(self) -> Dict[str, Any]:
-        """Validation de la configuration"""        pass
-    
+        """Validation de la configuration"""
     @abstractmethod
     async def get_configuration(self) -> Dict[str, Any]:
-        """Récupération de la configuration"""        pass
-
-class ConfigurationRegistry:
-    """Registry central pour toutes les configurations"""    
+        """Récupération de la configuration"""
+    class ConfigurationRegistry:
+    """Registry central pour toutes les configurations"""
     def __init__(self):
         self.managers: Dict[str, ConfigurationManagerProtocol] = {}
         self.initialized = False
@@ -126,7 +123,9 @@ class ConfigurationRegistry:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def register_manager(self, name: str, manager: ConfigurationManagerProtocol) -> None:
-        """Enregistrement d'un manager de configuration"""        try:
+        """Enregistrement d'un manager de configuration"""
+        
+        :
             await manager.initialize()
             self.managers[name] = manager
             self.logger.info(f"✅ Manager '{name}' enregistré avec succès")
@@ -135,10 +134,12 @@ class ConfigurationRegistry:
             raise
     
     async def get_manager(self, name: str) -> Optional[ConfigurationManagerProtocol]:
-        """Récupération d'un manager spécifique"""        return self.managers.get(name)
+        """Récupération d'un manager spécifique"""
+                 self.managers.get(name)
     
     async def get_all_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Récupération de toutes les configurations"""        configurations = {}
+        """Récupération de toutes les configurations"""
+        configurations = {}
         for name, manager in self.managers.items():
             try:
                 configurations[name] = await manager.get_configuration()
@@ -148,7 +149,8 @@ class ConfigurationRegistry:
         return configurations
     
     async def validate_all_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Validation de toutes les configurations"""        validations = {}
+        """Validation de toutes les configurations"""
+        validations = {}
         for name, manager in self.managers.items():
             try:
                 validations[name] = await manager.validate_configuration()
@@ -158,7 +160,7 @@ class ConfigurationRegistry:
         return validations
 
 class MasterConfigurationManager:
-    """Gestionnaire maître de toutes les configurations système"""    
+    """Gestionnaire maître de toutes les configurations système"""
     def __init__(self):
         self.registry = ConfigurationRegistry()
         self.initialized = False
@@ -166,7 +168,9 @@ class MasterConfigurationManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize_all_managers(self) -> bool:
-        """Initialisation complète de tous les managers"""        try:
+        """Initialisation complète de tous les managers"""
+        
+        :
             self.logger.info("🚀 Initialisation des gestionnaires de configuration...")
             
             # Environment managers
@@ -199,7 +203,8 @@ class MasterConfigurationManager:
             return False
     
     async def _initialize_environment_managers(self) -> None:
-        """Initialisation des gestionnaires d'environnement"""        environment = os.getenv('ENVIRONMENT', 'development')
+        """Initialisation des gestionnaires d'environnement"""
+        environment = os.getenv('ENVIRONMENT', 'development')
         
         if environment == 'production':
             await self.registry.register_manager('environment', ProductionConfigManager())
@@ -247,7 +252,8 @@ class MasterConfigurationManager:
         await self.registry.register_manager('notifications', NotificationConfigManager())
     
     async def get_complete_configuration(self) -> Dict[str, Any]:
-        """Configuration complète du système"""        if not self.initialized:
+        """Configuration complète du système"""
+                 not self.initialized:
             await self.initialize_all_managers()
         
         return {
@@ -266,10 +272,12 @@ class MasterConfigurationManager:
 master_config = MasterConfigurationManager()
 
 async def initialize_configuration() -> bool:
-    """Point d'entrée pour l'initialisation de la configuration"""    return await master_config.initialize_all_managers()
+    """Point d'entrée pour l'initialisation de la configuration"""
+             await master_config.initialize_all_managers()
 
 async def get_configuration(manager_name: Optional[str] = None) -> Union[Dict[str, Any], Optional[ConfigurationManagerProtocol]]:
-    """Récupération de configuration spécifique ou complète"""    if manager_name:
+    """Récupération de configuration spécifique ou complète"""
+             manager_name:
         return await master_config.registry.get_manager(manager_name)
     return await master_config.get_complete_configuration()
 

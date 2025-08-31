@@ -27,7 +27,7 @@ FINGERPRINTING ARCHITECTURE:
 ├── 📊 Analytics Dashboard (Performance + Alerts)
 └── 🛡️ Protection Management (Takedown + Recovery)
 """
-__version__ = "1.0.0"
+        __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -165,21 +165,24 @@ from .index import (
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types d'empreintes supportées"""    AUDIO = "audio"
+    """Types d'empreintes supportées"""
+        AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     COMPOSITE = "composite"
 
 class SimilarityThreshold(Enum):
-    """Seuils de similarité pour la détection"""    EXACT = 0.95      # Correspondance exacte
+    """Seuils de similarité pour la détection"""
+        EXACT = 0.95      # Correspondance exacte
     HIGH = 0.85       # Haute similarité
     MEDIUM = 0.70     # Similarité moyenne
     LOW = 0.55        # Faible similarité
     POTENTIAL = 0.40  # Correspondance potentielle
 
 class ProtectionLevel(Enum):
-    """Niveaux de protection du contenu"""    MAXIMUM = "maximum"     # Protection maximale
+    """Niveaux de protection du contenu"""
+        MAXIMUM = "maximum"     # Protection maximale
     HIGH = "high"          # Protection élevée
     STANDARD = "standard"   # Protection standard
     BASIC = "basic"        # Protection de base
@@ -247,7 +250,7 @@ class FingerprintingEngine:
     - Indexation vectorielle FAISS pour similarité
     - Monitoring temps réel et détection de violations
     - Protection automatisée et récupération de revenus
-    """    
+    """
     def __init__(self, config: Optional[FingerprintConfig] = None):
         self.config = config or FingerprintConfig()
         
@@ -293,7 +296,9 @@ class FingerprintingEngine:
             
         Returns:
             Dictionnaire contenant l'empreinte complète
-        """        try:
+        """
+        
+        :
             start_time = datetime.now()
             
             # Détection automatique du type si nécessaire
@@ -369,7 +374,9 @@ class FingerprintingEngine:
             
         Returns:
             Liste des contenus similaires trouvés
-        """        try:
+        """
+        
+        :
             # Recherche dans l'index vectoriel
             similar_content = await self.vector_engine.search_similar(
                 fingerprint_data["vectors"],
@@ -410,7 +417,9 @@ class FingerprintingEngine:
             
         Returns:
             ID de la session de monitoring
-        """        try:
+        """
+        
+        :
             if not self.realtime_monitor:
                 raise ValueError("Real-time monitoring not enabled")
             
@@ -434,7 +443,9 @@ class FingerprintingEngine:
             
         Returns:
             Résultat du traitement de la violation
-        """        try:
+        """
+        
+        :
             # Mise à jour des métriques
             self.metrics["violations_found"] += 1
             
@@ -479,7 +490,8 @@ class FingerprintingEngine:
             raise ValueError(f"Unknown file extension: {ext}")
 
     async def _generate_similarity_vectors(self, fingerprints: Dict[str, Any]) -> Dict[str, Any]:
-        """Génère les vecteurs pour la recherche de similarité"""        vectors = {}
+        """Génère les vecteurs pour la recherche de similarité"""
+        vectors = {}
         
         for fp_type, fp_data in fingerprints.items():
             if fp_type == "audio":
@@ -519,10 +531,12 @@ class FingerprintingEngine:
         return 0.85  # Simulation
 
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques de performance"""        return self.metrics.copy()
+        """Retourne les métriques de performance"""
+                 self.metrics.copy()
 
     def get_status(self) -> Dict[str, Any]:
-        """Retourne le statut du système"""        return {
+        """Retourne le statut du système"""
+                 {
             "version": __version__,
             "engines_active": {
                 "audio": self.audio_engine is not None,
