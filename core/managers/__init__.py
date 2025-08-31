@@ -89,7 +89,8 @@ async def initialize_all_managers() -> bool:
     
     Returns:
         bool: True if all managers initialized successfully
-    """    try:
+    """
+    try:
         managers = [
             ("analytics", get_analytics_manager()),
             ("cache", get_cache_manager()),
@@ -149,7 +150,8 @@ async def cleanup_all_managers() -> bool:
     
     Returns:
         bool: True if all managers cleaned up successfully
-    """    try:
+    """
+    try:
         managers = list(_MANAGER_REGISTRY.values())
         
         # Cleanup all managers concurrently
