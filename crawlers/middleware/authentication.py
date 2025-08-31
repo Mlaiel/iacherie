@@ -17,6 +17,9 @@ import hashlib
 import hmac
 import jwt
 import redis
+import pyotp
+import secrets
+import aioredis
 from fastapi import HTTPException, status
 from pydantic import BaseModel, Field
 import logging
@@ -334,9 +337,115 @@ class MultiFactorAuthenticator:
     
     def verify_totp_token(self, secret: str, token: str) -> bool:
         """Verify Time-based One-Time Password"""
-        import pyotp
         totp = pyotp.TOTP(secret)
         return totp.verify(token, valid_window=1)
+    
+    async def send_sms_mfa_code(self, user_id: str, phone_number: str) -> bool:
+        """Send SMS MFA code to user's phone"""
+        try:
+            # Generate 6-digit code
+            mfa_code = f"{secrets.randbelow(900000) + 100000:06d}"
+            
+            # Store code for verification (valid for 5 minutes)
+            cache_key = f"sms_mfa:{user_id}"
+            await self.redis_client.setex(cache_key, 300, mfa_code)
+            
+            # In production, integrate with SMS service like Twilio
+            # For now, log the code (REMOVE IN PRODUCTION)
+            logger.info(f"SMS MFA code for {user_id}: {mfa_code}")
+            
+            # Store attempt for rate limiting
+            attempt_key = f"sms_attempts:{user_id}"
+            attempts = await self.redis_client.get(attempt_key)
+            attempts = int(attempts) if attempts else 0
+            
+            if attempts >= 3:
+                logger.warning(f"SMS MFA rate limit exceeded for user: {user_id}")
+                return False
+                
+            await self.redis_client.setex(attempt_key, 3600, attempts + 1)
+            
+            logger.info(f"SMS MFA code sent to user: {user_id}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to send SMS MFA code: {e}")
+            return False
+    
+    async def verify_sms_mfa_code(self, user_id: str, code: str) -> bool:
+        """Verify SMS MFA code"""
+        try:
+            cache_key = f"sms_mfa:{user_id}"
+            stored_code = await self.redis_client.get(cache_key)
+            
+            if not stored_code:
+                logger.warning(f"No SMS MFA code found for user: {user_id}")
+                return False
+                
+            stored_code = stored_code.decode() if isinstance(stored_code, bytes) else stored_code
+            
+            if stored_code == code:
+                # Code is valid, remove it to prevent reuse
+                await self.redis_client.delete(cache_key)
+                
+                # Reset attempt counter
+                attempt_key = f"sms_attempts:{user_id}"
+                await self.redis_client.delete(attempt_key)
+                
+                logger.info(f"SMS MFA verification successful for user: {user_id}")
+                return True
+            else:
+                logger.warning(f"Invalid SMS MFA code for user: {user_id}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"SMS MFA verification error: {e}")
+            return False
+    
+    async def verify_hardware_key_mfa(self, user_id: str, fido2_response: Dict[str, Any]) -> bool:
+        """Verify hardware key MFA using FIDO2"""
+        try:
+            # Import here to avoid circular dependency
+            from ...security.fido2_webauthn import fido2_manager
+            
+            # Verify FIDO2 authentication
+            authenticated_user = await fido2_manager.verify_authentication(fido2_response)
+            
+            if authenticated_user == user_id:
+                logger.info(f"Hardware key MFA verification successful for user: {user_id}")
+                return True
+            else:
+                logger.warning(f"Hardware key MFA verification failed for user: {user_id}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Hardware key MFA verification error: {e}")
+            return False
+    
+    async def verify_any_mfa(self, user_id: str, mfa_data: Dict[str, Any]) -> bool:
+        """Verify any supported MFA method"""
+        try:
+            # Check TOTP token
+            if "totp_token" in mfa_data:
+                if await self.verify_mfa_token(user_id, mfa_data["totp_token"]):
+                    return True
+            
+            # Check SMS code
+            if "sms_code" in mfa_data:
+                if await self.verify_sms_mfa_code(user_id, mfa_data["sms_code"]):
+                    return True
+            
+            # Check hardware key
+            if "fido2_response" in mfa_data:
+                if await self.verify_hardware_key_mfa(user_id, mfa_data["fido2_response"]):
+                    return True
+            
+            logger.warning(f"All MFA methods failed for user: {user_id}")
+            return False
+            
+        except Exception as e:
+            logger.error(f"MFA verification error: {e}")
+            return False
 
 
 class AuthenticationMiddleware:

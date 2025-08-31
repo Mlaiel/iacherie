@@ -32,6 +32,8 @@ class OAuthProvider(str, Enum):
     TWITCH = "twitch"
     LINKEDIN = "linkedin"
     GITHUB = "github"
+    APPLE = "apple"
+    GOOGLE = "google"
 
 
 class OAuthScope(str, Enum):
@@ -54,6 +56,13 @@ class OAuthScope(str, Enum):
     # Business scopes
     LINKEDIN_READ = "r_liteprofile r_emailaddress"
     FACEBOOK_READ = "email public_profile pages_show_list"
+    
+    # Apple Sign-In scopes
+    APPLE_READ = "name email"
+    
+    # Google scopes
+    GOOGLE_READ = "openid email profile"
+    GOOGLE_CALENDAR = "https://www.googleapis.com/auth/calendar"
 
 
 class OAuthConfig(BaseSettings):
@@ -119,6 +128,21 @@ class OAuthConfig(BaseSettings):
     github_client_secret: str = Field(..., env="GITHUB_CLIENT_SECRET")
     github_redirect_uri: str = Field(..., env="GITHUB_REDIRECT_URI")
     
+    # Apple Sign-In OAuth
+    apple_client_id: str = Field(..., env="APPLE_CLIENT_ID")
+    apple_client_secret: str = Field(..., env="APPLE_CLIENT_SECRET")
+    apple_redirect_uri: str = Field(..., env="APPLE_REDIRECT_URI")
+    apple_team_id: str = Field(..., env="APPLE_TEAM_ID")
+    apple_key_id: str = Field(..., env="APPLE_KEY_ID")
+    apple_private_key: str = Field(..., env="APPLE_PRIVATE_KEY")
+    apple_scopes: List[str] = Field(default_factory=lambda: [OAuthScope.APPLE_READ])
+    
+    # Google OAuth
+    google_client_id: str = Field(..., env="GOOGLE_CLIENT_ID")
+    google_client_secret: str = Field(..., env="GOOGLE_CLIENT_SECRET")
+    google_redirect_uri: str = Field(..., env="GOOGLE_REDIRECT_URI")
+    google_scopes: List[str] = Field(default_factory=lambda: [OAuthScope.GOOGLE_READ])
+    
     # General OAuth settings
     oauth_state_secret: str = Field(..., env="OAUTH_STATE_SECRET")
     oauth_token_expiry_seconds: int = Field(default=3600, env="OAUTH_TOKEN_EXPIRY")
@@ -182,6 +206,16 @@ class OAuthEndpoints:
             "authorize": "https://github.com/login/oauth/authorize",
             "token": "https://github.com/login/oauth/access_token",
             "userinfo": "https://api.github.com/user"
+        },
+        OAuthProvider.APPLE: {
+            "authorize": "https://appleid.apple.com/auth/authorize",
+            "token": "https://appleid.apple.com/auth/token",
+            "userinfo": "https://appleid.apple.com/auth/userinfo"
+        },
+        OAuthProvider.GOOGLE: {
+            "authorize": "https://accounts.google.com/o/oauth2/auth",
+            "token": "https://oauth2.googleapis.com/token",
+            "userinfo": "https://www.googleapis.com/oauth2/v1/userinfo"
         }
     }
     
