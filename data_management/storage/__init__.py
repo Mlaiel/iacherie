@@ -273,12 +273,15 @@ logger = logging.getLogger("data_management.storage")
 logger.setLevel(logging.INFO)
 
 class StorageFactory:
-    """Factory for creating storage managers with enterprise configurations"""    
+    """
+Factory for creating storage managers with enterprise configurations"""    
     @staticmethod
     def create_enterprise_manager(
         config: Optional[Dict[str, Any]] = None
     ) -> StorageManager:
-        """Create enterprise storage manager with full feature set"""        final_config = {**ENTERPRISE_STORAGE_CONFIG, **(config or {})}
+        """
+Create enterprise storage manager with full feature set"""
+        final_config = {**ENTERPRISE_STORAGE_CONFIG, **(config or {})}
         return StorageManager(final_config)
     
     @staticmethod
@@ -287,7 +290,9 @@ class StorageFactory:
         credentials: Dict[str, str],
         config: Optional[Dict[str, Any]] = None
     ) -> CloudStorageManager:
-        """Create cloud-specific storage manager"""        cloud_config = CloudConfig(
+        """
+Create cloud-specific storage manager"""
+        cloud_config = CloudConfig(
             provider=provider,
             **credentials,
             **(config or {})
@@ -301,7 +306,9 @@ class StorageFactory:
         cdn_config: Optional[CDNConfig] = None,
         cache_config: Optional[CacheConfig] = None
     ) -> StorageManager:
-        """Create hybrid storage manager with multiple providers"""        config = {
+        """
+Create hybrid storage manager with multiple providers"""
+        config = {
             'cloud_config': cloud_config,
             'local_config': local_config,
             'cdn_config': cdn_config,
@@ -311,7 +318,9 @@ class StorageFactory:
         return StorageManager(config)
 
 def initialize_storage_system(config: Dict[str, Any]) -> Dict[str, Any]:
-    """Initialize complete storage system with all components"""    try:
+    """
+Initialize complete storage system with all components"""
+    try:
         # Create main storage manager
         storage_manager = StorageFactory.create_enterprise_manager(config)
         
@@ -344,7 +353,9 @@ def initialize_storage_system(config: Dict[str, Any]) -> Dict[str, Any]:
         raise
 
 def get_content_type_from_filename(filename: str) -> ContentType:
-    """Determine content type from filename"""    file_path = Path(filename)
+    """
+Determine content type from filename"""
+    file_path = Path(filename)
     extension = file_path.suffix.lower()
     
     for content_type, mapping in CONTENT_TYPE_MAPPINGS.items():
@@ -358,7 +369,8 @@ def get_optimal_storage_tier(
     file_size: int,
     access_pattern: str = 'unknown'
 ) -> StorageTier:
-    """Determine optimal storage tier based on content characteristics"""    # High-priority content types
+    """
+Determine optimal storage tier based on content characteristics"""    # High-priority content types
     if content_type in [ContentType.FINGERPRINT, ContentType.EMBEDDING]:
         return StorageTier.HOT
     
@@ -457,13 +469,17 @@ from .cdn_storage import CDNStorageManager, AsyncCDNStorageManager
 from .cache_storage import CacheStorageManager, AsyncCacheStorageManager
 
 class StorageTier(Enum):
-    """Niveaux de stockage par fréquence d'accès"""    HOT = "hot"        # Accès fréquent (< 30 jours)
+    """
+Niveaux de stockage par fréquence d'accès"""
+    HOT = "hot"        # Accès fréquent (< 30 jours)
     WARM = "warm"      # Accès occasionnel (30-90 jours)
     COLD = "cold"      # Accès rare (90-365 jours)
     ARCHIVE = "archive" # Archivage long terme (> 365 jours)
 
 class StorageProvider(Enum):
-    """Fournisseurs de stockage supportés"""    LOCAL = "local"
+    """
+Fournisseurs de stockage supportés"""
+    LOCAL = "local"
     S3 = "s3"
     MINIO = "minio"
     AZURE_BLOB = "azure_blob"
@@ -473,7 +489,8 @@ class StorageProvider(Enum):
 
 @dataclass
 class StorageConfig:
-    """Configuration du système de stockage"""    
+    """
+Configuration du système de stockage"""    
     # Configuration par tiers
     tier_config: Dict[StorageTier, Dict[str, Any]] = None
     
@@ -567,7 +584,9 @@ class StorageConfig:
 
 @dataclass
 class StorageMetadata:
-    """Métadonnées d'un objet stocké"""    file_id: str
+    """
+Métadonnées d'un objet stocké"""
+    file_id: str
     original_path: str
     storage_path: str
     provider: StorageProvider
@@ -584,7 +603,9 @@ class StorageMetadata:
 
 @dataclass
 class StorageResult:
-    """Résultat d'une opération de stockage"""    success: bool
+    """
+Résultat d'une opération de stockage"""
+    success: bool
     file_id: Optional[str]
     storage_path: Optional[str]
     metadata: Optional[StorageMetadata]
@@ -592,7 +613,8 @@ class StorageResult:
     warnings: List[str]
 
 class StorageManager:
-    """Gestionnaire principal du système de stockage multi-tiers"""    
+    """
+Gestionnaire principal du système de stockage multi-tiers"""    
     def __init__(self, config: Optional[StorageConfig] = None):
         self.config = config or StorageConfig()
         self.logger = logging.getLogger(__name__)
@@ -622,7 +644,8 @@ class StorageManager:
         tier: Optional[StorageTier] = None,
         tags: Optional[List[str]] = None
     ) -> StorageResult:
-        """Stocke un fichier dans le tiers approprié"""        
+        """
+Stocke un fichier dans le tiers approprié"""        
         try:
             # Déterminer le tiers si non spécifié
             if tier is None:
@@ -697,7 +720,8 @@ class StorageManager:
             )
     
     def retrieve(self, file_id: str, local_path: Optional[str] = None) -> StorageResult:
-        """Récupère un fichier depuis le stockage"""        
+        """
+Récupère un fichier depuis le stockage"""        
         try:
             # Vérifier l'existence du fichier
             if file_id not in self.metadata_store:
@@ -741,7 +765,8 @@ class StorageManager:
             )
     
     def delete(self, file_id: str) -> StorageResult:
-        """Supprime un fichier du stockage"""        
+        """
+Supprime un fichier du stockage"""        
         try:
             if file_id not in self.metadata_store:
                 return StorageResult(
@@ -786,7 +811,8 @@ class StorageManager:
             )
     
     def migrate_tier(self, file_id: str, target_tier: StorageTier) -> StorageResult:
-        """Migre un fichier vers un autre tiers de stockage"""        
+        """
+Migre un fichier vers un autre tiers de stockage"""        
         try:
             if file_id not in self.metadata_store:
                 return StorageResult(
@@ -852,7 +878,9 @@ class StorageManager:
             )
     
     def auto_tier_migration(self) -> Dict[str, Any]:
-        """Migration automatique basée sur les patterns d'accès"""        migrated_files = []
+        """
+Migration automatique basée sur les patterns d'accès"""
+        migrated_files = []
         errors = []
         
         current_time = datetime.now()
@@ -892,16 +920,21 @@ class StorageManager:
         }
     
     def get_usage_stats(self, creator_type: Optional[str] = None) -> Dict[str, Any]:
-        """Récupère les statistiques d'utilisation du stockage"""        if creator_type:
+        """
+Récupère les statistiques d'utilisation du stockage"""
+        if creator_type:
             return self.usage_stats.get(creator_type, {})
         return self.usage_stats
     
     def _determine_optimal_tier(self, file_path: str, creator_type: str, content_type: str) -> StorageTier:
-        """Détermine le tiers de stockage optimal pour un nouveau fichier"""        # Par défaut, nouveaux fichiers vont en HOT
+        """
+Détermine le tiers de stockage optimal pour un nouveau fichier"""        # Par défaut, nouveaux fichiers vont en HOT
         return StorageTier.HOT
     
     def _check_storage_limits(self, creator_type: str, tier: StorageTier, file_path: str) -> bool:
-        """Vérifie si les limites de stockage permettent d'ajouter le fichier"""        file_size_gb = os.path.getsize(file_path) / (1024**3)  # Convertir en GB
+        """
+Vérifie si les limites de stockage permettent d'ajouter le fichier"""
+        file_size_gb = os.path.getsize(file_path) / (1024**3)  # Convertir en GB
         
         # Récupérer la limite pour ce créateur et tiers
         limits = self.config.storage_limits.get(creator_type, {})
@@ -914,19 +947,25 @@ class StorageManager:
         return (current_usage_gb + file_size_gb) <= tier_limit
     
     def _generate_file_id(self, file_path: str) -> str:
-        """Génère un ID unique pour le fichier"""        timestamp = datetime.now().isoformat()
+        """
+Génère un ID unique pour le fichier"""
+        timestamp = datetime.now().isoformat()
         content = f"{file_path}:{timestamp}"
         return hashlib.sha256(content.encode()).hexdigest()[:16]
     
     def _calculate_checksum(self, file_path: str) -> str:
-        """Calcule le checksum MD5 du fichier"""        hash_md5 = hashlib.md5()
+        """
+Calcule le checksum MD5 du fichier"""
+        hash_md5 = hashlib.md5()
         with open(file_path, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_md5.update(chunk)
         return hash_md5.hexdigest()
     
     def _update_usage_stats(self, creator_type: str, tier: StorageTier, size_delta: int):
-        """Met à jour les statistiques d'utilisation"""        if creator_type not in self.usage_stats:
+        """
+Met à jour les statistiques d'utilisation"""
+        if creator_type not in self.usage_stats:
             self.usage_stats[creator_type] = {}
         
         if tier.value not in self.usage_stats[creator_type]:
@@ -935,7 +974,8 @@ class StorageManager:
         self.usage_stats[creator_type][tier.value] += size_delta
     
     def _calculate_optimal_tier(self, file_age: int, days_since_access: int, access_count: int) -> StorageTier:
-        """Calcule le tiers optimal basé sur les patterns d'usage"""        # Logique de migration automatique
+        """
+Calcule le tiers optimal basé sur les patterns d'usage"""        # Logique de migration automatique
         if days_since_access <= 7 and access_count > 5:
             return StorageTier.HOT
         elif days_since_access <= 30:
