@@ -16,9 +16,9 @@ under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 """
-from .music_orchestrator import MusicOrchestrator
-from .spotify_integration import SpotifyIntegration
-from .composition_analyzer import (
+from .utils.music_orchestrator import MusicOrchestrator
+from .utils.spotify_integration import SpotifyIntegration
+from .utils.composition_analyzer import (
     CompositionAnalyzer,
     CompositionAnalysisResult,
     CompositionComplexity,
@@ -27,7 +27,7 @@ from .composition_analyzer import (
     MelodyAnalysis,
     StructuralAnalysis
 )
-from .music_generator import (
+from .utils.music_generator import (
     MusicGenerator,
     GeneratedTrack,
     GenerationParameters,
@@ -37,7 +37,7 @@ from .music_generator import (
     MusicStyle,
     EmotionalArc
 )
-from .artist_insights import (
+from .utils.artist_insights import (
     ArtistInsights,
     ComprehensiveInsights,
     PerformanceMetrics,
