@@ -25,6 +25,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 
+// Import authentication service
+import AuthenticationService from '../services/AuthenticationService';
+import { NotificationService } from '../services/NotificationService';
+
 interface UploadItem {
   id: string;
   name: string;
@@ -142,6 +146,21 @@ const UploadScreen: React.FC = () => {
   };
 
   const processUpload = async (file: { name: string; type: string; size: string; uri: string }) => {
+    // Authenticate before upload for security
+    console.log('🔐 Authenticating for secure upload...');
+    const authResult = await AuthenticationService.authenticateForUpload();
+    
+    if (!authResult.success) {
+      Alert.alert(
+        'Authentication Required', 
+        authResult.error || 'Please authenticate to upload content securely',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
+    console.log(`✅ Authenticated with ${authResult.authType} on ${authResult.platform}`);
+
     const newUpload: UploadItem = {
       id: Date.now().toString(),
       name: file.name,
@@ -153,6 +172,12 @@ const UploadScreen: React.FC = () => {
 
     setUploads(prev => [newUpload, ...prev]);
     setIsProcessing(true);
+
+    // Store upload securely
+    await AuthenticationService.storeSecureData(
+      `upload_${newUpload.id}`,
+      JSON.stringify({ ...file, timestamp: Date.now() })
+    );
 
     // Simulate upload and AI processing
     const uploadInterval = setInterval(() => {
@@ -173,14 +198,14 @@ const UploadScreen: React.FC = () => {
   };
 
   const processWithAI = async (uploadId: string) => {
-    // Simulate AI analysis
+    // Simulate AI analysis with authentication
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     setUploads(prev => prev.map(upload => {
       if (upload.id === uploadId) {
-        return {
+        const updatedUpload = {
           ...upload,
-          status: 'completed',
+          status: 'completed' as const,
           aiAnalysis: {
             contentType: upload.type.includes('video') ? 'Video Content' : 
                         upload.type.includes('audio') ? 'Audio Content' : 'Image Content',
@@ -192,23 +217,26 @@ const UploadScreen: React.FC = () => {
             ]
           }
         };
+
+        // Send completion notification
+        NotificationService.sendAIProcessingComplete(
+          upload.name, 
+          updatedUpload.aiAnalysis?.qualityScore || 0
+        );
+
+        return updatedUpload;
       }
       return upload;
     }));
     
     setIsProcessing(false);
   };
-        }
-        return upload;
-      }));
-    }, 300);
-  };
 
-  const getFileIcon = (type: string) => {
+  const getFileIcon = (type: string): keyof typeof Ionicons.glyphMap => {
     if (type.startsWith('image/')) return 'image';
     if (type.startsWith('video/')) return 'videocam';
-    if (type.startsWith('audio/')) return 'audiotrack';
-    return 'insert-drive-file';
+    if (type.startsWith('audio/')) return 'musical-notes';
+    return 'document';
   };
 
   const getStatusColor = (status: string) => {
@@ -222,19 +250,19 @@ const UploadScreen: React.FC = () => {
   const UploadOption = ({ title, description, icon, color, onPress }: {
     title: string;
     description: string;
-    icon: string;
+    icon: keyof typeof Ionicons.glyphMap;
     color: string;
     onPress: () => void;
   }) => (
     <TouchableOpacity style={styles.uploadOption} onPress={onPress}>
       <View style={[styles.uploadIcon, { backgroundColor: color }]}>
-        <Icon name={icon} size={32} color="#fff" />
+        <Ionicons name={icon} size={32} color="#fff" />
       </View>
       <View style={styles.uploadContent}>
         <Text style={styles.uploadTitle}>{title}</Text>
         <Text style={styles.uploadDescription}>{description}</Text>
       </View>
-      <Icon name="chevron-right" size={24} color="#9CA3AF" />
+      <Ionicons name="chevron-forward" size={24} color="#9CA3AF" />
     </TouchableOpacity>
   );
 
@@ -253,7 +281,7 @@ const UploadScreen: React.FC = () => {
         <UploadOption
           title="Camera"
           description="Capture photo or video"
-          icon="camera-alt"
+          icon="camera"
           color="#3B82F6"
           onPress={handleCameraCapture}
         />
@@ -261,7 +289,7 @@ const UploadScreen: React.FC = () => {
         <UploadOption
           title="Gallery"
           description="Select from photo library"
-          icon="photo-library"
+          icon="images"
           color="#10B981"
           onPress={handleGalleryPicker}
         />
@@ -283,7 +311,7 @@ const UploadScreen: React.FC = () => {
             {uploads.map(upload => (
               <View key={upload.id} style={styles.uploadItem}>
                 <View style={styles.uploadFileInfo}>
-                  <Icon 
+                  <Ionicons 
                     name={getFileIcon(upload.type)} 
                     size={24} 
                     color="#6B7280" 
@@ -322,7 +350,7 @@ const UploadScreen: React.FC = () => {
       {/* Upload Tips */}
       <View style={styles.section}>
         <View style={styles.tipsCard}>
-          <Icon name="lightbulb-outline" size={24} color="#F59E0B" />
+          <Ionicons name="bulb" size={24} color="#F59E0B" />
           <View style={styles.tipsContent}>
             <Text style={styles.tipsTitle}>Upload Tips</Text>
             <Text style={styles.tipsText}>
