@@ -630,7 +630,7 @@ class PaymentProcessorConfig:
     )
     
     # Security Configuration
-    SECURITY_CONFIG: PaymentSecurityConfig = PaymentSecurityConfig()
+    SECURITY_CONFIG: PaymentSecurityConfig = field(default_factory=PaymentSecurityConfig)
     
     # Supported Payment Methods by Provider
     PROVIDER_PAYMENT_METHODS: Dict[PaymentProvider, List[PaymentMethod]] = field(
