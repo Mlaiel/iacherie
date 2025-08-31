@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: region-config-us-west-2
+  namespace: production
+  labels:
+    region: us-west-2
+    type: secondary
+data:
+  region_code: us-west-2
+  region_name: US West (Oregon)
+  cluster_name: ainflue-prod-us-west-2
+  region_type: secondary
+  availability_zones: us-west-2a,us-west-2b,us-west-2c
+  database_endpoint: ainflue-prod-us-west-2.cluster-def456.us-west-2.rds.amazonaws.com
+  redis_endpoint: ainflue-prod-cache-us-west-2.def456.cache.amazonaws.com
+  s3_bucket: ainflue-content-us-west-2
+  cdn_endpoint: https://cdn-us-west-2.ainflue.com
+  api_endpoint: https://api-us-west-2.ainflue.com

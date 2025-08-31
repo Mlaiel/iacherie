@@ -1,0 +1,143 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: production
+  labels:
+    app: notification-service
+    component: backend
+    tier: service
+    version: v1.0.0
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+        component: backend
+        tier: service
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8000'
+        prometheus.io/path: /metrics
+    spec:
+      serviceAccountName: notification-service
+      containers:
+      - name: notification-service
+        image: ainflue/notification-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: production
+        - name: LOG_LEVEL
+          value: INFO
+        - name: ENABLE_METRICS
+          value: 'true'
+        - name: DATABASE_SECRET_URL
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: notification_db_url
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: smtp-secret
+              key: password
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: sms-secret
+              key: api_key
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 100m
+          limits:
+            memory: 256Mi
+            cpu: 300m
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: config
+          mountPath: /app/config
+          readOnly: true
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: config
+        configMap:
+          name: notification-service-config
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - notification-service
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: production
+  labels:
+    app: notification-service
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    app: notification-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: notification-service
+  namespace: production
+  labels:
+    app: notification-service

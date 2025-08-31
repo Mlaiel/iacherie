@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-load-balancer-config
+  namespace: production
+data:
+  nginx.conf: "\nupstream primary_region {\n    server api-us-east-1.ainflue.com max_fails=3\
+    \ fail_timeout=30s;\n}\n\nupstream secondary_regions {\n    server api-us-west-2.ainflue.com\
+    \ max_fails=3 fail_timeout=30s backup;\n    server api-eu-west-1.ainflue.com max_fails=3\
+    \ fail_timeout=30s backup;\n    server api-ap-southeast-1.ainflue.com max_fails=3\
+    \ fail_timeout=30s backup;\n}\n\nmap $http_cf_ipcountry $region_backend {\n  \
+    \  default primary_region;\n    US primary_region;\n    CA primary_region;\n \
+    \   GB secondary_regions;\n    DE secondary_regions;\n    FR secondary_regions;\n\
+    \    SG secondary_regions;\n    JP secondary_regions;\n    AU secondary_regions;\n\
+    }\n\nserver {\n    listen 80;\n    server_name api.ainflue.com;\n    \n    location\
+    \ /health {\n        access_log off;\n        return 200 \"healthy\";\n      \
+    \  add_header Content-Type text/plain;\n    }\n    \n    location / {\n      \
+    \  proxy_pass http://$region_backend;\n        proxy_set_header Host $host;\n\
+    \        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For\
+    \ $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n\
+    \        proxy_set_header X-Region $http_cf_ipcountry;\n        \n        proxy_connect_timeout\
+    \ 5s;\n        proxy_send_timeout 60s;\n        proxy_read_timeout 60s;\n    \
+    \    \n        proxy_next_upstream error timeout http_502 http_503 http_504;\n\
+    \        proxy_next_upstream_tries 3;\n    }\n}\n"

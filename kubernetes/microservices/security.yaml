@@ -1,0 +1,360 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: production
+  name: microservice-role
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: microservice-binding
+  namespace: production
+subjects:
+- kind: ServiceAccount
+  name: api-gateway
+  namespace: production
+- kind: ServiceAccount
+  name: user-service
+  namespace: production
+- kind: ServiceAccount
+  name: content-service
+  namespace: production
+- kind: ServiceAccount
+  name: ai-service
+  namespace: production
+- kind: ServiceAccount
+  name: protection-service
+  namespace: production
+- kind: ServiceAccount
+  name: collaboration-service
+  namespace: production
+- kind: ServiceAccount
+  name: payment-service
+  namespace: production
+- kind: ServiceAccount
+  name: notification-service
+  namespace: production
+- kind: ServiceAccount
+  name: analytics-service
+  namespace: production
+roleRef:
+  kind: Role
+  name: microservice-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      app: api-gateway
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from: []
+    ports:
+    - protocol: TCP
+      port: 8000
+    - protocol: TCP
+      port: 8443
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          tier: service
+    ports:
+    - protocol: TCP
+      port: 8000
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-microservices
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      tier: service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+    ports:
+    - protocol: TCP
+      port: 8000
+  - from:
+    - podSelector:
+        matchLabels:
+          tier: service
+    ports:
+    - protocol: TCP
+      port: 8000
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 5432  # PostgreSQL
+    - protocol: TCP
+      port: 6379  # Redis
+    - protocol: TCP
+      port: 27017 # MongoDB
+    - protocol: TCP
+      port: 443   # HTTPS
+    - protocol: TCP
+      port: 53    # DNS
+    - protocol: UDP
+      port: 53    # DNS
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-monitoring
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      app: prometheus
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from: []
+    ports:
+    - protocol: TCP
+      port: 9090
+  egress:
+  - to:
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 8000
+    - protocol: TCP
+      port: 8001
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 6443
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: database-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  # These are placeholder values - replace with actual base64 encoded secrets
+  user_db_url: cGxhY2Vob2xkZXI=      # placeholder
+  content_db_url: cGxhY2Vob2xkZXI=   # placeholder
+  ai_db_url: cGxhY2Vob2xkZXI=        # placeholder
+  protection_db_url: cGxhY2Vob2xkZXI= # placeholder
+  collaboration_db_url: cGxhY2Vob2xkZXI= # placeholder
+  payment_db_url: cGxhY2Vob2xkZXI=   # placeholder
+  notification_db_url: cGxhY2Vob2xkZXI= # placeholder
+  analytics_db_url: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  url: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  url: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: auth-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  jwt_secret: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: oauth-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  client_id: cGxhY2Vob2xkZXI=      # placeholder
+  client_secret: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: s3-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  bucket_name: cGxhY2Vob2xkZXI=  # placeholder
+  access_key: cGxhY2Vob2xkZXI=   # placeholder
+  secret_key: cGxhY2Vob2xkZXI=   # placeholder
+  region: cGxhY2Vob2xkZXI=       # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: stripe-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  api_key: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: paypal-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  client_id: cGxhY2Vob2xkZXI=      # placeholder
+  client_secret: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: smtp-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  password: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sms-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  api_key: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+  namespace: production
+  labels:
+    app: ainflue
+type: Opaque
+data:
+  username: cGxhY2Vob2xkZXI=  # placeholder
+  password: cGxhY2Vob2xkZXI=  # placeholder
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: api-gateway-pdb
+  namespace: production
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: api-gateway
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: user-service-pdb
+  namespace: production
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: user-service
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: content-service-pdb
+  namespace: production
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: content-service
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: payment-service-pdb
+  namespace: production
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: payment-service

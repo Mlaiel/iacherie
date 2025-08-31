@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-service-config
+  namespace: production
+  labels:
+    app: user-service
+data:
+  app.yaml: |
+    service:
+      name: user-service
+      port: 8000
+      host: "0.0.0.0"
+      
+    auth:
+      jwt_algorithm: "HS256"
+      jwt_expiration: 3600
+      password_hash_rounds: 12
+      oauth2_providers:
+        - google
+        - facebook
+        - spotify
+        
+    database:
+      pool_size: 20
+      max_connections: 100
+      connection_timeout: 30
+      query_timeout: 30
+      
+    cache:
+      ttl: 3600
+      max_connections: 50
+      
+    security:
+      rate_limiting:
+        login_attempts: 5
+        window_minutes: 15
+      password_policy:
+        min_length: 8
+        require_uppercase: true
+        require_lowercase: true
+        require_numbers: true
+        require_special: true
+        
+    monitoring:
+      enable_prometheus: true
+      enable_jaeger: true
+      log_level: "INFO"

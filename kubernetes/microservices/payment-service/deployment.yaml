@@ -1,0 +1,143 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  namespace: production
+  labels:
+    app: payment-service
+    component: backend
+    tier: service
+    version: v1.0.0
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+        component: backend
+        tier: service
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8000'
+        prometheus.io/path: /metrics
+    spec:
+      serviceAccountName: payment-service
+      containers:
+      - name: payment-service
+        image: ainflue/payment-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: production
+        - name: LOG_LEVEL
+          value: INFO
+        - name: ENABLE_METRICS
+          value: 'true'
+        - name: DATABASE_SECRET_URL
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: payment_db_url
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: stripe-secret
+              key: api_key
+        - name: CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: paypal-secret
+              key: client_id
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 200m
+          limits:
+            memory: 512Mi
+            cpu: 500m
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: config
+          mountPath: /app/config
+          readOnly: true
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: config
+        configMap:
+          name: payment-service-config
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - payment-service
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  namespace: production
+  labels:
+    app: payment-service
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    app: payment-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: payment-service
+  namespace: production
+  labels:
+    app: payment-service

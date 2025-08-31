@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monitoring-config-us-west-2
+  namespace: production
+  labels:
+    region: us-west-2
+    component: monitoring
+data:
+  prometheus.yml: "\nglobal:\n  scrape_interval: 15s\n  evaluation_interval: 15s\n\
+    \  external_labels:\n    region: 'us-west-2'\n    cluster: 'ainflue-prod-us-west-2'\n\
+    \    environment: 'production'\n\nrule_files:\n  - \"/etc/prometheus/rules/*.yml\"\
+    \n\nscrape_configs:\n  - job_name: 'kubernetes-apiservers'\n    kubernetes_sd_configs:\n\
+    \    - role: endpoints\n    scheme: https\n    tls_config:\n      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt\n\
+    \    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token\n\
+    \    relabel_configs:\n    - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name,\
+    \ __meta_kubernetes_endpoint_port_name]\n      action: keep\n      regex: default;kubernetes;https\n\
+    \n  - job_name: 'microservices'\n    kubernetes_sd_configs:\n    - role: pod\n\
+    \    relabel_configs:\n    - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]\n\
+    \      action: keep\n      regex: true\n    - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]\n\
+    \      action: replace\n      target_label: __metrics_path__\n      regex: (.+)\n\
+    \    - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]\n\
+    \      action: replace\n      regex: ([^:]+)(?::\\d+)?;(\\d+)\n      replacement:\
+    \ $1:$2\n      target_label: __address__\n"

@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ainflue-ingress-eu-west-1
+  namespace: production
+  labels:
+    region: eu-west-1
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/rate-limit: '1000'
+    nginx.ingress.kubernetes.io/rate-limit-window: 1m
+    nginx.ingress.kubernetes.io/proxy-body-size: 1g
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '300'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '300'
+spec:
+  tls:
+  - hosts:
+    - api-eu-west-1.ainflue.com
+    secretName: ainflue-tls-eu-west-1
+  rules:
+  - host: api-eu-west-1.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: api-gateway-service
+            port:
+              number: 80

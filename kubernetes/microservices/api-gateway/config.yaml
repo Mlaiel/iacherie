@@ -1,0 +1,169 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kong-config
+  namespace: production
+  labels:
+    app: api-gateway
+data:
+  kong.yml: |
+    _format_version: "3.0"
+    _transform: true
+    
+    services:
+    - name: user-service
+      url: http://user-service:8000
+      tags: ["auth", "users"]
+      routes:
+      - name: user-auth
+        paths: ["/api/v1/auth"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        strip_path: true
+      - name: user-profiles
+        paths: ["/api/v1/users"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        strip_path: true
+      plugins:
+      - name: rate-limiting
+        config:
+          minute: 1000
+          hour: 10000
+      - name: cors
+        config:
+          origins: ["*"]
+          methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+      - name: jwt
+        config:
+          secret_is_base64: false
+    
+    - name: content-service
+      url: http://content-service:8000
+      tags: ["content", "storage"]
+      routes:
+      - name: content-upload
+        paths: ["/api/v1/content"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        strip_path: true
+      plugins:
+      - name: rate-limiting
+        config:
+          minute: 500
+          hour: 5000
+      - name: request-size-limiting
+        config:
+          allowed_payload_size: 1000
+    
+    - name: ai-service
+      url: http://ai-service:8000
+      tags: ["ai", "ml"]
+      routes:
+      - name: ai-processing
+        paths: ["/api/v1/ai"]
+        methods: ["GET", "POST"]
+        strip_path: true
+      plugins:
+      - name: rate-limiting
+        config:
+          minute: 100
+          hour: 1000
+      - name: request-timeout
+        config:
+          http_timeout: 300000
+          read_timeout: 300000
+    
+    - name: protection-service
+      url: http://protection-service:8000
+      tags: ["protection", "fingerprinting"]
+      routes:
+      - name: protection-api
+        paths: ["/api/v1/protection"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        strip_path: true
+      plugins:
+      - name: rate-limiting
+        config:
+          minute: 200
+          hour: 2000
+    
+    - name: collaboration-service
+      url: http://collaboration-service:8000
+      tags: ["collaboration", "matching"]
+      routes:
+      - name: collaboration-api
+        paths: ["/api/v1/collaboration"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        strip_path: true
+      plugins:
+      - name: rate-limiting
+        config:
+          minute: 300
+          hour: 3000
+    
+    - name: payment-service
+      url: http://payment-service:8000
+      tags: ["payment", "billing"]
+      routes:
+      - name: payment-api
+        paths: ["/api/v1/payments"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        strip_path: true
+      plugins:
+      - name: rate-limiting
+        config:
+          minute: 200
+          hour: 2000
+      - name: request-validator
+        config:
+          body_schema: |
+            {
+              "type": "object",
+              "properties": {
+                "amount": {"type": "number", "minimum": 0.01},
+                "currency": {"type": "string", "enum": ["USD", "EUR", "GBP"]}
+              }
+            }
+    
+    - name: notification-service
+      url: http://notification-service:8000
+      tags: ["notifications", "alerts"]
+      routes:
+      - name: notification-api
+        paths: ["/api/v1/notifications"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        strip_path: true
+      plugins:
+      - name: rate-limiting
+        config:
+          minute: 1000
+          hour: 10000
+    
+    - name: analytics-service
+      url: http://analytics-service:8000
+      tags: ["analytics", "metrics"]
+      routes:
+      - name: analytics-api
+        paths: ["/api/v1/analytics"]
+        methods: ["GET", "POST"]
+        strip_path: true
+      plugins:
+      - name: rate-limiting
+        config:
+          minute: 500
+          hour: 5000
+    
+    plugins:
+    - name: prometheus
+      config:
+        per_consumer: false
+    - name: cors
+      config:
+        origins: ["*"]
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"]
+        headers: ["Accept", "Accept-Version", "Content-Length", "Content-MD5", "Content-Type", "Date", "X-Auth-Token", "Authorization"]
+        exposed_headers: ["X-Auth-Token"]
+        credentials: true
+        max_age: 3600
+    - name: request-id
+      config:
+        header_name: "X-Request-ID"
+        echo_downstream: true
